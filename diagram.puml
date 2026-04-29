@@ -1,0 +1,44 @@
+@startuml diagrama
+title guitarApp Domain Model
+
+object User #ffc862 {
+  ObjectId _id
+  String email
+  String password
+  String name
+}
+
+object Token #ffc862 {
+  ObjectId _id
+  String token
+  Date expiresAt
+}
+
+object Notebook #2084ac {
+  ObjectId _id
+  String name
+}
+
+object Configuration #2084ac {
+  ObjectId _id
+  String name
+  Boolean lockZeroChord
+  Number startChord
+  Date createdAt
+  Date updatedAt
+}
+
+object Effect #2084ac {
+  ObjectId _id
+  String type
+  Number order
+  Boolean enabled
+  Object params <<EmbeddedDocument>>
+}
+
+User "1" --> "*" Token
+User "1" --> "*" Notebook
+Notebook "1" --> "*" Configuration
+Configuration "1" *-- "*" Effect
+
+@enduml

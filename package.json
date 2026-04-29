@@ -1,0 +1,29 @@
+{
+  "name": "guitar-app-monorepo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ArmandoEnrique1010K/Guitar-App-Monorepo.git",
+  "author": "ArmandoEnrique1010K <enrique1010k@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
+    "dev:frontend": "yarn workspace frontend dev",
+    "dev:backend": "yarn workspace backend dev",
+    "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
+    "build:shared": "yarn workspace shared build",
+    "build:frontend": "yarn workspace frontend build",
+    "build:backend": "yarn workspace backend build",
+    "start": "yarn workspace backend start",
+    "lint": "yarn workspaces foreach run lint",
+    "test": "yarn workspaces foreach run test",
+    "clean": "rimraf node_modules apps/**/node_modules packages/**/node_modules apps/**/dist packages/**/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
