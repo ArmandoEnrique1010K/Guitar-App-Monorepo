@@ -17,6 +17,7 @@
       "emails/*": ["emails/*"],
       "middlewares/*": ["middlewares/*"],
       "models/*": ["models/*"],
+      "seeds/*": ["seeds/*"],
       "routes/*": ["routes/*"],
       "types/*": ["types/*"],
       "utils/*": ["utils/*"]

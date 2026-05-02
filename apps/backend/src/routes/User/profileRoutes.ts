@@ -1,7 +1,7 @@
 import { ProfileController } from "controllers/User/ProfileController";
 import { Router } from "express";
 import { body } from "express-validator";
-import { authenticate } from "middlewares/auth";
+import { authenticate } from "middlewares/User/auth";
 import { handleInputErrors } from "middlewares/validation";
 
 const router = Router();

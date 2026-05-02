@@ -1,6 +1,5 @@
 import Notebook from "models/Notebook/Notebook";
 import type { Request, Response } from "express";
-import Configuration from "models/Notebook/Configuration";
 
 export class NotebookController {
   static createNotebook = async (req: Request, res: Response) => {
@@ -69,13 +68,21 @@ export class NotebookController {
     }
   };
 
-  // TODO: CONTINUAR AQUI
   static updateNotebook = async (req: Request, res: Response) => {
     try {
-        req.notebook.name = req.body.name
-        await req.notebook.save(),
+      req.notebook.name = req.body.name;
+      await req.notebook.save();
+      res.send("Cuaderno actualizado");
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Hubo un error" });
+    }
+  };
 
-
+  static deleteNotebook = async (req: Request, res: Response) => {
+    try {
+      await req.notebook.deleteOne();
+      res.send("Cuaderno eliminado");
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Hubo un error" });

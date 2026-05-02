@@ -70,7 +70,12 @@ const VisualMappingSchema = new Schema(
   {
     rootChord: { type: Number, default: defaultRootChord },
     lockOpenString: { type: Boolean, default: defaultLockOpenString },
-    stringOrder: [{ type: Number, default: defaultStringOrder }],
+
+    // Arreglo de numeros
+    stringOrder: {
+      type: [Number],
+      default: defaultStringOrder,
+    },
   },
   { _id: false },
 );

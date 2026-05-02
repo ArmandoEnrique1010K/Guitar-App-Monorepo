@@ -5,6 +5,7 @@ import { connectDB } from "config/db";
 import profileRoutes from "routes/User/profileRoutes";
 import authRoutes from "routes/User/authRoutes";
 import notebookRoutes from "routes/Notebook/notebookRoutes";
+import configurationRoutes from "routes/Notebook/configurationRoutes";
 
 dotenv.config();
 console.log("API KEY:", process.env.RESEND_API_KEY);
@@ -23,5 +24,6 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/notebook", notebookRoutes);
+app.use("/api/configuration", configurationRoutes);
 
 export default app;

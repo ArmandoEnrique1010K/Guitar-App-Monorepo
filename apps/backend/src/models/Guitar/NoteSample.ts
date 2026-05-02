@@ -1,13 +1,13 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface INoteSample extends Document {
-  nodeIndex: string;
+  noteIndex: string;
   audioUrl: number;
   guitar: Types.ObjectId;
 }
 
 const noteSampleSchema: Schema = new Schema({
-  nodeIndex: {
+  noteIndex: {
     type: Number,
     required: true,
   },
