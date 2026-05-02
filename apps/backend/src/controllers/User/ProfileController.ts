@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import User from "models/User";
+import User from "models/User/User";
 import { checkPassword, hashPassword } from "utils/auth";
 
 export class ProfileController {

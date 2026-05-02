@@ -1,4 +1,4 @@
-import { ProfileController } from "controllers/ProfileController";
+import { ProfileController } from "controllers/User/ProfileController";
 import { Router } from "express";
 import { body } from "express-validator";
 import { authenticate } from "middlewares/auth";

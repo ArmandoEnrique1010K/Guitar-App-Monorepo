@@ -12,6 +12,7 @@
     "baseUrl": "./src",
     "paths": {
       "config/*": ["config/*"],
+      "constants/*": ["constants/*"],
       "controllers/*": ["controllers/*"],
       "emails/*": ["emails/*"],
       "middlewares/*": ["middlewares/*"],

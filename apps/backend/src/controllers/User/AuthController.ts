@@ -1,7 +1,7 @@
 import { AuthEmail } from "emails/AuthEmail";
 import type { Request, Response } from "express";
-import Token from "models/Token";
-import User from "models/User";
+import Token from "models/User/Token";
+import User from "models/User/User";
 import { checkPassword, hashPassword } from "utils/auth";
 import { generateJWT } from "utils/jwt";
 import { generateToken } from "utils/token";
@@ -14,7 +14,7 @@ export class AuthController {
       // Prevenir duplicados
       const userExists = await User.findOne({ email });
       if (userExists) {
-        const error = new Error("El Usuario ya esta registrado");
+        const error = new Error("El usuario ya esta registrado");
         return res.status(409).json({ error: error.message });
       }
 

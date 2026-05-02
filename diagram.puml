@@ -6,6 +6,7 @@ object User #ffc862 {
   String email
   String password
   String name
+  Boolean confirmed
 }
 
 object Token #ffc862 {
@@ -14,31 +15,171 @@ object Token #ffc862 {
   Date expiresAt
 }
 
-object Notebook #2084ac {
+
+object Notebook #8FEAFF {
   ObjectId _id
   String name
 }
+note left of Notebook
+Un usuario puede tener varios 
+cuadernos, en donde se almacena las 
+configuraciones preestablecidas
+end note
 
-object Configuration #2084ac {
+
+object Configuration #8FEAFF {
   ObjectId _id
   String name
-  Boolean lockZeroChord
-  Number startChord
-  Date createdAt
-  Date updatedAt
+}
+note left of Configuration
+Una configuracion posee varios 
+parametros, es por ello que se
+separaron en documentos embebidos
+end note
+note right of Configuration
+Existen varios tipos de guitarra,
+es por ello que el ID de la
+guitarra es clave para obtener las
+notas de la guitarra
+end note
+
+
+object Guitar #E3B5FF {
+  ObjectId _id
+  String name
+  
 }
 
-object Effect #2084ac {
+object NoteSample #E3B5FF {
+  ObjectId _id
+  Number noteIndex
+  String audioUrl
+}
+note right of NoteSample
+Las notas de una guitarra se obtienen
+desde un servicio externo, audioUrl
+contiene la URL, además una guitarra
+tiene 46 notas musicales
+end note
+
+
+
+
+
+
+object GuitarBehavior <<embedded>> {
+  Number volume
+  Boolean holdToPlay
+  Boolean muteOnSameString
+  Boolean muteOnDifferentString
+}
+note bottom of GuitarBehavior
+Representa las propiedades relacionadas
+a reproducción de audio, como volumen,
+el modo pulso (manten presionado la tecla
+para reproducir y sueltala para silenciar),
+y el modo silenciar la nota anterior
+reproducida si la nueva nota tocada coincide
+con la misma cuerda de la anterior o si es
+diferente a la anterior
+end note
+
+
+object PlaybackSettings <<embedded>> {
+  Boolean loopMode
+  Number loopIntervalMs
+  Boolean autoMute
+  Number autoMuteDelayMs
+}
+note bottom of PlaybackSettings
+Representa las propiedades relacionadas a
+intervalos de tiempo, en el cual se tiene el modo
+repeticion (al mantener pulsado una tecla,
+reproduce la misma nota en un intervalo de
+tiempo) y el modo silenciar (silencia una nota 
+reproducida luego de un cierto tiempo)
+end note
+
+
+object VisualMapping <<embedded>> {
+  Number rootChord
+  Boolean lockOpenString
+  Array<number> stringOrder
+}
+
+note bottom of VisualMapping
+Representa las propiedades visuales que
+tendra el mastil de la guitarra como acorde
+inicial, bloquear acorde 0 y el orden de las
+cuerdas del mastil
+end note
+
+object Effect #D7FFB5 {
   ObjectId _id
   String type
   Number order
   Boolean enabled
-  Object params <<EmbeddedDocument>>
+  EffectParams params
 }
+note left of Effect
+Los efectos forman una signal chain
+ordenada como en Tone.js:
+Input -> Effect -> Effect -> Output
+end note
+note bottom of Effect
+params es dinámico y depende del type,
+por ejemplo:
+- DISTORTION → distortion, oversample, wet
+- REVERB → decay, preDelay, wet
+- EQ3 → bass, mid, treble, etc...
+end note
+
+
+object Distortion <<EffectParams>> {
+  Number distortion
+  OversampleDistortion oversample
+  Number wet
+}
+
+object Reverb <<EffectParams>> {
+  Number decay
+  Number preDelay
+  Number wet
+}
+
+object Tremolo <<EffectParams>> {
+  Number depth
+  Number frequency
+  Number spread
+  String type
+  Number wet
+}
+
+
+enum OversampleDistortion {
+  none
+  2x
+  4x
+}
+
+
+
 
 User "1" --> "*" Token
 User "1" --> "*" Notebook
 Notebook "1" --> "*" Configuration
-Configuration "1" *-- "*" Effect
+Configuration "1" *--- "*" Effect
+Configuration "1" -- "1" GuitarBehavior
+Configuration "1" -- "1" PlaybackSettings
+Configuration "1" -- "1" VisualMapping
+
+Configuration "1" --- "1" Guitar
+Guitar "1" --> "*" NoteSample
+
+Effect .... Distortion
+Distortion .... OversampleDistortion
+
+Effect .... Reverb
+Effect .... Tremolo
 
 @enduml
