@@ -33,6 +33,13 @@ export interface IVisualMappingSchema extends Document {
   stringOrder: Array<number>;
 }
 
+export interface IEffectSchema extends Document {
+  type: string;
+  order: number;
+  enabled: boolean;
+  params: object;
+}
+
 export interface IConfiguration extends Document {
   name: string;
   notebook: Types.ObjectId;
@@ -40,6 +47,15 @@ export interface IConfiguration extends Document {
   guitarBehavior: IGuitarBehaviorSchema;
   playbackSettings: IPlaybackSettingsSchema;
   visualMapping: IVisualMappingSchema;
+  effects: [IEffectSchema];
+}
+
+// Para los efectos de sonido
+export interface IEffect extends Document {
+  type: string;
+  order: number;
+  enabled: boolean;
+  params: Object;
 }
 
 // CORE,  el contenido embebido esta aqui, no se trata de entidades relacionadas 1 a 1
@@ -80,6 +96,29 @@ const VisualMappingSchema = new Schema(
   { _id: false },
 );
 
+const EffectSchema = new Schema(
+  {
+    type: {
+      type: String,
+      required: true,
+      enum: ["distortion", "reverb", "tremolo", "eq3"],
+    },
+    order: {
+      type: Number,
+      required: true,
+    },
+    enabled: {
+      type: Boolean,
+      default: true,
+    },
+    params: {
+      type: Schema.Types.Mixed, //  clave
+      required: true,
+    },
+  },
+  { _id: false },
+);
+
 const configurationSchema: Schema = new Schema({
   name: {
     type: String,
@@ -96,6 +135,7 @@ const configurationSchema: Schema = new Schema({
   guitarBehavior: GuitarBehaviorSchema,
   playbackSettings: PlaybackSettingsSchema,
   visualMapping: VisualMappingSchema,
+  effects: [EffectSchema],
 });
 
 const Configuration = mongoose.model<IConfiguration>(

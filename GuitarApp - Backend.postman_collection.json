@@ -1,0 +1,639 @@
+{
+  "info": {
+    "_postman_id": "7c91e8df-3483-40c2-9f31-4bf1d590be35",
+    "name": "GuitarApp - Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "35943406"
+  },
+  "item": [
+    {
+      "name": "AUTH",
+      "item": [
+        {
+          "name": "createAccount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Enrique\",\r\n    \"email\": \"correo@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"password_confirmation\": \"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/create-account",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "create-account"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "confirmAccount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\": \"286847\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/confirm-account",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "confirm-account"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "requestConfirmationCode",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"juan2@correo.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/request-code",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "request-code"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgotPassword",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"enrique1010k@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/forgot-password",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "validateToken",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\": \"268320\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/validate-token",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "validate-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updatePasswordWithToken",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\": \"\",\r\n    \"password_confirmation\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/auth/update-password/268320",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "update-password",
+                "268320"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/auth/user",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/auth/logout",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PROFILE",
+      "item": [
+        {
+          "name": "updateProfile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDhkYmM5MDg4ODY2YTJjOTNlMmZmNSIsImlhdCI6MTc0OTk2MTc2MiwiZXhwIjoxNzY1NTEzNzYyfQ.USvIc0BifWbdS2AYqiQDDlvadQBY_O1Xr-NLn4-cgI8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"\",\r\n    \"email\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/profile",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updatePassword",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"current_password\": \"\",\r\n    \"password\": \"\",\r\n    \"password_confirmation\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/profile/update-password",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "profile",
+                "update-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "checkPassword",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjBkODRhYmFjNThjZGY0MWExMWMxYyIsImlhdCI6MTc0OTc4Nzk5MywiZXhwIjoxNzY1MzM5OTkzfQ.rCt7L8wiSo2_Z-a5htqMewPWxC8CtK7d6w-yixe4Rj0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/profile/check-password",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "profile",
+                "check-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NOTEBOOK",
+      "item": [
+        {
+          "name": "createNotebook",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Last Nite 2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/notebook",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "notebook"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllNotebooks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/notebook",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "notebook"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateNotebook",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"It this it\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/notebook/69f66f0a3cc109b09f0a53f5",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "notebook",
+                "69f66f0a3cc109b09f0a53f5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteNotebook",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/notebook/69f66f0a3cc109b09f0a53f5",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "notebook",
+                "69f66f0a3cc109b09f0a53f5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CONFIGURATION",
+      "item": [
+        {
+          "name": "createConfiguration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"End 2\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"muteOnSameString\": true,\r\n    \"muteOnDifferentString\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 1000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n    \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.7,\r\n                \"oversample\": \"2x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/configuration/notebook/69f686976f0d243c8ce41fbd/guitar/69f67d0437b845cd4182e2d5",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "configuration",
+                "notebook",
+                "69f686976f0d243c8ce41fbd",
+                "guitar",
+                "69f67d0437b845cd4182e2d5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllConfigurations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/configuration/notebook/69f686976f0d243c8ce41fbd",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "configuration",
+                "notebook",
+                "69f686976f0d243c8ce41fbd"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateConfiguration",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"End\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"muteOnSameString\": true,\r\n    \"muteOnDifferentString\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 2000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n        \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.2,\r\n                \"oversample\": \"4x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:4000/api/configuration/69f6d741236aec096b8cf59e/guitar/69f6ca965795b3cfc5480cb4",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "configuration",
+                "69f6d741236aec096b8cf59e",
+                "guitar",
+                "69f6ca965795b3cfc5480cb4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteConfiguration",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/configuration/69f6b646ef49976a57f1b9ea",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "configuration",
+                "69f6b646ef49976a57f1b9ea"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GUITAR",
+      "item": [
+        {
+          "name": "getAllGuitars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/guitar",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "guitar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NOTE SAMPLE",
+      "item": [
+        {
+          "name": "getAllNoteSamples",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:4000/api/noteSample/guitar/69f6ca965795b3cfc5480cb4",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "noteSample",
+                "guitar",
+                "69f6ca965795b3cfc5480cb4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

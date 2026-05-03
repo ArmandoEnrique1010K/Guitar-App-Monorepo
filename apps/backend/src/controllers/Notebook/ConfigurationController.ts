@@ -17,10 +17,32 @@ export class ConfigurationController {
         rootChord,
         lockOpenString,
         stringOrder,
+        effects,
       } = req.body;
 
       const { notebookId, guitarId } = req.params;
       const name = req.configurationName;
+
+      // Validar efectos
+      // const allowedEffects = ["distortion", "reverb", "tremolo", "eq3"];
+
+      // for (const effect of effects) {
+      //   if (!allowedEffects.includes(effect.type)) {
+      //     throw new Error("Tipo de efecto inválido");
+      //   }
+
+      //   if (typeof effect.order !== "number") {
+      //     throw new Error("Order inválido");
+      //   }
+
+      //   if (typeof effect.enabled !== "boolean") {
+      //     throw new Error("Enabled inválido");
+      //   }
+
+      //   if (typeof effect.params !== "object") {
+      //     throw new Error("Params inválido");
+      //   }
+      // }
 
       // Crear una configuracion
       const configuration = new Configuration({
@@ -48,6 +70,8 @@ export class ConfigurationController {
           lockOpenString,
           stringOrder,
         },
+
+        effects,
       });
 
       await configuration.save();
@@ -67,7 +91,7 @@ export class ConfigurationController {
       // Con select puedes quitar los campos que no son necesarios
       const configurations = await Configuration.find({
         notebook: notebookId,
-      }).select("-notebook -guitar -__v");
+      }).select("-notebook -__v");
 
       res.json(configurations);
     } catch (error) {
@@ -93,6 +117,7 @@ export class ConfigurationController {
         rootChord,
         lockOpenString,
         stringOrder,
+        effects,
       } = req.body;
 
       const guitarExists = await Guitar.findById(guitarId);
@@ -120,6 +145,8 @@ export class ConfigurationController {
       req.configuration!.visualMapping.rootChord = rootChord;
       req.configuration!.visualMapping.lockOpenString = lockOpenString;
       req.configuration!.visualMapping.stringOrder = stringOrder;
+
+      req.configuration!.effects = effects;
 
       await req.configuration!.save();
       res.send("Configuración actualizada");
