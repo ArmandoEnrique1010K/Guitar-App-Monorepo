@@ -26,7 +26,7 @@ export async function isAuthorOfNotebook(
   next: NextFunction,
 ) {
   try {
-    if (req.user?._id.toString() !== req.notebook.user._id.toString()) {
+    if (req.user?._id.toString() !== req.notebook?.user._id.toString()) {
       const error = new Error("Acción no válida");
       return res.status(400).json({ error: error.message });
     }

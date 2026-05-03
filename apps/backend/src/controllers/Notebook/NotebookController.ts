@@ -70,8 +70,8 @@ export class NotebookController {
 
   static updateNotebook = async (req: Request, res: Response) => {
     try {
-      req.notebook.name = req.body.name;
-      await req.notebook.save();
+      req.notebook!.name = req.body.name;
+      await req.notebook!.save();
       res.send("Cuaderno actualizado");
     } catch (error) {
       console.log(error);
@@ -81,7 +81,7 @@ export class NotebookController {
 
   static deleteNotebook = async (req: Request, res: Response) => {
     try {
-      await req.notebook.deleteOne();
+      await req.notebook!.deleteOne();
       res.send("Cuaderno eliminado");
     } catch (error) {
       console.log(error);

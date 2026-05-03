@@ -17,23 +17,13 @@ declare global {
   namespace Express {
     interface Request {
       user?: IUser;
+      notebook?: INotebook;
+      configuration?: IConfiguration;
+
+      // Campo para el nombre de la configuración
+      configurationName?: string;
     }
   }
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      notebook: INotebook;
-    }
-  }
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      configuration: IConfiguration;
-    }
-  }
-}
 export {};

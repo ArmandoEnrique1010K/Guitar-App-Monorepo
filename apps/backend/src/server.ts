@@ -6,6 +6,8 @@ import profileRoutes from "routes/User/profileRoutes";
 import authRoutes from "routes/User/authRoutes";
 import notebookRoutes from "routes/Notebook/notebookRoutes";
 import configurationRoutes from "routes/Notebook/configurationRoutes";
+import guitarRoutes from "routes/Guitar/guitarRoutes";
+import noteSampleRoutes from "routes/Guitar/noteSampleRoutes";
 
 dotenv.config();
 console.log("API KEY:", process.env.RESEND_API_KEY);
@@ -25,5 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/notebook", notebookRoutes);
 app.use("/api/configuration", configurationRoutes);
+app.use("/api/guitar", guitarRoutes);
+app.use("/api/noteSample", noteSampleRoutes);
 
 export default app;

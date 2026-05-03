@@ -42,7 +42,7 @@ export interface IConfiguration extends Document {
   visualMapping: IVisualMappingSchema;
 }
 
-// CORE, todo el contenido embebido esta aqui, no se trata de entidades relacionadas 1 a 1
+// CORE,  el contenido embebido esta aqui, no se trata de entidades relacionadas 1 a 1
 const GuitarBehaviorSchema = new Schema(
   {
     volume: { type: Number, default: defaultVolume },

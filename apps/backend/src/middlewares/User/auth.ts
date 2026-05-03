@@ -24,7 +24,9 @@ export const authenticate = async (
         return res.status(401).json({ error: "Token inválido" });
       }
 
+      // EXACTAMENTE aqui Y SOLO AQUI se guarda el usuario en el request
       req.user = user;
+
       return next();
     }
   } catch (error) {
