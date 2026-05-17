@@ -1,38 +1,37 @@
-import { login, type LoginForm } from '../../api/AuthAPI';
 import { Form, Formik, type FormikHelpers } from 'formik';
+import { AuthTitle } from '../../components/Auth/AuthTitle';
+import { createAccount, type CreateAccountForm } from '../../api/AuthAPI';
 import { useNotifications } from 'reapop';
 import { TextField } from '../../ui/Formik/TextField';
 import { PasswordField } from '../../ui/Formik/PasswordField';
 import { FormButton } from '../../ui/FormButton';
 import { SecondaryText } from '../../components/Auth/SecondaryText';
-import { AuthTitle } from '../../components/Auth/AuthTitle';
 
-export const LoginPage = () => {
-    const initialValues: LoginForm = {
+export const RegisterPage = () => {
+    const initialValues: CreateAccountForm = {
         email: '',
         password: '',
+        password_confirmation: '',
+        name: '',
     };
+
     const { notify } = useNotifications();
 
     const handleSubmit = async (
-        values: LoginForm,
-        { setErrors, setStatus }: FormikHelpers<LoginForm>,
+        values: CreateAccountForm,
+        { setErrors, setStatus }: FormikHelpers<CreateAccountForm>,
     ) => {
         try {
-            const response = await login(values);
+            const response = await createAccount(values);
             console.log(response);
 
-            // LOGIN EXITOSO
+            // REGISTRO EXITOSO
             if (typeof response === 'string') {
-                setStatus(response);
-
                 notify({
                     message: response,
                     status: 'success',
                 });
             }
-
-            // El objeto response es string cuando el usuario ha iniciado sesion
         } catch (error) {
             const data = error.response.data;
             console.log(data);
@@ -62,19 +61,13 @@ export const LoginPage = () => {
 
     return (
         <>
-            <AuthTitle title="Login" />
+            <AuthTitle title="Registrar" />
 
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                // `validateOnBlur` indica si se va a validar el formulario cuando el usuario saca el foco de un campo de entrada. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
                 validateOnBlur={false}
-                // `validateOnChange` indica si se va a validar el formulario cuando se modifica un campo de entrada. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
                 validateOnChange={false}
-                // `validateOnMount` indica si se va a validar el formulario cuando se monta el componente. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación al inicio del componente, antes de que el usuario haya ingresado ningún dato.
                 validateOnMount={false}
             >
                 {() => (
@@ -84,6 +77,13 @@ export const LoginPage = () => {
                         autoComplete="off"
                     >
                         <div className="flex flex-col gap-4">
+                            <TextField
+                                id="name"
+                                label="Nombre"
+                                placeholder="Nombre"
+                                type="text"
+                            />
+
                             <TextField
                                 id="email"
                                 label="Correo"
@@ -96,18 +96,24 @@ export const LoginPage = () => {
                                 label="Contraseña"
                                 placeholder="********"
                             />
+
+                            <PasswordField
+                                id="password_confirmation"
+                                label="Confirmar Contraseña"
+                                placeholder="********"
+                            />
                         </div>
                         <div className="flex flex-col my-6">
-                            <FormButton text="Iniciar Sesión" type="submit" />
+                            <FormButton text="Registrar" type="submit" />
                         </div>
                     </Form>
                 )}
             </Formik>
 
             <SecondaryText
-                text="¿No tienes cuenta?"
-                linkText="Regístrate aquí"
-                link="/register"
+                text="¿Ya tienes cuenta?"
+                linkText="Inicia sesión aquí"
+                link="/login"
             />
         </>
     );

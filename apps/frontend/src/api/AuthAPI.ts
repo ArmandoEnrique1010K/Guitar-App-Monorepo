@@ -1,10 +1,17 @@
-import { isAxiosError } from "axios";
-import { api } from "../lib/axios";
+import { api } from '../lib/axios';
 
 export interface LoginForm {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
+
+export interface CreateAccountForm {
+    email: string;
+    password: string;
+    password_confirmation: string;
+    name: string;
+}
+
 // export const login = async (formData: LoginForm) => {
 //     try {
 //         const response = await api.post('/auth/login', formData);
@@ -19,11 +26,13 @@ export interface LoginForm {
 // };
 
 export const login = async (formData: LoginForm) => {
+    const response = await api.post('/auth/login', formData);
 
-  const response = await api.post(
-    "/auth/login",
-    formData
-  );
+    return response.data;
+};
 
-  return response.data;
+export const createAccount = async (formData: CreateAccountForm) => {
+    const response = await api.post('/auth/create-account', formData);
+
+    return response.data;
 };
