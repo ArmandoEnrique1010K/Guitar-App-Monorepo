@@ -1,26 +1,18 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import { CorsOptions } from "cors"
 
-export interface IToken extends Document {
-    token: string;
-    user: Types.ObjectId;
-    createdAt: Date;
+export const corsConfig: CorsOptions = {
+    origin: function (origin, callback) {
+        const whitelist = [process.env.FRONTEND_URL];
+
+        if (process.argv.includes("--api")) {
+            whitelist.push(undefined);
+        }
+
+        if (!origin || whitelist.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Error de CORS"));
+        }
+    },
+    credentials: true
 }
-
-const tokenSchema: Schema = new Schema({
-    token: {
-        type: String,
-        required: true,
-    },
-    user: {
-        type: Types.ObjectId,
-        ref: "User",
-    },
-    expiresAt: {
-        type: Date,
-        default: Date.now(),
-        expires: "10m",
-    },
-});
-
-const Token = mongoose.model<IToken>("Token", tokenSchema);
-export default Token;

@@ -8,6 +8,8 @@ import notebookRoutes from "routes/Notebook/notebookRoutes";
 import configurationRoutes from "routes/Notebook/configurationRoutes";
 import guitarRoutes from "routes/Guitar/guitarRoutes";
 import noteSampleRoutes from "routes/Guitar/noteSampleRoutes";
+import { corsConfig } from "config/cors";
+import cors from "cors";
 
 dotenv.config();
 // console.log("API KEY:", process.env.RESEND_API_KEY);
@@ -21,7 +23,7 @@ const app = express();
 
 // Leer datos de formularios
 app.use(express.json());
-// app.use(cors(corsConfig));
+app.use(cors(corsConfig));
 app.use(cookieParser());
 
 // Rutas

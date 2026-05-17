@@ -1,2 +1,57 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
+
+@font-face {
+    font-family: "Shockwave2";
+    src: url("/fonts/shockwave-2.otf") format("opentype");
+}
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/fonts/RobotoMono-VariableFont_wght.ttf");
+}
+/* Aplicar a todos los botones la clase de tailwind */
+@layer base {
+
+    button,
+    [role="button"] {
+        cursor: pointer;
+        outline: none;
+    }
+}
+
+
+@layer components {
+    .font-shockwave {
+        font-family: var(--font-shockwave);
+    }
+
+    .font-roboto {
+        font-family: var(--font-roboto);
+    }
+}
+
+@theme {
+    --breakpoint-xsm: 400px;
+    --font-shockwave: "Shockwave2";
+    --font-roboto: "Roboto";
+    --color-primary: rgb(1, 236, 2);
+    --primary-color: rgb(1, 236, 2);
+    --range-color: #d9fc2e;
+    --background-color: #38384e;
+    /* --menu-dark-color:rgb(26, 26, 38);*/
+    --menu-dark-color: #595983;
+
+    --title-container-color: #0e0e13;
+
+    --menu-bar-button-color: #ffee93;
+    /* --primary-color-dark: rgb(27, 57, 40); */
+
+    --primary-color-dark: #106b37;
+
+    --button-color: #d6dddd;
+    --icon-color: #fc9e00;
+
+
+}

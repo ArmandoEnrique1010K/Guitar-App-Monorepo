@@ -1,112 +1,112 @@
+import { Link } from "react-router-dom";
+import { login, type LoginForm } from "../../api/AuthAPI";
+import { Form, Formik, type FormikHelpers } from "formik";
+import { useNotifications } from "reapop";
+import { TextField } from "../../ui/Formik/TextField";
+import { PasswordField } from "../../ui/Formik/PasswordField";
+import { FormButton } from "../../ui/FormButton";
+
 export const LoginPage = () => {
-  return (
-    <div className="pt-8 pb-20 flex items-center justify-center min-w-md">
-      <form
-        className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm flex flex-col gap-5 mx-2"
-        autoComplete="off"
-        noValidate // Deshabilita la validación del navegador
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <h2 className="text-4xl font-light text-center text-black font-shockwave">
-          Login
-        </h2>
+    const initialValues: LoginForm = {
+        email: "",
+        password: "",
+    };
+    const { notify } = useNotifications();
 
-        {/* Campo email */}
-        <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-sm font-medium text-black">
-            Email
-          </label>
+    const handleSubmit = async (
+        values: LoginForm,
+        { setErrors, setStatus }: FormikHelpers<LoginForm>,
+    ) => {
+        try {
+            const response = await login(values);
+            console.log(response);
 
-          {/* <form.Field
-            name="email"
-            validators={{
-              onChange: ({ value }) => {
-                if (!value) return "El email es obligatorio";
-                if (!/\S+@\S+\.\S+/.test(value)) return "El email no es válido";
-                return undefined;
-              },
-            }}
-          >
-            {(field) => (
-              <>
-                <input
-                  id="email"
-                  type="email"
-                  value={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent
-                                        ${
-                                          field.state.meta.errors?.length > 0
-                                            ? "border-red-500"
-                                            : "border-gray-300"
-                                        }`}
-                  placeholder="tucorreo@ejemplo.com"
-                />
-                {!field.state.meta.isValid && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
+            // LOGIN EXITOSO
+            if (typeof response === "string") {
+                setStatus(response);
+
+                notify({
+                    message: response,
+                    status: "success",
+                });
+            }
+
+            // El objeto response es string cuando el usuario ha iniciado sesion
+        } catch (error) {
+            const data = error.response.data;
+            console.log(data);
+
+            // VALIDACIONES
+            if (data.errors) {
+                const formikErrors: Record<string, string> = {};
+
+                data.errors.forEach((err: { path: string; msg: string }) => {
+                    formikErrors[err.path] = err.msg;
+                });
+
+                setErrors(formikErrors);
+            }
+
+            // ERROR GENERAL
+            if (data.error) {
+                setStatus(data.error);
+
+                notify({
+                    message: data.error,
+                    status: "error",
+                });
+            }
+        }
+    };
+
+    return (
+        <>
+            <h2 className="text-3xl font-light text-center text-black pb-4">
+                Login
+            </h2>
+
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                // `validateOnBlur` indica si se va a validar el formulario cuando el usuario saca el foco de un campo de entrada. Por defecto es `true`.
+                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
+                validateOnBlur={false}
+
+                // `validateOnChange` indica si se va a validar el formulario cuando se modifica un campo de entrada. Por defecto es `true`.
+                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
+                validateOnChange={false}
+
+                // `validateOnMount` indica si se va a validar el formulario cuando se monta el componente. Por defecto es `true`.
+                // Es útil cuando quieres que se realice la validación al inicio del componente, antes de que el usuario haya ingresado ningún dato.
+                validateOnMount={false}
+            >
+                {() => (
+                    <Form className="w-full flex flex-col gap-6" noValidate autoComplete="off">
+                        <TextField
+                            id="email"
+                            label="Correo"
+                            placeholder="Correo del usuario"
+                            type="email"
+                        />
+
+                        <PasswordField
+                            id="password"
+                            label="Contraseña"
+                            placeholder="********"
+                        />
+
+                        <FormButton text="Iniciar Sesión" type="submit" />
+
+                    </Form>
                 )}
-              </>
-            )}
-          </form.Field> */}
-        </div>
+            </Formik>
 
-        {/* Campo password */}
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="text-sm font-medium text-black">
-            Contraseña
-          </label>
-          {/* <form.Field
-            name="password"
-            validators={{
-              onChange: ({ value }) => {
-                if (!value) return "La contraseña es obligatoria";
-                return undefined;
-              },
-            }}
-          >
-            {(field) => (
-              <>
-                <input
-                  id="password"
-                  type="password"
-                  value={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent
-                                        ${
-                                          field.state.meta.errors?.length > 0
-                                            ? "border-red-500"
-                                            : "border-gray-300"
-                                        }`}
-                  placeholder="••••••••"
-                />
-                {!field.state.meta.isValid && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                )}
-              </>
-            )}
-          </form.Field> */}
-        </div>
-
-        <button
-          type="submit"
-          className="bg-orange-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-200 text-center disabled:bg-gray-400"
-        >
-          {"Iniciar sesión"}
-        </button>
-
-        <p className="text-sm text-center text-gray-500">
-          ¿No tienes cuenta?{" "}
-          <a href="/register" className="text-green-600 hover:underline">
-            Regístrate aquí
-          </a>
-        </p>
-      </form>
-    </div>
-  );
+            <p className="text-sm text-center text-gray-500 mt-4">
+                ¿No tienes cuenta?{" "}
+                <Link to="/register" className="text-green-500 hover:underline">
+                    Regístrate aquí
+                </Link>
+            </p>
+        </>
+    );
 };
