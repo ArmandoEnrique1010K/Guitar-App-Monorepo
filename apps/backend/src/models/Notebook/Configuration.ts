@@ -1,145 +1,145 @@
 import {
-  defaultAutoMute,
-  defaultAutoMuteDelayMs,
-  defaultHoldToPlay,
-  defaultLockOpenString,
-  defaultLoopIntervalMs,
-  defaultLoopMode,
-  defaultMuteOnDifferentString,
-  defaultMuteOnSameString,
-  defaultRootChord,
-  defaultStringOrder,
-  defaultVolume,
+    defaultAutoMute,
+    defaultAutoMuteDelayMs,
+    defaultHoldToPlay,
+    defaultLockOpenString,
+    defaultLoopIntervalMs,
+    defaultLoopMode,
+    defaultMuteOnDifferentString,
+    defaultMuteOnSameString,
+    defaultRootChord,
+    defaultStringOrder,
+    defaultVolume,
 } from "constants/configurations";
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IGuitarBehaviorSchema extends Document {
-  volume: number;
-  holdToPlay: boolean;
-  muteOnSameString: boolean;
-  muteOnDifferentString: boolean;
+    volume: number;
+    holdToPlay: boolean;
+    muteOnSameString: boolean;
+    muteOnDifferentString: boolean;
 }
 
 export interface IPlaybackSettingsSchema extends Document {
-  loopMode: number;
-  loopIntervalMs: boolean;
-  autoMute: boolean;
-  autoMuteDelayMs: boolean;
+    loopMode: number;
+    loopIntervalMs: boolean;
+    autoMute: boolean;
+    autoMuteDelayMs: boolean;
 }
 
 export interface IVisualMappingSchema extends Document {
-  rootChord: number;
-  lockOpenString: boolean;
-  stringOrder: Array<number>;
+    rootChord: number;
+    lockOpenString: boolean;
+    stringOrder: Array<number>;
 }
 
 export interface IEffectSchema extends Document {
-  type: string;
-  order: number;
-  enabled: boolean;
-  params: object;
+    type: string;
+    order: number;
+    enabled: boolean;
+    params: object;
 }
 
 export interface IConfiguration extends Document {
-  name: string;
-  notebook: Types.ObjectId;
-  guitar: Types.ObjectId;
-  guitarBehavior: IGuitarBehaviorSchema;
-  playbackSettings: IPlaybackSettingsSchema;
-  visualMapping: IVisualMappingSchema;
-  effects: [IEffectSchema];
+    name: string;
+    notebook: Types.ObjectId;
+    guitar: Types.ObjectId;
+    guitarBehavior: IGuitarBehaviorSchema;
+    playbackSettings: IPlaybackSettingsSchema;
+    visualMapping: IVisualMappingSchema;
+    effects: [IEffectSchema];
 }
 
 // Para los efectos de sonido
 export interface IEffect extends Document {
-  type: string;
-  order: number;
-  enabled: boolean;
-  params: Object;
+    type: string;
+    order: number;
+    enabled: boolean;
+    params: Object;
 }
 
 // CORE,  el contenido embebido esta aqui, no se trata de entidades relacionadas 1 a 1
 const GuitarBehaviorSchema = new Schema(
-  {
-    volume: { type: Number, default: defaultVolume },
-    holdToPlay: { type: Boolean, default: defaultHoldToPlay },
-    muteOnSameString: { type: Boolean, default: defaultMuteOnSameString },
-    muteOnDifferentString: {
-      type: Boolean,
-      default: defaultMuteOnDifferentString,
+    {
+        volume: { type: Number, default: defaultVolume },
+        holdToPlay: { type: Boolean, default: defaultHoldToPlay },
+        muteOnSameString: { type: Boolean, default: defaultMuteOnSameString },
+        muteOnDifferentString: {
+            type: Boolean,
+            default: defaultMuteOnDifferentString,
+        },
     },
-  },
-  { _id: false },
+    { _id: false },
 );
 
 const PlaybackSettingsSchema = new Schema(
-  {
-    loopMode: { type: Boolean, default: defaultLoopMode },
-    loopIntervalMs: { type: Number, default: defaultLoopIntervalMs },
-    autoMute: { type: Boolean, default: defaultAutoMute },
-    autoMuteDelayMs: { type: Number, default: defaultAutoMuteDelayMs },
-  },
-  { _id: false },
+    {
+        loopMode: { type: Boolean, default: defaultLoopMode },
+        loopIntervalMs: { type: Number, default: defaultLoopIntervalMs },
+        autoMute: { type: Boolean, default: defaultAutoMute },
+        autoMuteDelayMs: { type: Number, default: defaultAutoMuteDelayMs },
+    },
+    { _id: false },
 );
 
 const VisualMappingSchema = new Schema(
-  {
-    rootChord: { type: Number, default: defaultRootChord },
-    lockOpenString: { type: Boolean, default: defaultLockOpenString },
+    {
+        rootChord: { type: Number, default: defaultRootChord },
+        lockOpenString: { type: Boolean, default: defaultLockOpenString },
 
-    // Arreglo de numeros
-    stringOrder: {
-      type: [Number],
-      default: defaultStringOrder,
+        // Arreglo de numeros
+        stringOrder: {
+            type: [Number],
+            default: defaultStringOrder,
+        },
     },
-  },
-  { _id: false },
+    { _id: false },
 );
 
 const EffectSchema = new Schema(
-  {
-    type: {
-      type: String,
-      required: true,
-      enum: ["distortion", "reverb", "tremolo", "eq3"],
+    {
+        type: {
+            type: String,
+            required: true,
+            enum: ["distortion", "reverb", "tremolo", "eq3"],
+        },
+        order: {
+            type: Number,
+            required: true,
+        },
+        enabled: {
+            type: Boolean,
+            default: true,
+        },
+        params: {
+            type: Schema.Types.Mixed, //  clave
+            required: true,
+        },
     },
-    order: {
-      type: Number,
-      required: true,
-    },
-    enabled: {
-      type: Boolean,
-      default: true,
-    },
-    params: {
-      type: Schema.Types.Mixed, //  clave
-      required: true,
-    },
-  },
-  { _id: false },
+    { _id: false },
 );
 
 const configurationSchema: Schema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  notebook: {
-    type: Types.ObjectId,
-    ref: "Notebook",
-  },
-  guitar: {
-    type: Types.ObjectId,
-    ref: "Guitar",
-  },
-  guitarBehavior: GuitarBehaviorSchema,
-  playbackSettings: PlaybackSettingsSchema,
-  visualMapping: VisualMappingSchema,
-  effects: [EffectSchema],
+    name: {
+        type: String,
+        required: true,
+    },
+    notebook: {
+        type: Types.ObjectId,
+        ref: "Notebook",
+    },
+    guitar: {
+        type: Types.ObjectId,
+        ref: "Guitar",
+    },
+    guitarBehavior: GuitarBehaviorSchema,
+    playbackSettings: PlaybackSettingsSchema,
+    visualMapping: VisualMappingSchema,
+    effects: [EffectSchema],
 });
 
 const Configuration = mongoose.model<IConfiguration>(
-  "Configuration",
-  configurationSchema,
+    "Configuration",
+    configurationSchema,
 );
 export default Configuration;

@@ -1,24 +1,24 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface INoteSample extends Document {
-  noteIndex: string;
-  audioUrl: number;
-  guitar: Types.ObjectId;
+    noteIndex: string;
+    audioUrl: number;
+    guitar: Types.ObjectId;
 }
 
 const noteSampleSchema: Schema = new Schema({
-  noteIndex: {
-    type: Number,
-    required: true,
-  },
-  audioUrl: {
-    type: String,
-    required: true,
-  },
-  guitar: {
-    type: Types.ObjectId,
-    ref: "Guitar",
-  },
+    noteIndex: {
+        type: Number,
+        required: true,
+    },
+    audioUrl: {
+        type: String,
+        required: true,
+    },
+    guitar: {
+        type: Types.ObjectId,
+        ref: "Guitar",
+    },
 });
 
 const NoteSample = mongoose.model<INoteSample>("NoteSample", noteSampleSchema);

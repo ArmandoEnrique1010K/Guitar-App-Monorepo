@@ -4,9 +4,9 @@ import { param } from "express-validator";
 
 const router = Router();
 router.get(
-  "/guitar/:guitarId",
-  param("guitarId").isMongoId().withMessage("ID no válido"),
-  NoteSampleController.getAllNoteSamples,
+    "/guitar/:guitarId",
+    param("guitarId").isMongoId().withMessage("ID no válido"),
+    NoteSampleController.getAllNoteSamples,
 );
 
 export default router;

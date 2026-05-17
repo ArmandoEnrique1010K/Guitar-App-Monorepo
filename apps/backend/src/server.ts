@@ -10,9 +10,11 @@ import guitarRoutes from "routes/Guitar/guitarRoutes";
 import noteSampleRoutes from "routes/Guitar/noteSampleRoutes";
 
 dotenv.config();
-console.log("API KEY:", process.env.RESEND_API_KEY);
+// console.log("API KEY:", process.env.RESEND_API_KEY);
+// console.log("DATABASE URL:", process.env.DATABASE_URL);
 
 connectDB();
+
 const app = express();
 // Logging
 // app.use(morgan("dev"));

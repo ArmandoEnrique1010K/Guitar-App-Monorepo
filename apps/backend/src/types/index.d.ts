@@ -14,16 +14,16 @@ import { IUser } from "models/User/User";
 // controlador que reciba un objeto Request sin tener que hacer un
 // casting.
 declare global {
-  namespace Express {
-    interface Request {
-      user?: IUser;
-      notebook?: INotebook;
-      configuration?: IConfiguration;
+    namespace Express {
+        interface Request {
+            user?: IUser;
+            notebook?: INotebook;
+            configuration?: IConfiguration;
 
-      // Campo para el nombre de la configuración
-      configurationName?: string;
+            // Campo para el nombre de la configuración
+            configurationName?: string;
+        }
     }
-  }
 }
 
 export {};
