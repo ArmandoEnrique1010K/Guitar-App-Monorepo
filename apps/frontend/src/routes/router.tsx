@@ -4,10 +4,12 @@ import NotificationsSystem, {
     setUpNotifications,
     wyboTheme,
 } from 'reapop';
-import AuthLayout from '../layouts/AuthLayout';
-import { LoginPage } from '../pages/Auth/LoginPage';
-import { GuitarLayout } from '../layouts/GuitarLayout';
-import { RegisterPage } from '../pages/Auth/RegisterPage';
+import AuthLayout from '@/layouts/AuthLayout';
+import { LoginPage } from '@/pages/Auth/LoginPage';
+import { GuitarLayout } from '@/layouts/GuitarLayout';
+import { RegisterPage } from '@/pages/Auth/RegisterPage';
+import { ConfirmAccountPage } from '@/pages/Auth/ConfirmAccountPage';
+import { RequestCodePage } from '@/pages/Auth/RequestCodePage';
 
 export default function Router() {
     const { notifications, dismissNotification } = useNotifications();
@@ -17,6 +19,7 @@ export default function Router() {
             dismissAfter: 5000,
             dismissible: true,
             showDismissButton: true,
+            closeButton: true,
         },
     });
 
@@ -31,12 +34,14 @@ export default function Router() {
             <Routes>
                 <Route path="/" element={<GuitarLayout />}></Route>
 
-                <Route path="/login" element={<AuthLayout />}>
+                <Route path="/auth" element={<AuthLayout />}>
                     <Route index element={<LoginPage />} />
-                </Route>
-
-                <Route path="/register" element={<AuthLayout />}>
-                    <Route index element={<RegisterPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route
+                        path="confirm-account"
+                        element={<ConfirmAccountPage />}
+                    />
+                    <Route path="request-code" element={<RequestCodePage />} />
                 </Route>
 
                 {/* <Route element={<InstrumentLayout />}>

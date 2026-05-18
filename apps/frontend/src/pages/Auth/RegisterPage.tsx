@@ -1,11 +1,13 @@
 import { Form, Formik, type FormikHelpers } from 'formik';
-import { AuthTitle } from '../../components/Auth/AuthTitle';
-import { createAccount, type CreateAccountForm } from '../../api/AuthAPI';
+import { AuthTitle } from '@/components/Auth/AuthTitle';
+import { createAccount } from '@/api/AuthAPI';
 import { useNotifications } from 'reapop';
-import { TextField } from '../../ui/Formik/TextField';
-import { PasswordField } from '../../ui/Formik/PasswordField';
-import { FormButton } from '../../ui/FormButton';
-import { SecondaryText } from '../../components/Auth/SecondaryText';
+import { TextField } from '@/ui/Formik/TextField';
+import { PasswordField } from '@/ui/Formik/PasswordField';
+import { FormButton } from '@/ui/FormButton';
+import { SecondaryText } from '@/components/Auth/SecondaryText';
+import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import type { CreateAccountForm } from '@/schemas';
 
 export const RegisterPage = () => {
     const initialValues: CreateAccountForm = {
@@ -23,7 +25,7 @@ export const RegisterPage = () => {
     ) => {
         try {
             const response = await createAccount(values);
-            console.log(response);
+            // console.log(response);
 
             // REGISTRO EXITOSO
             if (typeof response === 'string') {
@@ -33,29 +35,34 @@ export const RegisterPage = () => {
                 });
             }
         } catch (error) {
-            const data = error.response.data;
-            console.log(data);
+            handleFormikApiError({
+                error,
+                setErrors,
+                setStatus,
+                notify,
+            });
 
-            // VALIDACIONES
-            if (data.errors) {
-                const formikErrors: Record<string, string> = {};
+            // const data = error.response.data;
+            // console.log(data);
 
-                data.errors.forEach((err: { path: string; msg: string }) => {
-                    formikErrors[err.path] = err.msg;
-                });
+            // if (data.errors) {
+            //     const formikErrors: Record<string, string> = {};
 
-                setErrors(formikErrors);
-            }
+            //     data.errors.forEach((err: { path: string; msg: string }) => {
+            //         formikErrors[err.path] = err.msg;
+            //     });
 
-            // ERROR GENERAL
-            if (data.error) {
-                setStatus(data.error);
+            //     setErrors(formikErrors);
+            // }
 
-                notify({
-                    message: data.error,
-                    status: 'error',
-                });
-            }
+            // if (data.error) {
+            //     setStatus(data.error);
+
+            //     notify({
+            //         message: data.error,
+            //         status: 'error',
+            //     });
+            // }
         }
     };
 
@@ -113,7 +120,7 @@ export const RegisterPage = () => {
             <SecondaryText
                 text="¿Ya tienes cuenta?"
                 linkText="Inicia sesión aquí"
-                link="/login"
+                link="/auth"
             />
         </>
     );

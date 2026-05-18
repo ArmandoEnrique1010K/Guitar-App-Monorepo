@@ -1,0 +1,18 @@
+export interface LoginForm {
+    email: string;
+    password: string;
+}
+
+export interface CreateAccountForm {
+    email: string;
+    password: string;
+    password_confirmation: string;
+    name: string;
+}
+export interface ConfirmAccountForm {
+    token: string;
+}
+
+export interface RequestCodeForm {
+    email: string;
+}

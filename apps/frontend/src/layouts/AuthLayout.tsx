@@ -1,3 +1,4 @@
+import { LogoGuitar } from '@/components/LogoGuitar';
 import { Link, Outlet } from 'react-router-dom';
 
 export default function AuthLayout() {
@@ -8,11 +9,7 @@ export default function AuthLayout() {
                     to={'/'}
                     className="flex flex-col align-center justify-center items-center gap-4 sm:p-0 pt-4"
                 >
-                    <img
-                        src="guitar.svg"
-                        alt="Guitar"
-                        className="sm:w-36 w-24"
-                    />
+                    <LogoGuitar size="large" />
                     <h1 className="sm:text-4xl text-3xl font-shockwave text-green-500">
                         Guitar App 2
                     </h1>

@@ -1,11 +1,14 @@
-import { login, type LoginForm } from '../../api/AuthAPI';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
-import { TextField } from '../../ui/Formik/TextField';
-import { PasswordField } from '../../ui/Formik/PasswordField';
-import { FormButton } from '../../ui/FormButton';
-import { SecondaryText } from '../../components/Auth/SecondaryText';
-import { AuthTitle } from '../../components/Auth/AuthTitle';
+import { TextField } from '@/ui/Formik/TextField';
+import { PasswordField } from '@/ui/Formik/PasswordField';
+import { FormButton } from '@/ui/FormButton';
+import { SecondaryText } from '@/components/Auth/SecondaryText';
+import { AuthTitle } from '@/components/Auth/AuthTitle';
+import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { useNavigate } from 'react-router-dom';
+import type { LoginForm } from '@/schemas';
+import { login } from '@/api/AuthAPI';
 
 export const LoginPage = () => {
     const initialValues: LoginForm = {
@@ -13,6 +16,7 @@ export const LoginPage = () => {
         password: '',
     };
     const { notify } = useNotifications();
+    const navigate = useNavigate();
 
     const handleSubmit = async (
         values: LoginForm,
@@ -20,7 +24,7 @@ export const LoginPage = () => {
     ) => {
         try {
             const response = await login(values);
-            console.log(response);
+            // console.log(response);
 
             // LOGIN EXITOSO
             if (typeof response === 'string') {
@@ -30,33 +34,40 @@ export const LoginPage = () => {
                     message: response,
                     status: 'success',
                 });
+
+                navigate('/');
             }
 
             // El objeto response es string cuando el usuario ha iniciado sesion
         } catch (error) {
-            const data = error.response.data;
-            console.log(data);
+            handleFormikApiError({
+                error,
+                setErrors,
+                setStatus,
+                notify,
+            });
 
-            // VALIDACIONES
-            if (data.errors) {
-                const formikErrors: Record<string, string> = {};
+            // const data = error.response.data;
+            // console.log(data);
 
-                data.errors.forEach((err: { path: string; msg: string }) => {
-                    formikErrors[err.path] = err.msg;
-                });
+            // if (data.errors) {
+            //     const formikErrors: Record<string, string> = {};
 
-                setErrors(formikErrors);
-            }
+            //     data.errors.forEach((err: { path: string; msg: string }) => {
+            //         formikErrors[err.path] = err.msg;
+            //     });
 
-            // ERROR GENERAL
-            if (data.error) {
-                setStatus(data.error);
+            //     setErrors(formikErrors);
+            // }
 
-                notify({
-                    message: data.error,
-                    status: 'error',
-                });
-            }
+            // if (data.error) {
+            //     setStatus(data.error);
+
+            //     notify({
+            //         message: data.error,
+            //         status: 'error',
+            //     });
+            // }
         }
     };
 
@@ -103,12 +114,13 @@ export const LoginPage = () => {
                     </Form>
                 )}
             </Formik>
-
-            <SecondaryText
-                text="¿No tienes cuenta?"
-                linkText="Regístrate aquí"
-                link="/register"
-            />
+            <div className="flex flex-col gap-2">
+                <SecondaryText
+                    text="¿Olvidaste tu contraseña?"
+                    linkText="Solicita un token"
+                    link="/auth/request-code"
+                />
+            </div>
         </>
     );
 };
