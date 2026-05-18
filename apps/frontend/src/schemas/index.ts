@@ -16,3 +16,13 @@ export interface ConfirmAccountForm {
 export interface RequestCodeForm {
     email: string;
 }
+export interface ForgotPasswordForm {
+    email: string;
+}
+export interface ValidateTokenForm {
+    token: string;
+}
+export interface UpdatePasswordForm {
+    password: string;
+    password_confirmation: string;
+}

@@ -28,18 +28,21 @@ export class AuthController {
             const token = new Token();
             token.token = generateToken();
             token.user = user._id;
+            await Promise.all([user.save(), token.save()]);
+            console.log("ANTES DE SEND CONFIRMATION");
 
             // enviar el email
-            AuthEmail.sendConfirmationEmail({
+            // ADVERTENCIA: RESEND SOLAMENTE FUNCIONA CON EL EMAIL DEL USUARIO QUE HA CREADO EL API KEY DE PRUEBA
+            // DE LO CONTRARIO SE TENDRIA QUE COMPRAR UN DOMINIO EN CLOUDFLARE
+            await AuthEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
                 token: token.token,
             });
-            await Promise.allSettled([user.save(), token.save()]);
-
+            console.log("DESPUES DE SEND CONFIRMATION");
             res.send("Cuenta creada, revisa tu email para confirmarla");
         } catch (error) {
-            console.log(error);
+            console.error(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };

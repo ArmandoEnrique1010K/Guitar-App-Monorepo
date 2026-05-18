@@ -1,28 +1,27 @@
-import { useNavigate } from 'react-router-dom';
 import { useNotifications } from 'reapop';
-import { Form, Formik, type FormikHelpers } from 'formik';
 import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { AuthTitle } from '@/components/Auth/AuthTitle';
+import { TextField } from '@/ui/Formik/TextField';
 import { FormButton } from '@/ui/FormButton';
-import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
 import { SecondaryText } from '@/components/Auth/SecondaryText';
-import type { ConfirmAccountForm } from '@/schemas';
-import { confirmAccount } from '@/api/AuthAPI';
+import type { RequestCodeForm } from '@/schemas';
+import { forgotPassword } from '@/api/AuthAPI';
 
-export const ConfirmAccountPage = () => {
-    const initialValues = {
-        token: '',
+export const ForgotPasswordPage = () => {
+    const initialValues: RequestCodeForm = {
+        email: '',
     };
-
     const { notify } = useNotifications();
-    const navigate = useNavigate();
 
     const handleSubmit = async (
-        values: ConfirmAccountForm,
-        { setErrors, setStatus }: FormikHelpers<ConfirmAccountForm>,
+        values: RequestCodeForm,
+        { setErrors, setStatus }: FormikHelpers<RequestCodeForm>,
     ) => {
         try {
-            const response = await confirmAccount(values);
+            const response = await forgotPassword(values);
+
+            // LOGIN EXITOSO
             if (typeof response === 'string') {
                 setStatus(response);
 
@@ -30,8 +29,9 @@ export const ConfirmAccountPage = () => {
                     message: response,
                     status: 'success',
                 });
-                navigate('/auth');
             }
+
+            // El objeto response es string cuando el usuario ha iniciado sesion
         } catch (error) {
             handleFormikApiError({
                 error,
@@ -44,7 +44,7 @@ export const ConfirmAccountPage = () => {
 
     return (
         <>
-            <AuthTitle title="Confirma tu cuenta" />
+            <AuthTitle title="Olvidaste la contraseña" />
 
             <Formik
                 initialValues={initialValues}
@@ -59,23 +59,29 @@ export const ConfirmAccountPage = () => {
                         noValidate
                         autoComplete="off"
                     >
+                        <p className="text-sm text-left mb-6 w-full sm:max-w-md max-w-full">
+                            Introduce tu correo y te enviaremos un código para
+                            que puedas restablecer tu contraseña.
+                        </p>
                         <div className="flex flex-col">
-                            <DigitsGroupField
-                                id="token"
-                                label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
+                            <TextField
+                                id="email"
+                                label="Correo"
+                                placeholder="correo@ejemplo.com"
+                                type="email"
                             />
                         </div>
                         <div className="flex flex-col my-6">
-                            <FormButton text="Confirmar Cuenta" type="submit" />
+                            <FormButton text="Enviar código" type="submit" />
                         </div>
                     </Form>
                 )}
             </Formik>
 
             <SecondaryText
-                text="Necesitas un nuevo código."
-                linkText="Solicítalo aquí"
-                link="/auth/request-code"
+                text="¿Recuerdas tu contraseña?"
+                linkText="Inicia sesión aquí"
+                link="/auth"
             />
         </>
     );

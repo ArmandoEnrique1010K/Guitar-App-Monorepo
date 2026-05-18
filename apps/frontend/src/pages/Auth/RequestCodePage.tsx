@@ -4,7 +4,6 @@ import { Form, Formik, type FormikHelpers } from 'formik';
 import { AuthTitle } from '@/components/Auth/AuthTitle';
 import { TextField } from '@/ui/Formik/TextField';
 import { FormButton } from '@/ui/FormButton';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
 import type { RequestCodeForm } from '@/schemas';
 import { requestCode } from '@/api/AuthAPI';
 
@@ -44,7 +43,7 @@ export const RequestCodePage = () => {
 
     return (
         <>
-            <AuthTitle title="Solicitar token" />
+            <AuthTitle title="Solicitar código" />
 
             <Formik
                 initialValues={initialValues}
@@ -60,9 +59,8 @@ export const RequestCodePage = () => {
                         autoComplete="off"
                     >
                         <p className="text-sm text-left mb-6 w-full sm:max-w-md max-w-full">
-                            Si olvidastes tu contraseña introduce tu correo y te
-                            enviaremos un token para que puedas restablecer tu
-                            contraseña.
+                            Introduce tu correo y te enviaremos un código de 6
+                            dígitos.
                         </p>
                         <div className="flex flex-col gap-4">
                             <TextField
@@ -72,18 +70,12 @@ export const RequestCodePage = () => {
                                 type="email"
                             />
                         </div>
-                        <div className="flex flex-col my-6">
-                            <FormButton text="Enviar token" type="submit" />
+                        <div className="flex flex-col mt-6">
+                            <FormButton text="Enviar código" type="submit" />
                         </div>
                     </Form>
                 )}
             </Formik>
-
-            <SecondaryText
-                text="¿Recuerdas tu contraseña?"
-                linkText="Inicia sesión aquí"
-                link="/auth"
-            />
         </>
     );
 };

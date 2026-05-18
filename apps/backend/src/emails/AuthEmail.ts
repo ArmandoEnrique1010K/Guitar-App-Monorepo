@@ -17,6 +17,9 @@ const getResend = () => {
 export class AuthEmail {
     static sendConfirmationEmail = async (user: IEmail) => {
         const resend = getResend();
+
+        console.log("ANTES DE ENVIAR EMAIL");
+
         try {
             const response = await resend.emails.send({
                 from: `${process.env.EMAIL_FROM}`,
@@ -31,7 +34,7 @@ export class AuthEmail {
         <p>Si tú no creaste esta cuenta, ignora este mensaje</p>
       `,
             });
-
+            console.log("RESPUESTA RESEND:", response);
             return response;
         } catch (error) {
             console.error("Error enviando email de confirmación:", error);

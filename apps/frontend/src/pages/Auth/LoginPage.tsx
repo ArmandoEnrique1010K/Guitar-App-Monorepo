@@ -114,11 +114,17 @@ export const LoginPage = () => {
                     </Form>
                 )}
             </Formik>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
                 <SecondaryText
-                    text="¿Olvidaste tu contraseña?"
-                    linkText="Solicita un token"
-                    link="/auth/request-code"
+                    text="¿No tienes una cuenta?"
+                    linkText="Regístrate aquí"
+                    link="/auth/register"
+                />
+
+                <SecondaryText
+                    text="Si olvidaste tu contraseña."
+                    linkText="Cámbiala aquí"
+                    link="/auth/forgot-password"
                 />
             </div>
         </>

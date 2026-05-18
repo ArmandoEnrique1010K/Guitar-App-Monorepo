@@ -1,28 +1,31 @@
-import { useNavigate } from 'react-router-dom';
-import { useNotifications } from 'reapop';
-import { Form, Formik, type FormikHelpers } from 'formik';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
-import { FormButton } from '@/ui/FormButton';
+import { validateToken } from '@/api/AuthAPI';
 import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
 import { SecondaryText } from '@/components/Auth/SecondaryText';
-import type { ConfirmAccountForm } from '@/schemas';
-import { confirmAccount } from '@/api/AuthAPI';
+import type { ValidateTokenForm } from '@/schemas';
+import { FormButton } from '@/ui/FormButton';
+import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { Form, Formik, type FormikHelpers } from 'formik';
+import { useNotifications } from 'reapop';
 
-export const ConfirmAccountPage = () => {
+type Props = {
+    token: string;
+    setToken: (token: string) => void;
+    setIsValidToken: (isValidToken: boolean) => void;
+};
+
+export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
     const initialValues = {
-        token: '',
+        token,
     };
 
     const { notify } = useNotifications();
-    const navigate = useNavigate();
 
     const handleSubmit = async (
-        values: ConfirmAccountForm,
-        { setErrors, setStatus }: FormikHelpers<ConfirmAccountForm>,
+        values: ValidateTokenForm,
+        { setErrors, setStatus }: FormikHelpers<ValidateTokenForm>,
     ) => {
         try {
-            const response = await confirmAccount(values);
+            const response = await validateToken(values);
             if (typeof response === 'string') {
                 setStatus(response);
 
@@ -30,7 +33,8 @@ export const ConfirmAccountPage = () => {
                     message: response,
                     status: 'success',
                 });
-                navigate('/auth');
+
+                setIsValidToken(true);
             }
         } catch (error) {
             handleFormikApiError({
@@ -44,8 +48,6 @@ export const ConfirmAccountPage = () => {
 
     return (
         <>
-            <AuthTitle title="Confirma tu cuenta" />
-
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
@@ -63,6 +65,7 @@ export const ConfirmAccountPage = () => {
                             <DigitsGroupField
                                 id="token"
                                 label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
+                                onChange={(value) => setToken(value)}
                             />
                         </div>
                         <div className="flex flex-col my-6">

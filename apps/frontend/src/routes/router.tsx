@@ -10,6 +10,8 @@ import { GuitarLayout } from '@/layouts/GuitarLayout';
 import { RegisterPage } from '@/pages/Auth/RegisterPage';
 import { ConfirmAccountPage } from '@/pages/Auth/ConfirmAccountPage';
 import { RequestCodePage } from '@/pages/Auth/RequestCodePage';
+import { ForgotPasswordPage } from '@/pages/Auth/ForgotPasswordPage';
+import { NewPasswordPage } from '@/pages/Auth/NewPasswordPage';
 
 export default function Router() {
     const { notifications, dismissNotification } = useNotifications();
@@ -42,6 +44,11 @@ export default function Router() {
                         element={<ConfirmAccountPage />}
                     />
                     <Route path="request-code" element={<RequestCodePage />} />
+                    <Route
+                        path="forgot-password"
+                        element={<ForgotPasswordPage />}
+                    />
+                    <Route path="new-password" element={<NewPasswordPage />} />
                 </Route>
 
                 {/* <Route element={<InstrumentLayout />}>

@@ -5,10 +5,11 @@ import { ErrorMessage, useField } from 'formik';
 type Props = {
     id: string;
     label: string;
+    onChange?: (value: string) => void;
 };
 
 // Campo para introducir un token de 6 digitos
-export const DigitsGroupField = ({ id, label }: Props) => {
+export const DigitsGroupField = ({ id, label, onChange }: Props) => {
     const [field, , helpers] = useField<string>(id);
     const pinValue =
         typeof field.value === 'string'
@@ -20,6 +21,7 @@ export const DigitsGroupField = ({ id, label }: Props) => {
             value={pinValue}
             onValueChange={(details) => {
                 helpers.setValue(details.value.join(''));
+                onChange?.(details.value.join(''));
             }}
         >
             {' '}
