@@ -8,7 +8,7 @@ import { NotificationsProvider } from 'reapop';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        {/* Chakra UI Provider ha cambiado con respecto a la version 2 de Chakra UI */}
+        {/* Chakra UI Provider ha cambiado con respecto a la version 2 de Chakra UI, en su lugar opte por Ark UI, contiene los componentes y sus estilos aplicados de Chakra UI */}
         {/* <ChakraProvider value={defaultSystem}> */}
         <NotificationsProvider>
             <ThemeRadixUI>

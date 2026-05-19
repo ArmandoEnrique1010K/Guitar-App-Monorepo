@@ -18,6 +18,7 @@ export const PasswordField = ({ id, label, placeholder }: Props) => {
             </label>
             <div className="flex justify-between sm:gap-3 gap-2">
                 <Field
+                    id={id}
                     name={id}
                     type={showPassword ? 'text' : 'password'}
                     placeholder={placeholder}

@@ -32,7 +32,7 @@ export const DigitsGroupField = ({ id, label, onChange }: Props) => {
                 </label>
 
                 <div className="flex flex-col gap-0.5 justify-center items-center">
-                    <PinInput.Control className="flex sm:gap-3 gap-2">
+                    <PinInput.Control id={id} className="flex sm:gap-3 gap-2">
                         {[0, 1, 2, 3, 4, 5].map((index) => (
                             <DigitField key={index} index={index} />
                         ))}

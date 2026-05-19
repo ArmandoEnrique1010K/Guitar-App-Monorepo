@@ -8,7 +8,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/fonts/RobotoMono-VariableFont_wght.ttf');
+    /* src: url('/fonts/RobotoMono-VariableFont_wght.ttf'); */
+    src: url('/fonts/Roboto-Medium.ttf');
 }
 /* Aplicar a todos los botones la clase de tailwind */
 @layer base {

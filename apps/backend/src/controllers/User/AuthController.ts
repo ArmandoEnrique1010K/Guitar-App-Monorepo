@@ -33,7 +33,7 @@ export class AuthController {
 
             // enviar el email
             // ADVERTENCIA: RESEND SOLAMENTE FUNCIONA CON EL EMAIL DEL USUARIO QUE HA CREADO EL API KEY DE PRUEBA
-            // DE LO CONTRARIO SE TENDRIA QUE COMPRAR UN DOMINIO EN CLOUDFLARE
+            // EN UN ENTORNO DE PRODUCCIÓN SE TENDRIA QUE COMPRAR UN DOMINIO EN CLOUDFLARE
             await AuthEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
@@ -120,7 +120,7 @@ export class AuthController {
                 maxAge: 1000 * 60 * 60 * 24 * 30, // 30 días
             });
 
-            res.send("Bienvenido usuario");
+            res.send("Bienvenido " + user.name);
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" });
         }

@@ -49,3 +49,15 @@ export const logout = async () => {
     const response = await api.post('/auth/logout');
     return response.data;
 };
+
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+}
+
+// Obtener el perfil del usuario
+export const user = async () => {
+    const response = await api.get<User>('/profile/user');
+    return response.data;
+};

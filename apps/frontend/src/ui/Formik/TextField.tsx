@@ -14,6 +14,7 @@ export const TextField = ({ id, label, placeholder, type = 'text' }: Props) => {
                 {label}:
             </label>
             <Field
+                id={id}
                 name={id}
                 type={type}
                 placeholder={placeholder}
