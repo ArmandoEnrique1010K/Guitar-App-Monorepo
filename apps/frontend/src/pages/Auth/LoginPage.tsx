@@ -24,8 +24,6 @@ export const LoginPage = () => {
     ) => {
         try {
             const response = await login(values);
-            // console.log(response);
-
             // LOGIN EXITOSO
             if (typeof response === 'string') {
                 setStatus(response);
@@ -46,34 +44,12 @@ export const LoginPage = () => {
                 setStatus,
                 notify,
             });
-
-            // const data = error.response.data;
-            // console.log(data);
-
-            // if (data.errors) {
-            //     const formikErrors: Record<string, string> = {};
-
-            //     data.errors.forEach((err: { path: string; msg: string }) => {
-            //         formikErrors[err.path] = err.msg;
-            //     });
-
-            //     setErrors(formikErrors);
-            // }
-
-            // if (data.error) {
-            //     setStatus(data.error);
-
-            //     notify({
-            //         message: data.error,
-            //         status: 'error',
-            //     });
-            // }
         }
     };
 
     return (
         <>
-            <AuthTitle title="Login" />
+            <AuthTitle title="Iniciar sesión" />
 
             <Formik
                 initialValues={initialValues}

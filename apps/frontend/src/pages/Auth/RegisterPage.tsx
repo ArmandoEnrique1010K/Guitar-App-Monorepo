@@ -68,7 +68,7 @@ export const RegisterPage = () => {
 
     return (
         <>
-            <AuthTitle title="Registrar" />
+            <AuthTitle title="Regístrate" />
 
             <Formik
                 initialValues={initialValues}

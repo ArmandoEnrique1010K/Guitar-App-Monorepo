@@ -20,19 +20,27 @@ export const MenuButton = () => {
                     />
                 </Menu.Trigger>
                 <Menu.Positioner>
-                    <Menu.Content className="min-w-44 p-2 rounded-2xl border border-gray-200 bg-white shadow-xl outline-none focus:outline-none focus-visible:outline-none flex flex-col gap-1">
+                    <Menu.Content className="min-w-44  border border-gray-200 bg-white shadow-xl outline-none focus:outline-none focus-visible:outline-none flex flex-col">
+                        <Menu.Item
+                            value="Creditos-del-autor"
+                            className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                            onClick={() => {}}
+                        >
+                            Creditos del autor
+                        </Menu.Item>
+
                         {profile ? (
                             <>
                                 <Menu.Item
                                     value="Mi-perfil"
-                                    className="px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
                                     onClick={() => {}}
                                 >
                                     Mi perfil
                                 </Menu.Item>
                                 <Menu.Item
                                     value="Cerrar-sesion"
-                                    className="px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
                                     onClick={() => {
                                         logout();
                                         navigate('/auth');
@@ -45,13 +53,13 @@ export const MenuButton = () => {
                             <>
                                 <Link
                                     to="/auth"
-                                    className="px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
                                 >
                                     Iniciar sesión
                                 </Link>
                                 <Link
                                     to="/auth/register"
-                                    className="px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
                                 >
                                     Registrarse
                                 </Link>
