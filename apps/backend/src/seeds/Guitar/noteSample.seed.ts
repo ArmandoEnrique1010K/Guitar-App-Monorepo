@@ -26,12 +26,22 @@ export const noteSampleSeed = async () => {
             .join("");
     };
 
+    // Formatear el nombre del archivo para que quede de la siguiente forma:
+    // 0 -> 00
+    // 9 -> 09
+    // 10 -> 10
+    // 46 -> 46
+    const formatFile = (file: string): string => {
+        return file.padStart(2, "0");
+    };
+
     // Generar notas por cada guitarra
     const notesToInsert = guitars.flatMap((guitar) => {
-        // TODO: MODIFICAR LA URL EN DONDE SE GUARDARAN LAS NOTAS, length ES LA CANTIDAD DE NOTAS
-        return Array.from({ length: 5 }).map((_, i) => ({
+        // length ES LA CANTIDAD DE NOTAS
+        return Array.from({ length: 47 }).map((_, i) => ({
             noteIndex: i,
-            audioUrl: `https://fake-url.com/${formatWord(guitar.name)}/note-${i}.mp3`,
+            // audioUrl: `https://fake-url.com/${formatWord(guitar.name)}/note-${i}.mp3`,
+            audioUrl: `${process.env.FILES_URL}/${formatWord(guitar.name)}/${formatFile(i.toString())}.mp3`,
             guitar: guitar._id,
         }));
     });

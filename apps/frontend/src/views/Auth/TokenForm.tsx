@@ -1,5 +1,5 @@
 import { validateToken } from '@/api/AuthAPI';
-import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
+import { DigitsGroupFieldChakra } from '@/components/Auth/DigitsGroupFieldChakra';
 import { SecondaryText } from '@/components/Auth/SecondaryText';
 import type { ValidateTokenForm } from '@/schemas';
 import { FormButton } from '@/ui/FormButton';
@@ -62,11 +62,17 @@ export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
                         autoComplete="off"
                     >
                         <div className="flex flex-col">
-                            <DigitsGroupField
+                            <DigitsGroupFieldChakra
                                 id="token"
                                 label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
                                 onChange={(value) => setToken(value)}
                             />
+
+                            {/* <DigitsGroupField
+                                id="token"
+                                label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
+                                onChange={(value) => setToken(value)}
+                            /> */}
                         </div>
                         <div className="flex flex-col my-6">
                             <FormButton text="Confirmar Cuenta" type="submit" />
