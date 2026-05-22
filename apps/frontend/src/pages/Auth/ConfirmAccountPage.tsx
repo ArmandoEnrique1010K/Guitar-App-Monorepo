@@ -4,10 +4,10 @@ import { Form, Formik, type FormikHelpers } from 'formik';
 import { handleFormikApiError } from '@/utils/handleFormikApiError';
 import { AuthTitle } from '@/components/Auth/AuthTitle';
 import { FormButton } from '@/ui/FormButton';
-import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
 import { SecondaryText } from '@/components/Auth/SecondaryText';
 import type { ConfirmAccountForm } from '@/schemas';
 import { confirmAccount } from '@/api/AuthAPI';
+import { DigitsGroupFieldChakra } from '@/components/Auth/DigitsGroupFieldChakra';
 
 export const ConfirmAccountPage = () => {
     const initialValues = {
@@ -60,7 +60,7 @@ export const ConfirmAccountPage = () => {
                         autoComplete="off"
                     >
                         <div className="flex flex-col">
-                            <DigitsGroupField
+                            <DigitsGroupFieldChakra
                                 id="token"
                                 label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
                             />

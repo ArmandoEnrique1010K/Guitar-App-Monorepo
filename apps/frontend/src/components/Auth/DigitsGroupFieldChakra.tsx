@@ -1,6 +1,7 @@
 import { PinInput } from '@chakra-ui/react';
-import { ErrorMessage } from 'formik';
+import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = {
     id: string;
@@ -10,14 +11,17 @@ type Props = {
 
 export const DigitsGroupFieldChakra = ({ id, label, onChange }: Props) => {
     const [value, setValue] = useState<string[]>([]);
+    const { setFieldValue } = useFormikContext();
 
+    // TODO: ¿ES POSIBLE MODIFICAR EL CODIGO PARA QUE NO UTILIZAR 'setFieldValue'?
     const handleValueChange = (details: PinInput.ValueChangeDetails) => {
         setValue(details.value);
 
         onChange?.(details.value.join(''));
-        console.log(details.value.join(''));
+        setFieldValue(id, details.value.join(''));
     };
 
+    const isMobile = useMediaQuery({ query: '(max-width: 639px)' });
     return (
         <div className="flex flex-col gap-6">
             <label
@@ -30,18 +34,15 @@ export const DigitsGroupFieldChakra = ({ id, label, onChange }: Props) => {
             <div className="flex flex-col items-center gap-1">
                 <PinInput.Root
                     id={id}
-                    value={value.join('')}
+                    value={value}
                     onValueChange={handleValueChange}
+                    size={isMobile ? 'lg' : 'xl'}
                 >
                     <PinInput.HiddenInput />
 
-                    <PinInput.Control className="flex gap-2">
+                    <PinInput.Control>
                         {Array.from({ length: 6 }).map((_, index) => (
-                            <PinInput.Input
-                                key={index}
-                                index={index}
-                                className="w-12 h-12 rounded-lg border border-gray-300 text-center text-lg focus:border-blue-500 focus:outline-none"
-                            />
+                            <PinInput.Input key={index} index={index} />
                         ))}
                     </PinInput.Control>
                 </PinInput.Root>

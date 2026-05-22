@@ -33,6 +33,7 @@ export const handleFormikApiError = <T>({
     const axiosError = error as AxiosError<BackendErrorResponse>;
 
     const data = axiosError.response?.data;
+    console.log(data);
 
     if (!data) return;
 

@@ -67,12 +67,6 @@ export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
                                 label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
                                 onChange={(value) => setToken(value)}
                             />
-
-                            {/* <DigitsGroupField
-                                id="token"
-                                label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
-                                onChange={(value) => setToken(value)}
-                            /> */}
                         </div>
                         <div className="flex flex-col my-6">
                             <FormButton text="Confirmar Cuenta" type="submit" />
@@ -84,7 +78,7 @@ export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
             <SecondaryText
                 text="Necesitas un nuevo código."
                 linkText="Solicítalo aquí"
-                link="/auth/request-code"
+                link="/auth/forgot-password"
             />
         </>
     );

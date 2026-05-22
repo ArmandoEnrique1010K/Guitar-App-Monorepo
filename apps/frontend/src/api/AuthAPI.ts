@@ -8,46 +8,118 @@ import type {
     ValidateTokenForm,
     UpdatePasswordForm,
 } from '@/schemas';
+import { isAxiosError } from 'axios';
 
+//* ESTO ES UNA MALA PRACTICA
+// export const login = async (formData: LoginForm) => {
+//     const response = await api.post('/auth/login', formData);
+//     return response.data;
+// };
+
+//* ESTO ES UNA BUENA PRACTICA
 export const login = async (formData: LoginForm) => {
-    const response = await api.post('/auth/login', formData);
-    return response.data;
+    try {
+        const url = '/auth/login';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export const createAccount = async (formData: CreateAccountForm) => {
-    const response = await api.post('/auth/create-account', formData);
-    return response.data;
+    try {
+        const url = '/auth/create-account';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export const confirmAccount = async (formData: ConfirmAccountForm) => {
-    const response = await api.post('/auth/confirm-account', formData);
-    return response.data;
+    try {
+        const url = '/auth/confirm-account';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export const requestCode = async (formData: RequestCodeForm) => {
-    const response = await api.post('/auth/request-code', formData);
-    return response.data;
+    try {
+        const url = '/auth/request-code';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export const forgotPassword = async (formData: ForgotPasswordForm) => {
-    const response = await api.post('/auth/forgot-password', formData);
-    return response.data;
+    try {
+        const url = '/auth/forgot-password';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 export const validateToken = async (formData: ValidateTokenForm) => {
-    const response = await api.post('/auth/validate-token', formData);
-    return response.data;
+    try {
+        const url = '/auth/validate-token';
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 export const updatePasswordWithToken = async (
     token: string,
     formData: UpdatePasswordForm,
 ) => {
-    const response = await api.post(`/auth/update-password/${token}`, formData);
-    return response.data;
+    try {
+        const url = `/auth/update-password/${token}`;
+        const { data } = await api.post(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export const logout = async () => {
-    const response = await api.post('/auth/logout');
-    return response.data;
+    try {
+        const url = '/auth/logout';
+        const { data } = await api.post(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };
 
 export interface User {

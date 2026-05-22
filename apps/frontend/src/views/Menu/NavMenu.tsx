@@ -1,5 +1,5 @@
 import { LogoGuitar } from '@/components/LogoGuitar';
-import { MenuButton } from './Menu/MenuButton';
+import { MenuButton } from '@/components/Menu/MenuButton';
 
 export const NavMenu = () => {
     return (

@@ -1,4 +1,4 @@
-import { NavMenu } from '@/views/NavMenu';
+import { NavMenu } from '@/views/Menu/NavMenu';
 
 export const GuitarLayout = () => {
     return (
