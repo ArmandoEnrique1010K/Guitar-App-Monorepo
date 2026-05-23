@@ -1,8 +1,7 @@
 import { validateToken } from '@/api/AuthAPI';
-import { DigitsGroupFieldChakra } from '@/components/Auth/DigitsGroupFieldChakra';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
+import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
 import type { ValidateTokenForm } from '@/schemas';
-import { FormButton } from '@/ui/FormButton';
+import { FormButton } from '@/components/Auth/FormButton';
 import { handleFormikApiError } from '@/utils/handleFormikApiError';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
@@ -62,7 +61,7 @@ export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
                         autoComplete="off"
                     >
                         <div className="flex flex-col">
-                            <DigitsGroupFieldChakra
+                            <DigitsGroupField
                                 id="token"
                                 label="Ingresa el código de 6 dígitos que te enviamos a tu correo"
                                 onChange={(value) => setToken(value)}
@@ -74,12 +73,6 @@ export const TokenForm = ({ token, setToken, setIsValidToken }: Props) => {
                     </Form>
                 )}
             </Formik>
-
-            <SecondaryText
-                text="Necesitas un nuevo código."
-                linkText="Solicítalo aquí"
-                link="/auth/forgot-password"
-            />
         </>
     );
 };

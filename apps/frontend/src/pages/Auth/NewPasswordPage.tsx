@@ -3,6 +3,7 @@ import type { ConfirmAccountForm } from '@/schemas';
 import { useState } from 'react';
 import { TokenForm } from '@/views/Auth/TokenForm';
 import { NewPasswordForm } from '@/views/Auth/NewPasswordForm';
+import { SecondaryText } from '@/components/Auth/SecondaryText';
 
 export const NewPasswordPage = () => {
     const [token, setToken] = useState<ConfirmAccountForm['token']>('');
@@ -21,6 +22,12 @@ export const NewPasswordPage = () => {
             ) : (
                 <NewPasswordForm token={token} />
             )}
+
+            <SecondaryText
+                text="Necesitas un nuevo código."
+                linkText="Solicítalo aquí"
+                link="/auth/forgot-password"
+            />
         </>
     );
 };

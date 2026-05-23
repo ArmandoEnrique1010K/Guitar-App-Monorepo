@@ -4,7 +4,7 @@ import { Menu } from '@ark-ui/react/menu';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const MenuButton = () => {
+export const BurgerMenuButton = () => {
     const { profile } = useProfile();
     const navigate = useNavigate();
 

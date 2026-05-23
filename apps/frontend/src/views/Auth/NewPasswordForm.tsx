@@ -1,7 +1,7 @@
 import { updatePasswordWithToken } from '@/api/AuthAPI';
 import type { UpdatePasswordForm } from '@/schemas';
-import { FormButton } from '@/ui/FormButton';
-import { PasswordField } from '@/ui/Formik/PasswordField';
+import { FormButton } from '@/components/Auth/FormButton';
+import { PasswordField } from '@/components/Auth/PasswordField';
 import { handleFormikApiError } from '@/utils/handleFormikApiError';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';

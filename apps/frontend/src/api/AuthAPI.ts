@@ -130,6 +130,14 @@ export interface User {
 
 // Obtener el perfil del usuario
 export const user = async () => {
-    const response = await api.get<User>('/profile/user');
-    return response.data;
+    try {
+        const url = '/profile/user';
+        const { data } = await api.get<User>(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
 };

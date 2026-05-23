@@ -1,7 +1,7 @@
 import { LogoGuitar } from '@/components/LogoGuitar';
-import { MenuButton } from '@/components/Menu/MenuButton';
+import { BurgerMenuButton } from '@/components/Studio/Header/BurgerMenuButton';
 
-export const NavMenu = () => {
+export const MenuNavbar = () => {
     return (
         <>
             {/* bg-linear-to-r from-slate-600 to-slate-700 */}
@@ -12,7 +12,7 @@ export const NavMenu = () => {
                     Guitar App 2
                 </h1>
                 <div className="bg-amber-200 flex-1 sm:h-[4px] h-0 hidden sm:block" />
-                <MenuButton />
+                <BurgerMenuButton />
             </div>
         </>
     );

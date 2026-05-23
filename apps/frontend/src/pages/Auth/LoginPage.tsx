@@ -1,8 +1,8 @@
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
-import { TextField } from '@/ui/Formik/TextField';
-import { PasswordField } from '@/ui/Formik/PasswordField';
-import { FormButton } from '@/ui/FormButton';
+import { TextField } from '@/components/Auth/TextField';
+import { PasswordField } from '@/components/Auth/PasswordField';
+import { FormButton } from '@/components/Auth/FormButton';
 import { SecondaryText } from '@/components/Auth/SecondaryText';
 import { AuthTitle } from '@/components/Auth/AuthTitle';
 import { handleFormikApiError } from '@/utils/handleFormikApiError';

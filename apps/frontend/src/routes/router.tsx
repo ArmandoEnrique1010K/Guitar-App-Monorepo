@@ -6,12 +6,13 @@ import NotificationsSystem, {
 } from 'reapop';
 import AuthLayout from '@/layouts/AuthLayout';
 import { LoginPage } from '@/pages/Auth/LoginPage';
-import { GuitarLayout } from '@/layouts/GuitarLayout';
+import { StudioLayout } from '@/layouts/StudioLayout';
 import { RegisterPage } from '@/pages/Auth/RegisterPage';
 import { ConfirmAccountPage } from '@/pages/Auth/ConfirmAccountPage';
 import { RequestCodePage } from '@/pages/Auth/RequestCodePage';
 import { ForgotPasswordPage } from '@/pages/Auth/ForgotPasswordPage';
 import { NewPasswordPage } from '@/pages/Auth/NewPasswordPage';
+import { StudioPage } from '@/pages/Studio/StudioPage';
 
 export default function Router() {
     const { notifications, dismissNotification } = useNotifications();
@@ -34,7 +35,9 @@ export default function Router() {
                 theme={wyboTheme}
             />
             <Routes>
-                <Route path="/" element={<GuitarLayout />}></Route>
+                <Route path="/" element={<StudioLayout />}>
+                    <Route index element={<StudioPage />} />
+                </Route>
 
                 <Route path="/auth" element={<AuthLayout />}>
                     <Route index element={<LoginPage />} />
