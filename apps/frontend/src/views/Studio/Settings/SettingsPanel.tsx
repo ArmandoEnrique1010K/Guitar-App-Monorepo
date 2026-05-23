@@ -1,23 +1,26 @@
-import { LockOpenStringButton } from '../../../components/Studio/Settings/Preferences/Buttons/LockOpenStringButton';
-import { HoldToPlayButton } from '../../../components/Studio/Settings/Preferences/Buttons/HoldToPlayButton';
-import { MuteOnSameStringButton } from '../../../components/Studio/Settings/Preferences/Buttons/MuteOnSameStringButton';
-import { MuteOnDifferentStringButton } from '../../../components/Studio/Settings/Preferences/Buttons/MuteOnDifferentStringButton';
-import { ShowKeyboardButton } from '../../../components/Studio/Settings/Preferences/Buttons/ShowKeyboardButton';
-import { LoopModeButton } from '../../../components/Studio/Settings/Preferences/Buttons/LoopModeButton';
-import { AutoMuteButton } from '../../../components/Studio/Settings/Preferences/Buttons/AutoMuteButton';
+import { DynamicSlider } from '@/components/Studio/Settings/Preferences/DynamicSlider';
+import { useState } from 'react';
 
 export const SettingsPanel = () => {
+    const [volume, setVolume] = useState(45);
+
     return (
         <div>
             SettingsPanel
             <div>
-                <LockOpenStringButton />
+                {/* <LockOpenStringButton />
                 <HoldToPlayButton />
                 <MuteOnSameStringButton />
                 <MuteOnDifferentStringButton />
                 <ShowKeyboardButton />
                 <LoopModeButton />
                 <AutoMuteButton />
+                <PauseButton /> */}
+                <DynamicSlider
+                    label="Volume"
+                    value={volume}
+                    onChange={setVolume}
+                />
             </div>
         </div>
     );

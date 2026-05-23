@@ -9,7 +9,8 @@ type Props = {
 };
 
 export const SwitchButton = ({ text, value, onClick, title, icon }: Props) => {
-    const isMobile = useMediaQuery({ query: '(max-width: 639px)' });
+    // TODO: EL TAMAÑO PODRIA CAMBIAR EN EL FUTURO
+    const isMobile = useMediaQuery({ maxWidth: 639.999 });
 
     return (
         <button
