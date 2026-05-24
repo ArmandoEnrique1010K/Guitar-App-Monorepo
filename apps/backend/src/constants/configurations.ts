@@ -1,7 +1,7 @@
 export const defaultVolume = 1;
 export const defaultHoldToPlay = false;
-export const defaultMuteOnSameString = false;
-export const defaultMuteOnDifferentString = false;
+export const defaultAllowSameStringOverlap = false;
+export const defaultAllowDifferentStringOverlap = false;
 
 export const defaultLoopMode = false;
 export const defaultLoopIntervalMs = 500;

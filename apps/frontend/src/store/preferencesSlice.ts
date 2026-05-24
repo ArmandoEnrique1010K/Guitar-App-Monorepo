@@ -1,3 +1,4 @@
+import { getAllGuitars } from '@/api/GuitarAPI';
 import type { Instrument } from '@/schemas';
 import type { StateCreator } from 'zustand';
 
@@ -5,39 +6,44 @@ export type PreferencesSliceType = {
     // Guitarra seleccionada
     selectedGuitar: Instrument;
     // Cambiar la guitarra seleccionada
-    changeSelectedGuitar: (guitar: Instrument) => void;
+    setSelectedGuitar: (guitar: Instrument) => void;
     // Lista de guitarras
-    guitarsList: Instrument[];
+    guitars: Instrument[];
     // Establecer la lista de guitarras
-    setGuitarsList: (guitars: Instrument[]) => void;
+    setGuitars: (guitars: Instrument[]) => void;
 
     // El orden de las cuerdas
     stringOrder: number[];
-    changeStringOrder: (stringOrder: number[]) => void;
+    setStringOrder: (stringOrder: number[]) => void;
 
     holdToPlay: boolean; // Mantener presionado para reproducir
-    toogleHoldToPlay: () => void;
+    toggleHoldToPlay: () => void;
 
-    muteOnSameString: boolean; // Silenciar cuando se toca la misma cuerda
-    toogleMuteOnSameString: () => void;
+    allowSameStringOverlap: boolean; // Silenciar cuando se toca la misma cuerda
+    toggleAllowSameStringOverlap: () => void;
 
-    muteOnDifferentString: boolean; // Silenciar cuando se toca una cuerda diferente
-    toogleMuteOnDifferentString: () => void;
+    allowDifferentStringOverlap: boolean; // Silenciar cuando se toca una cuerda diferente
+    toggleAllowDifferentStringOverlap: () => void;
 
     loopMode: boolean; // Modo loop
-    toogleLoopMode: () => void;
+    toggleLoopMode: () => void;
+
     loopIntervalMs: number; // Intervalo en milisegundos
-    changeLoopIntervalMs: (loopIntervalMs: number) => void;
+    setLoopIntervalMs: (loopIntervalMs: number) => void;
 
     autoMute: boolean;
-    toogleAutoMute: () => void;
+    toggleAutoMute: () => void;
+
     autoMuteDelayMs: number; // Retardo en milisegundos
-    changeAutoMuteDelayMs: (autoMuteDelayMs: number) => void;
+    setAutoMuteDelayMs: (autoMuteDelayMs: number) => void;
 
     showKeyboardKeys: boolean;
-    toogleShowKeyboardKeys: () => void;
+    toggleShowKeyboardKeys: () => void;
 
     volume: number;
+    setVolume: (volume: number) => void;
+
+    loadGuitars: () => Promise<void>;
 };
 
 export const preferencesSlice: StateCreator<PreferencesSliceType> = (
@@ -48,64 +54,86 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
         id: '0',
         name: '',
     },
-    guitarsList: [],
+    guitars: [],
 
     stringOrder: [0, 1, 2, 3, 4, 5],
 
-    volume: 1,
+    volume: 100,
     holdToPlay: false,
 
-    muteOnSameString: false,
-    muteOnDifferentString: true, // El comportamiento de una guitarra es silenciar cuando se toca una cuerda diferente
+    // Mantener reproduciendo notas en la misma cuerda
+    allowSameStringOverlap: false,
+
+    // Mantener reproduciendo notas en cuerdas diferentes
+    allowDifferentStringOverlap: true, // El comportamiento de una guitarra es silenciar cuando se toca una cuerda diferente
     loopMode: false,
     loopIntervalMs: 0,
     autoMute: false,
     autoMuteDelayMs: 100,
     showKeyboardKeys: true,
 
-    changeSelectedGuitar: (guitar: Instrument) => {
+    setSelectedGuitar: (guitar: Instrument) => {
         set({ selectedGuitar: guitar });
     },
 
-    changeStringOrder: (stringOrder: number[]) => {
+    setStringOrder: (stringOrder: number[]) => {
         set({ stringOrder });
     },
 
-    setGuitarsList: (guitars: Instrument[]) => {
-        set({ guitarsList: guitars });
+    setGuitars: (guitars: Instrument[]) => {
+        set({ guitars: guitars });
     },
 
-    toogleHoldToPlay: () => {
+    toggleHoldToPlay: () => {
         set((state) => ({ holdToPlay: !state.holdToPlay }));
     },
 
-    toogleMuteOnSameString: () => {
-        set((state) => ({ muteOnSameString: !state.muteOnSameString }));
-    },
-
-    toogleMuteOnDifferentString: () => {
+    toggleAllowSameStringOverlap: () => {
         set((state) => ({
-            muteOnDifferentString: !state.muteOnDifferentString,
+            allowSameStringOverlap: !state.allowSameStringOverlap,
         }));
     },
 
-    toogleLoopMode: () => {
+    toggleAllowDifferentStringOverlap: () => {
+        set((state) => ({
+            allowDifferentStringOverlap: !state.allowDifferentStringOverlap,
+        }));
+    },
+
+    toggleLoopMode: () => {
         set((state) => ({ loopMode: !state.loopMode }));
     },
 
-    changeLoopIntervalMs: (loopIntervalMs: number) => {
+    setLoopIntervalMs: (loopIntervalMs: number) => {
         set({ loopIntervalMs });
     },
 
-    toogleAutoMute: () => {
+    toggleAutoMute: () => {
         set((state) => ({ autoMute: !state.autoMute }));
     },
 
-    changeAutoMuteDelayMs: (autoMuteDelayMs: number) => {
+    setAutoMuteDelayMs: (autoMuteDelayMs: number) => {
         set({ autoMuteDelayMs });
     },
 
-    toogleShowKeyboardKeys: () => {
+    toggleShowKeyboardKeys: () => {
         set((state) => ({ showKeyboardKeys: !state.showKeyboardKeys }));
+    },
+
+    setVolume: (volume: number) => {
+        set({ volume });
+    },
+
+    loadGuitars: async () => {
+        try {
+            const data = await getAllGuitars();
+
+            set({
+                guitars: data,
+                selectedGuitar: data[0],
+            });
+        } catch (error) {
+            console.error(error);
+        }
     },
 });

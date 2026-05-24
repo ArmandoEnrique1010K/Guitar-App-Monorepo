@@ -8,8 +8,8 @@ export class ConfigurationController {
             const {
                 volume,
                 holdToPlay,
-                muteOnSameString,
-                muteOnDifferentString,
+                allowSameStringOverlap,
+                allowDifferentStringOverlap,
                 loopMode,
                 loopIntervalMs,
                 autoMute,
@@ -54,8 +54,8 @@ export class ConfigurationController {
                 guitarBehavior: {
                     volume,
                     holdToPlay,
-                    muteOnSameString,
-                    muteOnDifferentString,
+                    allowSameStringOverlap,
+                    allowDifferentStringOverlap,
                 },
 
                 playbackSettings: {
@@ -106,8 +106,8 @@ export class ConfigurationController {
                 // GuitarBehavior
                 volume,
                 holdToPlay,
-                muteOnSameString,
-                muteOnDifferentString,
+                allowSameStringOverlap,
+                allowDifferentStringOverlap,
                 // PlaybackSettings
                 loopMode,
                 loopIntervalMs,
@@ -133,10 +133,10 @@ export class ConfigurationController {
 
             req.configuration!.guitarBehavior.volume = volume;
             req.configuration!.guitarBehavior.holdToPlay = holdToPlay;
-            req.configuration!.guitarBehavior.muteOnSameString =
-                muteOnSameString;
-            req.configuration!.guitarBehavior.muteOnDifferentString =
-                muteOnDifferentString;
+            req.configuration!.guitarBehavior.allowSameStringOverlap =
+                allowSameStringOverlap;
+            req.configuration!.guitarBehavior.allowDifferentStringOverlap =
+                allowDifferentStringOverlap;
 
             req.configuration!.playbackSettings.loopMode = loopMode;
             req.configuration!.playbackSettings.loopIntervalMs = loopIntervalMs;

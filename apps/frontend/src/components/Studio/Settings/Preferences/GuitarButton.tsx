@@ -2,13 +2,12 @@ import { usePreferences } from '@/hooks/usePreferences';
 import { SelectOptionButton } from '@/ui/Studio/SelectOptionButton';
 
 export const GuitarButton = () => {
-    const { selectedGuitar, guitarsList, changeSelectedGuitar } =
-        usePreferences();
+    const { selectedGuitar, guitars, setSelectedGuitar } = usePreferences();
 
     const handleChange = (value: string) => {
-        const guitar = guitarsList.find((guitar) => guitar.name === value);
+        const guitar = guitars.find((guitar) => guitar.name === value);
         if (guitar) {
-            changeSelectedGuitar(guitar);
+            setSelectedGuitar(guitar);
         }
     };
 
@@ -16,7 +15,7 @@ export const GuitarButton = () => {
         <>
             <SelectOptionButton
                 value={selectedGuitar?.name || ''}
-                options={guitarsList.map((guitar) => guitar.name)}
+                options={guitars.map((guitar) => guitar.name)}
                 onChange={handleChange}
                 title="Cambie la guitarra seleccionada"
             />

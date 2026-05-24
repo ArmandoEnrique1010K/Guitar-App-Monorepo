@@ -3,19 +3,19 @@ import { useAppStore } from '@/store/useAppStore';
 export const useControlBar = () => {
     // CONFIGURACIONES EN LA BARRA
     const rootChord = useAppStore((state) => state.rootChord);
-    const changeRootChord = useAppStore((state) => state.changeRootChord);
+    const setRootChord = useAppStore((state) => state.setRootChord);
     const lockOpenString = useAppStore((state) => state.lockOpenString);
-    const toogleLockOpenString = useAppStore(
-        (state) => state.toogleLockOpenString,
+    const toggleLockOpenString = useAppStore(
+        (state) => state.toggleLockOpenString,
     );
     const minRootChord = useAppStore((state) => state.minRootChord);
     const maxRootChord = useAppStore((state) => state.maxRootChord);
 
     return {
         rootChord,
-        changeRootChord,
+        setRootChord,
         lockOpenString,
-        toogleLockOpenString,
+        toggleLockOpenString,
         minRootChord,
         maxRootChord,
     };

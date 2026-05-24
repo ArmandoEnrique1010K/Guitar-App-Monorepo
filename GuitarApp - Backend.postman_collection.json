@@ -25,15 +25,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/create-account",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "create-account"
-              ]
+              "path": ["api", "auth", "create-account"]
             }
           },
           "response": []
@@ -54,15 +48,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/confirm-account",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "confirm-account"
-              ]
+              "path": ["api", "auth", "confirm-account"]
             }
           },
           "response": []
@@ -83,15 +71,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/login",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
+              "path": ["api", "auth", "login"]
             }
           },
           "response": []
@@ -112,15 +94,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/request-code",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "request-code"
-              ]
+              "path": ["api", "auth", "request-code"]
             }
           },
           "response": []
@@ -141,15 +117,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/forgot-password",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "forgot-password"
-              ]
+              "path": ["api", "auth", "forgot-password"]
             }
           },
           "response": []
@@ -170,15 +140,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/validate-token",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "validate-token"
-              ]
+              "path": ["api", "auth", "validate-token"]
             }
           },
           "response": []
@@ -199,16 +163,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/auth/update-password/268320",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "update-password",
-                "268320"
-              ]
+              "path": ["api", "auth", "update-password", "268320"]
             }
           },
           "response": []
@@ -223,15 +180,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/auth/user",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "user"
-              ]
+              "path": ["api", "auth", "user"]
             }
           },
           "response": []
@@ -243,15 +194,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/auth/logout",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "auth",
-                "logout"
-              ]
+              "path": ["api", "auth", "logout"]
             }
           },
           "response": []
@@ -287,14 +232,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/profile",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "profile"
-              ]
+              "path": ["api", "profile"]
             }
           },
           "response": []
@@ -318,15 +258,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/profile/update-password",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "profile",
-                "update-password"
-              ]
+              "path": ["api", "profile", "update-password"]
             }
           },
           "response": []
@@ -357,15 +291,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/profile/check-password",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "profile",
-                "check-password"
-              ]
+              "path": ["api", "profile", "check-password"]
             }
           },
           "response": []
@@ -391,14 +319,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/notebook",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "notebook"
-              ]
+              "path": ["api", "notebook"]
             }
           },
           "response": []
@@ -410,14 +333,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/notebook",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "notebook"
-              ]
+              "path": ["api", "notebook"]
             }
           },
           "response": []
@@ -441,15 +359,9 @@
             },
             "url": {
               "raw": "localhost:4000/api/notebook/69f66f0a3cc109b09f0a53f5",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "notebook",
-                "69f66f0a3cc109b09f0a53f5"
-              ]
+              "path": ["api", "notebook", "69f66f0a3cc109b09f0a53f5"]
             }
           },
           "response": []
@@ -461,15 +373,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/notebook/69f66f0a3cc109b09f0a53f5",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "notebook",
-                "69f66f0a3cc109b09f0a53f5"
-              ]
+              "path": ["api", "notebook", "69f66f0a3cc109b09f0a53f5"]
             }
           },
           "response": []
@@ -486,7 +392,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"End 2\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"muteOnSameString\": true,\r\n    \"muteOnDifferentString\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 1000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n    \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.7,\r\n                \"oversample\": \"2x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"name\": \"End 2\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"allowSameStringOverlap\": true,\r\n    \"allowDifferentStringOverlap\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 1000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n    \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.7,\r\n                \"oversample\": \"2x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -495,9 +401,7 @@
             },
             "url": {
               "raw": "localhost:4000/api/configuration/notebook/69f686976f0d243c8ce41fbd/guitar/69f67d0437b845cd4182e2d5",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
               "path": [
                 "api",
@@ -518,9 +422,7 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/configuration/notebook/69f686976f0d243c8ce41fbd",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
               "path": [
                 "api",
@@ -539,7 +441,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"End\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"muteOnSameString\": true,\r\n    \"muteOnDifferentString\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 2000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n        \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.2,\r\n                \"oversample\": \"4x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"name\": \"End\",\r\n    \"volume\": 1,\r\n    \"holdToPlay\": true,\r\n    \"allowSameStringOverlap\": true,\r\n    \"allowDifferentStringOverlap\": true,\r\n    \"loopMode\": true,\r\n    \"loopIntervalMs\": 2000,\r\n    \"autoMute\": true,\r\n    \"autoMuteDelayMs\": 100,\r\n    \"rootChord\": 4,\r\n    \"lockOpenString\": true,\r\n    \"stringOrder\": [4,5,0,1,2,3],\r\n        \"effects\": [\r\n        {\r\n            \"type\": \"distortion\",\r\n            \"order\": 1,\r\n            \"enabled\": true,\r\n            \"params\": {\r\n                \"distortion\": 0.2,\r\n                \"oversample\": \"4x\",\r\n                \"wet\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -548,9 +450,7 @@
             },
             "url": {
               "raw": "localhost:4000/api/configuration/69f6d741236aec096b8cf59e/guitar/69f6ca965795b3cfc5480cb4",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
               "path": [
                 "api",
@@ -570,15 +470,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/configuration/69f6b646ef49976a57f1b9ea",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "configuration",
-                "69f6b646ef49976a57f1b9ea"
-              ]
+              "path": ["api", "configuration", "69f6b646ef49976a57f1b9ea"]
             }
           },
           "response": []
@@ -595,14 +489,9 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/guitar",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
-              "path": [
-                "api",
-                "guitar"
-              ]
+              "path": ["api", "guitar"]
             }
           },
           "response": []
@@ -619,9 +508,7 @@
             "header": [],
             "url": {
               "raw": "localhost:4000/api/noteSample/guitar/69f6ca965795b3cfc5480cb4",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "4000",
               "path": [
                 "api",

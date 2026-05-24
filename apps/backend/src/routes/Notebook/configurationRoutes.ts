@@ -23,8 +23,8 @@ router.post(
 
     body("volume"),
     body("holdToPlay"),
-    body("muteOnSameString"),
-    body("muteOnDifferentString"),
+    body("allowSameStringOverlap"),
+    body("allowDifferentStringOverlap"),
 
     // PlaybackSettingsSchema
     body("loopMode"),
@@ -58,8 +58,8 @@ router.put(
     // GuitarBehavior
     body("volume"),
     body("holdToPlay"),
-    body("muteOnSameString"),
-    body("muteOnDifferentString"),
+    body("allowSameStringOverlap"),
+    body("allowDifferentStringOverlap"),
 
     // PlaybackSettings
     body("loopMode"),

@@ -1,3 +1,5 @@
+import { AllowDifferentStringOverlapButton } from '@/components/Studio/Settings/Preferences/AllowDifferentStringOverlapButton';
+import { AllowSameStringOverlapButton } from '@/components/Studio/Settings/Preferences/AllowSameStringOverlapButton';
 import { AutoMuteButton } from '@/components/Studio/Settings/Preferences/AutoMuteButton';
 import { AutoMuteSlider } from '@/components/Studio/Settings/Preferences/AutoMuteSlider';
 import { GuitarButton } from '@/components/Studio/Settings/Preferences/GuitarButton';
@@ -5,8 +7,6 @@ import { GuitarImage } from '@/components/Studio/Settings/Preferences/GuitarImag
 import { HoldToPlayButton } from '@/components/Studio/Settings/Preferences/HoldToPlayButton';
 import { LoopModeButton } from '@/components/Studio/Settings/Preferences/LoopModeButton';
 import { LoopModeSlider } from '@/components/Studio/Settings/Preferences/LoopModeSlider';
-import { MuteOnDifferentStringButton } from '@/components/Studio/Settings/Preferences/MuteOnDifferentStringButton';
-import { MuteOnSameStringButton } from '@/components/Studio/Settings/Preferences/MuteOnSameStringButton';
 import { ShowKeyboardButton } from '@/components/Studio/Settings/Preferences/ShowKeyboardButton';
 import { StringOrderGroup } from '@/components/Studio/Settings/Preferences/StringOrderGroup';
 import { VolumeSlider } from '@/components/Studio/Settings/Preferences/VolumeSlider';
@@ -24,8 +24,8 @@ export const PreferencesPanel = () => {
                     <div className="flex lg:flex-row flex-col gap-4 lg:items-center items-start">
                         <div className="flex flex-row gap-2">
                             <HoldToPlayButton />
-                            <MuteOnSameStringButton />
-                            <MuteOnDifferentStringButton />
+                            <AllowSameStringOverlapButton />
+                            <AllowDifferentStringOverlapButton />
                             <div className="sm:flex hidden">
                                 <ShowKeyboardButton />
                             </div>

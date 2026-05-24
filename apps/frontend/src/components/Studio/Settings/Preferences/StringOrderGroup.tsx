@@ -14,7 +14,7 @@ const KEY_ROW_LABELS = [
 // Componente para mostrar el orden de las cuerdas
 export const StringOrderGroup = () => {
     // El tipo de stringOrder es arreglo de numeros
-    const { stringOrder, changeStringOrder } = usePreferences();
+    const { stringOrder, setStringOrder } = usePreferences();
 
     // Derivamos los objetos desde Zustand
     const items = useMemo(() => {
@@ -36,8 +36,8 @@ export const StringOrderGroup = () => {
     useEffect(() => {
         // console.log(keysRowType.map((item) => item.row));
 
-        changeStringOrder(keysRowType.map((item) => item.row));
-    }, [keysRowType, changeStringOrder]);
+        setStringOrder(keysRowType.map((item) => item.row));
+    }, [keysRowType, setStringOrder]);
 
     return (
         <div

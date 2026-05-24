@@ -5,9 +5,9 @@ export type ControlBarSliceType = {
     rootChord: number;
     minRootChord: number;
     maxRootChord: number;
-    changeRootChord: (rootChord: number) => void;
+    setRootChord: (rootChord: number) => void;
     lockOpenString: boolean; // Bloquear acorde 0
-    toogleLockOpenString: () => void;
+    toggleLockOpenString: () => void;
     pauseAllNotes: () => void;
 };
 
@@ -20,10 +20,10 @@ export const controlBarSlice: StateCreator<ControlBarSliceType> = (
     maxRootChord: 13,
     lockOpenString: false,
 
-    changeRootChord: (rootChord: number) => {
+    setRootChord: (rootChord: number) => {
         set({ rootChord: rootChord });
     },
-    toogleLockOpenString: () => {
+    toggleLockOpenString: () => {
         set({ lockOpenString: !get().lockOpenString });
 
         // Cada vez que se bloquea el acorde inicial debe cambiar los rangos de los sliders

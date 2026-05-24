@@ -70,8 +70,8 @@ end note
 object GuitarBehavior <<embedded>> {
   Number volume
   Boolean holdToPlay
-  Boolean muteOnSameString
-  Boolean muteOnDifferentString
+  Boolean allowSameStringOverlap
+  Boolean allowDifferentStringOverlap
 }
 note bottom of GuitarBehavior
 Representa las propiedades relacionadas

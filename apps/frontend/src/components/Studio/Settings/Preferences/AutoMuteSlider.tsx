@@ -2,13 +2,12 @@ import { HorizontalSlider } from '@/ui/Studio/HorizontalSlider';
 import { usePreferences } from '@/hooks/usePreferences';
 
 export const AutoMuteSlider = () => {
-    const { autoMuteDelayMs, changeAutoMuteDelayMs, autoMute } =
-        usePreferences();
+    const { autoMuteDelayMs, setAutoMuteDelayMs, autoMute } = usePreferences();
 
     return (
         <HorizontalSlider
             value={autoMuteDelayMs}
-            onChange={changeAutoMuteDelayMs}
+            onChange={setAutoMuteDelayMs}
             unit="ms"
             step={1}
             min={50}

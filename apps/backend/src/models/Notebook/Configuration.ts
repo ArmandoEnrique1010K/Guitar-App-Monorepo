@@ -1,12 +1,12 @@
 import {
+    defaultAllowDifferentStringOverlap,
+    defaultAllowSameStringOverlap,
     defaultAutoMute,
     defaultAutoMuteDelayMs,
     defaultHoldToPlay,
     defaultLockOpenString,
     defaultLoopIntervalMs,
     defaultLoopMode,
-    defaultMuteOnDifferentString,
-    defaultMuteOnSameString,
     defaultRootChord,
     defaultStringOrder,
     defaultVolume,
@@ -16,8 +16,8 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 export interface IGuitarBehaviorSchema extends Document {
     volume: number;
     holdToPlay: boolean;
-    muteOnSameString: boolean;
-    muteOnDifferentString: boolean;
+    allowSameStringOverlap: boolean;
+    allowDifferentStringOverlap: boolean;
 }
 
 export interface IPlaybackSettingsSchema extends Document {
@@ -63,10 +63,13 @@ const GuitarBehaviorSchema = new Schema(
     {
         volume: { type: Number, default: defaultVolume },
         holdToPlay: { type: Boolean, default: defaultHoldToPlay },
-        muteOnSameString: { type: Boolean, default: defaultMuteOnSameString },
-        muteOnDifferentString: {
+        allowSameStringOverlap: {
             type: Boolean,
-            default: defaultMuteOnDifferentString,
+            default: defaultAllowSameStringOverlap,
+        },
+        allowDifferentStringOverlap: {
+            type: Boolean,
+            default: defaultAllowDifferentStringOverlap,
         },
     },
     { _id: false },

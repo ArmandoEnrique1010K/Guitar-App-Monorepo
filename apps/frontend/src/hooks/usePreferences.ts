@@ -1,85 +1,88 @@
-import { getAllGuitars } from '@/api/GuitarAPI';
 import { useAppStore } from '@/store/useAppStore';
 import { useEffect } from 'react';
 
 export const usePreferences = () => {
     // Obten la guitarra seleccionada
-    const guitarsList = useAppStore((state) => state.guitarsList);
+    const guitars = useAppStore((state) => state.guitars);
     const selectedGuitar = useAppStore((state) => state.selectedGuitar);
-    const changeSelectedGuitar = useAppStore(
-        (state) => state.changeSelectedGuitar,
-    );
-    const setGuitarsList = useAppStore((state) => state.setGuitarsList);
+    const setSelectedGuitar = useAppStore((state) => state.setSelectedGuitar);
     const stringOrder = useAppStore((state) => state.stringOrder);
-    const changeStringOrder = useAppStore((state) => state.changeStringOrder);
+    const setStringOrder = useAppStore((state) => state.setStringOrder);
 
     const holdToPlay = useAppStore((state) => state.holdToPlay);
-    const toogleHoldToPlay = useAppStore((state) => state.toogleHoldToPlay);
+    const toggleHoldToPlay = useAppStore((state) => state.toggleHoldToPlay);
 
-    const muteOnSameString = useAppStore((state) => state.muteOnSameString);
-    const toogleMuteOnSameString = useAppStore(
-        (state) => state.toogleMuteOnSameString,
+    const allowSameStringOverlap = useAppStore(
+        (state) => state.allowSameStringOverlap,
+    );
+    const toggleAllowSameStringOverlap = useAppStore(
+        (state) => state.toggleAllowSameStringOverlap,
     );
 
-    const muteOnDifferentString = useAppStore(
-        (state) => state.muteOnDifferentString,
+    const allowDifferentStringOverlap = useAppStore(
+        (state) => state.allowDifferentStringOverlap,
     );
-    const toogleMuteOnDifferentString = useAppStore(
-        (state) => state.toogleMuteOnDifferentString,
+    const toggleAllowDifferentStringOverlap = useAppStore(
+        (state) => state.toggleAllowDifferentStringOverlap,
     );
 
     const loopMode = useAppStore((state) => state.loopMode);
-    const toogleLoopMode = useAppStore((state) => state.toogleLoopMode);
+    const toggleLoopMode = useAppStore((state) => state.toggleLoopMode);
 
     const loopIntervalMs = useAppStore((state) => state.loopIntervalMs);
-    const changeLoopIntervalMs = useAppStore(
-        (state) => state.changeLoopIntervalMs,
-    );
+    const setLoopIntervalMs = useAppStore((state) => state.setLoopIntervalMs);
 
     const autoMute = useAppStore((state) => state.autoMute);
-    const toogleAutoMute = useAppStore((state) => state.toogleAutoMute);
+    const toggleAutoMute = useAppStore((state) => state.toggleAutoMute);
 
     const autoMuteDelayMs = useAppStore((state) => state.autoMuteDelayMs);
-    const changeAutoMuteDelayMs = useAppStore(
-        (state) => state.changeAutoMuteDelayMs,
-    );
+    const setAutoMuteDelayMs = useAppStore((state) => state.setAutoMuteDelayMs);
 
     const showKeyboardKeys = useAppStore((state) => state.showKeyboardKeys);
-    const toogleShowKeyboardKeys = useAppStore(
-        (state) => state.toogleShowKeyboardKeys,
+    const toggleShowKeyboardKeys = useAppStore(
+        (state) => state.toggleShowKeyboardKeys,
     );
+    const volume = useAppStore((state) => state.volume);
+    const setVolume = useAppStore((state) => state.setVolume);
+    const loadGuitars = useAppStore((state) => state.loadGuitars);
 
-    // Cuando se monta por primera vez
     useEffect(() => {
-        // Llamar a la API
-        // TODO: ¿SERA POSIBLE HACER EL LLAMADO DESDE EL SLIDE DE ZUSTAND?
-        getAllGuitars().then((data) => {
-            setGuitarsList(data);
-            changeSelectedGuitar(data[0]);
-        });
-    }, [changeSelectedGuitar, setGuitarsList]);
+        loadGuitars();
+    }, [loadGuitars]);
+    // // Cuando se monta por primera vez
+    // useEffect(() => {
+    //     // Llamar a la API
+    //     // TODO: ¿SERA POSIBLE HACER EL LLAMADO DESDE EL SLIDE DE ZUSTAND?
+    //     getAllGuitars().then((data) => {
+    //         setGuitars(data);
+    //         setSelectedGuitar(data[0]);
+    //     });
+    // }, [setSelectedGuitar, setGuitars]);
 
     return {
-        guitarsList,
+        guitars,
         selectedGuitar,
-        changeSelectedGuitar,
+        setSelectedGuitar,
         stringOrder,
-        changeStringOrder,
+        setStringOrder,
         holdToPlay,
-        toogleHoldToPlay,
-        muteOnSameString,
-        toogleMuteOnSameString,
-        muteOnDifferentString,
-        toogleMuteOnDifferentString,
+        toggleHoldToPlay,
+        allowSameStringOverlap,
+        toggleAllowSameStringOverlap,
+        allowDifferentStringOverlap,
+        toggleAllowDifferentStringOverlap,
         loopMode,
-        toogleLoopMode,
+        toggleLoopMode,
         loopIntervalMs,
-        changeLoopIntervalMs,
+        setLoopIntervalMs,
         autoMute,
-        toogleAutoMute,
+        toggleAutoMute,
         autoMuteDelayMs,
-        changeAutoMuteDelayMs,
+        setAutoMuteDelayMs,
         showKeyboardKeys,
-        toogleShowKeyboardKeys,
+        toggleShowKeyboardKeys,
+        volume,
+        setVolume,
+        loadGuitars,
     };
 };
