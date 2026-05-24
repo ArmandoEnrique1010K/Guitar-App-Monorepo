@@ -2,6 +2,8 @@ import { generateResponseForAI } from '@/api/AssistantAPI';
 import type { StateCreator } from 'zustand';
 
 export type AssistantSliceType = {
+    showPanel: boolean;
+    toogleShowPanel: () => void;
     resultFromAI: string;
     isGeneratingResultFromAI: boolean;
 
@@ -9,8 +11,15 @@ export type AssistantSliceType = {
 };
 
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
+    showPanel: false,
     resultFromAI: '',
     isGeneratingResultFromAI: false,
+
+    toogleShowPanel: () => {
+        set((state) => ({
+            showPanel: !state.showPanel,
+        }));
+    },
 
     generateResponse: async (prompt: string) => {
         set({
