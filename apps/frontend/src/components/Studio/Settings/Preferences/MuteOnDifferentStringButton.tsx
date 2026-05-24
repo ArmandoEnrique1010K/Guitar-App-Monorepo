@@ -1,15 +1,17 @@
 import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { useState } from 'react';
 import { ShuffleIcon } from '@/icons/ShuffleIcon';
+import { usePreferences } from '@/hooks/usePreferences';
 
 export const MuteOnDifferentStringButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const { muteOnDifferentString, toogleMuteOnDifferentString } =
+        usePreferences();
 
     return (
         <SwitchButton
             text="Mantener entre cuerdas"
-            value={darkMode}
-            onClick={() => setDarkMode(!darkMode)}
+            title="Mantener reproduciendo notas en diferentes cuerdas"
+            value={muteOnDifferentString}
+            onClick={toogleMuteOnDifferentString}
             icon={<ShuffleIcon className="w-6 h-6" />}
         />
     );

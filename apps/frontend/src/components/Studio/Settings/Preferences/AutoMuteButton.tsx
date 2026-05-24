@@ -1,15 +1,15 @@
 import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { useState } from 'react';
 import { VolumeOffIcon } from '@/icons/VolumeOffIcon';
+import { usePreferences } from '@/hooks/usePreferences';
 
 export const AutoMuteButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
-
+    const { autoMute, toogleAutoMute } = usePreferences();
     return (
         <SwitchButton
             text="Auto silenciar pulso"
-            value={darkMode}
-            onClick={() => setDarkMode(!darkMode)}
+            title="Silenciar nota reproducida luego de un cierto tiempo"
+            value={autoMute}
+            onClick={toogleAutoMute}
             icon={<VolumeOffIcon className="size-6" />}
         />
     );

@@ -1,69 +1,50 @@
+import { usePreferences } from '@/hooks/usePreferences';
 import { useDragAndDrop } from '@formkit/drag-and-drop/react';
+import { useEffect, useMemo } from 'react';
 
-// Componente para mostrar el orden de las cuerdas
-const initialKeysRow = [
-    {
-        row: 0,
-        value: 'Sin teclas',
-    },
-    {
-        row: 1,
-        value: 'Sin teclas',
-    },
-    {
-        row: 2,
-        value: 'Fila Z - M',
-    },
-    {
-        row: 3,
-        value: 'Fila A - Ñ',
-    },
-    {
-        row: 4,
-        value: 'Fila Q - P',
-    },
-    {
-        row: 5,
-        value: 'Fila 1 - 0',
-    },
+const KEY_ROW_LABELS = [
+    'Fila 1 - 0',
+    'Fila Q - P',
+    'Fila A - Ñ',
+    'Fila Z - M',
+    'Sin teclas',
+    'Sin teclas',
 ];
 
+// Componente para mostrar el orden de las cuerdas
 export const StringOrderGroup = () => {
-    // const [keysRowTypeState, setKeysRowTypeState] = useState<
-    //     { row: number; value: string }[]
-    // >([]);
+    // El tipo de stringOrder es arreglo de numeros
+    const { stringOrder, changeStringOrder } = usePreferences();
+
+    // Derivamos los objetos desde Zustand
+    const items = useMemo(() => {
+        return stringOrder.map((row) => ({
+            row,
+            value: KEY_ROW_LABELS[row],
+        }));
+    }, [stringOrder]);
 
     const [parent, keysRowType] = useDragAndDrop<
         HTMLUListElement,
         { row: number; value: string }
-    >(initialKeysRow, {
+    >(items, {
         sortable: true,
     });
 
-    // useEffect(() => {
-    //     setKeysRow(keysRow.map(({ row }) => row));
-    // }, [keysRowType, keysRow]);
+    // Cuando cambia el drag and drop
+    // actualizamos Zustand
+    useEffect(() => {
+        // console.log(keysRowType.map((item) => item.row));
+
+        changeStringOrder(keysRowType.map((item) => item.row));
+    }, [keysRowType, changeStringOrder]);
 
     return (
         <div
-            className="
-        w-36
-        bg-black
-        p-1
-            border-2
-            border-t-slate-900
-            border-l-slate-900
-            border-r-slate-500
-            border-b-slate-500
-        "
+            className="w-36 bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
+            border-b-slate-500"
         >
-            <ul
-                ref={parent}
-                className="          
-                    flex
-                    flex-col
-                "
-            >
+            <ul ref={parent} className="flex flex-col">
                 {keysRowType.map((item, index) => (
                     <li
                         key={item.row}

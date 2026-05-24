@@ -1,17 +1,18 @@
 import { HorizontalSlider } from '@/ui/Studio/HorizontalSlider';
-import { useState } from 'react';
+import { usePreferences } from '@/hooks/usePreferences';
 
 export const LoopModeSlider = () => {
-    const [interval, setInterval] = useState(45);
+    const { loopIntervalMs, changeLoopIntervalMs, loopMode } = usePreferences();
 
     return (
         <HorizontalSlider
-            value={interval}
-            onChange={setInterval}
+            value={loopIntervalMs}
+            onChange={changeLoopIntervalMs}
             unit="ms"
             step={1}
             min={50}
             max={3000}
+            disabled={!loopMode}
         />
     );
 };

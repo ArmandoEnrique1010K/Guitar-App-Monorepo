@@ -1,16 +1,16 @@
 import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { useState } from 'react';
 import { HandIcon } from '@/icons/HandIcon';
+import { usePreferences } from '@/hooks/usePreferences';
 
 export const HoldToPlayButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const { holdToPlay, toogleHoldToPlay } = usePreferences();
 
     return (
         <SwitchButton
             text="Mantener tecla pulsada"
             title="Manten pulsada una tecla para reproducir"
-            value={darkMode}
-            onClick={() => setDarkMode(!darkMode)}
+            value={holdToPlay}
+            onClick={toogleHoldToPlay}
             icon={<HandIcon className="w-6 h-6" />}
         />
     );

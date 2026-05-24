@@ -26,3 +26,23 @@ export interface UpdatePasswordForm {
     password: string;
     password_confirmation: string;
 }
+
+export type Neck = {
+    rope: number;
+    frets: Frets;
+}[];
+
+export type Frets = {
+    chord: number;
+    file: string;
+    key?: string;
+}[];
+
+export type Note = {
+    rope: number | null;
+    chord: number | null;
+};
+export type Instrument = {
+    id: string;
+    name: string;
+};

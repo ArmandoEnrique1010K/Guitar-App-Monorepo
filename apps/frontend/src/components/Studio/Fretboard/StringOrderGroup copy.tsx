@@ -1,7 +1,7 @@
 import { useDragAndDrop } from '@formkit/drag-and-drop/react';
 import { animations } from '@formkit/drag-and-drop';
 
-// USAR EL DISEÑO PARA LOS BOTONES DE LA GUITARRA
+// TODO:USAR EL DISEÑO PARA LOS BOTONES DE LA GUITARRA
 const initialKeysRow = [
     {
         row: 0,
@@ -64,7 +64,7 @@ export const StringOrderGroup = () => {
         >
             <ul
                 ref={parent}
-                className="            flex
+                className="flex
             flex-col
             gap-1
 "

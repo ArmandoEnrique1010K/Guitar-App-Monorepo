@@ -33,7 +33,9 @@ export const HorizontalSlider = ({
     };
 
     return (
-        <div className="flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide">
+        <div
+            className={`${disabled ? 'opacity-50' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
+        >
             {label && (
                 <div className="flex justify-between items-center">
                     {<span className="text-gray-200">{label}</span>}

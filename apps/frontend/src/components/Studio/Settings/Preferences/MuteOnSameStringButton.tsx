@@ -1,15 +1,16 @@
 import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { useState } from 'react';
 import { WaveformIcon } from '@/icons/WaveformIcon';
+import { usePreferences } from '@/hooks/usePreferences';
 
 export const MuteOnSameStringButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const { muteOnSameString, toogleMuteOnSameString } = usePreferences();
 
     return (
         <SwitchButton
             text="Mantener misma cuerda"
-            value={darkMode}
-            onClick={() => setDarkMode(!darkMode)}
+            title="Mantener reproduciendo notas en la misma cuerda"
+            value={muteOnSameString}
+            onClick={toogleMuteOnSameString}
             icon={<WaveformIcon className="w-6 h-6" />}
         />
     );

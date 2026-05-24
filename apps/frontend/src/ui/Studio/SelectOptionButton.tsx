@@ -75,7 +75,7 @@ export const SelectOptionButton = ({
                 "
             >
                 <span className="text-xs flex-1 text-left">{value}</span>
-                <div className="border-l border-l-gray-700 pl-1">
+                <div className="border-l border-l-gray-700 pl-1 sm:flex hidden">
                     <TriangleDownIcon className="size-5" />
                 </div>
             </div>

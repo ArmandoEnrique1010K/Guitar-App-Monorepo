@@ -5,9 +5,10 @@ type Props = {
     min: number;
     max: number;
     onChange: (value: number) => void;
+    title?: string;
 };
 
-export const LongSlider = ({ value, min, max, onChange }: Props) => {
+export const LongSlider = ({ value, min, max, onChange, title }: Props) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(Number(e.target.value));
     };
@@ -15,6 +16,7 @@ export const LongSlider = ({ value, min, max, onChange }: Props) => {
     return (
         <div className="flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide">
             <input
+                title={title}
                 type="range"
                 min={min}
                 max={max}

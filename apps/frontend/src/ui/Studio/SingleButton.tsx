@@ -15,8 +15,8 @@ export const SingleButton = ({ text, onClick, title, icon }: Props) => {
     return (
         <button
             className={`
-                flex items-center gap-2
-                px-2 py-1
+                flex items-center sm:gap-2 gap-1
+                sm:px-2 sm:py-1 px-1 py-0.5
                 border-2
                 uppercase
                 font-bold
