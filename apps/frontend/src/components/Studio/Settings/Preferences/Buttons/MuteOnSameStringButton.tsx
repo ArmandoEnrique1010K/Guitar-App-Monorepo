@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/components/Studio/Settings/Preferences/SwitchButton';
+import { SwitchButton } from '@/ui/Studio/SwitchButton';
 import { useState } from 'react';
-import Waveform from '@/icons/Waveform.svg';
+import { WaveformIcon } from '@/icons/WaveformIcon';
 
 export const MuteOnSameStringButton = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -10,7 +10,7 @@ export const MuteOnSameStringButton = () => {
             text="Mantener misma cuerda"
             value={darkMode}
             onClick={() => setDarkMode(!darkMode)}
-            icon={<img src={Waveform} className="w-6 h-6" alt="Waveform" />}
+            icon={<WaveformIcon className="w-6 h-6" />}
         />
     );
 };

@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/components/Studio/Settings/Preferences/SwitchButton';
-import Hand from '@/icons/Hand.svg';
+import { SwitchButton } from '@/ui/Studio/SwitchButton';
 import { useState } from 'react';
+import { HandIcon } from '@/icons/HandIcon';
 
 export const HoldToPlayButton = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -11,7 +11,7 @@ export const HoldToPlayButton = () => {
             title="Manten pulsada una tecla para reproducir"
             value={darkMode}
             onClick={() => setDarkMode(!darkMode)}
-            icon={<img src={Hand} className="w-6 h-6" alt="Hand" />}
+            icon={<HandIcon className="w-6 h-6" />}
         />
     );
 };

@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/components/Studio/Settings/Preferences/SwitchButton';
+import { SwitchButton } from '@/ui/Studio/SwitchButton';
 import { useState } from 'react';
-import RepeatAlt from '@/icons/RepeatAlt.svg';
+import { RepeatAltIcon } from '@/icons/RepeatAltIcon';
 
 export const LoopModeButton = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -10,7 +10,7 @@ export const LoopModeButton = () => {
             text="Modo bucle a pulso"
             value={darkMode}
             onClick={() => setDarkMode(!darkMode)}
-            icon={<img src={RepeatAlt} className="w-6 h-6" alt="Repeat" />}
+            icon={<RepeatAltIcon className="size-6" />}
         />
     );
 };

@@ -1,0 +1,27 @@
+type Props = {
+    className?: string;
+};
+
+export const RepeatAltIcon = ({ className = '' }: Props) => {
+    return (
+        <>
+            <svg
+                width="800px"
+                height="800px"
+                className={className}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M10.0001 17H8.00098C4.68727 17 2.00098 14.3137 2.00098 11C2.00098 7.68629 4.68727 5 8.00098 5H16.0001C19.3138 5 22.0001 7.68629 22.0001 11C22.0001 14.3137 19.3138 17 16.0001 17H14.0001M17.0001 20L14.0001 17M14.0001 17L17.0001 14"
+                    // En este caso, se especificaba el color en la propiedad stroke
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </>
+    );
+};
