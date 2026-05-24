@@ -34,9 +34,11 @@ export const HorizontalSlider = ({
 
     return (
         <div className="flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide">
-            <div className="flex justify-between items-center">
-                {label && <span className="text-gray-200">{label}</span>}
-            </div>
+            {label && (
+                <div className="flex justify-between items-center">
+                    {<span className="text-gray-200">{label}</span>}
+                </div>
+            )}
             <input
                 type="range"
                 min={min}
@@ -59,7 +61,7 @@ export const HorizontalSlider = ({
             />
             <div className="flex flex-row justify-center items-center gap-1">
                 <div
-                    className="w-8 h-6 flex items-center justify-center text-green-500 bg-black 
+                    className="w-10 h-6 flex items-center justify-center text-green-500 bg-black 
                                 border-2
                                 border-t-slate-900
                                 border-l-slate-900

@@ -59,7 +59,8 @@ export const SwitchButton = ({ text, value, onClick, title, icon }: Props) => {
                 `}
             />
 
-            {isMobile ? (
+            {icon}
+            {/* {isMobile ? (
                 icon
             ) : (
                 <>
@@ -67,7 +68,7 @@ export const SwitchButton = ({ text, value, onClick, title, icon }: Props) => {
                         {text}
                     </span>
                 </>
-            )}
+            )} */}
         </button>
     );
 };

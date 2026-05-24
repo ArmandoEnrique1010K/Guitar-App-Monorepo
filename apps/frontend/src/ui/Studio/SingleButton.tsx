@@ -47,8 +47,7 @@ export const SingleButton = ({ text, onClick, title, icon }: Props) => {
             onClick={onClick}
             title={title}
         >
-            {isMobile ? (
-                // <img src={icon} alt={text} className="w-6 h-6" />
+            {/* {isMobile ? (
                 icon
             ) : (
                 <>
@@ -56,7 +55,8 @@ export const SingleButton = ({ text, onClick, title, icon }: Props) => {
                         {text}
                     </span>
                 </>
-            )}
+            )} */}
+            {icon}
         </button>
     );
 };

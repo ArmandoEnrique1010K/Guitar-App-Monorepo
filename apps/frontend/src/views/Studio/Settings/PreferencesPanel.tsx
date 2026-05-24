@@ -1,0 +1,53 @@
+import { AutoMuteButton } from '@/components/Studio/Settings/Preferences/AutoMuteButton';
+import { AutoMuteSlider } from '@/components/Studio/Settings/Preferences/AutoMuteSlider';
+import { GuitarButton } from '@/components/Studio/Settings/Preferences/GuitarButton';
+import { GuitarImage } from '@/components/Studio/Settings/Preferences/GuitarImage';
+import { HoldToPlayButton } from '@/components/Studio/Settings/Preferences/HoldToPlayButton';
+import { LoopModeButton } from '@/components/Studio/Settings/Preferences/LoopModeButton';
+import { LoopModeSlider } from '@/components/Studio/Settings/Preferences/LoopModeSlider';
+import { MuteOnDifferentStringButton } from '@/components/Studio/Settings/Preferences/MuteOnDifferentStringButton';
+import { MuteOnSameStringButton } from '@/components/Studio/Settings/Preferences/MuteOnSameStringButton';
+import { ShowKeyboardButton } from '@/components/Studio/Settings/Preferences/ShowKeyboardButton';
+import { StringOrderGroup } from '@/components/Studio/Settings/Preferences/StringOrderGroup';
+import { VolumeSlider } from '@/components/Studio/Settings/Preferences/VolumeSlider';
+
+export const PreferencesPanel = () => {
+    // TODO: SOLUCION TEMPORAL: OCULTAR LAS TECLAS EN PANTALLAS MENORES QUE 640PX sm:flex hidden
+    return (
+        <>
+            <div className="p-2 flex flex-row justify-between gap-4">
+                <div className="sm:flex hidden">
+                    <StringOrderGroup />
+                </div>
+
+                <div className="flex flex-col gap-4 flex-1">
+                    <div className="flex lg:flex-row flex-col gap-4 lg:items-center items-start">
+                        <div className="flex flex-row gap-2">
+                            <HoldToPlayButton />
+                            <MuteOnSameStringButton />
+                            <MuteOnDifferentStringButton />
+                            <div className="sm:flex hidden">
+                                <ShowKeyboardButton />
+                            </div>
+                        </div>
+                        <div className="w-full">
+                            <VolumeSlider />
+                        </div>
+                    </div>
+                    <div className="flex flex-row gap-2 w-full">
+                        <LoopModeButton />
+                        <LoopModeSlider />
+                    </div>
+                    <div className="flex flex-row gap-2 w-full">
+                        <AutoMuteButton />
+                        <AutoMuteSlider />
+                    </div>
+                </div>
+                <div className="flex flex-col w-44 gap-2">
+                    <GuitarButton />
+                    <GuitarImage />
+                </div>
+            </div>
+        </>
+    );
+};
