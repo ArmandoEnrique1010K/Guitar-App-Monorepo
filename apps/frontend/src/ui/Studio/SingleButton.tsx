@@ -5,9 +5,16 @@ type Props = {
     onClick: () => void;
     title?: string;
     icon: React.ReactNode;
+    disabled?: boolean;
 };
 
-export const SingleButton = ({ text, onClick, title, icon }: Props) => {
+export const SingleButton = ({
+    text,
+    onClick,
+    title,
+    icon,
+    disabled = false,
+}: Props) => {
     // TODO: EL TAMAÑO PODRIA CAMBIAR EN EL FUTURO
 
     const isMobile = useMediaQuery({ maxWidth: 639.999 });
@@ -15,6 +22,7 @@ export const SingleButton = ({ text, onClick, title, icon }: Props) => {
     return (
         <button
             className={`
+                ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
                 flex items-center sm:gap-2 gap-1
                 sm:px-2 sm:py-1 px-1 py-0.5
                 border-2
@@ -46,6 +54,7 @@ export const SingleButton = ({ text, onClick, title, icon }: Props) => {
 
             onClick={onClick}
             title={title}
+            disabled={disabled}
         >
             {/* {isMobile ? (
                 icon

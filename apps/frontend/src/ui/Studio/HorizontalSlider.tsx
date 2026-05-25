@@ -33,8 +33,9 @@ export const HorizontalSlider = ({
     };
 
     return (
+        // TODO: INVESTIGAR COMO COLOCAR LA CLASE cursor-not-allowed EN LOS ESTILOS CSS (APARTE EN EL DIV CONTENEDOR)
         <div
-            className={`${disabled ? 'opacity-50' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
+            className={`${disabled ? 'opacity-50 ' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
         >
             {label && (
                 <div className="flex justify-between items-center">

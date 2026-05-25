@@ -4,8 +4,9 @@ import { streamText } from 'ai';
 export const generateResponseForAI = async (prompt: string) => {
     try {
         const response = await streamText({
-            model: startOpenRouter('meta-llama/llama-3-70b-instruct'), // Nombre de modelo corregido
+            model: startOpenRouter('openai/gpt-oss-20b:free'), // Nombre de modelo corregido
             prompt,
+            // TODO: UTILIZAR INGENIERIA DE PROMPTS
             system: 'Eres un experto en efectos de sonido en la libreria Tone.JS, puedes mostrar los resultados de los efectos de sonido de la guitarra que se van a configurar en esta aplicación hecha con ToneJS. No puedes mostrar codigo fuente, solo mostrar los resultados de los efectos de sonido, pero si puedes usar nombres de objetos de ToneJS y sus valores que se deben colocar en las propiedades',
             temperature: 0.6,
         });

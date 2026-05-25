@@ -52,14 +52,15 @@ export const LatchButton = ({
             from-gray-400
             to-gray-500
 
-            border-t-gray-800
-            border-l-gray-800
-            border-r-gray-200
-            border-b-gray-200
+            border-t-slate-800
+            border-l-slate-800
+            border-r-slate-200
+            border-b-slate-200
             text-slate-800
 
         `,
                 )}
+                // SOLUCION TEMPORAL, USAR EL COLOR SLATE EN LUGAR DE GRAY PARA LOS BORDES (CASI NO HAY DIFERENCIA VISUAL)
                 onClick={onClick}
                 title={title}
             >

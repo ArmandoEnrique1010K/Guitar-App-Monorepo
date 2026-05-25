@@ -12,7 +12,7 @@ export type AssistantSliceType = {
 
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
     showPanel: false,
-    resultFromAI: '',
+    resultFromAI: '¿En qué puedo ayudarte?',
     isGeneratingResultFromAI: false,
 
     toogleShowPanel: () => {

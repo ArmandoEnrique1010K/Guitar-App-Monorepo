@@ -20,7 +20,7 @@ export const BurgerMenuButton = () => {
                     />
                 </Menu.Trigger>
                 <Menu.Positioner>
-                    <Menu.Content className="min-w-44  border border-gray-200 bg-white shadow-xl outline-none focus:outline-none focus-visible:outline-none flex flex-col">
+                    <Menu.Content className="min-w-44 z-30 border border-gray-200 bg-white shadow-xl outline-none focus:outline-none focus-visible:outline-none flex flex-col">
                         <Menu.Item
                             value="Creditos-del-autor"
                             className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"

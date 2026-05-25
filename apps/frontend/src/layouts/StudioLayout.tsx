@@ -7,7 +7,7 @@ export const StudioLayout = () => {
             <div className="flex flex-col h-screen">
                 <MenuNavbar />
                 {/* TODO: DEBE GUARDAR LA SESION ACTUAL DEL USUARIO EN ZUSTAND */}
-                <div className="w-full flex-1">
+                <div className="w-full flex-1 min-h-0">
                     <Outlet />
                 </div>
             </div>
