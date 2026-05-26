@@ -15,7 +15,9 @@ export const StudioPage = () => {
                     </div>
                     <SettingsPanel />
                 </div>
-                {showPanel && <AssistantSlidingSidebar />}
+                <div className="hidden sm:block">
+                    {showPanel && <AssistantSlidingSidebar />}
+                </div>
             </div>
         </>
     );

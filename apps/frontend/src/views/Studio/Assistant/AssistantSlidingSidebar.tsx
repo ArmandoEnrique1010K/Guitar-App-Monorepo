@@ -22,7 +22,7 @@ export const AssistantSlidingSidebar = () => {
     return (
         // TODO: SUGERENCIA, PASAR DE "to-slate-800" A "to-slate-900"
         <aside
-            className="lg:w-120 w-84 shrink-0 
+            className="xl:w-100 w-80 shrink-0 h-full
             bg-linear-to-l from-slate-700 to-slate-800 
             border-l-2 border-slate-900
             flex flex-col 

@@ -41,6 +41,7 @@ export const SelectOptionButton = ({
             title={title}
         >
             <select
+                id={`select-${title}`}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 className="
@@ -75,7 +76,7 @@ export const SelectOptionButton = ({
                 "
             >
                 <span className="text-xs flex-1 text-left">{value}</span>
-                <div className="border-l border-l-gray-700 pl-1 xl:flex hidden">
+                <div className="border-l border-l-gray-700 pl-1 sm:flex hidden">
                     <TriangleDownIcon className="size-5" />
                 </div>
             </div>

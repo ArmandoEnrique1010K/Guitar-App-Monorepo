@@ -21,7 +21,7 @@ export const PreferencesPanel = () => {
                 </div>
 
                 <div className="flex flex-col gap-4 flex-1">
-                    <div className="flex lg:flex-row flex-col gap-4 lg:items-center items-start">
+                    <div className="flex xl:flex-row flex-col gap-4 xl:items-center items-start">
                         <div className="flex flex-row gap-2">
                             <HoldToPlayButton />
                             <AllowSameStringOverlapButton />

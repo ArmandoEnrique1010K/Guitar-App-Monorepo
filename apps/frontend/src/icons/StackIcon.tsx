@@ -14,7 +14,7 @@ export const StackIcon = ({ className = '' }: Props) => {
         >
             <path
                 d="M0 10l8 4 8-4v2l-8 4-8-4v-2zm0-4l8 4 8-4v2l-8 4-8-4V6zm8-6l8 4-8 4-8-4 8-4z"
-                fill-rule="evenodd"
+                fillRule="evenodd"
             />
         </svg>
     );
