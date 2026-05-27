@@ -40,6 +40,7 @@ export const StringOrderGroup = () => {
     }, [keysRowType, setStringOrder]);
 
     return (
+        // lg:w-36 w-30
         <div
             className="w-36 bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
             border-b-slate-500"

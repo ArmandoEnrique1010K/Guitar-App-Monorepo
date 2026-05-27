@@ -107,12 +107,14 @@ export const Chord = ({
     //         if (noteConfig.enableRepeatNote) stopRepeatingNote(rope, chord);
     //     }
     // };
+
+    // TODO: LA ALTURA DEBE SER DINAMICA DE TAL MANERA QUE OCUPE TODO LA ALTURA DISPONIBLE SEA COMO SEA
     return (
         <button
             className={` ${isActive ? 'bg-[var(--range-color)]' : 'hover:bg-[var(--primary-color)]'} ${
                 chord === 0
-                    ? 'flex-1 text-center text-black border text-base sm:text-lg font-semibold border-solid border-black bg-[var(--icon-color)] h-10 outline-0'
-                    : 'flex-1 text-center text-black border text-base sm:text-lg font-semibold border-solid border-black h-10 outline-0'
+                    ? 'flex-1 text-center text-black border text-base sm:text-lg font-semibold border-solid border-black bg-[var(--icon-color)] h-5 outline-0'
+                    : 'flex-1 text-center text-black border text-base sm:text-lg font-semibold border-solid border-black h-5 outline-0'
             }`}
             // onMouseDown={handleMouseDown}
             // onMouseUp={handleMouseUp}

@@ -12,7 +12,6 @@ export const SettingsPanel = () => {
             <div className="h-52 overflow-y-auto">
                 {selectedPanel === 'preferences' && <PreferencesPanel />}
             </div>
-            <BottomBar />
         </div>
     );
 };

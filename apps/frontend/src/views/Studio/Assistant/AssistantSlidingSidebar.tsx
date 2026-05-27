@@ -22,18 +22,20 @@ export const AssistantSlidingSidebar = () => {
     return (
         // TODO: SUGERENCIA, PASAR DE "to-slate-800" A "to-slate-900"
         <aside
-            className="xl:w-100 w-80 shrink-0 h-full
+            className="2xl:w-120 lg:w-90 w-full shrink-0 h-full min-h-0
             bg-linear-to-l from-slate-700 to-slate-800 
             border-l-2 border-slate-900
             flex flex-col 
-            p-3 gap-3
-            text-xs uppercase tracking-wide font-bold"
+            lg:p-2 lg:gap-2 p-4 gap-4
+            text-xs uppercase tracking-wide font-bold "
         >
             <div
                 className="
                     flex-1
-
+min-h-0
                     bg-black
+                h-full
+
 
                     border-2
                     border-t-slate-900
@@ -43,6 +45,7 @@ export const AssistantSlidingSidebar = () => {
 
                     p-2
 
+                    
                     overflow-y-auto
 
                     text-green-500
@@ -80,7 +83,7 @@ export const AssistantSlidingSidebar = () => {
                         border-l-slate-900
                         border-r-slate-500
                         border-b-slate-500
-                        text-xs
+                         text-xs uppercase tracking-wide font-bold
                     "
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
@@ -93,7 +96,7 @@ export const AssistantSlidingSidebar = () => {
                     disabled={isGeneratingResultFromAI}
                     onClick={handleSubmit}
                     icon={<PaperPlaneIcon className="size-5" />}
-                    title="Enviar pregunta"
+                    title="Responder con IA"
                 />
             </div>
 
