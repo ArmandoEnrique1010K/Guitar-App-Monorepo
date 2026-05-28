@@ -6,8 +6,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const AssistantSlidingSidebar = () => {
-    const { isGeneratingResultFromAI, generateResponse, resultFromAI } =
-        useAssistant();
+    const { isGenerating, generateResponse, response } = useAssistant();
 
     const [question, setQuestion] = useState('');
 
@@ -22,7 +21,7 @@ export const AssistantSlidingSidebar = () => {
     return (
         // TODO: SUGERENCIA, PASAR DE "to-slate-800" A "to-slate-900"
         <aside
-            className="2xl:w-120 lg:w-90 w-full shrink-0 h-full min-h-0
+            className="2xl:w-150 xl:w-120 lg:w-90 w-full shrink-0 h-full min-h-0
             bg-linear-to-l from-slate-700 to-slate-800 
             border-l-2 border-slate-900
             flex flex-col 
@@ -57,15 +56,15 @@ min-h-0
 
                 "
             >
-                <Markdown remarkPlugins={[remarkGfm]}>{resultFromAI}</Markdown>
+                <Markdown remarkPlugins={[remarkGfm]}>{response}</Markdown>
             </div>
-            <div className="flex items-stretch gap-2">
+            <div className="flex items-stretch lg:gap-2 gap-4">
                 <input
                     type="text"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder="Escribe una pregunta..."
-                    disabled={isGeneratingResultFromAI}
+                    disabled={isGenerating}
                     className="
                         flex-1
 
@@ -93,7 +92,7 @@ min-h-0
                 />
                 <SingleButton
                     text=""
-                    disabled={isGeneratingResultFromAI}
+                    disabled={isGenerating}
                     onClick={handleSubmit}
                     icon={<PaperPlaneIcon className="size-5" />}
                     title="Responder con IA"

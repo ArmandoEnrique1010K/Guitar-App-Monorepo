@@ -1,4 +1,5 @@
 import { useAssistant } from '@/hooks/useAssistant';
+import { useBottomBar } from '@/hooks/useBottomBar';
 import { AssistantSlidingSidebar } from '@/views/Studio/Assistant/AssistantSlidingSidebar';
 import { GuitarPanel } from '@/views/Studio/Fretboard/GuitarPanel';
 import { BottomBar } from '@/views/Studio/Settings/BottomBar';
@@ -6,7 +7,8 @@ import { SettingsPanel } from '@/views/Studio/Settings/SettingsPanel';
 import { useMediaQuery } from 'react-responsive';
 
 export const StudioPage = () => {
-    const { showPanel } = useAssistant();
+    const { isPanelOpen } = useAssistant();
+    const { selectedPanel } = useBottomBar();
 
     const isDesktop = useMediaQuery({ minWidth: 1024 });
 
@@ -16,7 +18,7 @@ export const StudioPage = () => {
                 <div className="flex flex-col w-full min-h-0">
                     <div className="flex flex-col flex-1 min-w-0 min-h-0">
                         {/* En pantallas menores que el corte de tailwind 'lg' el panel del asistente de IA debe cubrir toda la pantalla */}
-                        {!isDesktop && showPanel ? (
+                        {!isDesktop && selectedPanel === 'assistant' ? (
                             <div className="w-full h-full">
                                 <AssistantSlidingSidebar />
                             </div>
@@ -33,11 +35,11 @@ export const StudioPage = () => {
                     <BottomBar />
                 </div>
 
-                {isDesktop && showPanel && <AssistantSlidingSidebar />}
+                {isDesktop && isPanelOpen && <AssistantSlidingSidebar />}
             </div>
         </>
     );
 };
 // <div className="hidden lg:block">
-//     {showPanel && <AssistantSlidingSidebar />}
+//     {isPanelOpen && <AssistantSlidingSidebar />}
 // </div>

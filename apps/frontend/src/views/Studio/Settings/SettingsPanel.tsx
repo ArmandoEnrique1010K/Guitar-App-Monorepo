@@ -1,6 +1,6 @@
 import { ControlBar } from './ControlBar';
+import { EffectsPanel } from './EffectsPanel';
 import { PreferencesPanel } from './PreferencesPanel';
-import { BottomBar } from './BottomBar';
 import { useBottomBar } from '@/hooks/useBottomBar';
 
 export const SettingsPanel = () => {
@@ -11,6 +11,7 @@ export const SettingsPanel = () => {
             <ControlBar />
             <div className="h-52 overflow-y-auto">
                 {selectedPanel === 'preferences' && <PreferencesPanel />}
+                {selectedPanel === 'effects' && <EffectsPanel />}
             </div>
         </div>
     );

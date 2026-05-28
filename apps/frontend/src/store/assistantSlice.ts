@@ -2,29 +2,36 @@ import { generateResponseForAI } from '@/api/AssistantAPI';
 import type { StateCreator } from 'zustand';
 
 export type AssistantSliceType = {
-    showPanel: boolean;
-    toogleShowPanel: () => void;
-    resultFromAI: string;
-    isGeneratingResultFromAI: boolean;
+    isPanelOpen: boolean;
+    togglePanel: () => void;
+    openPanel: () => void;
+    response: string;
+    isGenerating: boolean;
 
     generateResponse: (prompt: string) => Promise<void>;
 };
 
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
-    showPanel: false,
-    resultFromAI: '¿En qué puedo ayudarte?',
-    isGeneratingResultFromAI: false,
+    isPanelOpen: false,
+    response: '¿En qué puedo ayudarte?',
+    isGenerating: false,
 
-    toogleShowPanel: () => {
+    togglePanel: () => {
         set((state) => ({
-            showPanel: !state.showPanel,
+            isPanelOpen: !state.isPanelOpen,
         }));
+    },
+
+    openPanel: () => {
+        set({
+            isPanelOpen: true,
+        });
     },
 
     generateResponse: async (prompt: string) => {
         set({
-            resultFromAI: '',
-            isGeneratingResultFromAI: true,
+            response: '',
+            isGenerating: true,
         });
 
         console.log(`El usuario ha introducido el texto ${prompt}`);
@@ -35,7 +42,7 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
             console.log('Stream recibido:', stream);
 
             set({
-                resultFromAI: '...',
+                response: '...',
             });
 
             let fullResponse = '';
@@ -44,24 +51,24 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
                 fullResponse += chunk;
 
                 set({
-                    resultFromAI: fullResponse,
+                    response: fullResponse,
                 });
             }
 
             if (!fullResponse) {
                 set({
-                    resultFromAI: 'No se recibió respuesta de la IA.',
+                    response: 'No se recibió respuesta de la IA.',
                 });
             }
         } catch (error) {
             console.error('Error en generateResponse:', error);
 
             set({
-                resultFromAI: 'Error al obtener respuesta de la IA.',
+                response: 'Error al obtener respuesta de la IA.',
             });
         } finally {
             set({
-                isGeneratingResultFromAI: false,
+                isGenerating: false,
             });
         }
     },

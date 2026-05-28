@@ -1,19 +1,19 @@
 import { useAppStore } from '@/store/useAppStore';
 
 export const useAssistant = () => {
-    const showPanel = useAppStore((state) => state.showPanel);
-    const toogleShowPanel = useAppStore((state) => state.toogleShowPanel);
-    const resultFromAI = useAppStore((state) => state.resultFromAI);
-    const isGeneratingResultFromAI = useAppStore(
-        (state) => state.isGeneratingResultFromAI,
-    );
+    const isPanelOpen = useAppStore((state) => state.isPanelOpen);
+    const togglePanel = useAppStore((state) => state.togglePanel);
+    const openPanel = useAppStore((state) => state.openPanel);
+    const response = useAppStore((state) => state.response);
+    const isGenerating = useAppStore((state) => state.isGenerating);
     const generateResponse = useAppStore((state) => state.generateResponse);
 
     return {
-        showPanel,
-        toogleShowPanel,
-        resultFromAI,
-        isGeneratingResultFromAI,
+        isPanelOpen,
+        togglePanel,
+        openPanel,
+        response,
+        isGenerating,
         generateResponse,
     };
 };
