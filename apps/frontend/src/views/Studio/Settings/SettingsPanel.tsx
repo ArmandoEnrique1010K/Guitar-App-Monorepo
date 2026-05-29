@@ -1,4 +1,4 @@
-import { ControlBar } from './ControlBar';
+import { ControlBar } from '../ControlBar/ControlBar';
 import { EffectsPanel } from './EffectsPanel';
 import { PreferencesPanel } from './PreferencesPanel';
 import { useBottomBar } from '@/hooks/useBottomBar';

@@ -1,8 +1,8 @@
 import { useAssistant } from '@/hooks/useAssistant';
 import { useBottomBar } from '@/hooks/useBottomBar';
 import { AssistantSlidingSidebar } from '@/views/Studio/Assistant/AssistantSlidingSidebar';
+import { BottomBar } from '@/views/Studio/BottomBar/BottomBar';
 import { GuitarPanel } from '@/views/Studio/Fretboard/GuitarPanel';
-import { BottomBar } from '@/views/Studio/Settings/BottomBar';
 import { SettingsPanel } from '@/views/Studio/Settings/SettingsPanel';
 import { useMediaQuery } from 'react-responsive';
 
