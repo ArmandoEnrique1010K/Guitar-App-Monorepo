@@ -48,10 +48,10 @@ export type PreferencesSliceType = {
 
 export const preferencesSlice: StateCreator<PreferencesSliceType> = (
     set,
-    // get,
+    get,
 ) => ({
     selectedGuitar: {
-        id: '0',
+        _id: '',
         name: '',
     },
     guitars: [],
@@ -125,6 +125,8 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
     },
 
     loadGuitars: async () => {
+        console.log('loadGuitars ejecutado');
+
         try {
             const data = await getAllGuitars();
 
@@ -132,6 +134,8 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
                 guitars: data,
                 selectedGuitar: data[0],
             });
+
+            console.log(get().guitars);
         } catch (error) {
             console.error(error);
         }

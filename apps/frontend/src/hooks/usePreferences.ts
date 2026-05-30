@@ -1,5 +1,4 @@
 import { useAppStore } from '@/store/useAppStore';
-import { useEffect } from 'react';
 
 export const usePreferences = () => {
     // Obten la guitarra seleccionada
@@ -45,19 +44,8 @@ export const usePreferences = () => {
     const volume = useAppStore((state) => state.volume);
     const setVolume = useAppStore((state) => state.setVolume);
     const loadGuitars = useAppStore((state) => state.loadGuitars);
-
-    useEffect(() => {
-        loadGuitars();
-    }, [loadGuitars]);
-    // // Cuando se monta por primera vez
-    // useEffect(() => {
-    //     // Llamar a la API
-    //     // TODO: ¿SERA POSIBLE HACER EL LLAMADO DESDE EL SLIDE DE ZUSTAND?
-    //     getAllGuitars().then((data) => {
-    //         setGuitars(data);
-    //         setSelectedGuitar(data[0]);
-    //     });
-    // }, [setSelectedGuitar, setGuitars]);
+    const noteSamples = useAppStore((state) => state.noteSamples);
+    const loadNoteSamples = useAppStore((state) => state.loadNoteSamples);
 
     return {
         guitars,
@@ -84,5 +72,7 @@ export const usePreferences = () => {
         volume,
         setVolume,
         loadGuitars,
+        noteSamples,
+        loadNoteSamples,
     };
 };

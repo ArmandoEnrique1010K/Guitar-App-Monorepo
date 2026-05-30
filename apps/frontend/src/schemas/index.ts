@@ -43,6 +43,18 @@ export type Note = {
     chord: number | null;
 };
 export type Instrument = {
-    id: string;
+    _id: string;
     name: string;
 };
+export type FretNote = {
+    noteIndex: number;
+    audioUrl: string;
+    key?: string; // Representa la tecla
+};
+
+export type GuitarStringNotes = {
+    stringIndex: number;
+    frets: FretNote[];
+};
+
+export type GuitarNotes = GuitarStringNotes[];

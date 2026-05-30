@@ -4,7 +4,7 @@ import { RootChordSlider } from '@/components/Studio/ControlBar/RootChordSlider'
 
 export const ControlBar = () => {
     return (
-        <div className="flex flex-row sm:gap-4 gap-2 sm:p-2 p-1">
+        <div className="flex flex-row sm:gap-4 gap-2">
             <LockOpenStringButton />
             <RootChordSlider />
             <PauseButton />

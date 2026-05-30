@@ -7,7 +7,7 @@ export const LogoGuitar = ({ size }: Props) => {
         <img
             src="/guitar.svg"
             alt="Guitar"
-            className={size === 'large' ? 'sm:w-36 w-24' : 'sm:w-16 w-12'}
+            className={size === 'large' ? 'sm:w-32 w-20' : 'sm:w-12 w-8'}
         />
     );
 };

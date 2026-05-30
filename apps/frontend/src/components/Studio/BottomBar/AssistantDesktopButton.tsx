@@ -1,9 +1,9 @@
-import { useAssistant } from '@/hooks/useAssistant';
 import { SparkleFillIcon } from '@/icons/SparkleFillIcon';
+import { useAppStore } from '@/store/useAppStore';
 import { LatchButton } from '@/ui/Studio/LatchButton';
 
 export const AssistantDesktopButton = () => {
-    const { togglePanel } = useAssistant();
+    const togglePanel = useAppStore((state) => state.togglePanel);
 
     return (
         <>

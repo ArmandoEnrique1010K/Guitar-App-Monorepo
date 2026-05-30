@@ -1,9 +1,9 @@
 import { KEYSBYROW } from '@/constants';
 import { keyboardRows } from '@/data/keyboardRows';
-import type { Neck } from '@/schemas';
+import type { GuitarNotes } from '@/schemas';
 
 export const assignKeysToFrets = (
-    file: Neck,
+    file: GuitarNotes,
     firstRowKeys: number,
     secondRowKeys: number,
     thirdRowKeys: number,
@@ -12,8 +12,8 @@ export const assignKeysToFrets = (
     sixthRowKeys: number,
     startFromTheChord: number,
     lockTheZeroChord: boolean,
-): Neck => {
-    let result: Neck = [];
+): GuitarNotes => {
+    let result: GuitarNotes = [];
 
     // Almacena las teclas asignadas por fila
     const arrayRowKeys = [
@@ -27,9 +27,11 @@ export const assignKeysToFrets = (
 
     // Iterar sobre las 6 cuerdas de la guitarra
     for (let i = 0; i < 6; i++) {
+        const stringIndex = 5 - i;
+
         // Buscar la cuerda en los datos proporcionados
-        const findRope = file.find((n) => n.rope === 6 - i) || {
-            rope: 0,
+        const findRope = file.find((n) => n.stringIndex === stringIndex) || {
+            stringIndex,
             frets: [],
         };
         const rowKeys = arrayRowKeys[i];
@@ -114,12 +116,16 @@ export const assignKeysToFrets = (
         }
 
         // Agregar la cuerda al resultado final
-        result = [...result, { rope: findRope.rope, frets: findRope.frets }];
+        result = [
+            ...result,
+            { stringIndex: findRope.stringIndex, frets: findRope.frets },
+        ];
     }
 
     return filterFrets(result); // Filtrar las notas finales antes de retornar
 };
-const filterFrets = (neck: Neck): Neck => {
+
+const filterFrets = (neck: GuitarNotes): GuitarNotes => {
     return neck.map((note) => ({
         ...note,
         frets: note.frets.filter((f) => f.key !== 'OCULTAR'),

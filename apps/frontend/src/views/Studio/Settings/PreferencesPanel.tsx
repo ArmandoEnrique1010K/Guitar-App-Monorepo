@@ -15,7 +15,7 @@ export const PreferencesPanel = () => {
     // TODO: SOLUCION TEMPORAL: OCULTAR LAS TECLAS EN PANTALLAS MENORES QUE 640PX sm:flex hidden
     return (
         <>
-            <div className="flex flex-row justify-between sm:gap-4 gap-2 sm:p-2 p-1">
+            <div className="flex flex-row justify-between sm:gap-4 gap-2 ">
                 <div className="sm:flex hidden">
                     <StringOrderGroup />
                 </div>
