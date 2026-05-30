@@ -56,7 +56,7 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
     },
     guitars: [],
 
-    stringOrder: [0, 1, 2, 3, 4, 5],
+    stringOrder: [5, 4, 3, 2, 1, 0],
 
     volume: 100,
     holdToPlay: false,
@@ -125,8 +125,6 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
     },
 
     loadGuitars: async () => {
-        console.log('loadGuitars ejecutado');
-
         try {
             const data = await getAllGuitars();
 
@@ -135,7 +133,7 @@ export const preferencesSlice: StateCreator<PreferencesSliceType> = (
                 selectedGuitar: data[0],
             });
 
-            console.log(get().guitars);
+            // console.log(get().guitars);
         } catch (error) {
             console.error(error);
         }

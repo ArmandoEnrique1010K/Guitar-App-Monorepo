@@ -1,5 +1,5 @@
 import { getAllNoteSamples } from '@/api/NoteSamplesAPI';
-import type { Note } from '@/schemas';
+import type { GuitarNotes, Note } from '@/schemas';
 import type { StateCreator } from 'zustand';
 
 export type FretboardSliceType = {
@@ -9,6 +9,8 @@ export type FretboardSliceType = {
 
     loadNoteSamples: (guitarId: string) => Promise<void>;
     noteSamples: { _id: string; noteIndex: number; audioUrl: string }[];
+    neck: GuitarNotes;
+    setNeck: (neck: GuitarNotes) => void;
 };
 
 export const fretboardSlice: StateCreator<FretboardSliceType> = (set) => ({
@@ -25,4 +27,9 @@ export const fretboardSlice: StateCreator<FretboardSliceType> = (set) => ({
         }
     },
     noteSamples: [],
+    neck: [],
+
+    setNeck: (neck: GuitarNotes) => {
+        set({ neck });
+    },
 });

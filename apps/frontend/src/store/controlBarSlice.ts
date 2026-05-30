@@ -17,7 +17,7 @@ export const controlBarSlice: StateCreator<ControlBarSliceType> = (
 ) => ({
     rootChord: 0,
     minRootChord: 1,
-    maxRootChord: 13,
+    maxRootChord: 12,
     lockOpenString: false,
 
     setRootChord: (rootChord: number) => {

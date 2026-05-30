@@ -1,4 +1,10 @@
-export const FretCell = () => {
+type Props = {
+    audioUrl: string;
+    noteIndex: number;
+    keyToPress: string;
+};
+
+export const FretCell = ({ audioUrl, noteIndex, keyToPress }: Props) => {
     return (
         <div
             //                     shadow-[0_0_4px_rgba(74,222,128,0.35)]
@@ -28,7 +34,7 @@ export const FretCell = () => {
                     transition-all
                 "
         >
-            0
+            {keyToPress}
         </div>
     );
 };

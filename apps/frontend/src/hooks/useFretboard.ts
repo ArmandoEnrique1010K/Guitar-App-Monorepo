@@ -6,6 +6,8 @@ export const useFretboard = () => {
     const loading = useAppStore((state) => state.loading);
     const loadNoteSamples = useAppStore((state) => state.loadNoteSamples);
     const noteSamples = useAppStore((state) => state.noteSamples);
+    const neck = useAppStore((state) => state.neck);
+    const setNeck = useAppStore((state) => state.setNeck);
 
     return {
         currentNote,
@@ -13,5 +15,7 @@ export const useFretboard = () => {
         loading,
         loadNoteSamples,
         noteSamples,
+        neck,
+        setNeck,
     };
 };

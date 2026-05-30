@@ -1,7 +1,11 @@
+import { useFretboard } from '@/hooks/useFretboard';
 import { GuitarString } from './GuitarString';
 import { OpenStringLabel } from './OpenStringLabel';
 
 export const GuitarNeck = () => {
+    const { neck } = useFretboard();
+
+    const OPEN_STRING_VALUES = ['E', 'B', 'G', 'D', 'A', 'E'];
     return (
         //         border
         // border-zinc-700
@@ -23,7 +27,15 @@ export const GuitarNeck = () => {
         
         "
         >
-            <div className="flex flex-row flex-1">
+            {neck.map((string, index) => (
+                <div key={index} className="flex flex-row flex-1">
+                    <OpenStringLabel
+                        value={OPEN_STRING_VALUES[string.stringIndex]}
+                    />
+                    <GuitarString frets={string.frets} />
+                </div>
+            ))}
+            {/* <div className="flex flex-row flex-1">
                 <OpenStringLabel value="E" />
                 <GuitarString />
             </div>
@@ -46,7 +58,7 @@ export const GuitarNeck = () => {
             <div className="flex flex-row flex-1">
                 <OpenStringLabel value="E" />
                 <GuitarString />
-            </div>
+            </div> */}
         </div>
     );
 };

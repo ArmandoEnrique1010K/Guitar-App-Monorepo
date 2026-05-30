@@ -24,8 +24,6 @@ export const StudioPage = () => {
     useEffect(() => {
         if (!selectedGuitar?._id) return;
 
-        console.log('Loading note samples for guitar:', selectedGuitar._id);
-
         loadNoteSamples(selectedGuitar._id);
     }, [selectedGuitar?._id, loadNoteSamples]);
 

@@ -3,12 +3,18 @@ import { useDragAndDrop } from '@formkit/drag-and-drop/react';
 import { useEffect, useMemo } from 'react';
 
 const KEY_ROW_LABELS = [
-    'Fila 1 - 0',
-    'Fila Q - P',
-    'Fila A - Ñ',
+    // 'Fila 1 - 0',
+    // 'Fila Q - P',
+    // 'Fila A - Ñ',
+    // 'Fila Z - M',
+    // 'Sin teclas',
+    // 'Sin teclas',
+    'Sin teclas',
+    'Sin teclas',
     'Fila Z - M',
-    'Sin teclas',
-    'Sin teclas',
+    'Fila A - Ñ',
+    'Fila Q - P',
+    'Fila 1 - 0',
 ];
 
 // Componente para mostrar el orden de las cuerdas

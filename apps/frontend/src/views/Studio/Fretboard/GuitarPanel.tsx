@@ -10,19 +10,19 @@ import { useEffect, useMemo } from 'react';
 // Tipado para las notas de la guitarra que se asignaran
 
 export const GuitarPanel = () => {
-    const { loadNoteSamples, noteSamples } = useFretboard();
-    const { stringOrder, selectedGuitar } = usePreferences();
+    const { noteSamples, setNeck } = useFretboard();
+    const { stringOrder } = usePreferences();
     const { lockOpenString, rootChord } = useControlBar();
 
     // CARGA INICIAL DE NOTAS DE LA GUITARRA
     // 1. Debe llamar a la API REST para obtener las notas de la guitarra
     // loadNoteSamples es la función, ya se llama des de el componente "StudioPage"
 
-    useEffect(() => {
-        if (noteSamples) {
-            console.log(noteSamples);
-        }
-    }, [noteSamples]);
+    // useEffect(() => {
+    //     if (noteSamples) {
+    //         console.log(noteSamples);
+    //     }
+    // }, [noteSamples]);
     // Tipado de noteSamples: {
     //     _id: string;
     //     noteIndex: number;
@@ -64,21 +64,23 @@ export const GuitarPanel = () => {
         }));
     }, [noteSamples]);
 
-    useEffect(() => {
-        console.log(guitarNotes);
-    }, [guitarNotes]);
+    // useEffect(() => {
+    //     console.log(guitarNotes);
+    // }, [guitarNotes]);
 
     // 3. Debe asignar las notas a los trastes
     // La función de utilidad assignKeysToFrets es la encargada de hacer eso
     const newNeck = useMemo(() => {
+        const reversed = stringOrder.slice();
+
         const keys = assignKeysToFrets(
             guitarNotes,
-            stringOrder[0],
-            stringOrder[1],
-            stringOrder[2],
-            stringOrder[3],
-            stringOrder[4],
-            stringOrder[5],
+            reversed[0],
+            reversed[1],
+            reversed[2],
+            reversed[3],
+            reversed[4],
+            reversed[5],
             rootChord,
             lockOpenString,
         );
@@ -86,15 +88,8 @@ export const GuitarPanel = () => {
     }, [guitarNotes, stringOrder, rootChord, lockOpenString]);
 
     useEffect(() => {
-        console.log(newNeck);
-    }, [newNeck]);
-
-    // Definición del mastil de la guitarra
-    // const neck = useMemo(() => {
-    //     const reversedStringOrder = [...stringOrder].reverse();
-    //     // return assignKeysToFrets(guitarNotes);
-    // }, [stringOrder]);
-
+        setNeck(newNeck);
+    }, [newNeck, setNeck]);
     return (
         <div
             className=" w-full h-full flex flex-col justify-between min-h-max
