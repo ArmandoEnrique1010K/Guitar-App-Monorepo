@@ -39,8 +39,8 @@ export type Frets = {
 }[];
 
 export type Note = {
-    rope: number | null;
-    chord: number | null;
+    stringIndex: number | null;
+    noteIndex: number | null;
 };
 export type Instrument = {
     _id: string;

@@ -1,10 +1,12 @@
 type Props = {
     value: string;
+    title: string;
 };
 
-export const OpenStringLabel = ({ value }: Props) => {
+export const OpenStringLabel = ({ value, title }: Props) => {
     return (
         <div
+            title={title}
             className="
                 flex
                 flex-col

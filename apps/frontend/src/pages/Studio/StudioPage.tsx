@@ -1,73 +1,15 @@
 import { useAssistant } from '@/hooks/useAssistant';
 import { useBottomBar } from '@/hooks/useBottomBar';
-import { useFretboard } from '@/hooks/useFretboard';
-import { usePreferences } from '@/hooks/usePreferences';
 import { AssistantSlidingSidebar } from '@/views/Studio/Assistant/AssistantSlidingSidebar';
 import { BottomBar } from '@/views/Studio/BottomBar/BottomBar';
 import { GuitarPanel } from '@/views/Studio/Fretboard/GuitarPanel';
 import { SettingsPanel } from '@/views/Studio/Settings/SettingsPanel';
-import { useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 export const StudioPage = () => {
     const { isPanelOpen } = useAssistant();
     const { selectedPanel } = useBottomBar();
-    const { loadGuitars, selectedGuitar } = usePreferences();
-    const { loadNoteSamples, noteSamples, initializePlayers } = useFretboard();
     const isDesktop = useMediaQuery({ minWidth: 1024 });
-
-    // AQUI DEBE CARGARSE LOS EFECTOS SECUNDARIOS PORQUE ES EL COMPONENTE CONTENEDOR
-    useEffect(() => {
-        loadGuitars();
-    }, [loadGuitars]);
-
-    useEffect(() => {
-        if (!selectedGuitar?._id) return;
-
-        loadNoteSamples(selectedGuitar._id);
-    }, [selectedGuitar?._id, loadNoteSamples]);
-    useEffect(() => {
-        if (!noteSamples.length) return;
-
-        initializePlayers(noteSamples);
-    }, [noteSamples]);
-    // "NoteSamples" contiene los datos de las notas
-    // const urls = Object.fromEntries(
-    //     noteSamples.map((noteSample) => [
-    //         noteSample.noteIndex,
-    //         noteSample.audioUrl,
-    //     ]),
-    // );
-
-    // const players = new Tone.Players(urls).toDestination();
-    // await Tone.loaded();
-
-    // useEffect(() => {
-    //     if (noteSamples.length === 0) return;
-
-    //     const initialize = async () => {
-    //         players?.dispose();
-
-    //         const urls = Object.fromEntries(
-    //             noteSamples.map((sample) => [
-    //                 sample.noteIndex,
-    //                 sample.audioUrl,
-    //             ]),
-    //         );
-
-    //         setPlayers(new Tone.Players(urls));
-
-    //         await Tone.loaded();
-
-    //         players.toDestination();
-    //     };
-
-    //     initialize();
-
-    //     return () => {
-    //         players?.dispose();
-    //     };
-    // }, [noteSamples, players, setPlayers]);
 
     return (
         <>

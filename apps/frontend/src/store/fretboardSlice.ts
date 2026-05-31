@@ -2,10 +2,20 @@ import { getAllNoteSamples } from '@/api/NoteSamplesAPI';
 import type { GuitarNotes, Note } from '@/schemas';
 import type { StateCreator } from 'zustand';
 import * as Tone from 'tone';
+import type { PreferencesSliceType } from './preferencesSlice';
 
 export type FretboardSliceType = {
     currentNote: Note | null;
     previousNote: Note | null;
+    activeNotes: Record<
+        string,
+        {
+            stringIndex: number;
+            noteIndex: number;
+            player: Tone.Player;
+            timeoutId: number;
+        }
+    >;
     loading: boolean; // Carga inicial
 
     loadNoteSamples: (guitarId: string) => Promise<void>;
@@ -20,15 +30,19 @@ export type FretboardSliceType = {
     setPlayers: (players: Tone.Players | null) => void;
     initializePlayers: (noteSamples: { _id: string; noteIndex: number; audioUrl: string }[]) => Promise<void>;
 
-    playNote: (noteIndex: number) => void;
+    playNote: (stringIndex: number, noteIndex: number) => void;
 
-    stopNote: (noteIndex: number) => void;
+    stopNote: (stringIndex: number, noteIndex: number) => void;
+
+    // DETENER NOTAS POR CONDICIONES
+    stopNotesByConditions: () => void;
 
 };
 
-export const fretboardSlice: StateCreator<FretboardSliceType> = (set, get) => ({
+export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceType, [], [], FretboardSliceType> = (set, get) => ({
     currentNote: null,
     previousNote: null,
+    activeNotes: {},
     loading: true,
 
     loadNoteSamples: async (guitarId: string) => {
@@ -64,28 +78,179 @@ export const fretboardSlice: StateCreator<FretboardSliceType> = (set, get) => ({
             ])
         );
 
+
+        // PARA VER CUANTA MEMORIA SE CARGA EN EL NAVEGADOR
+        // PULSA F12 -> MORE TOOLS -> PERFORMANCE MONITOR -> JS HEAP SIZE
+
         const players = new Tone.Players(urls);
+        const volumeNode = new Tone.Volume(0);
 
         await Tone.loaded();
 
-        players.toDestination();
+        players.connect(volumeNode);
+
+        volumeNode.toDestination();
+
+        await Tone.loaded();
 
         set({
-            players
+            players: players,
+            volumeNode
         });
+
+        console.log('SE CARGO LOS PLAYERS')
     },
-    playNote: (noteIndex) => {
-        const players = get().players;
 
-        if (!players) return;
 
-        players.player(noteIndex.toString()).start();
+    playNote: (stringIndex, noteIndex) => {
+        const player =
+            get().players?.player(noteIndex.toString());
+
+        if (!player) return;
+
+        // Duracion del archivo mp3
+        const duration =
+            player.buffer?.duration ?? 0;
+
+        if (!player.loaded) return;
+
+        const key = `${stringIndex}-${noteIndex}`;
+
+        // Si se toca la nota en la misma cuerda y acorde, se detiene la anterior
+        const existingNote =
+            get().activeNotes[key];
+
+        // console.log('EXISTING', existingNote);
+
+        // console.log(
+        //     'MISMA REFERENCIA?',
+        //     existingNote?.player === player
+        // );
+
+
+        if (existingNote) {
+            clearTimeout(existingNote.timeoutId);
+
+            existingNote.player.stop();
+        }
+        // console.log(
+        //     'ACTIVE COUNT',
+        //     Object.keys(get().activeNotes).length
+        // );
+
+        const timeoutId = window.setTimeout(() => {
+            const currentActiveNote =
+                get().activeNotes[key];
+
+            if (
+                !currentActiveNote ||
+                currentActiveNote.timeoutId !== timeoutId
+            ) {
+                return;
+            }
+
+            const activeNotes = {
+                ...get().activeNotes,
+            };
+
+            delete activeNotes[key];
+
+            set({ activeNotes });
+        }, duration * 1000);
+
+
+        set({
+            activeNotes: {
+                ...get().activeNotes,
+                [key]: {
+                    stringIndex,
+                    noteIndex,
+                    player,
+                    timeoutId
+                }
+            }
+        });
+        // DEBE ACTUALIZAR LA NOTA ANTERIOR Y LA NUEVA QUE SE REPRODUCE
+        set({
+            previousNote: get().currentNote,
+            currentNote: {
+                noteIndex,
+                stringIndex
+            }
+        })
+        get().stopNotesByConditions();
+
+        // if (!players) return;
+
+        // players.player(noteIndex.toString()).start();
+
+        player.start();
     },
-    stopNote: (noteIndex) => {
-        const players = get().players;
 
-        if (!players) return;
+    stopNote: (stringIndex, noteIndex) => {
+        const key = `${stringIndex}-${noteIndex}`;
 
-        players.player(noteIndex.toString()).stop();
+        const activeNote = get().activeNotes[key];
+
+        if (!activeNote) return;
+
+        clearTimeout(activeNote.timeoutId);
+
+        activeNote.player.stop();
+
+        const activeNotes = {
+            ...get().activeNotes,
+        };
+
+        delete activeNotes[key];
+
+        set({ activeNotes });
     },
+
+    stopNotesByConditions: () => {
+
+        // Ten en cuenta los siguientes estados:
+        // get().allowSameStringOverlap (booleano) -> Permite reproducir notas en la misma cuerda sin detener la anterior
+        // get().allowDifferentStringOverlap (booleano) -> Permite reproducir notas en cuerdas diferentes sin detener la anterior
+        // get().currentNote (objeto con propiedades stringIndex y noteIndex) -> Nota actual que se está reproduciendo
+
+        // IMPLEMENTAR LOGICA PARA DETENER NOTAS POR CONDICIONES
+
+        const current = get().currentNote;
+
+        if (!current) return;
+
+        const activeNotes = get().activeNotes;
+
+        Object.entries(activeNotes).forEach(
+            ([key, active]) => {
+
+                const isSameNote =
+                    active.stringIndex === current.stringIndex &&
+                    active.noteIndex === current.noteIndex;
+
+                if (isSameNote) return;
+
+                const sameString =
+                    active.stringIndex === current.stringIndex;
+
+                const differentString =
+                    active.stringIndex !== current.stringIndex;
+
+                if (
+                    sameString &&
+                    !get().allowSameStringOverlap
+                ) {
+                    active.player.stop();
+                }
+
+                if (
+                    differentString &&
+                    !get().allowDifferentStringOverlap
+                ) {
+                    active.player.stop();
+                }
+            }
+        );
+    }
 });

@@ -18,15 +18,25 @@ export const FretCell = ({
     keyToShow,
     stringIndex,
 }: Props) => {
-    const { showKeyboardKeys, loopMode, autoMute } = usePreferences();
+    const { showKeyboardKeys, loopMode, autoMute, holdToPlay } =
+        usePreferences();
     const { rootChord } = useControlBar();
-    const { keyboardMode, playNote } = useFretboard();
+    const { keyboardMode, playNote, stopNote } = useFretboard();
 
     // Tecla presionada
     const [keyPressed, setKeyPressed] = useState(false);
 
     // Activo o si ha sido presionado por el teclado
     const [isActive, setIsActive] = useState(false);
+    // Función para manejar la detencion del sonido
+    const handleStopSound = () => {
+        // TODO: stopAllInstances();
+        stopNote(stringIndex, noteIndex);
+
+        if (loopMode) {
+            // TODO: stopRepeatingNote(stringIndex, noteIndex);
+        }
+    };
 
     // Función para manejar el pulso del teclado
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -35,7 +45,7 @@ export const FretCell = ({
             setIsActive(true);
 
             // TODO: playSound(stringIndex, noteIndex, audioUrl);
-            playNote(noteIndex);
+            playNote(stringIndex, noteIndex);
         }
     };
 
@@ -45,7 +55,7 @@ export const FretCell = ({
             setKeyPressed(false);
             setIsActive(false);
 
-            if (autoMute) {
+            if (holdToPlay) {
                 handleStopSound();
             }
 
@@ -58,7 +68,7 @@ export const FretCell = ({
     // Función para manejar el click del mouse
     const handleMouseDown = () => {
         setIsActive(true);
-        playNote(noteIndex);
+        playNote(stringIndex, noteIndex);
 
         // TODO:     playSound(stringIndex, noteIndex, audioUrl);
     };
@@ -67,7 +77,7 @@ export const FretCell = ({
     const handleMouseUp = () => {
         setIsActive(false);
 
-        if (autoMute) {
+        if (holdToPlay) {
             handleStopSound();
         }
 
@@ -78,15 +88,6 @@ export const FretCell = ({
 
     const handleMouseLeave = () => {
         setIsActive(false);
-    };
-
-    // Función para manejar la detencion del sonido
-    const handleStopSound = () => {
-        // TODO: stopAllInstances();
-
-        if (loopMode) {
-            // TODO: stopRepeatingNote(stringIndex, noteIndex);
-        }
     };
 
     // EFECTO SECUNDARIO
@@ -100,7 +101,9 @@ export const FretCell = ({
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
-    }, [keyToPress, autoMute, keyboardMode, rootChord]);
+
+        // holdToPlay como dependencia es necesario porque ese estado habilita si se va a silenciar el sonido al soltar la tecla
+    }, [keyToPress, autoMute, keyboardMode, rootChord, holdToPlay]);
 
     return (
         <button
@@ -137,7 +140,7 @@ export const FretCell = ({
             onMouseLeave={handleMouseLeave}
         >
             {/* CASO ESPECIAL SI SE TRATA DE LA TECLA 'Dead' */}
-            {keyToShow === 'Dead' ? '`' : showKeyboardKeys ? keyToShow : ''}
+            {showKeyboardKeys ? (keyToShow === 'Dead' ? '`' : keyToShow) : ''}
         </button>
     );
 };
