@@ -34,4 +34,31 @@ app.use("/api/configuration", configurationRoutes);
 app.use("/api/guitar", guitarRoutes);
 app.use("/api/noteSample", noteSampleRoutes);
 
+/**
+ * Servir archivos de audio mediante HTTP para que puedan ser consumidos
+ * desde el frontend (React + Tone.js).
+ *
+ * Los navegadores bloquean el acceso a rutas locales del sistema de archivos
+ * (file:///D:/...) cuando una aplicación web intenta cargarlas.
+ *
+ * Por ese motivo, los audios almacenados en:
+ * D:/ArmandoEnrique1020k/Sonidos
+ *
+ * se exponen temporalmente mediante:
+ * http://localhost:4000/audio
+ *
+ * Ejemplo:
+ * D:/ArmandoEnrique1020k/Sonidos/cleanSolo/46.mp3
+ * ↓
+ * http://localhost:4000/audio/cleanSolo/46.mp3
+ *
+ * TODO:
+ * Reemplazar express.static por almacenamiento en la nube
+ * (Cloudflare R2, Amazon S3 o similar) antes del despliegue a producción.
+ */
+app.use(
+    '/audio',
+    express.static('D:/ArmandoEnrique1020k/Sonidos')
+);
+
 export default app;

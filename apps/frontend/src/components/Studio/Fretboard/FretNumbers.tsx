@@ -12,16 +12,7 @@ export const FretNumbers = () => {
 
     return (
         <div
-            // className="flex flex-row w-full bg-orange-500"
-
-            // bg-slate-600
-            //         bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)]
-            //         bg-size-[4px_4px]
-
-            // border-t-2 border-b-2
-
             className="flex flex-row w-full 
-            
                     gap-2 px-2
                     text-sm
                     text-green-500

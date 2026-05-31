@@ -11,6 +11,11 @@ export const useFretboard = () => {
 
     const keyboardMode = useAppStore((state) => state.keyboardMode);
     const setKeyboardMode = useAppStore((state) => state.setKeyboardMode);
+    const players = useAppStore((state) => state.players);
+    const setPlayers = useAppStore((state) => state.setPlayers);
+    const initializePlayers = useAppStore((state) => state.initializePlayers);
+    const playNote = useAppStore((state) => state.playNote);
+    const stopNote = useAppStore((state) => state.stopNote);
 
     return {
         currentNote,
@@ -22,5 +27,10 @@ export const useFretboard = () => {
         setNeck,
         keyboardMode,
         setKeyboardMode,
+        players,
+        setPlayers,
+        initializePlayers,
+        playNote,
+        stopNote,
     };
 };

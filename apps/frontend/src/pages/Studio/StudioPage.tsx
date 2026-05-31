@@ -13,7 +13,7 @@ export const StudioPage = () => {
     const { isPanelOpen } = useAssistant();
     const { selectedPanel } = useBottomBar();
     const { loadGuitars, selectedGuitar } = usePreferences();
-    const { loadNoteSamples } = useFretboard();
+    const { loadNoteSamples, noteSamples, initializePlayers } = useFretboard();
     const isDesktop = useMediaQuery({ minWidth: 1024 });
 
     // AQUI DEBE CARGARSE LOS EFECTOS SECUNDARIOS PORQUE ES EL COMPONENTE CONTENEDOR
@@ -26,6 +26,48 @@ export const StudioPage = () => {
 
         loadNoteSamples(selectedGuitar._id);
     }, [selectedGuitar?._id, loadNoteSamples]);
+    useEffect(() => {
+        if (!noteSamples.length) return;
+
+        initializePlayers(noteSamples);
+    }, [noteSamples]);
+    // "NoteSamples" contiene los datos de las notas
+    // const urls = Object.fromEntries(
+    //     noteSamples.map((noteSample) => [
+    //         noteSample.noteIndex,
+    //         noteSample.audioUrl,
+    //     ]),
+    // );
+
+    // const players = new Tone.Players(urls).toDestination();
+    // await Tone.loaded();
+
+    // useEffect(() => {
+    //     if (noteSamples.length === 0) return;
+
+    //     const initialize = async () => {
+    //         players?.dispose();
+
+    //         const urls = Object.fromEntries(
+    //             noteSamples.map((sample) => [
+    //                 sample.noteIndex,
+    //                 sample.audioUrl,
+    //             ]),
+    //         );
+
+    //         setPlayers(new Tone.Players(urls));
+
+    //         await Tone.loaded();
+
+    //         players.toDestination();
+    //     };
+
+    //     initialize();
+
+    //     return () => {
+    //         players?.dispose();
+    //     };
+    // }, [noteSamples, players, setPlayers]);
 
     return (
         <>

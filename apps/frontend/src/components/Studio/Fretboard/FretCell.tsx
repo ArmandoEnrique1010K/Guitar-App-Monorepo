@@ -20,7 +20,7 @@ export const FretCell = ({
 }: Props) => {
     const { showKeyboardKeys, loopMode, autoMute } = usePreferences();
     const { rootChord } = useControlBar();
-    const { keyboardMode } = useFretboard();
+    const { keyboardMode, playNote } = useFretboard();
 
     // Tecla presionada
     const [keyPressed, setKeyPressed] = useState(false);
@@ -34,7 +34,8 @@ export const FretCell = ({
             setKeyPressed(true);
             setIsActive(true);
 
-            // TODO:       playSound(stringIndex, noteIndex, audioUrl);
+            // TODO: playSound(stringIndex, noteIndex, audioUrl);
+            playNote(noteIndex);
         }
     };
 
@@ -57,6 +58,8 @@ export const FretCell = ({
     // Función para manejar el click del mouse
     const handleMouseDown = () => {
         setIsActive(true);
+        playNote(noteIndex);
+
         // TODO:     playSound(stringIndex, noteIndex, audioUrl);
     };
 
@@ -87,7 +90,8 @@ export const FretCell = ({
     };
 
     // EFECTO SECUNDARIO
-    //* ADVERTENCIA: NO CAMBIAR EL ACORDE INICIAL MIENTRAS SE MANTIENE PULSADA UNA TECLA
+    //* ADVERTENCIA: NO CAMBIAR EL ACORDE INICIAL 3 SE MANTIENE PULSADA UNA TECLA
+    // TODO: SOLUCIONAR EL ERRROR MENCIONADO
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
