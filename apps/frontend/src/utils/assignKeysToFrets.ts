@@ -85,7 +85,7 @@ export const assignKeysToFrets = (
                         element.key = undefined;
                     }
                 } else {
-                    element.key = 'OCULTAR'; // Ocultar si está fuera del rango
+                    element.key = { code: 'OCULTAR', label: 'OCULTAR' }; // Ocultar si está fuera del rango
                 }
             }
 
@@ -100,18 +100,18 @@ export const assignKeysToFrets = (
 
             // Ocultar notas que no deben mostrarse
             if (!lockTheZeroChord && index <= startFromTheChord - 1) {
-                element.key = 'OCULTAR';
+                element.key = { code: 'OCULTAR', label: 'OCULTAR' };
             }
 
             if (
                 lockTheZeroChord &&
                 index === KEYSBYROW + startFromTheChord - 1
             ) {
-                element.key = 'OCULTAR';
+                element.key = { code: 'OCULTAR', label: 'OCULTAR' };
             }
 
             if (index > KEYSBYROW - 1 + startFromTheChord) {
-                element.key = 'OCULTAR';
+                element.key = { code: 'OCULTAR', label: 'OCULTAR' };
             }
         }
 
@@ -128,6 +128,6 @@ export const assignKeysToFrets = (
 const filterFrets = (neck: GuitarNotes): GuitarNotes => {
     return neck.map((note) => ({
         ...note,
-        frets: note.frets.filter((f) => f.key !== 'OCULTAR'),
+        frets: note.frets.filter((f) => f.key?.code !== 'OCULTAR'),
     }));
 };

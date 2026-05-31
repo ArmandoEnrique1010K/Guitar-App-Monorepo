@@ -11,6 +11,9 @@ export type FretboardSliceType = {
     noteSamples: { _id: string; noteIndex: number; audioUrl: string }[];
     neck: GuitarNotes;
     setNeck: (neck: GuitarNotes) => void;
+
+    keyboardMode: boolean;
+    setKeyboardMode: (keyboardMode: boolean) => void;
 };
 
 export const fretboardSlice: StateCreator<FretboardSliceType> = (set) => ({
@@ -27,9 +30,15 @@ export const fretboardSlice: StateCreator<FretboardSliceType> = (set) => ({
         }
     },
     noteSamples: [],
-    neck: [],
+    neck: [] as GuitarNotes,
 
+    // AQUI PASA UN ERROR DE QUE frets ESTA VACIO
     setNeck: (neck: GuitarNotes) => {
         set({ neck });
+    },
+
+    keyboardMode: true, // MODO PARA TOCAR EL INSTRUMENTO, SE DESACTIVA CUANDO SE USA LA IA GENERATIVA
+    setKeyboardMode: (keyboardMode: boolean) => {
+        set({ keyboardMode });
     },
 });

@@ -9,6 +9,9 @@ export const useFretboard = () => {
     const neck = useAppStore((state) => state.neck);
     const setNeck = useAppStore((state) => state.setNeck);
 
+    const keyboardMode = useAppStore((state) => state.keyboardMode);
+    const setKeyboardMode = useAppStore((state) => state.setKeyboardMode);
+
     return {
         currentNote,
         previousNote,
@@ -17,5 +20,7 @@ export const useFretboard = () => {
         noteSamples,
         neck,
         setNeck,
+        keyboardMode,
+        setKeyboardMode,
     };
 };

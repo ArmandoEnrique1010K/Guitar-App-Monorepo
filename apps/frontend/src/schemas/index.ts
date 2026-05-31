@@ -49,7 +49,10 @@ export type Instrument = {
 export type FretNote = {
     noteIndex: number;
     audioUrl: string;
-    key?: string; // Representa la tecla
+    key?: {
+        code: string;
+        label: string;
+    }; // Representa la tecla
 };
 
 export type GuitarStringNotes = {
@@ -58,3 +61,11 @@ export type GuitarStringNotes = {
 };
 
 export type GuitarNotes = GuitarStringNotes[];
+
+export type KeyboardsRows = {
+    row: number;
+    keys: {
+        code: string;
+        label: string;
+    }[];
+}[];

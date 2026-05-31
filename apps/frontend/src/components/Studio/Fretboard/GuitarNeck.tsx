@@ -1,9 +1,14 @@
 import { useFretboard } from '@/hooks/useFretboard';
 import { GuitarString } from './GuitarString';
 import { OpenStringLabel } from './OpenStringLabel';
+import { useEffect } from 'react';
 
 export const GuitarNeck = () => {
     const { neck } = useFretboard();
+
+    // useEffect(() => {
+    //     console.log(neck);
+    // }, [neck]);
 
     const OPEN_STRING_VALUES = ['E', 'B', 'G', 'D', 'A', 'E'];
     return (
@@ -32,7 +37,10 @@ export const GuitarNeck = () => {
                     <OpenStringLabel
                         value={OPEN_STRING_VALUES[string.stringIndex]}
                     />
-                    <GuitarString frets={string.frets} />
+                    <GuitarString
+                        frets={string.frets}
+                        stringIndex={string.stringIndex}
+                    />
                 </div>
             ))}
             {/* <div className="flex flex-row flex-1">

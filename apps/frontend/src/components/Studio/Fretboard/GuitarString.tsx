@@ -3,9 +3,10 @@ import { FretCell } from './FretCell';
 
 type Props = {
     frets: FretNote[];
+    stringIndex: number;
 };
 
-export const GuitarString = ({ frets }: Props) => {
+export const GuitarString = ({ frets, stringIndex }: Props) => {
     return (
         <div className="w-full flex-1 flex items-center gap-1 justify-between">
             {frets.map((fret) => (
@@ -13,19 +14,11 @@ export const GuitarString = ({ frets }: Props) => {
                     key={fret.noteIndex}
                     audioUrl={fret.audioUrl}
                     noteIndex={fret.noteIndex}
-                    keyToPress={fret.key}
+                    keyToPress={fret.key?.code}
+                    keyToShow={fret.key?.label}
+                    stringIndex={stringIndex}
                 />
             ))}
-            {/* <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell />
-            <FretCell /> */}
         </div>
     );
 };

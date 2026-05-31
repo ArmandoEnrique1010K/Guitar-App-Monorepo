@@ -89,6 +89,8 @@ export const GuitarPanel = () => {
 
     useEffect(() => {
         setNeck(newNeck);
+        console.log(newNeck);
+        // console.log(neck);
     }, [newNeck, setNeck]);
     return (
         <div
