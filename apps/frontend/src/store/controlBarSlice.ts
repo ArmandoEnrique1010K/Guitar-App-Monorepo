@@ -16,7 +16,7 @@ export const controlBarSlice: StateCreator<ControlBarSliceType> = (
     get,
 ) => ({
     rootChord: 0,
-    minRootChord: 1,
+    minRootChord: 0,
     maxRootChord: 12,
     lockOpenString: false,
 
@@ -36,16 +36,19 @@ export const controlBarSlice: StateCreator<ControlBarSliceType> = (
             if (get().rootChord === 0) {
                 set({ rootChord: 1 });
             }
-        } else {
+        }
+
+        if (!get().lockOpenString) {
             set({
                 minRootChord: 0,
                 maxRootChord: 12,
             });
+
 
             if (get().rootChord === 13) {
                 set({ rootChord: 12 });
             }
         }
     },
-    pauseAllNotes: () => {},
+    pauseAllNotes: () => { },
 });

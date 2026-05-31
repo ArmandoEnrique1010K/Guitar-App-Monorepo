@@ -110,6 +110,7 @@ export const FretCell = ({
             // transition-all
 
             className={`
+                z-20
                     h-full
                     flex
                     items-center

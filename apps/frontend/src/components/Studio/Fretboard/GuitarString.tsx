@@ -8,7 +8,7 @@ type Props = {
 
 export const GuitarString = ({ frets, stringIndex }: Props) => {
     return (
-        <div className="w-full flex-1 flex items-center gap-1 justify-between">
+        <div className="w-full flex-1 flex items-center gap-1 justify-between relative z-10">
             {frets.map((fret) => (
                 <FretCell
                     key={fret.noteIndex}

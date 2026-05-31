@@ -1,4 +1,5 @@
 import { useAssistant } from '@/hooks/useAssistant';
+import { useFretboard } from '@/hooks/useFretboard';
 import { SingleButton } from '@/ui/Studio/SingleButton';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
@@ -7,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 
 export const AssistantSlidingSidebar = () => {
     const { isGenerating, generateResponse, response } = useAssistant();
+    const { setKeyboardMode } = useFretboard();
 
     const [question, setQuestion] = useState('');
 
@@ -89,6 +91,10 @@ min-h-0
                             handleSubmit();
                         }
                     }}
+                    // Desactivar el modo de teclado cuando se enfoca el input
+                    onFocus={() => setKeyboardMode(false)}
+                    // Activar el modo de teclado cuando se desenfoca el input
+                    onBlur={() => setKeyboardMode(true)}
                 />
                 <SingleButton
                     text=""

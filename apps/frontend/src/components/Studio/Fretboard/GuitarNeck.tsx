@@ -27,15 +27,16 @@ export const GuitarNeck = () => {
             title: '2° cuerda',
         },
         {
-            value: 'E',
+            value: "E'",
             title: '1° cuerda (aguda)',
         },
     ];
 
     return (
         <div
-            className="
+            className=" 
         w-full
+        h-full
         lg:p-2 p-1
         text-white
         flex flex-col flex-1
