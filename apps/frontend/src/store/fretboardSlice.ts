@@ -15,6 +15,7 @@ export type FretboardSliceType = {
             player: Tone.Player;
             timeoutId?: number;
             intervalId?: number;
+            isLooping: boolean;
         }
     >;
     loading: boolean; // Carga inicial
@@ -108,7 +109,6 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
 
     // Los estados de loopMode y loopModeInterval se utilizan para reproducir continuamente una nota mientras se mantiene pulsado
     playNote: (stringIndex, noteIndex) => {
-
 
         const player =
             get().players?.player(noteIndex.toString());
@@ -213,31 +213,6 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
                 set({ activeNotes });
             }, duration * 1000);
         }
-        // console.log(
-        //     'ANTES',
-        //     get().activeNotes
-        // );
-
-
-        set({
-            activeNotes: {
-                ...get().activeNotes,
-                [key]: {
-                    stringIndex,
-                    noteIndex,
-                    player,
-                    timeoutId,
-                    intervalId,
-                }
-            }
-        });
-
-        // console.log(
-        //     'DESPUES',
-        //     get().activeNotes
-        // );
-
-
 
         // DEBE ACTUALIZAR LA NOTA ANTERIOR Y LA NUEVA QUE SE REPRODUCE
         set({
@@ -254,17 +229,27 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         );
 
         get().stopNotesByConditions();
-
+        player.start();
+        set({
+            activeNotes: {
+                ...get().activeNotes,
+                [key]: {
+                    stringIndex,
+                    noteIndex,
+                    player,
+                    timeoutId,
+                    intervalId,
+                    isLooping: loopMode
+                }
+            }
+        });
+        console.log(
+            'ACTIVE NOTES DESPUES DEL SET',
+            Object.keys(get().activeNotes)
+        );
         // if (!players) return;
 
         // players.player(noteIndex.toString()).start();
-
-        player.start();
-
-        // console.log(
-        //     'FINAL',
-        //     get().activeNotes
-        // );
     },
 
     stopNote: (stringIndex, noteIndex) => {
@@ -308,14 +293,20 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         const activeNotes = get().activeNotes;
 
         console.log(
-            'ANTES stopNotesByConditions',
-            Object.keys(activeNotes)
+            'STOP CONDITIONS',
+            current,
+            {
+                allowSameStringOverlap: get().allowSameStringOverlap,
+                allowDifferentStringOverlap: get().allowDifferentStringOverlap
+            }
         );
-
-
 
         const updatedActiveNotes = { ...activeNotes };
 
+        console.log(
+            'ACTIVE NOTES',
+            Object.keys(activeNotes)
+        );
         Object.entries(activeNotes).forEach(
             ([key, active]) => {
 
@@ -340,7 +331,14 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
                 if (!mustStop) return;
 
                 active.player.stop();
-
+                console.log(
+                    'SILENCIANDO',
+                    key,
+                    {
+                        sameString,
+                        differentString
+                    }
+                );
                 if (active.intervalId) {
                     clearInterval(active.intervalId);
                 }
@@ -381,14 +379,34 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         // NOTA: ESTO HACE UN CORTE ABRUPTO AL SOLTAR EL TECLADO O EL MOUSE
         // activeNote.player.stop();
 
-        const activeNotes = {
-            ...get().activeNotes,
-        };
+        // NO DECOMENTAR ESTO
+        // const activeNotes = {
+        //     ...get().activeNotes,
+        // };
 
-        delete activeNotes[key];
+        // delete activeNotes[key];
 
-        console.log('ELIMINANDO LOOP', key, activeNote.intervalId);
+        // console.log('ELIMINANDO LOOP', key, activeNote.intervalId);
 
-        set({ activeNotes });
+        // set({ activeNotes });
+
+        // TODO: SI LOOPMODE ESTA EN TRUE, SE MANTIENE EL ESTADO DE activeNotes, NO SE ELIMINAN LAS NOTAS LUEGO DE QUE HAYA TERMINADO EL TIEMPO DE REPRODUCCIÓN
+        set({
+            activeNotes: {
+                ...get().activeNotes,
+                [key]: {
+                    ...activeNote,
+                    intervalId: undefined,
+                    isLooping: false
+                }
+            }
+        });
+
+        console.log(
+            'STOP LOOP',
+            key,
+            Object.keys(get().activeNotes)
+        );
+
     },
 });
