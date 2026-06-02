@@ -18,10 +18,11 @@ export const FretCell = ({
     keyToShow,
     stringIndex,
 }: Props) => {
-    const { showKeyboardKeys, loopMode, autoMute, holdToPlay } =
+    const { showKeyboardKeys, loopMode, loopIntervalMs, autoMute, holdToPlay } =
         usePreferences();
     const { rootChord } = useControlBar();
-    const { keyboardMode, playNote, stopNote } = useFretboard();
+    const { keyboardMode, playNote, stopNote, stopRepeatingNote } =
+        useFretboard();
 
     // Tecla presionada
     const [keyPressed, setKeyPressed] = useState(false);
@@ -35,11 +36,15 @@ export const FretCell = ({
 
         if (loopMode) {
             // TODO: stopRepeatingNote(stringIndex, noteIndex);
+            stopRepeatingNote(stringIndex, noteIndex);
         }
     };
 
     // Función para manejar el pulso del teclado
     const handleKeyDown = (event: KeyboardEvent) => {
+        // Evita que se reproduzca el sonido varias veces cuando se mantiene presionada la tecla
+        if (event.repeat) return;
+
         if (event.code === keyToPress && !keyPressed && keyboardMode) {
             setKeyPressed(true);
             setIsActive(true);
@@ -51,6 +56,8 @@ export const FretCell = ({
 
     // Función para manejar el momento cuando se suelta el teclado
     const handleKeyUp = (event: KeyboardEvent) => {
+        // console.log('KEYUP', event.code);
+
         if (event.code === keyToPress) {
             setKeyPressed(false);
             setIsActive(false);
@@ -61,6 +68,7 @@ export const FretCell = ({
 
             if (loopMode) {
                 // TODO: stopRepeatingNote(stringIndex, noteIndex);
+                stopRepeatingNote(stringIndex, noteIndex);
             }
         }
     };
@@ -83,6 +91,7 @@ export const FretCell = ({
 
         if (loopMode) {
             // TODO: stopRepeatingNote(stringIndex, noteIndex)
+            stopRepeatingNote(stringIndex, noteIndex);
         }
     };
 
@@ -103,7 +112,15 @@ export const FretCell = ({
         };
 
         // holdToPlay como dependencia es necesario porque ese estado habilita si se va a silenciar el sonido al soltar la tecla
-    }, [keyToPress, autoMute, keyboardMode, rootChord, holdToPlay]);
+    }, [
+        keyToPress,
+        autoMute,
+        keyboardMode,
+        rootChord,
+        holdToPlay,
+        loopMode,
+        loopIntervalMs,
+    ]);
 
     return (
         <button

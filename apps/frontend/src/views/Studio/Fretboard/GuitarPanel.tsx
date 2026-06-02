@@ -1,4 +1,3 @@
-import { FretMarkers } from '@/components/Studio/Fretboard/FretMarkers';
 import { FretNumbers } from '@/components/Studio/Fretboard/FretNumbers';
 import { GuitarNeck } from '@/components/Studio/Fretboard/GuitarNeck';
 
@@ -28,7 +27,7 @@ export const GuitarPanel = () => {
                 <GuitarNeck />
 
                 {/* Componente para los circulos del mastil */}
-                <FretMarkers />
+                {/* <FretMarkers /> */}
             </div>
 
             <FretNumbers />

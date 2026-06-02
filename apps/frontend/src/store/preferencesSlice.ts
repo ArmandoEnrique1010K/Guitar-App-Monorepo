@@ -71,7 +71,7 @@ export const preferencesSlice: StateCreator<PreferencesSliceType & FretboardSlic
     // Mantener reproduciendo notas en cuerdas diferentes
     allowDifferentStringOverlap: true, // El comportamiento de una guitarra es silenciar cuando se toca una cuerda diferente
     loopMode: false,
-    loopIntervalMs: 0,
+    loopIntervalMs: 50,
     autoMute: false,
     autoMuteDelayMs: 100,
     showKeyboardKeys: true,

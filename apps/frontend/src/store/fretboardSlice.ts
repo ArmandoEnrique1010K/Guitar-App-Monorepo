@@ -13,7 +13,8 @@ export type FretboardSliceType = {
             stringIndex: number;
             noteIndex: number;
             player: Tone.Player;
-            timeoutId: number;
+            timeoutId?: number;
+            intervalId?: number;
         }
     >;
     loading: boolean; // Carga inicial
@@ -36,6 +37,9 @@ export type FretboardSliceType = {
 
     // DETENER NOTAS POR CONDICIONES
     stopNotesByConditions: () => void;
+
+    // DETENER NOTAS DEL BUCLE
+    stopRepeatingNote: (stringIndex: number, noteIndex: number) => void
 
 };
 
@@ -98,11 +102,14 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
             volumeNode
         });
 
-        console.log('SE CARGO LOS PLAYERS')
+        // console.log('SE CARGO LOS PLAYERS')
     },
 
 
+    // Los estados de loopMode y loopModeInterval se utilizan para reproducir continuamente una nota mientras se mantiene pulsado
     playNote: (stringIndex, noteIndex) => {
+
+
         const player =
             get().players?.player(noteIndex.toString());
 
@@ -116,6 +123,12 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
 
         const key = `${stringIndex}-${noteIndex}`;
 
+        // console.log(
+        //     'PLAY NOTE',
+        //     key,
+        //     get().activeNotes[key]
+        // );
+
         // Si se toca la nota en la misma cuerda y acorde, se detiene la anterior
         const existingNote =
             get().activeNotes[key];
@@ -126,28 +139,21 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         //     'MISMA REFERENCIA?',
         //     existingNote?.player === player
         // );
-
+        // MODO BUCLE 
+        const loopMode = get().loopMode;
+        const loopIntervalMs = get().loopIntervalMs; // Intervalo en milisegundos
 
         if (existingNote) {
-            clearTimeout(existingNote.timeoutId);
+            if (existingNote.timeoutId) {
+                clearTimeout(existingNote.timeoutId);
+            }
+
+            // Si hay un intervalo, tambien lo debe limpiar
+            if (existingNote.intervalId) {
+                clearInterval(existingNote.intervalId);
+            }
 
             existingNote.player.stop();
-        }
-        // console.log(
-        //     'ACTIVE COUNT',
-        //     Object.keys(get().activeNotes).length
-        // );
-
-        const timeoutId = window.setTimeout(() => {
-            const currentActiveNote =
-                get().activeNotes[key];
-
-            if (
-                !currentActiveNote ||
-                currentActiveNote.timeoutId !== timeoutId
-            ) {
-                return;
-            }
 
             const activeNotes = {
                 ...get().activeNotes,
@@ -156,7 +162,61 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
             delete activeNotes[key];
 
             set({ activeNotes });
-        }, duration * 1000);
+
+        }
+        // console.log(
+        //     'ACTIVE COUNT',
+        //     Object.keys(get().activeNotes).length
+        // );
+
+
+        let intervalId: number | undefined;
+        let timeoutId: number | undefined;
+
+        // Si el modo bucle esta activo, se reproduce la nota continuamente
+        if (loopMode) {
+            intervalId = window.setInterval(() => {
+                console.log(
+                    'LOOP ACTIVO',
+                    key,
+                    Object.keys(get().activeNotes)
+                );
+
+                const currentPlayer =
+                    get().players?.player(noteIndex.toString());
+
+                if (!currentPlayer?.loaded) return;
+
+                currentPlayer.stop();
+                currentPlayer.start();
+            }, loopIntervalMs);
+        }
+
+        if (!loopMode) {
+            timeoutId = window.setTimeout(() => {
+                const currentActiveNote =
+                    get().activeNotes[key];
+
+                if (
+                    !currentActiveNote ||
+                    currentActiveNote.timeoutId !== timeoutId
+                ) {
+                    return;
+                }
+
+                const activeNotes = {
+                    ...get().activeNotes,
+                };
+
+                delete activeNotes[key];
+
+                set({ activeNotes });
+            }, duration * 1000);
+        }
+        // console.log(
+        //     'ANTES',
+        //     get().activeNotes
+        // );
 
 
         set({
@@ -166,10 +226,19 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
                     stringIndex,
                     noteIndex,
                     player,
-                    timeoutId
+                    timeoutId,
+                    intervalId,
                 }
             }
         });
+
+        // console.log(
+        //     'DESPUES',
+        //     get().activeNotes
+        // );
+
+
+
         // DEBE ACTUALIZAR LA NOTA ANTERIOR Y LA NUEVA QUE SE REPRODUCE
         set({
             previousNote: get().currentNote,
@@ -178,6 +247,12 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
                 stringIndex
             }
         })
+
+        console.log(
+            'ANTES DE llamar a stopNotesByConditions',
+            Object.keys(get().activeNotes)
+        );
+
         get().stopNotesByConditions();
 
         // if (!players) return;
@@ -185,6 +260,11 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         // players.player(noteIndex.toString()).start();
 
         player.start();
+
+        // console.log(
+        //     'FINAL',
+        //     get().activeNotes
+        // );
     },
 
     stopNote: (stringIndex, noteIndex) => {
@@ -194,7 +274,13 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
 
         if (!activeNote) return;
 
-        clearTimeout(activeNote.timeoutId);
+        if (activeNote.timeoutId) {
+            clearTimeout(activeNote.timeoutId);
+        }
+
+        if (activeNote.intervalId) {
+            clearInterval(activeNote.intervalId);
+        }
 
         activeNote.player.stop();
 
@@ -208,7 +294,6 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
     },
 
     stopNotesByConditions: () => {
-
         // Ten en cuenta los siguientes estados:
         // get().allowSameStringOverlap (booleano) -> Permite reproducir notas en la misma cuerda sin detener la anterior
         // get().allowDifferentStringOverlap (booleano) -> Permite reproducir notas en cuerdas diferentes sin detener la anterior
@@ -221,6 +306,15 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
         if (!current) return;
 
         const activeNotes = get().activeNotes;
+
+        console.log(
+            'ANTES stopNotesByConditions',
+            Object.keys(activeNotes)
+        );
+
+
+
+        const updatedActiveNotes = { ...activeNotes };
 
         Object.entries(activeNotes).forEach(
             ([key, active]) => {
@@ -237,20 +331,64 @@ export const fretboardSlice: StateCreator<FretboardSliceType & PreferencesSliceT
                 const differentString =
                     active.stringIndex !== current.stringIndex;
 
-                if (
-                    sameString &&
-                    !get().allowSameStringOverlap
-                ) {
-                    active.player.stop();
+                const mustStop =
+                    (sameString &&
+                        !get().allowSameStringOverlap) ||
+                    (differentString &&
+                        !get().allowDifferentStringOverlap);
+
+                if (!mustStop) return;
+
+                active.player.stop();
+
+                if (active.intervalId) {
+                    clearInterval(active.intervalId);
                 }
 
-                if (
-                    differentString &&
-                    !get().allowDifferentStringOverlap
-                ) {
-                    active.player.stop();
+                if (active.timeoutId) {
+                    clearTimeout(active.timeoutId);
                 }
+
+                delete updatedActiveNotes[key];
             }
         );
-    }
+
+        console.log(
+            'DESPUES stopNotesByConditions',
+            Object.keys(updatedActiveNotes)
+        );
+
+        set({ activeNotes: updatedActiveNotes });
+    },
+
+    // NOTA: ESTA FUNCIÓN SE LLAMARA CUANDO SE SUELTE LA TECLA O CUANDO SE SUELTE EL CLICK SOBRE EL BOTON DE LA NOTA 
+    stopRepeatingNote: (stringIndex, noteIndex) => {
+        const key = `${stringIndex}-${noteIndex}`;
+        console.log(
+            'STOP LOOP',
+            key,
+            Object.keys(get().activeNotes)
+        );
+
+        const activeNote = get().activeNotes[key];
+
+        if (!activeNote) return;
+
+        if (activeNote.intervalId) {
+            clearInterval(activeNote.intervalId);
+        }
+
+        // NOTA: ESTO HACE UN CORTE ABRUPTO AL SOLTAR EL TECLADO O EL MOUSE
+        // activeNote.player.stop();
+
+        const activeNotes = {
+            ...get().activeNotes,
+        };
+
+        delete activeNotes[key];
+
+        console.log('ELIMINANDO LOOP', key, activeNote.intervalId);
+
+        set({ activeNotes });
+    },
 });

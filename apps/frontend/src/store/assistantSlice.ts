@@ -34,12 +34,12 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
             isGenerating: true,
         });
 
-        console.log(`El usuario ha introducido el texto ${prompt}`);
+        // console.log(`El usuario ha introducido el texto ${prompt}`);
 
         try {
             const stream = await generateResponseForAI(prompt);
 
-            console.log('Stream recibido:', stream);
+            // console.log('Stream recibido:', stream);
 
             set({
                 response: '...',

@@ -1,6 +1,5 @@
 import { Rope } from '@/components/Studio/Fretboard/old/Rope';
 import { neck } from '@/data/neck';
-import { useEffect } from 'react';
 
 const renderCircle = (chord: number) => {
     if (chord === 12) {
@@ -22,15 +21,15 @@ const renderCircle = (chord: number) => {
 export const GuitarPanel = () => {
     const firstRopeFrets = () => {
         if (neck.length > 0) {
-            console.log('MOSTRANDO NECK');
+            // console.log('MOSTRANDO NECK');
 
             return neck[0].frets;
         }
         return [];
     };
-    useEffect(() => {
-        console.log(neck);
-    }, [neck]);
+    // useEffect(() => {
+    //     console.log(neck);
+    // }, [neck]);
 
     return (
         <div className="relative">

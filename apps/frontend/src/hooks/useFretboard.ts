@@ -16,6 +16,9 @@ export const useFretboard = () => {
     const initializePlayers = useAppStore((state) => state.initializePlayers);
     const playNote = useAppStore((state) => state.playNote);
     const stopNote = useAppStore((state) => state.stopNote);
+    const stopNotesByConditions = useAppStore((state) => state.stopNotesByConditions);
+    const stopRepeatingNote = useAppStore((state) => state.stopRepeatingNote);
+
 
     return {
         currentNote,
@@ -32,5 +35,7 @@ export const useFretboard = () => {
         initializePlayers,
         playNote,
         stopNote,
+        stopNotesByConditions,
+        stopRepeatingNote,
     };
 };
