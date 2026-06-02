@@ -1,3 +1,5 @@
+import * as Tone from "tone";
+
 export interface LoginForm {
     email: string;
     password: string;
@@ -69,3 +71,67 @@ export type KeyboardsRows = {
         label: string;
     }[];
 }[];
+
+
+export type Effects = {
+    distortion: DistortionConfig;
+};
+
+// export type PartialEffects = {
+//     distortion?: Partial<DistortionEffect>;
+// }
+
+export type EffectsChain = {
+    distortion: Tone.Distortion | null;
+};
+
+export type DistortionConfig = {
+    enabled: boolean;
+    distortion: number;        // nivel de distorsión (0 a 1)
+    oversample: "none" | "2x" | "4x";
+    wet: number;
+}
+
+
+export type EffectHandler<
+    TEffect,
+    TConfig
+> = {
+    create: () => TEffect;
+
+    configure: (
+        effect: TEffect,
+        config: TConfig
+    ) => void;
+
+    dispose?: (
+        effect: TEffect
+    ) => void;
+};
+
+export type EffectHandlers = {
+    distortion: EffectHandler<
+        Tone.Distortion,
+        DistortionConfig
+    >;
+};
+
+
+
+// TIPADO DE PROPIEDADES
+export type NumberProperty = {
+    min: number;
+    max: number;
+    step: number;
+    defaultValue: number;
+    factor: number,
+    unit: string;
+    decimals: number;
+};
+
+export type OptionProperty<T extends string> = {
+    default: T;
+    values: T[];
+};
+
+
