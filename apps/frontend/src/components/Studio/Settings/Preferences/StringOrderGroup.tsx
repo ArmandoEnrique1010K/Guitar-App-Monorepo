@@ -1,5 +1,6 @@
 import { usePreferences } from '@/hooks/usePreferences';
 import { useDragAndDrop } from '@formkit/drag-and-drop/react';
+import { DragHandleDots1Icon } from '@radix-ui/react-icons';
 import { useEffect, useMemo } from 'react';
 
 const KEY_ROW_LABELS = [
@@ -47,8 +48,9 @@ export const StringOrderGroup = () => {
 
     return (
         // lg:w-36 w-30
+        // h-full
         <div
-            className="w-36 bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
+            className="w-36  bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
             border-b-slate-500"
         >
             <ul ref={parent} className="flex flex-col">
@@ -65,9 +67,8 @@ export const StringOrderGroup = () => {
 
                     flex
                     items-center
-                    pl-1
 
-                    justify-start
+                    justify-start   
 
         bg-black
         text-green-400
@@ -87,8 +88,11 @@ transition-colors
 overflow-hidden
 will-change-transform
         duration-75
+        gap-1
                 "
                     >
+                        {/* className="size-4" */}
+                        <DragHandleDots1Icon />
                         {index + 1}. {item.value}
                     </li>
                 ))}
