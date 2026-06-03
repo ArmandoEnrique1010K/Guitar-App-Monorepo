@@ -19,6 +19,7 @@ export const useEffects = () => {
     const rebuildEffectsChain = useAppStore(
         (state) => state.rebuildEffectsChain,
     );
+    const addEffect = useAppStore((state) => state.addEffect);
 
     return {
         effectsOrder,
@@ -32,5 +33,6 @@ export const useEffects = () => {
         createEffectInstance,
         removeEffectInstance,
         rebuildEffectsChain,
+        addEffect,
     };
 };

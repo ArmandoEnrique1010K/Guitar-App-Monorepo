@@ -75,6 +75,7 @@ export type KeyboardsRows = {
 
 export type Effects = {
     distortion: DistortionConfig;
+    reverb: ReverbConfig;
 };
 
 // export type PartialEffects = {
@@ -83,6 +84,7 @@ export type Effects = {
 
 export type EffectsChain = {
     distortion: Tone.Distortion | null;
+    reverb: Tone.Reverb | null;
 };
 
 export type DistortionConfig = {
@@ -92,6 +94,12 @@ export type DistortionConfig = {
     wet: number;
 }
 
+export type ReverbConfig = {
+    enabled: boolean;
+    decay: number;
+    preDelay: number;
+    wet: number;
+}
 
 export type EffectHandler<
     TEffect,
@@ -113,6 +121,10 @@ export type EffectHandlers = {
     distortion: EffectHandler<
         Tone.Distortion,
         DistortionConfig
+    >;
+    reverb: EffectHandler<
+        Tone.Reverb,
+        ReverbConfig
     >;
 };
 

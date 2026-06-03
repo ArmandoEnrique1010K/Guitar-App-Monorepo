@@ -1,6 +1,6 @@
 import { usePreferences } from '@/hooks/usePreferences';
 import { useDragAndDrop } from '@formkit/drag-and-drop/react';
-import { DragHandleDots1Icon } from '@radix-ui/react-icons';
+import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import { useEffect, useMemo } from 'react';
 
 const KEY_ROW_LABELS = [
@@ -59,8 +59,6 @@ export const StringOrderGroup = () => {
                         key={item.row}
                         className="
         h-6
-        min-h-6
-        max-h-6
 
         shrink-0
         select-none
@@ -88,12 +86,13 @@ transition-colors
 overflow-hidden
 will-change-transform
         duration-75
-        gap-1
                 "
                     >
                         {/* className="size-4" */}
-                        <DragHandleDots1Icon />
-                        {index + 1}. {item.value}
+                        <div className="flex flex-row gap-2 items-start">
+                            <DragHandleDots2Icon />
+                            {index + 1}. {item.value}
+                        </div>
                     </li>
                 ))}
             </ul>

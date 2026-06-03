@@ -2,6 +2,8 @@ import type { EffectHandlers, Effects, EffectsChain } from "@/schemas"
 import type { StateCreator } from "zustand"
 import { distortionHandler } from "./handlers/distortion.handler";
 import { INITIAL_DISTORTION } from "@/constants/distortion.constants";
+import { INITIAL_REVERB } from "@/constants/reverb.constants";
+import { reverbHandler } from "./handlers/reverb.handler";
 
 
 
@@ -36,6 +38,7 @@ export type EffectsSliceType = {
     ) => void;
 
     rebuildEffectsChain: () => EffectsChain[keyof EffectsChain][];
+    addEffect: (effectName: keyof Effects) => void;
 };
 
 export const effectsSlice:
@@ -45,21 +48,26 @@ export const effectsSlice:
     ) => ({
         effectsOrder: [
             // TODO: ESTO DEBE ESTAR VACIO AL CARGAR LA PAGINA
-            "distortion",
+            // EL ORDEN IMPORTA
         ],
 
         effects: {
             distortion:
-                INITIAL_DISTORTION
+                INITIAL_DISTORTION,
+            reverb:
+                INITIAL_REVERB
         },
 
         effectsChain: {
-            distortion: null
+            distortion: null,
+            reverb: null
         },
 
         effectHandlers: {
             distortion:
-                distortionHandler
+                distortionHandler,
+            reverb:
+                reverbHandler
         },
 
         setEffectsOrder: (effectsOrder) => {
@@ -191,7 +199,7 @@ export const effectsSlice:
 
                     [effectName]:
                         null
-                }
+                },
             }));
         },
         rebuildEffectsChain: () => {
@@ -214,5 +222,27 @@ export const effectsSlice:
                     .filter(Boolean);
 
             return activeEffects;
+        },
+        addEffect: (effectName) => {
+            console.log('Añadiendo efecto:', effectName);
+
+            const state = get();
+
+            if (state.effectsOrder.includes(effectName)) {
+                console.log('Ya existe');
+                return;
+            }
+
+            state.createEffectInstance(effectName);
+
+            set((state) => ({
+                effectsOrder: [
+                    ...state.effectsOrder,
+                    effectName,
+                ],
+            }));
+
+            console.log(get().effectsOrder);
         }
-    });
+    }
+    );
