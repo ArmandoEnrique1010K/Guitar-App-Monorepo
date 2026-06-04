@@ -37,16 +37,16 @@ export const SingleButton = ({
                 border-b-gray-800
                 shadow-inner
 
-                active:from-gray-400
-                active:to-gray-500
-                active:border-t-gray-800
-                active:border-l-gray-800
-                active:border-r-gray-200
-                active:border-b-gray-200
+                ${
+                    !disabled &&
+                    `active:from-gray-400 active:to-gray-500 
+                    active:border-t-gray-800 active:border-l-gray-800 active:border-r-gray-200 active:border-b-gray-200
+                    active:text-slate-800  
+                    `
+                }
 
 
                 text-slate-600 
-                active:text-slate-800  
                 active:drop-shadow(0 0 4px #4ade80)
             `}
             // El color de texto sirve para aplicarle color de fondo al icono

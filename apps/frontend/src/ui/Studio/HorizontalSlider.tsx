@@ -9,6 +9,7 @@ type Props = {
     unit?: string;
     step?: number;
     onChange: (value: number) => void;
+    formatedValue?: number;
 };
 
 export const HorizontalSlider = ({
@@ -20,6 +21,7 @@ export const HorizontalSlider = ({
     unit = '',
     step = 1,
     onChange,
+    formatedValue,
 }: Props) => {
     const percentage = ((value - min) / (max - min)) * 100;
 
@@ -39,7 +41,7 @@ export const HorizontalSlider = ({
         >
             {label && (
                 <div className="flex justify-between items-center">
-                    {<span className="text-gray-200">{label}</span>}
+                    {<span className="text-green-500">{label}</span>}
                 </div>
             )}
             <input
@@ -72,11 +74,11 @@ export const HorizontalSlider = ({
                                 border-b-slate-500
                 "
                 >
-                    {value}
+                    {formatedValue !== undefined ? formatedValue : value}
                 </div>
                 {unit && (
                     <>
-                        <div className="text-gray-200">{unit}</div>
+                        <div className="text-green-500">{unit}</div>
                     </>
                 )}
             </div>

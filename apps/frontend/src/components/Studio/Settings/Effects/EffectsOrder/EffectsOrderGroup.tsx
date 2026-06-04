@@ -40,7 +40,7 @@ export const EffectsOrderGroup = () => {
                 strategy={verticalListSortingStrategy}
             >
                 <div
-                    className="w-60 h-full bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
+                    className="w-56 h-full bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
             border-b-slate-500"
                 >
                     <ul className="flex flex-col">

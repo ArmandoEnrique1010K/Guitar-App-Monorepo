@@ -93,6 +93,7 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
         chorus: null,
     },
 
+    // FUNCION AUXILIAR
     effectHandlers: {
         distortion: distortionHandler,
         reverb: reverbHandler,
@@ -101,6 +102,24 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
         chorus: chorusHandler,
     },
 
+    // Ejemplo de funcion auxliar para distortion
+    // export const distortionHandler = {
+    //     create: () => {
+    //         return new Tone.Distortion();
+    //     },
+
+    //     configure: (effect: Tone.Distortion, config: DistortionConfig) => {
+    //         effect.distortion = config.distortion;
+    //         effect.oversample = config.oversample;
+    //         effect.wet.value = config.wet;
+    //     },
+
+    //     dispose: (effect: Tone.Distortion) => {
+    //         effect.dispose();
+    //     },
+    // };
+
+    // Efecto actual seleccionado
     currentEffectSelected: null,
 
     setEffectsOrder: (effectsOrder) => {
@@ -156,6 +175,8 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
             };
         });
     },
+
+    // TODO: CONTINUAR EN LA CREACION DE CAMPOS PARA CADA EFECTO DE SONIDO
     createEffectInstance: (effectName) => {
         const state = get();
 
@@ -187,23 +208,63 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
             return;
         }
 
+        const currentIndex = state.effectsOrder.indexOf(effectName);
+
+        // TAMBIEN DEBE MODIFICAR EL ESTADO DE EFFECTSORDER
+        const newOrder = state.effectsOrder.filter(
+            (effect) => effect !== effectName,
+        );
+
+        let newSelected = state.currentEffectSelected;
+
+        // Y CAMBIAR EL EFECTO ACTUAL SELECCIONADO
+
+        // Si el efecto eliminado coincide con el efecto seleccionado actualmente, debe seleccionar el anterior efecto de effectsOrder
+        // Pero si no hay un anterior efecto, debe seleccionar el siguiente efecto de effectsOrder
+        if (state.currentEffectSelected === effectName) {
+            newSelected =
+                newOrder[currentIndex - 1] ?? newOrder[currentIndex] ?? null;
+        }
+
         effect.dispose();
 
         set((state) => ({
             effectsChain: {
                 ...state.effectsChain,
-
                 [effectName]: null,
             },
+            effectsOrder: newOrder,
+            currentEffectSelected: newSelected,
         }));
 
-        // TAMBIEN DEBE MODIFICAR EL ESTADO DE EFFECTSORDER
-        console.log(effectName);
-        set((state) => ({
-            effectsOrder: state.effectsOrder.filter(
-                (effect) => effect !== effectName,
-            ),
-        }));
+        // effect.dispose();
+
+        // set((state) => ({
+        //     effectsChain: {
+        //         ...state.effectsChain,
+
+        //         [effectName]: null,
+        //     },
+        // }));
+
+        // set((state) => ({
+        //     effectsOrder: state.effectsOrder.filter(
+        //         (effect) => effect !== effectName,
+        //     ),
+        // }));
+
+        // if (state.currentEffectSelected === effectName) {
+        //     set((state) => ({
+        //         currentEffectSelected:
+        //             state.effectsOrder[
+        //                 state.effectsOrder.indexOf(effectName) - 1
+        //             ] ||
+        //             state.effectsOrder[
+        //                 state.effectsOrder.indexOf(effectName) + 1
+        //             ] ||
+        //             null,
+        //     }));
+        // }
     },
     rebuildEffectsChain: () => {
         const state = get();
