@@ -44,7 +44,7 @@ export const SelectOptionEffectButton = ({
             title={title}
         >
             <select
-                defaultValue=""
+                title="Agregue un efecto de sonido a la cadena de efectos"
                 onChange={(e) => onChange(e.target.value)}
                 className="
                     absolute
@@ -56,7 +56,11 @@ export const SelectOptionEffectButton = ({
                     h-full
                 "
             >
-                <option value="">Agregar efecto</option>
+                {options.length === 0 ? (
+                    <option value="">No hay efectos disponibles</option>
+                ) : (
+                    <option value="">Seleccione un efecto</option>
+                )}
 
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>

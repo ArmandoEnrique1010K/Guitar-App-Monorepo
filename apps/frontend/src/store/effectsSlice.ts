@@ -1,9 +1,15 @@
 import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
 import type { StateCreator } from 'zustand';
 import { distortionHandler } from './handlers/distortion.handler';
-import { INITIAL_DISTORTION } from '@/constants/distortion.constants';
-import { INITIAL_REVERB } from '@/constants/reverb.constants';
+import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
+import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { reverbHandler } from './handlers/reverb.handler';
+import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
+import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
+import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
+import { tremoloHandler } from './handlers/tremolo.handler';
+import { vibratoHandler } from './handlers/vibrato.handler';
+import { chorusHandler } from './handlers/chorus.handler';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -33,23 +39,66 @@ export type EffectsSliceType = {
 
 export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
     effectsOrder: [
-        // TODO: ESTO DEBE ESTAR VACIO AL CARGAR LA PAGINA
-        // EL ORDEN IMPORTA
+        //  ESTO DEBE ESTAR VACIO AL CARGAR LA PAGINA
+        // EL ORDEN IMPORTA, LOS EFECTOS PRESENTES EN LA CADENA
     ],
 
+    // OBJETO CON TODOS LOS EFECTOS DE SONIDO DISPONIBLES (DATOS)
     effects: {
-        distortion: INITIAL_DISTORTION,
-        reverb: INITIAL_REVERB,
+        distortion: {
+            distortion: DISTORTION_SCHEMA.distortion.defaultValue,
+            oversample: DISTORTION_SCHEMA.oversample.defaultValue,
+            wet: DISTORTION_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        reverb: {
+            decay: REVERB_SCHEMA.decay.defaultValue,
+            preDelay: REVERB_SCHEMA.preDelay.defaultValue,
+            wet: REVERB_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        tremolo: {
+            depth: TREMOLO_SCHEMA.depth.defaultValue,
+            frequency: TREMOLO_SCHEMA.frequency.defaultValue,
+            spread: TREMOLO_SCHEMA.spread.defaultValue,
+            type: TREMOLO_SCHEMA.type.defaultValue,
+            wet: TREMOLO_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        vibrato: {
+            depth: VIBRATO_SCHEMA.depth.defaultValue,
+            frequency: VIBRATO_SCHEMA.frequency.defaultValue,
+            type: VIBRATO_SCHEMA.type.defaultValue,
+            wet: VIBRATO_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        chorus: {
+            delayTime: CHORUS_SCHEMA.delayTime.defaultValue,
+            depth: CHORUS_SCHEMA.depth.defaultValue,
+            frequency: CHORUS_SCHEMA.frequency.defaultValue,
+            feedback: CHORUS_SCHEMA.feedback.defaultValue,
+            spread: CHORUS_SCHEMA.spread.defaultValue,
+            type: CHORUS_SCHEMA.type.defaultValue,
+            wet: CHORUS_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
     },
 
+    // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
     effectsChain: {
         distortion: null,
         reverb: null,
+        tremolo: null,
+        vibrato: null,
+        chorus: null,
     },
 
     effectHandlers: {
         distortion: distortionHandler,
         reverb: reverbHandler,
+        tremolo: tremoloHandler,
+        vibrato: vibratoHandler,
+        chorus: chorusHandler,
     },
 
     currentEffectSelected: null,
@@ -177,6 +226,17 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
 
         set((state) => ({
             effectsOrder: [...state.effectsOrder, effectName],
+        }));
+
+        // DEBE MARCAR LA PROPIEDAD ENABLED DEL EFECTO A TRUE
+        set((state) => ({
+            effects: {
+                ...state.effects,
+                [effectName]: {
+                    ...state.effects[effectName],
+                    enabled: true,
+                },
+            },
         }));
 
         state.setCurrentEffectSelected(effectName);

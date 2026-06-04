@@ -1,5 +1,6 @@
 import { useEffects } from '@/hooks/useEffects';
 import type { Effects } from '@/schemas';
+import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 import { useDragAndDrop } from '@formkit/drag-and-drop/react';
 import {
     CheckIcon,
@@ -7,11 +8,6 @@ import {
     DragHandleDots2Icon,
 } from '@radix-ui/react-icons';
 import { useEffect, useMemo } from 'react';
-
-const ORDER_EFFECTS: Record<keyof Effects, string> = {
-    distortion: 'Distorsión',
-    reverb: 'Reverberación',
-};
 
 export const EffectsOrderGroupContent = () => {
     const {
@@ -25,7 +21,7 @@ export const EffectsOrderGroupContent = () => {
     const items = useMemo(() => {
         return effectsOrder.map((row) => ({
             row,
-            value: ORDER_EFFECTS[row],
+            value: EFFECTS_NAMES[row],
         }));
     }, [effectsOrder]);
 
@@ -44,12 +40,6 @@ export const EffectsOrderGroupContent = () => {
     }, [values, setEffectsOrder]);
 
     return (
-        // <ul ref={parent} className="flex flex-col">
-        //     {values.map((item) => (
-        //         <li key={item.row}>...</li>
-        //     ))}
-        // </ul>
-
         <ul ref={parent} className="flex flex-col">
             {items.map((item, index) => {
                 const enabled = effects[item.row].enabled;
@@ -79,8 +69,6 @@ select-none
 
         hover:bg-[#0000ff]
         hover:text-white
-
-
 
 transition-colors
 
@@ -137,10 +125,7 @@ will-change-transform
 
             hover:bg-green-600
 "
-                                onClick={() =>
-                                    // TODO: PENDIENTE ESTA FUNCIÓN
-                                    removeEffectInstance(item.row)
-                                }
+                                onClick={() => removeEffectInstance(item.row)}
                                 onPointerDown={(e) => e.stopPropagation()}
                             >
                                 <Cross1Icon />
