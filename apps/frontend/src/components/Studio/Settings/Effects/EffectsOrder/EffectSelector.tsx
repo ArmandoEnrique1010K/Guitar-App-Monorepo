@@ -1,44 +1,42 @@
 import { useEffects } from '@/hooks/useEffects';
 import type { Effects } from '@/schemas';
-import { SelectOptionButton } from '@/ui/Studio/SelectOptionButton';
+import { SelectOptionEffectButton } from '@/ui/Studio/SelectOptionEffectButton';
 const EFFECTS_INFO = [
-    {
-        id: 'distortion',
-        label: 'Distorsión',
-    },
-    {
-        id: 'reverb',
-        label: 'Reverberación',
-    },
-    {
-        id: 'vibrato',
-        label: 'Vibrato',
-    },
-    {
-        id: 'eq3',
-        label: 'Ecualizador 3 bandas',
-    },
+    { id: 'distortion', label: 'Distorsión' },
+    { id: 'reverb', label: 'Reverberación' },
+    { id: 'vibrato', label: 'Vibrato' },
+    { id: 'eq3', label: 'Ecualizador 3 bandas' },
 ];
-export const EffectSelector = () => {
-    const { addEffect } = useEffects();
 
+export const EffectSelector = () => {
+    const { addEffect, effectsOrder } = useEffects();
+    const availableEffects = EFFECTS_INFO.filter(
+        (effect) => !effectsOrder.includes(effect.id as keyof Effects),
+    );
     return (
         <>
-            <SelectOptionButton
-                value="Agregue un efecto"
-                options={EFFECTS_INFO.map((effect) => effect.label)}
-                onChange={(value) => {
-                    console.log('SELECT:', value);
+            <SelectOptionEffectButton
+                options={availableEffects.map((effect) => ({
+                    value: effect.id,
+                    label: effect.label,
+                }))}
+                // onChange={(value) => {
+                //     const effect = EFFECTS_INFO.find(
+                //         (effect) => effect.label === value,
+                //     );
 
-                    const effect = EFFECTS_INFO.find(
-                        (effect) => effect.label === value,
-                    );
+                //     if (!effect) {
+                //         console.log('No encontrado');
+                //         return;
+                //     }
 
-                    console.log(effect);
+                //     console.log('ID:', effect.id);
+                //     console.log('LABEL:', effect.label);
+                // }}
+                onChange={(effectId) => {
+                    console.log(effectId);
 
-                    if (!effect) return;
-
-                    addEffect(effect.id as keyof Effects);
+                    addEffect(effectId as keyof Effects);
                 }}
             />
         </>

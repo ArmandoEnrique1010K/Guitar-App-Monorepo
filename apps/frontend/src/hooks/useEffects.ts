@@ -5,6 +5,9 @@ export const useEffects = () => {
     const effects = useAppStore((state) => state.effects);
     const effectsChain = useAppStore((state) => state.effectsChain);
     const effectHandlers = useAppStore((state) => state.effectHandlers);
+    const currentEffectSelected = useAppStore(
+        (state) => state.currentEffectSelected,
+    );
 
     const setEffectsOrder = useAppStore((state) => state.setEffectsOrder);
     const updateEffect = useAppStore((state) => state.updateEffect);
@@ -20,12 +23,16 @@ export const useEffects = () => {
         (state) => state.rebuildEffectsChain,
     );
     const addEffect = useAppStore((state) => state.addEffect);
+    const setCurrentEffectSelected = useAppStore(
+        (state) => state.setCurrentEffectSelected,
+    );
 
     return {
         effectsOrder,
         effects,
         effectsChain,
         effectHandlers,
+        currentEffectSelected,
         setEffectsOrder,
         updateEffect,
         toggleEffect,
@@ -34,5 +41,6 @@ export const useEffects = () => {
         removeEffectInstance,
         rebuildEffectsChain,
         addEffect,
+        setCurrentEffectSelected,
     };
 };
