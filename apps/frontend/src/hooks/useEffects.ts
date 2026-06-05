@@ -26,6 +26,9 @@ export const useEffects = () => {
     const setCurrentEffectSelected = useAppStore(
         (state) => state.setCurrentEffectSelected,
     );
+    const resetDefaultValuesEffectInstance = useAppStore(
+        (state) => state.resetDefaultValuesEffectInstance,
+    );
 
     return {
         effectsOrder,
@@ -42,5 +45,6 @@ export const useEffects = () => {
         rebuildEffectsChain,
         addEffect,
         setCurrentEffectSelected,
+        resetDefaultValuesEffectInstance,
     };
 };

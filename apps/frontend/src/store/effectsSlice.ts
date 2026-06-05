@@ -10,6 +10,8 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { tremoloHandler } from './handlers/tremolo.handler';
 import { vibratoHandler } from './handlers/vibrato.handler';
 import { chorusHandler } from './handlers/chorus.handler';
+import type { FretboardSliceType } from './fretboardSlice';
+import { buildDefaultConfigEffect } from '@/utils/buildDefaultConfigEffect';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -29,6 +31,8 @@ export type EffectsSliceType = {
 
     createEffectInstance: (effectName: keyof Effects) => void;
 
+    resetDefaultValuesEffectInstance: (effectName: keyof Effects) => void;
+
     removeEffectInstance: (effectName: keyof Effects) => void;
 
     rebuildEffectsChain: () => EffectsChain[keyof EffectsChain][];
@@ -37,7 +41,12 @@ export type EffectsSliceType = {
     setCurrentEffectSelected: (effectName: keyof Effects | null) => void;
 };
 
-export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
+export const effectsSlice: StateCreator<
+    EffectsSliceType & FretboardSliceType,
+    [],
+    [],
+    EffectsSliceType
+> = (set, get) => ({
     effectsOrder: [
         //  ESTO DEBE ESTAR VACIO AL CARGAR LA PAGINA
         // EL ORDEN IMPORTA, LOS EFECTOS PRESENTES EN LA CADENA
@@ -161,6 +170,8 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
                 },
             },
         }));
+
+        get().rebuildAudioGraph();
     },
     moveEffect: (fromIndex, toIndex) => {
         set((state) => {
@@ -174,6 +185,8 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
                 effectsOrder: newOrder,
             };
         });
+
+        get().rebuildAudioGraph();
     },
 
     // TODO: CONTINUAR EN LA CREACION DE CAMPOS PARA CADA EFECTO DE SONIDO
@@ -199,6 +212,34 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
             state.effects[effectName] as never,
         );
     },
+
+    resetDefaultValuesEffectInstance: (effectName) => {
+        // CADA UNO DE LOS PARAMETROS DEL EFECTO DE SONIDO DEFINIDO, SE TIENE QUE ESTABLECER A SUS VALORES INICIALES
+        // Llama a la función definida en utils
+        const defaults = buildDefaultConfigEffect(effectName);
+        get().updateEffect(effectName, defaults);
+        // const state = get();
+
+        // set((state) => ({
+        //     effects: {
+        //         ...state.effects,
+        //         [effectName]: {
+        //             ...state.effects[effectName],
+        //             ...defaults,
+        //         },
+        //     },
+        // }));
+
+        // const effect = get().effectsChain[effectName];
+
+        // if (effect) {
+        //     state.effectHandlers[effectName].configure(
+        //         effect as never,
+        //         get().effects[effectName] as never,
+        //     );
+        // }
+    },
+
     removeEffectInstance: (effectName) => {
         const state = get();
 
@@ -265,6 +306,7 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
         //             null,
         //     }));
         // }
+        state.rebuildAudioGraph();
     },
     rebuildEffectsChain: () => {
         const state = get();
@@ -301,6 +343,8 @@ export const effectsSlice: StateCreator<EffectsSliceType> = (set, get) => ({
         }));
 
         state.setCurrentEffectSelected(effectName);
+
+        state.rebuildAudioGraph();
     },
     setCurrentEffectSelected: (effectName) => {
         set({ currentEffectSelected: effectName });

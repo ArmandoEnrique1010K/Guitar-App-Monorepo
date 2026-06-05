@@ -11,8 +11,12 @@ import { DistortionParameters } from './DistortionParameters';
 import { ReverbParameters } from './ReverbParameters';
 
 export const EffectsPanel = () => {
-    const { currentEffectSelected, setCurrentEffectSelected, effectsOrder } =
-        useEffects();
+    const {
+        currentEffectSelected,
+        setCurrentEffectSelected,
+        effectsOrder,
+        resetDefaultValuesEffectInstance,
+    } = useEffects();
 
     const handlePreviousEffect = () => {
         if (!currentEffectSelected) return;
@@ -69,7 +73,12 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                     <SingleButton
                         title="Establecer valores predeterminados"
                         text="Reset"
-                        onClick={() => {}}
+                        onClick={() =>
+                            resetDefaultValuesEffectInstance(
+                                currentEffectSelected,
+                            )
+                        }
+                        disabled={!currentEffectSelected}
                         icon={<ResetIcon className="size-4" />}
                     />
                     <SingleButton

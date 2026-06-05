@@ -8,7 +8,7 @@ export const PreDelaySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Pre-Retraso"
+            label="Retraso"
             value={effects.reverb.preDelay}
             onChange={(value) => updateEffect('reverb', { preDelay: value })}
             unit={REVERB_SCHEMA.preDelay.unit}

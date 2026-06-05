@@ -50,10 +50,12 @@ export type PreferencesSliceType = {
     volumeNode: Tone.Volume | null;
 };
 
-export const preferencesSlice: StateCreator<PreferencesSliceType & FretboardSliceType, [], [], PreferencesSliceType> = (
-    set,
-    get,
-) => ({
+export const preferencesSlice: StateCreator<
+    PreferencesSliceType & FretboardSliceType,
+    [],
+    [],
+    PreferencesSliceType
+> = (set, get) => ({
     selectedGuitar: {
         _id: '',
         name: '',
@@ -126,35 +128,13 @@ export const preferencesSlice: StateCreator<PreferencesSliceType & FretboardSlic
 
     // Volume es un valor entre 0 y 100
     setVolume: (volume: number) => {
-        // console.log(
-        //     'ACTIVE',
-        //     get().activeNotes
-        // );
-
-        // const previousPlayers = get().players;
-        // console.log(
-        //     'PLAYERS REF',
-        //     previousPlayers
-        // );
         const volumeNode = get().volumeNode;
 
         if (volumeNode) {
-            volumeNode.volume.value =
-                Tone.gainToDb(volume / 100);
+            volumeNode.volume.value = Tone.gainToDb(volume / 100);
         }
 
         set({ volume });
-
-        // console.log(
-        //     'ACTIVE',
-        //     get().activeNotes
-        // );
-        // console.log(
-        //     'PLAYERS REF',
-        //     get().players
-        // );
-
-        // console.log(get().players === previousPlayers)
     },
 
     loadGuitars: async () => {
@@ -173,5 +153,4 @@ export const preferencesSlice: StateCreator<PreferencesSliceType & FretboardSlic
     },
 
     volumeNode: null,
-
 });
