@@ -9,6 +9,8 @@ import { ResetIcon } from '@/icons/ResetIcon';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 import { DistortionParameters } from './DistortionParameters';
 import { ReverbParameters } from './ReverbParameters';
+import { VibratoParameters } from './VibratoParameters';
+import { TremoloParameters } from './TremoloParameters';
 
 export const EffectsPanel = () => {
     const {
@@ -97,6 +99,14 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                     )}
 
                     {currentEffectSelected === 'reverb' && <ReverbParameters />}
+
+                    {currentEffectSelected === 'vibrato' && (
+                        <VibratoParameters />
+                    )}
+
+                    {currentEffectSelected === 'tremolo' && (
+                        <TremoloParameters />
+                    )}
                 </EffectParameters>
             </div>
         </div>

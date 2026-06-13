@@ -1,5 +1,7 @@
 import { useAppStore } from '@/store/useAppStore';
 
+// Los custom hooks se utilizan para 'simplificar' los nombres de los estados y metodos que se traen desde el store de Zustand
+// No se incluye logica de React como un hook useEffect dentro de los custom hooks
 export const useAssistant = () => {
     const isPanelOpen = useAppStore((state) => state.isPanelOpen);
     const togglePanel = useAppStore((state) => state.togglePanel);

@@ -10,6 +10,9 @@ import type {
 } from '@/schemas';
 import { isAxiosError } from 'axios';
 
+// A diferencia de AssistantAPI, aqui se definen las funciones que van a realizar las peticiones HTTP
+// a la API REST y se manejan los errores de una manera especifica
+
 //* ESTO ES UNA MALA PRACTICA
 // export const login = async (formData: LoginForm) => {
 //     const response = await api.post('/auth/login', formData);

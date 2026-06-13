@@ -78,7 +78,7 @@ export const effectsSlice: StateCreator<
             depth: VIBRATO_SCHEMA.depth.defaultValue,
             frequency: VIBRATO_SCHEMA.frequency.defaultValue,
             type: VIBRATO_SCHEMA.type.defaultValue,
-            wet: VIBRATO_SCHEMA.wet.defaultValue,
+            wet: VIBRATO_SCHEMA.frequency.defaultValue,
             enabled: false,
         },
         chorus: {
@@ -159,6 +159,8 @@ export const effectsSlice: StateCreator<
             );
         }
     },
+
+    // Activa o desactiva el efecto
     toggleEffect: (effectName) => {
         set((state) => ({
             effects: {
@@ -170,6 +172,11 @@ export const effectsSlice: StateCreator<
                 },
             },
         }));
+
+        // Solamente si se habilita el efecto de sonido, debe seleccionarlo
+        if (get().effects[effectName].enabled) {
+            set({ currentEffectSelected: effectName });
+        }
 
         get().rebuildAudioGraph();
     },
