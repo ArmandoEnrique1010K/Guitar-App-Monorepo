@@ -1,6 +1,6 @@
-import { IConfiguration } from "models/Notebook/Configuration";
-import { INotebook } from "models/Notebook/Notebook";
 import { IUser } from "models/User/User";
+import { IPreset } from "models/Workspace/Preset";
+import { IWorkspace } from "models/Workspace/Workspace";
 
 // En este archivo se define la forma en que typescript entiende
 // las propiedades que se le agregan a Request en el archivo
@@ -17,11 +17,11 @@ declare global {
     namespace Express {
         interface Request {
             user?: IUser;
-            notebook?: INotebook;
-            configuration?: IConfiguration;
+            workspace?: IWorkspace;
+            preset?: IPreset;
 
-            // Campo para el nombre de la configuración
-            configurationName?: string;
+            // Campo para el nombre del espacio de trabajo
+            presetName?: string;
         }
     }
 }

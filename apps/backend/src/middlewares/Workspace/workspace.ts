@@ -1,32 +1,32 @@
 import type { Request, Response, NextFunction } from "express";
-import Notebook from "models/Notebook/Notebook";
+import Workspace from "models/Workspace/Workspace";
 
-export async function notebookExists(
+export async function workspaceExists(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        const { notebookId } = req.params;
-        const notebook = await Notebook.findById(notebookId);
-        if (!notebook) {
-            const error = new Error("Cuaderno no encontrado");
+        const { workspaceId } = req.params;
+        const workspace = await Workspace.findById(workspaceId);
+        if (!workspace) {
+            const error = new Error("Espacio de trabajo no encontrado");
             return res.status(404).json({ error: error.message });
         }
-        req.notebook = notebook;
+        req.workspace = workspace;
         next();
     } catch (error) {
         res.status(500).json({ error: "Hubo un error" });
     }
 }
 
-export async function isAuthorOfNotebook(
+export async function isAuthorOfWorkspace(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        if (req.user?._id.toString() !== req.notebook?.user._id.toString()) {
+        if (req.user?._id.toString() !== req.workspace?.user._id.toString()) {
             const error = new Error("Acción no válida");
             return res.status(400).json({ error: error.message });
         }

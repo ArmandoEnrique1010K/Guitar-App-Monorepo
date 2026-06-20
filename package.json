@@ -14,6 +14,8 @@
     "dev": "concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
     "dev:frontend": "yarn workspace frontend dev",
     "dev:backend": "yarn workspace backend dev",
+    "guitar-seed:backend": "yarn workspace backend guitar-seed",
+    "workspace-destroy:backend": "yarn workspace backend workspace-destroy",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
     "build:shared": "yarn workspace shared build",
     "build:frontend": "yarn workspace frontend build",

@@ -1,62 +1,56 @@
-import Notebook from "models/Notebook/Notebook";
 import type { Request, Response } from "express";
+import Workspace from "models/Workspace/Workspace";
 
-export class NotebookController {
-    static createNotebook = async (req: Request, res: Response) => {
+export class WorkSpaceController {
+    static createWorkspace = async (req: Request, res: Response) => {
         try {
             const { name } = req.body;
 
-            const notebookExists = await Notebook.findOne({ name });
-            if (notebookExists) {
+            const workspaceExists = await Workspace.findOne({ name });
+            if (workspaceExists) {
                 const error = new Error("El cuaderno ya esta registrado");
                 return res.status(409).json({ error: error.message });
             }
             const userId = req.user?._id;
 
             // Crear cuaderno de configuraciones
-            const notebook = new Notebook({
+            const workspace = new Workspace({
                 name,
                 user: userId,
             });
 
-            await notebook.save();
+            await workspace.save();
 
-            res.send("Se creo un nuevo cuaderno");
+            res.send("Se creo un nuevo espacio de trabajo");
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static getAllNotebooks = async (req: Request, res: Response) => {
+    static getAllWorkspaces = async (req: Request, res: Response) => {
         try {
-            //   const notebooks = await Notebook.find({
-            //     user: req.user?._id,
-            //   });
-
-            //   res.json(notebooks);
-
-            const notebooks = await Notebook.aggregate([
+            const notebooks = await Workspace.aggregate([
                 { $match: { user: req.user?._id } },
 
                 {
                     $lookup: {
-                        from: "configurations",
+                        from: "presets",
                         localField: "_id",
-                        foreignField: "notebook",
-                        as: "configurations",
+                        foreignField: "workspace",
+                        as: "presets",
                     },
                 },
                 // Nuevos campos
                 {
                     $addFields: {
-                        configCount: { $size: "$configurations" },
+                        presetCount: { $size: "$presets" },
                     },
                 },
                 // Ocultar campos
                 {
                     $project: {
-                        configurations: 0, // opcional: no devolver array completo
+                        presets: 0, // opcional: no devolver array completo
                         user: 0,
                         __v: 0,
                     },
@@ -68,21 +62,21 @@ export class NotebookController {
         }
     };
 
-    static updateNotebook = async (req: Request, res: Response) => {
+    static updateWorkspace = async (req: Request, res: Response) => {
         try {
-            req.notebook!.name = req.body.name;
-            await req.notebook!.save();
-            res.send("Cuaderno actualizado");
+            req.workspace!.name = req.body.name;
+            await req.workspace!.save();
+            res.send("Espacio de trabajo actualizado");
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static deleteNotebook = async (req: Request, res: Response) => {
+    static deleteWorkspace = async (req: Request, res: Response) => {
         try {
-            await req.notebook!.deleteOne();
-            res.send("Cuaderno eliminado");
+            await req.workspace!.deleteOne();
+            res.send("Espacio de trabajo eliminado");
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

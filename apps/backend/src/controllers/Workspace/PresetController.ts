@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
 import Guitar from "models/Guitar/Guitar";
-import Configuration from "models/Notebook/Configuration";
+import Preset from "models/Workspace/Preset";
 
-export class ConfigurationController {
-    static createConfiguration = async (req: Request, res: Response) => {
+export class PresetController {
+    static createPreset = async (req: Request, res: Response) => {
         try {
             const {
                 volume,
@@ -20,8 +20,8 @@ export class ConfigurationController {
                 effects,
             } = req.body;
 
-            const { notebookId, guitarId } = req.params;
-            const name = req.configurationName;
+            const { workspaceId, guitarId } = req.params;
+            const name = req.presetName;
 
             // Validar efectos
             // const allowedEffects = ["distortion", "reverb", "tremolo", "eq3"];
@@ -45,10 +45,10 @@ export class ConfigurationController {
             // }
 
             // Crear una configuracion
-            const configuration = new Configuration({
+            const preset = new Preset({
                 name,
-                // Debe ser el notebook y la guitarra seleccionada por URL
-                notebook: notebookId,
+                // Debe ser el workspace y la guitarra seleccionada por URL
+                workspace: workspaceId,
                 guitar: guitarId,
 
                 guitarBehavior: {
@@ -74,7 +74,7 @@ export class ConfigurationController {
                 effects,
             });
 
-            await configuration.save();
+            await preset.save();
 
             res.send("Se guardo la configuración actual");
         } catch (error) {
@@ -84,22 +84,22 @@ export class ConfigurationController {
     };
 
     // Debe obtener todas las configuraciones por id de notebook con todos los parametros
-    static getAllConfigurations = async (req: Request, res: Response) => {
+    static getAllPresets = async (req: Request, res: Response) => {
         try {
-            const { notebookId } = req.params;
+            const { workspaceId } = req.params;
 
             // Con select puedes quitar los campos que no son necesarios
-            const configurations = await Configuration.find({
-                notebook: notebookId,
-            }).select("-notebook -__v");
+            const presets = await Preset.find({
+                workspace: workspaceId,
+            }).select("-workspace -__v");
 
-            res.json(configurations);
+            res.json(presets);
         } catch (error) {
             console.log(error);
         }
     };
 
-    static updateConfiguration = async (req: Request, res: Response) => {
+    static updatePreset = async (req: Request, res: Response) => {
         try {
             const { guitarId } = req.params;
             const {
@@ -126,31 +126,30 @@ export class ConfigurationController {
                 return res.status(404).json({ error: error.message });
             }
 
-            req.configuration!.guitar = guitarExists._id;
+            req.preset!.guitar = guitarExists._id;
 
             // Recordar que el nombre se obtiene del req.configurationName porque ha pasado por el middleware
-            req.configuration!.name = req.configurationName!;
+            req.preset!.name = req.presetName!;
 
-            req.configuration!.guitarBehavior.volume = volume;
-            req.configuration!.guitarBehavior.holdToPlay = holdToPlay;
-            req.configuration!.guitarBehavior.allowSameStringOverlap =
+            req.preset!.guitarBehavior.volume = volume;
+            req.preset!.guitarBehavior.holdToPlay = holdToPlay;
+            req.preset!.guitarBehavior.allowSameStringOverlap =
                 allowSameStringOverlap;
-            req.configuration!.guitarBehavior.allowDifferentStringOverlap =
+            req.preset!.guitarBehavior.allowDifferentStringOverlap =
                 allowDifferentStringOverlap;
 
-            req.configuration!.playbackSettings.loopMode = loopMode;
-            req.configuration!.playbackSettings.loopIntervalMs = loopIntervalMs;
-            req.configuration!.playbackSettings.autoMute = autoMute;
-            req.configuration!.playbackSettings.autoMuteDelayMs =
-                autoMuteDelayMs;
+            req.preset!.playbackSettings.loopMode = loopMode;
+            req.preset!.playbackSettings.loopIntervalMs = loopIntervalMs;
+            req.preset!.playbackSettings.autoMute = autoMute;
+            req.preset!.playbackSettings.autoMuteDelayMs = autoMuteDelayMs;
 
-            req.configuration!.visualMapping.rootChord = rootChord;
-            req.configuration!.visualMapping.lockOpenString = lockOpenString;
-            req.configuration!.visualMapping.stringOrder = stringOrder;
+            req.preset!.visualMapping.rootChord = rootChord;
+            req.preset!.visualMapping.lockOpenString = lockOpenString;
+            req.preset!.visualMapping.stringOrder = stringOrder;
 
-            req.configuration!.effects = effects;
+            req.preset!.effects = effects;
 
-            await req.configuration!.save();
+            await req.preset!.save();
             res.send("Configuración actualizada");
         } catch (error) {
             console.log(error);
@@ -158,9 +157,9 @@ export class ConfigurationController {
         }
     };
 
-    static deleteConfiguration = async (req: Request, res: Response) => {
+    static deletePreset = async (req: Request, res: Response) => {
         try {
-            await req.configuration!.deleteOne();
+            await req.preset!.deleteOne();
             res.send("Configuración eliminada");
         } catch (error) {
             console.log(error);

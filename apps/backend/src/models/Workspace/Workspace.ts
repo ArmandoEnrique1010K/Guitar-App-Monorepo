@@ -1,11 +1,11 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export interface INotebook extends Document {
+export interface IWorkspace extends Document {
     name: string;
     user: Types.ObjectId;
 }
 
-const notebookSchema: Schema = new Schema({
+const workspaceSchema: Schema = new Schema({
     name: {
         type: String,
         required: true,
@@ -17,5 +17,5 @@ const notebookSchema: Schema = new Schema({
     },
 });
 
-const Notebook = mongoose.model<INotebook>("Notebook", notebookSchema);
-export default Notebook;
+const Workspace = mongoose.model<IWorkspace>("Workspace", workspaceSchema);
+export default Workspace;

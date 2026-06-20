@@ -1,22 +1,22 @@
-import { ConfigurationController } from "controllers/Notebook/ConfigurationController";
+import { PresetController } from "controllers/Workspace/PresetController";
 import { Router } from "express";
 import { body, param } from "express-validator";
-import {
-    configurationExists,
-    generateNameForCreate,
-    generateNameForUpdate,
-    isAuthorOfConfiguration,
-} from "middlewares/Notebook/configuration";
 import { authenticate } from "middlewares/User/auth";
 import { handleInputErrors } from "middlewares/validation";
+import {
+    generateNameForCreate,
+    generateNameForUpdate,
+    isAuthorOfPreset,
+    presetExists,
+} from "middlewares/Workspace/preset";
 
 const router = Router();
 
 router.use(authenticate);
 
 router.post(
-    "/notebook/:notebookId/guitar/:guitarId",
-    param("notebookId").isMongoId().withMessage("ID no válido"),
+    "/workspace/:workspaceId/guitar/:guitarId",
+    param("workspaceId").isMongoId().withMessage("ID no válido"),
     param("guitarId").isMongoId().withMessage("ID no válido"),
     body("name").trim().notEmpty().withMessage("El nombre no puede ir vacio"),
     // GuitarBehaviorSchema
@@ -39,19 +39,17 @@ router.post(
     body("effects").isArray(),
     handleInputErrors,
     generateNameForCreate,
-    ConfigurationController.createConfiguration,
+    PresetController.createPreset,
 );
 
-router.get(
-    "/notebook/:notebookId",
-    ConfigurationController.getAllConfigurations,
-);
+router.get("/workspace/:workspaceId", PresetController.getAllPresets);
 
-router.param("configurationId", configurationExists);
+router.param("presetId", presetExists);
+// router.use(presetExists);
 
 router.put(
-    "/:configurationId/guitar/:guitarId",
-    param("configurationId").isMongoId().withMessage("ID no válido"),
+    "/:presetId/guitar/:guitarId",
+    param("presetId").isMongoId().withMessage("ID no válido"),
     param("guitarId").isMongoId().withMessage("ID no válido"),
 
     body("name").trim().notEmpty().withMessage("El nombre no puede ir vacio"),
@@ -72,18 +70,20 @@ router.put(
     body("lockOpenString"),
     body("stringOrder"),
     body("effects").isArray(),
+    //presetExists,
     handleInputErrors,
     generateNameForUpdate,
-    isAuthorOfConfiguration,
-    ConfigurationController.updateConfiguration,
+    isAuthorOfPreset,
+    PresetController.updatePreset,
 );
 
 router.delete(
-    "/:configurationId",
-    param("configurationId").isMongoId().withMessage("ID no válido"),
+    "/:presetId",
+    param("presetId").isMongoId().withMessage("ID no válido"),
+    // presetExists,
     handleInputErrors,
-    isAuthorOfConfiguration,
-    ConfigurationController.deleteConfiguration,
+    isAuthorOfPreset,
+    PresetController.deletePreset,
 );
 
 export default router;

@@ -1,9 +1,9 @@
 import { connectDB } from "config/db";
 import dotenv from "dotenv";
-import { configurationSeed } from "./configuration.seed";
-import { notebookSeed } from "./notebook.seed";
+import { presetDestroy } from "./preset.destroy";
+import { workspaceDestroy } from "./workspace.destroy";
 
-//* ADVERTENCIA: ESTE SEED SE ENCARGA DE ELIMINAR TODOS LOS CUADERNOS Y CONFIGURACIONES DE LOS USUARIOS
+//* ADVERTENCIA: ESTE DESTROY SE ENCARGA DE ELIMINAR TODOS LOS CUADERNOS Y CONFIGURACIONES DE LOS USUARIOS
 // TODO: AÑADIR UNA SEED RELACIONADA A EFECTOS
 const runNotebookSeeds = async () => {
     dotenv.config();
@@ -13,8 +13,8 @@ const runNotebookSeeds = async () => {
 
         console.log("🌱 Ejecutando seeds...");
 
-        await configurationSeed();
-        await notebookSeed();
+        await presetDestroy();
+        await workspaceDestroy();
 
         console.log("✅ Limpieza completada");
         process.exit(0);

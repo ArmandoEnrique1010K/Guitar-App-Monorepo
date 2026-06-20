@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import Configuration from "models/Notebook/Configuration";
-import Notebook from "models/Notebook/Notebook";
+import Preset from "models/Workspace/Preset";
+import Workspace from "models/Workspace/Workspace";
 
 export async function generateNameForCreate(
     req: Request,
@@ -27,16 +27,16 @@ export async function generateNameForCreate(
 
         const safeName = escapeRegex(baseName);
 
-        const notebookId = req.params.notebookId;
+        const presetId = req.params.presetId;
 
-        const existingConfigs = await Configuration.find({
-            notebook: notebookId,
+        const existingConfigs = await Preset.find({
+            preset: presetId,
             name: { $regex: `^${safeName}( \\d+)?$`, $options: "i" },
         }).select("name");
 
         const existingNames = existingConfigs.map((c) => c.name.toLowerCase());
         if (!existingNames.includes(baseName.toLowerCase())) {
-            req.configurationName = baseName;
+            req.presetName = baseName;
             return next();
         }
 
@@ -52,7 +52,7 @@ export async function generateNameForCreate(
             nextNumber++;
         }
 
-        req.configurationName = `${baseName} ${nextNumber}`;
+        req.presetName = `${baseName} ${nextNumber}`;
 
         next();
     } catch (error) {
@@ -82,19 +82,19 @@ export async function generateNameForUpdate(
 
         const safeName = escapeRegex(baseName);
 
-        const notebookId = req.configuration!.notebook;
+        const workspaceId = req.preset!.workspace;
 
         // Excluirse a sí mismo SOLO en update
         // Excluir el registro que tenga el mismo ID que la configuración
-        if (req.configuration!.name === rawName) {
-            req.configurationName = rawName;
+        if (req.preset!.name === rawName) {
+            req.presetName = rawName;
             return next();
         }
 
         // Buscar configuraciones con nombres similares
-        const existingConfigs = await Configuration.find({
-            notebook: notebookId,
-            _id: { $ne: req.configuration!._id }, // 🔥 clave
+        const existingConfigs = await Preset.find({
+            workspace: workspaceId,
+            _id: { $ne: req.preset!._id }, // 🔥 clave
             name: { $regex: `^${safeName}( \\d+)?$`, $options: "i" },
         }).select("name");
 
@@ -103,7 +103,7 @@ export async function generateNameForUpdate(
 
         // Caso base disponible
         if (!existingNames.includes(baseName.toLowerCase())) {
-            req.configurationName = baseName;
+            req.presetName = baseName;
             return next();
         }
 
@@ -122,7 +122,7 @@ export async function generateNameForUpdate(
         }
 
         // Generar nombre final SIEMPRE desde baseName
-        req.configurationName = `${baseName} ${nextNumber}`;
+        req.presetName = `${baseName} ${nextNumber}`;
 
         next();
     } catch (error) {
@@ -130,29 +130,32 @@ export async function generateNameForUpdate(
     }
 }
 
-export async function configurationExists(
+export async function presetExists(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        const { configurationId } = req.params;
+        // console.log("params:", req.params);
 
-        const configuration = await Configuration.findById(configurationId);
-        if (!configuration) {
+        const { presetId } = req.params;
+        // console.log(presetId);
+
+        const preset = await Preset.findById(presetId);
+        if (!preset) {
             const error = new Error("Configuración no encontrada");
             return res.status(404).json({ error: error.message });
         }
 
-        const notebook = await Notebook.findById(configuration.notebook);
-        if (!notebook) {
-            const error = new Error("Cuaderno no encontrado");
+        const workspace = await Workspace.findById(preset.workspace);
+        if (!workspace) {
+            const error = new Error("Espacio de trabajo no encontrado");
             return res.status(404).json({ error: error.message });
         }
 
-        req.configuration = configuration;
+        req.preset = preset;
         // AQUI DEBE GUARDAR EL AUTOR DEL NOTEBOOK
-        req.notebook = notebook;
+        req.workspace = workspace;
 
         next();
     } catch (error) {
@@ -160,13 +163,13 @@ export async function configurationExists(
     }
 }
 
-export async function isAuthorOfConfiguration(
+export async function isAuthorOfPreset(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        if (req.user?._id.toString() !== req.notebook?.user.toString()) {
+        if (req.user?._id.toString() !== req.workspace?.user.toString()) {
             return res.status(400).json({ error: "Acción no válida" });
         }
 

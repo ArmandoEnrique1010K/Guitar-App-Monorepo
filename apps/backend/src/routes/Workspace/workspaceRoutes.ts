@@ -1,12 +1,12 @@
-import { NotebookController } from "controllers/Notebook/NotebookController";
+import { WorkSpaceController } from "controllers/Workspace/WorkspaceController";
 import { Router } from "express";
 import { body, param } from "express-validator";
-import {
-    isAuthorOfNotebook,
-    notebookExists,
-} from "middlewares/Notebook/notebook";
 import { authenticate } from "middlewares/User/auth";
 import { handleInputErrors } from "middlewares/validation";
+import {
+    isAuthorOfWorkspace,
+    workspaceExists,
+} from "middlewares/Workspace/workspace";
 
 const router = Router();
 
@@ -17,31 +17,31 @@ router.post(
     "/",
     body("name").notEmpty().withMessage("El nombre no puede ir vacio"),
     handleInputErrors,
-    NotebookController.createNotebook,
+    WorkSpaceController.createWorkspace,
 );
 
-router.get("/", NotebookController.getAllNotebooks);
+router.get("/", WorkSpaceController.getAllWorkspaces);
 
 // A partir de las siguientes rutas, siempre debe verificar que el cuaderno exista
-router.param("notebookId", notebookExists);
+router.param("workspaceId", workspaceExists);
 
 router.put(
-    "/:notebookId",
-    param("notebookId").isMongoId().withMessage("ID no válido"),
+    "/:workspaceId",
+    param("workspaceId").isMongoId().withMessage("ID no válido"),
     body("name")
         .notEmpty()
         .withMessage("El nombre del cuaderno es obligatorio"),
     handleInputErrors,
-    isAuthorOfNotebook,
-    NotebookController.updateNotebook,
+    isAuthorOfWorkspace,
+    WorkSpaceController.updateWorkspace,
 );
 
 router.delete(
-    "/:notebookId",
-    param("notebookId").isMongoId().withMessage("ID no válido"),
+    "/:workspaceId",
+    param("workspaceId").isMongoId().withMessage("ID no válido"),
     handleInputErrors,
-    isAuthorOfNotebook,
-    NotebookController.deleteNotebook,
+    isAuthorOfWorkspace,
+    WorkSpaceController.deleteWorkspace,
 );
 
 export default router;
