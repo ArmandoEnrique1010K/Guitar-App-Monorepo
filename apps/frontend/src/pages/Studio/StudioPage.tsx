@@ -1,10 +1,12 @@
+import { useMediaQuery } from 'react-responsive';
 import { useAssistant } from '@/hooks/useAssistant';
 import { useBottomBar } from '@/hooks/useBottomBar';
-import { AssistantSlidingSidebar } from '@/views/Studio/Assistant/AssistantSlidingSidebar';
-import { BottomBar } from '@/views/Studio/BottomBar/BottomBar';
-import { GuitarPanel } from '@/views/Studio/Fretboard/GuitarPanel';
-import { SettingsPanel } from '@/views/Studio/Settings/SettingsPanel';
-import { useMediaQuery } from 'react-responsive';
+import {
+    AssistantView,
+    BottomBarView,
+    FretboardView,
+    SettingsView,
+} from '@/views';
 
 export const StudioPage = () => {
     const { isPanelOpen } = useAssistant();
@@ -19,26 +21,26 @@ export const StudioPage = () => {
                         {/* En pantallas menores que el corte de tailwind 'lg' el panel del asistente de IA debe cubrir toda la pantalla */}
                         {!isDesktop && selectedPanel === 'assistant' ? (
                             <div className="w-full h-full">
-                                <AssistantSlidingSidebar />
+                                <AssistantView />
                             </div>
                         ) : (
                             <>
                                 <div className="flex-1 overflow-auto">
-                                    <GuitarPanel />
+                                    <FretboardView />
                                 </div>
-                                <SettingsPanel />
+                                <SettingsView />
                             </>
                         )}
                     </div>
 
-                    <BottomBar />
+                    <BottomBarView />
                 </div>
 
-                {isDesktop && isPanelOpen && <AssistantSlidingSidebar />}
+                {isDesktop && isPanelOpen && <AssistantView />}
             </div>
         </>
     );
 };
 // <div className="hidden lg:block">
-//     {isPanelOpen && <AssistantSlidingSidebar />}
+//     {isPanelOpen && <AssistantView />}
 // </div>

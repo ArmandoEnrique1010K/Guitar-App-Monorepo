@@ -1,4 +1,3 @@
-import { MenuNavbar } from '@/views/Studio/Header/MenuNavbar';
 import { Outlet } from 'react-router-dom';
 import { useControlBar } from '@/hooks/useControlBar';
 import { useFretboard } from '@/hooks/useFretboard';
@@ -6,6 +5,7 @@ import { usePreferences } from '@/hooks/usePreferences';
 import type { GuitarNotes } from '@/schemas';
 import { assignKeysToFrets } from '@/utils/assignKeysToFrets';
 import { useEffect, useMemo } from 'react';
+import { HeaderView } from '@/views';
 
 export const StudioLayout = () => {
     const { loadGuitars, selectedGuitar, stringOrder } = usePreferences();
@@ -148,7 +148,7 @@ export const StudioLayout = () => {
     return (
         <>
             <div className="flex flex-col h-screen">
-                <MenuNavbar />
+                <HeaderView />
                 {/* TODO: DEBE GUARDAR LA SESION ACTUAL DEL USUARIO EN ZUSTAND */}
                 <div className="w-full flex-1 min-h-0">
                     <Outlet />

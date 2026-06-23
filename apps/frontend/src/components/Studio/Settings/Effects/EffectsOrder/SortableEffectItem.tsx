@@ -31,13 +31,7 @@ export const SortableEffectItem = ({ effectName, index }: Props) => {
         transition,
     };
 
-    const {
-        effectsOrder,
-        effects,
-        setEffectsOrder,
-        toggleEffect,
-        removeEffectInstance,
-    } = useEffects();
+    const { effects, toggleEffect, removeEffectInstance } = useEffects();
 
     const enabled = effects[effectName].enabled;
 

@@ -1,7 +1,7 @@
 import { LogoGuitar } from '@/components/LogoGuitar';
 import { Link, Outlet } from 'react-router-dom';
 
-export default function AuthLayout() {
+export const AuthLayout = () => {
     return (
         <div className="min-h-screen bg-black">
             <div className="flex flex-col gap-4 align-center justify-center items-center sm:py-10">
@@ -21,4 +21,4 @@ export default function AuthLayout() {
             </div>
         </div>
     );
-}
+};

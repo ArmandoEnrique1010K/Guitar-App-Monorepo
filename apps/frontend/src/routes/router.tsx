@@ -4,15 +4,16 @@ import NotificationsSystem, {
     setUpNotifications,
     wyboTheme,
 } from 'reapop';
-import AuthLayout from '@/layouts/AuthLayout';
-import { LoginPage } from '@/pages/Auth/LoginPage';
-import { StudioLayout } from '@/layouts/StudioLayout';
-import { RegisterPage } from '@/pages/Auth/RegisterPage';
-import { ConfirmAccountPage } from '@/pages/Auth/ConfirmAccountPage';
-import { RequestCodePage } from '@/pages/Auth/RequestCodePage';
-import { ForgotPasswordPage } from '@/pages/Auth/ForgotPasswordPage';
-import { NewPasswordPage } from '@/pages/Auth/NewPasswordPage';
-import { StudioPage } from '@/pages/Studio/StudioPage';
+import { AuthLayout, StudioLayout } from '@/layouts';
+import {
+    ConfirmAccountPage,
+    ForgotPasswordPage,
+    LoginPage,
+    NewPasswordPage,
+    RegisterPage,
+    RequestCodePage,
+    StudioPage,
+} from '@/pages';
 
 export default function Router() {
     const { notifications, dismissNotification } = useNotifications();
