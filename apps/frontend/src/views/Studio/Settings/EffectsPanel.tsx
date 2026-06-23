@@ -11,6 +11,7 @@ import { DistortionParameters } from './DistortionParameters';
 import { ReverbParameters } from './ReverbParameters';
 import { VibratoParameters } from './VibratoParameters';
 import { TremoloParameters } from './TremoloParameters';
+import { ChorusParameters } from './ChorusParameters';
 
 export const EffectsPanel = () => {
     const {
@@ -107,6 +108,8 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                     {currentEffectSelected === 'tremolo' && (
                         <TremoloParameters />
                     )}
+
+                    {currentEffectSelected === 'chorus' && <ChorusParameters />}
                 </EffectParameters>
             </div>
         </div>

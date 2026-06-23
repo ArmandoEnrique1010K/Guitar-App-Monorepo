@@ -78,7 +78,7 @@ export const effectsSlice: StateCreator<
             depth: VIBRATO_SCHEMA.depth.defaultValue,
             frequency: VIBRATO_SCHEMA.frequency.defaultValue,
             type: VIBRATO_SCHEMA.type.defaultValue,
-            wet: VIBRATO_SCHEMA.frequency.defaultValue,
+            wet: VIBRATO_SCHEMA.wet.defaultValue,
             enabled: false,
         },
         chorus: {

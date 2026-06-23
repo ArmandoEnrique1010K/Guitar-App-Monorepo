@@ -10,6 +10,7 @@ export const tremoloHandler = {
         effect.frequency.value = config.frequency;
         effect.depth.value = config.depth;
         effect.type = config.type;
+        effect.spread = config.spread;
         effect.wet.value = config.wet;
     },
 

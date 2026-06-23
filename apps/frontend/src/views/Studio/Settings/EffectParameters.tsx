@@ -3,8 +3,6 @@ type Props = {
 };
 
 export const EffectParameters = ({ children }: Props) => {
-    //                 bg-slate-500
-
     return (
         <div
             className="
@@ -25,18 +23,19 @@ export const EffectParameters = ({ children }: Props) => {
         scrollbar-track-black
         scrollbar-thumb-green-600
 
-                p-2
+                                    snap-y
+                    snap-mandatory
+
             "
         >
             {/* xl:grid-cols-2 */}
 
             <div
+                // gap-y-2
                 className="
                     grid
                     grid-cols-1
-
                     gap-x-4
-                    gap-y-2
                 "
             >
                 {children}
