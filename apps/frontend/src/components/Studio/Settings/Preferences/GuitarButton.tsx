@@ -1,5 +1,5 @@
-import { usePreferences } from '@/hooks/usePreferences';
-import { SelectOptionButton } from '@/ui/Studio/SelectOptionButton';
+import { usePreferences } from '@/hooks';
+import { OptionButton } from '@/ui';
 
 export const GuitarButton = () => {
     const { selectedGuitar, guitars, setSelectedGuitar } = usePreferences();
@@ -13,7 +13,7 @@ export const GuitarButton = () => {
 
     return (
         <>
-            <SelectOptionButton
+            <OptionButton
                 value={selectedGuitar?.name || ''}
                 options={guitars.map((guitar) => guitar.name)}
                 onChange={handleChange}

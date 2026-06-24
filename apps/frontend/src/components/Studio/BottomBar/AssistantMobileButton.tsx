@@ -1,7 +1,6 @@
-import { useAssistant } from '@/hooks/useAssistant';
-import { useBottomBar } from '@/hooks/useBottomBar';
-import { SparkleFillIcon } from '@/icons/SparkleFillIcon';
-import { LatchButton } from '@/ui/Studio/LatchButton';
+import { useAssistant, useBottomBar } from '@/hooks';
+import { SparkleFillIcon } from '@/icons';
+import { LatchButton } from '@/ui';
 import { useEffect, useRef } from 'react';
 
 // Este componente se mostrara en pantalla menores que 1024 px

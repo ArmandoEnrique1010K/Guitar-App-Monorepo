@@ -1,6 +1,6 @@
-import { useEffects } from '@/hooks/useEffects';
+import { useEffects } from '@/hooks';
 import type { Effects } from '@/schemas';
-import { SelectOptionEffectButton } from '@/ui/Studio/SelectOptionEffectButton';
+import { EffectOptionButton } from '@/ui';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 
 export const EffectAddSelector = () => {
@@ -13,7 +13,7 @@ export const EffectAddSelector = () => {
 
     return (
         <>
-            <SelectOptionEffectButton
+            <EffectOptionButton
                 options={availableEffects.map(([key, value]) => ({
                     value: key,
                     label: value,

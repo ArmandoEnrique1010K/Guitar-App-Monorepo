@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { KeyboardIcon } from '@/icons/KeyboardIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { KeyboardIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const ShowKeyboardButton = () => {
     const { showKeyboardKeys, toggleShowKeyboardKeys } = usePreferences();

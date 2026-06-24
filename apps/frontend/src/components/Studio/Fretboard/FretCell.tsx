@@ -1,6 +1,4 @@
-import { useControlBar } from '@/hooks/useControlBar';
-import { useFretboard } from '@/hooks/useFretboard';
-import { usePreferences } from '@/hooks/usePreferences';
+import { useControlBar, useFretboard, usePreferences } from '@/hooks';
 import { useEffect, useState } from 'react';
 
 type Props = {

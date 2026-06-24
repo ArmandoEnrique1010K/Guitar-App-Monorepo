@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { ShuffleIcon } from '@/icons/ShuffleIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { ShuffleIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const AllowDifferentStringOverlapButton = () => {
     const { allowDifferentStringOverlap, toggleAllowDifferentStringOverlap } =

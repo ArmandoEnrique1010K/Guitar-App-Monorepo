@@ -1,4 +1,4 @@
-import { useBottomBar } from '@/hooks/useBottomBar';
+import { useBottomBar } from '@/hooks';
 import { ControlBarView } from '../ControlBar/ControlBarView';
 import { PreferencesView } from './Preferences/PreferencesView';
 import { EffectsView } from './Effects/EffectsView';

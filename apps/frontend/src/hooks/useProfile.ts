@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { user, type User } from '@/api/AuthAPI';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { user, type User } from '@/api';
+import { handleFormikApiError } from '@/utils';
 
 export const useProfile = () => {
     const [profile, setProfile] = useState<User | null>(null);

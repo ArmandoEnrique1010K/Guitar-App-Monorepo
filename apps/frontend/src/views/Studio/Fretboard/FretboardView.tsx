@@ -1,5 +1,4 @@
-import { FretNumbers } from '@/components/Studio/Fretboard/FretNumbers';
-import { GuitarNeck } from '@/components/Studio/Fretboard/GuitarNeck';
+import { FretNumbers, GuitarNeck } from '@/components';
 
 // Tipado para las notas de la guitarra que se asignaran
 

@@ -1,4 +1,4 @@
-import { useControlBar } from '@/hooks/useControlBar';
+import { useControlBar } from '@/hooks';
 
 const REAL_MARKERS = [3, 5, 7, 9, 12, 15, 17, 19, 21];
 

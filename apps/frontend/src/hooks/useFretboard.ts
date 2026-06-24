@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 export const useFretboard = () => {
     const currentNote = useAppStore((state) => state.currentNote);
@@ -16,9 +16,10 @@ export const useFretboard = () => {
     const initializePlayers = useAppStore((state) => state.initializePlayers);
     const playNote = useAppStore((state) => state.playNote);
     const stopNote = useAppStore((state) => state.stopNote);
-    const stopNotesByConditions = useAppStore((state) => state.stopNotesByConditions);
+    const stopNotesByConditions = useAppStore(
+        (state) => state.stopNotesByConditions,
+    );
     const stopRepeatingNote = useAppStore((state) => state.stopRepeatingNote);
-
 
     return {
         currentNote,

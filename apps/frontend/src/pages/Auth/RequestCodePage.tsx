@@ -1,11 +1,9 @@
 import { useNotifications } from 'reapop';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
-import { TextField } from '@/components/Auth/TextField';
-import { FormButton } from '@/components/Auth/FormButton';
 import type { RequestCodeForm } from '@/schemas';
-import { requestCode } from '@/api/AuthAPI';
+import { requestCode } from '@/api';
+import { AuthTitle, FormButton, TextField } from '@/components';
 
 export const RequestCodePage = () => {
     const initialValues: RequestCodeForm = {

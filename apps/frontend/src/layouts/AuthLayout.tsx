@@ -1,4 +1,4 @@
-import { LogoGuitar } from '@/components/LogoGuitar';
+import { LogoGuitar } from '@/components';
 import { Link, Outlet } from 'react-router-dom';
 
 export const AuthLayout = () => {

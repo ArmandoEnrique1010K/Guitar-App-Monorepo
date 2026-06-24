@@ -1,12 +1,14 @@
 import { Form, Formik, type FormikHelpers } from 'formik';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
-import { createAccount } from '@/api/AuthAPI';
+import {
+    AuthTitle,
+    TextField,
+    PasswordField,
+    FormButton,
+    SecondaryText,
+} from '@/components';
+import { createAccount } from '@/api';
 import { useNotifications } from 'reapop';
-import { TextField } from '@/components/Auth/TextField';
-import { PasswordField } from '@/components/Auth/PasswordField';
-import { FormButton } from '@/components/Auth/FormButton';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { handleFormikApiError } from '@/utils';
 import type { CreateAccountForm } from '@/schemas';
 
 export const RegisterPage = () => {

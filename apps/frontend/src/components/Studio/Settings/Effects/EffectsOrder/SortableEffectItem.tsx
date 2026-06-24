@@ -1,4 +1,4 @@
-import { useEffects } from '@/hooks/useEffects';
+import { useEffects } from '@/hooks';
 import type { Effects } from '@/schemas';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 import { useSortable } from '@dnd-kit/sortable';
@@ -14,6 +14,7 @@ type Props = {
     effectName: keyof Effects;
     index: number;
 };
+
 export const SortableEffectItem = ({ effectName, index }: Props) => {
     const {
         attributes,

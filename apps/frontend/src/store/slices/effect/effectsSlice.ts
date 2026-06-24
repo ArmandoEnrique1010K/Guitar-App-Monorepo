@@ -1,0 +1,361 @@
+import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
+import type { StateCreator } from 'zustand';
+import { DISTORTION_SCHEMA } from '@/constants/effects/distortion.constants';
+import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
+import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
+import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
+import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import type { FretboardSliceType } from '../fretboardSlice';
+import { buildDefaultEffectConfig } from '@/utils';
+import {
+    chorusHandler,
+    distortionHandler,
+    reverbHandler,
+    tremoloHandler,
+    vibratoHandler,
+} from './handlers';
+
+// TIPADO DE EFECTOS
+export type EffectsSliceType = {
+    effectsOrder: Array<keyof Effects>;
+    effects: Effects;
+    effectsChain: EffectsChain;
+    effectHandlers: EffectHandlers;
+    currentEffectSelected: keyof Effects | null;
+    setEffectsOrder: (effectsOrder: Array<keyof Effects>) => void;
+    updateEffect: <T extends keyof Effects>(
+        effectName: T,
+        config: Partial<Effects[T]>,
+    ) => void;
+    toggleEffect: (effectName: keyof Effects) => void;
+
+    moveEffect: (fromIndex: number, toIndex: number) => void;
+
+    createEffectInstance: (effectName: keyof Effects) => void;
+
+    resetDefaultValuesEffectInstance: (effectName: keyof Effects) => void;
+
+    removeEffectInstance: (effectName: keyof Effects) => void;
+
+    rebuildEffectsChain: () => EffectsChain[keyof EffectsChain][];
+    addEffect: (effectName: keyof Effects) => void;
+
+    setCurrentEffectSelected: (effectName: keyof Effects | null) => void;
+};
+
+export const effectsSlice: StateCreator<
+    EffectsSliceType & FretboardSliceType,
+    [],
+    [],
+    EffectsSliceType
+> = (set, get) => ({
+    effectsOrder: [
+        //  ESTO DEBE ESTAR VACIO AL CARGAR LA PAGINA
+        // EL ORDEN IMPORTA, LOS EFECTOS PRESENTES EN LA CADENA
+    ],
+
+    // OBJETO CON TODOS LOS EFECTOS DE SONIDO DISPONIBLES (DATOS)
+    effects: {
+        distortion: {
+            distortion: DISTORTION_SCHEMA.distortion.defaultValue,
+            oversample: DISTORTION_SCHEMA.oversample.defaultValue,
+            wet: DISTORTION_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        reverb: {
+            decay: REVERB_SCHEMA.decay.defaultValue,
+            preDelay: REVERB_SCHEMA.preDelay.defaultValue,
+            wet: REVERB_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        tremolo: {
+            depth: TREMOLO_SCHEMA.depth.defaultValue,
+            frequency: TREMOLO_SCHEMA.frequency.defaultValue,
+            spread: TREMOLO_SCHEMA.spread.defaultValue,
+            type: TREMOLO_SCHEMA.type.defaultValue,
+            wet: TREMOLO_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        vibrato: {
+            depth: VIBRATO_SCHEMA.depth.defaultValue,
+            frequency: VIBRATO_SCHEMA.frequency.defaultValue,
+            type: VIBRATO_SCHEMA.type.defaultValue,
+            wet: VIBRATO_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        chorus: {
+            delayTime: CHORUS_SCHEMA.delayTime.defaultValue,
+            depth: CHORUS_SCHEMA.depth.defaultValue,
+            frequency: CHORUS_SCHEMA.frequency.defaultValue,
+            feedback: CHORUS_SCHEMA.feedback.defaultValue,
+            spread: CHORUS_SCHEMA.spread.defaultValue,
+            type: CHORUS_SCHEMA.type.defaultValue,
+            wet: CHORUS_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+    },
+
+    // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
+    effectsChain: {
+        distortion: null,
+        reverb: null,
+        tremolo: null,
+        vibrato: null,
+        chorus: null,
+    },
+
+    // FUNCION AUXILIAR
+    effectHandlers: {
+        distortion: distortionHandler,
+        reverb: reverbHandler,
+        tremolo: tremoloHandler,
+        vibrato: vibratoHandler,
+        chorus: chorusHandler,
+    },
+
+    // Ejemplo de funcion auxliar para distortion
+    // export const distortionHandler = {
+    //     create: () => {
+    //         return new Tone.Distortion();
+    //     },
+
+    //     configure: (effect: Tone.Distortion, config: DistortionConfig) => {
+    //         effect.distortion = config.distortion;
+    //         effect.oversample = config.oversample;
+    //         effect.wet.value = config.wet;
+    //     },
+
+    //     dispose: (effect: Tone.Distortion) => {
+    //         effect.dispose();
+    //     },
+    // };
+
+    // Efecto actual seleccionado
+    currentEffectSelected: null,
+
+    setEffectsOrder: (effectsOrder) => {
+        set({ effectsOrder });
+    },
+    updateEffect: (effectName, config) => {
+        set((state) => ({
+            effects: {
+                ...state.effects,
+
+                [effectName]: {
+                    ...state.effects[effectName],
+                    ...config,
+                },
+            },
+        }));
+
+        const state = get();
+
+        const effect = state.effectsChain[effectName];
+
+        const handler = state.effectHandlers[effectName];
+
+        if (effect) {
+            handler.configure(
+                effect as never,
+                state.effects[effectName] as never,
+            );
+        }
+    },
+
+    // Activa o desactiva el efecto
+    toggleEffect: (effectName) => {
+        set((state) => ({
+            effects: {
+                ...state.effects,
+
+                [effectName]: {
+                    ...state.effects[effectName],
+                    enabled: !state.effects[effectName].enabled,
+                },
+            },
+        }));
+
+        // Solamente si se habilita el efecto de sonido, debe seleccionarlo
+        if (get().effects[effectName].enabled) {
+            set({ currentEffectSelected: effectName });
+        }
+
+        get().rebuildAudioGraph();
+    },
+    moveEffect: (fromIndex, toIndex) => {
+        set((state) => {
+            const newOrder = [...state.effectsOrder];
+
+            const [removed] = newOrder.splice(fromIndex, 1);
+
+            newOrder.splice(toIndex, 0, removed);
+
+            return {
+                effectsOrder: newOrder,
+            };
+        });
+
+        get().rebuildAudioGraph();
+    },
+
+    // TODO: CONTINUAR EN LA CREACION DE CAMPOS PARA CADA EFECTO DE SONIDO
+    createEffectInstance: (effectName) => {
+        const state = get();
+
+        if (state.effectsChain[effectName]) {
+            return;
+        }
+
+        const instance = state.effectHandlers[effectName].create();
+
+        set((state) => ({
+            effectsChain: {
+                ...state.effectsChain,
+
+                [effectName]: instance,
+            },
+        }));
+
+        state.effectHandlers[effectName].configure(
+            instance as never,
+            state.effects[effectName] as never,
+        );
+    },
+
+    resetDefaultValuesEffectInstance: (effectName) => {
+        // CADA UNO DE LOS PARAMETROS DEL EFECTO DE SONIDO DEFINIDO, SE TIENE QUE ESTABLECER A SUS VALORES INICIALES
+        // Llama a la función definida en utils
+        const defaults = buildDefaultEffectConfig(effectName);
+        get().updateEffect(effectName, defaults);
+        // const state = get();
+
+        // set((state) => ({
+        //     effects: {
+        //         ...state.effects,
+        //         [effectName]: {
+        //             ...state.effects[effectName],
+        //             ...defaults,
+        //         },
+        //     },
+        // }));
+
+        // const effect = get().effectsChain[effectName];
+
+        // if (effect) {
+        //     state.effectHandlers[effectName].configure(
+        //         effect as never,
+        //         get().effects[effectName] as never,
+        //     );
+        // }
+    },
+
+    removeEffectInstance: (effectName) => {
+        const state = get();
+
+        const effect = state.effectsChain[effectName];
+
+        if (!effect) {
+            return;
+        }
+
+        const currentIndex = state.effectsOrder.indexOf(effectName);
+
+        // TAMBIEN DEBE MODIFICAR EL ESTADO DE EFFECTSORDER
+        const newOrder = state.effectsOrder.filter(
+            (effect) => effect !== effectName,
+        );
+
+        let newSelected = state.currentEffectSelected;
+
+        // Y CAMBIAR EL EFECTO ACTUAL SELECCIONADO
+
+        // Si el efecto eliminado coincide con el efecto seleccionado actualmente, debe seleccionar el anterior efecto de effectsOrder
+        // Pero si no hay un anterior efecto, debe seleccionar el siguiente efecto de effectsOrder
+        if (state.currentEffectSelected === effectName) {
+            newSelected =
+                newOrder[currentIndex - 1] ?? newOrder[currentIndex] ?? null;
+        }
+
+        effect.dispose();
+
+        set((state) => ({
+            effectsChain: {
+                ...state.effectsChain,
+                [effectName]: null,
+            },
+            effectsOrder: newOrder,
+            currentEffectSelected: newSelected,
+        }));
+
+        // effect.dispose();
+
+        // set((state) => ({
+        //     effectsChain: {
+        //         ...state.effectsChain,
+
+        //         [effectName]: null,
+        //     },
+        // }));
+
+        // set((state) => ({
+        //     effectsOrder: state.effectsOrder.filter(
+        //         (effect) => effect !== effectName,
+        //     ),
+        // }));
+
+        // if (state.currentEffectSelected === effectName) {
+        //     set((state) => ({
+        //         currentEffectSelected:
+        //             state.effectsOrder[
+        //                 state.effectsOrder.indexOf(effectName) - 1
+        //             ] ||
+        //             state.effectsOrder[
+        //                 state.effectsOrder.indexOf(effectName) + 1
+        //             ] ||
+        //             null,
+        //     }));
+        // }
+        state.rebuildAudioGraph();
+    },
+    rebuildEffectsChain: () => {
+        const state = get();
+
+        const activeEffects = state.effectsOrder
+            .filter((effectName) => state.effects[effectName].enabled)
+            .map((effectName) => state.effectsChain[effectName])
+            .filter(Boolean);
+
+        return activeEffects;
+    },
+    addEffect: (effectName) => {
+        const state = get();
+
+        if (state.effectsOrder.includes(effectName)) {
+            return;
+        }
+
+        state.createEffectInstance(effectName);
+
+        set((state) => ({
+            effectsOrder: [...state.effectsOrder, effectName],
+        }));
+
+        // DEBE MARCAR LA PROPIEDAD ENABLED DEL EFECTO A TRUE
+        set((state) => ({
+            effects: {
+                ...state.effects,
+                [effectName]: {
+                    ...state.effects[effectName],
+                    enabled: true,
+                },
+            },
+        }));
+
+        state.setCurrentEffectSelected(effectName);
+
+        state.rebuildAudioGraph();
+    },
+    setCurrentEffectSelected: (effectName) => {
+        set({ currentEffectSelected: effectName });
+    },
+});

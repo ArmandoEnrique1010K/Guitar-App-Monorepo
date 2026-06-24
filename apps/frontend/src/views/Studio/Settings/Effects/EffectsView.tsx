@@ -1,17 +1,17 @@
-import { EffectsDragAndDropOrder } from '@/components/Studio/Settings/Effects/EffectsOrder/EffectsDragAndDropOrder';
-import { EffectAddSelector } from '@/components/Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
-import { useEffects } from '@/hooks/useEffects';
-import { SingleButton } from '@/ui/Studio/SingleButton';
-import { PreviousArrowIcon } from '@/icons/PreviousArrowIcon';
-import { NextArrowIcon } from '@/icons/NextArrowIcon';
-import { ResetIcon } from '@/icons/ResetIcon';
+import {
+    ChorusControls,
+    DistortionControls,
+    EffectAddSelector,
+    EffectControlsContainer,
+    ReverbControls,
+    SortableEffectsList,
+    TremoloControls,
+    VibratoControls,
+} from '@/components';
+import { useEffects } from '@/hooks';
+import { Button } from '@/ui';
+import { PreviousArrowIcon, NextArrowIcon, ResetIcon } from '@/icons';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
-import { EffectParameters } from '@/components/Studio/Settings/Effects/EffectParameters';
-import { DistortionFields } from '@/components/Studio/Settings/Effects/Fields/DistortionFields';
-import { ReverbFields } from '@/components/Studio/Settings/Effects/Fields/ReverbFields';
-import { VibratoParameters } from '@/components/Studio/Settings/Effects/Fields/VibratoFields';
-import { TremoloParameters } from '@/components/Studio/Settings/Effects/Fields/TremoloFields';
-import { ChorusFields } from '@/components/Studio/Settings/Effects/Fields/ChorusFields';
 
 export const EffectsView = () => {
     const {
@@ -45,13 +45,13 @@ export const EffectsView = () => {
     return (
         <div className="flex flex-row  sm:gap-2 gap-1 h-full ">
             <div className="flex flex-col gap-2">
-                <EffectsDragAndDropOrder />
+                <SortableEffectsList />
                 <EffectAddSelector />
             </div>
 
             <div className="h-auto w-full flex flex-col gap-2">
                 <div className="flex flex-row gap-2">
-                    <SingleButton
+                    <Button
                         title="Anterior efecto de la cadena"
                         text="Previous"
                         onClick={() => handlePreviousEffect()}
@@ -73,7 +73,7 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                         {EFFECTS_NAMES[currentEffectSelected] ||
                             'Sin efecto seleccionado'}
                     </div>
-                    <SingleButton
+                    <Button
                         title="Establecer valores predeterminados"
                         text="Reset"
                         onClick={() =>
@@ -84,7 +84,7 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                         disabled={!currentEffectSelected}
                         icon={<ResetIcon className="size-4" />}
                     />
-                    <SingleButton
+                    <Button
                         text="Siguiente efecto de la cadena"
                         onClick={() => handleNextEffect()}
                         disabled={
@@ -94,23 +94,19 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                     />
                 </div>
 
-                <EffectParameters>
+                <EffectControlsContainer>
                     {currentEffectSelected === 'distortion' && (
-                        <DistortionFields />
+                        <DistortionControls />
                     )}
 
-                    {currentEffectSelected === 'reverb' && <ReverbFields />}
+                    {currentEffectSelected === 'reverb' && <ReverbControls />}
 
-                    {currentEffectSelected === 'vibrato' && (
-                        <VibratoParameters />
-                    )}
+                    {currentEffectSelected === 'vibrato' && <VibratoControls />}
 
-                    {currentEffectSelected === 'tremolo' && (
-                        <TremoloParameters />
-                    )}
+                    {currentEffectSelected === 'tremolo' && <TremoloControls />}
 
-                    {currentEffectSelected === 'chorus' && <ChorusFields />}
-                </EffectParameters>
+                    {currentEffectSelected === 'chorus' && <ChorusControls />}
+                </EffectControlsContainer>
             </div>
         </div>
     );

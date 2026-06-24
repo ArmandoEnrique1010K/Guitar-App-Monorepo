@@ -1,6 +1,6 @@
-import { SparkleFillIcon } from '@/icons/SparkleFillIcon';
-import { useAppStore } from '@/store/useAppStore';
-import { LatchButton } from '@/ui/Studio/LatchButton';
+import { SparkleFillIcon } from '@/icons';
+import { useAppStore } from '@/store';
+import { LatchButton } from '@/ui';
 
 export const AssistantDesktopButton = () => {
     const togglePanel = useAppStore((state) => state.togglePanel);

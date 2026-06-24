@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
+import { AuthTitle, SecondaryText } from '@/components';
 import type { ConfirmAccountForm } from '@/schemas';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
 import { NewPasswordFormView, TokenFormView } from '@/views';
 
 export const NewPasswordPage = () => {

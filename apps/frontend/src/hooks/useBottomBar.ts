@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 export const useBottomBar = () => {
     const selectedPanel = useAppStore((state) => state.selectedPanel);

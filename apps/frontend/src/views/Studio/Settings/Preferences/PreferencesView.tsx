@@ -1,15 +1,17 @@
-import { AllowDifferentStringOverlapButton } from '@/components/Studio/Settings/Preferences/AllowDifferentStringOverlapButton';
-import { AllowSameStringOverlapButton } from '@/components/Studio/Settings/Preferences/AllowSameStringOverlapButton';
-import { AutoMuteButton } from '@/components/Studio/Settings/Preferences/AutoMuteButton';
-import { AutoMuteSlider } from '@/components/Studio/Settings/Preferences/AutoMuteSlider';
-import { GuitarButton } from '@/components/Studio/Settings/Preferences/GuitarButton';
-import { GuitarImage } from '@/components/Studio/Settings/Preferences/GuitarImage';
-import { HoldToPlayButton } from '@/components/Studio/Settings/Preferences/HoldToPlayButton';
-import { LoopModeButton } from '@/components/Studio/Settings/Preferences/LoopModeButton';
-import { LoopModeSlider } from '@/components/Studio/Settings/Preferences/LoopModeSlider';
-import { ShowKeyboardButton } from '@/components/Studio/Settings/Preferences/ShowKeyboardButton';
-import { StringOrderGroup } from '@/components/Studio/Settings/Preferences/StringOrderGroup';
-import { VolumeSlider } from '@/components/Studio/Settings/Preferences/VolumeSlider';
+import {
+    AllowDifferentStringOverlapButton,
+    AllowSameStringOverlapButton,
+    AutoMuteButton,
+    AutoMuteSlider,
+    GuitarButton,
+    GuitarImage,
+    HoldToPlayButton,
+    LoopModeButton,
+    LoopModeSlider,
+    ShowKeyboardButton,
+    SortableStringsList,
+    VolumeSlider,
+} from '@/components';
 
 export const PreferencesView = () => {
     // TODO: SOLUCION TEMPORAL: OCULTAR LAS TECLAS EN PANTALLAS MENORES QUE 640PX sm:flex hidden
@@ -17,7 +19,7 @@ export const PreferencesView = () => {
         <>
             <div className="flex flex-row justify-between sm:gap-4 gap-2 ">
                 <div className="sm:flex hidden">
-                    <StringOrderGroup />
+                    <SortableStringsList />
                 </div>
 
                 <div className="flex flex-col gap-4 flex-1">

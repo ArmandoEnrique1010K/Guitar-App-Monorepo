@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 export const useControlBar = () => {
     const rootChord = useAppStore((state) => state.rootChord);

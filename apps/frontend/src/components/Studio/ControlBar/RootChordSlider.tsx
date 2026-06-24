@@ -1,5 +1,5 @@
-import { useControlBar } from '@/hooks/useControlBar';
-import { LongSlider } from '@/ui/Studio/LongSlider';
+import { useControlBar } from '@/hooks';
+import { FullWidthSlider } from '@/ui';
 
 export const RootChordSlider = () => {
     const { rootChord, setRootChord, minRootChord, maxRootChord } =
@@ -7,7 +7,7 @@ export const RootChordSlider = () => {
 
     return (
         <>
-            <LongSlider
+            <FullWidthSlider
                 value={rootChord}
                 onChange={setRootChord}
                 min={minRootChord}

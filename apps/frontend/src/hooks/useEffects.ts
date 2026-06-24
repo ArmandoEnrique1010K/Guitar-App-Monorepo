@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 export const useEffects = () => {
     const effectsOrder = useAppStore((state) => state.effectsOrder);

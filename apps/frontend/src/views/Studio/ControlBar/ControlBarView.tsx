@@ -1,6 +1,8 @@
-import { LockOpenStringButton } from '@/components/Studio/ControlBar/LockOpenStringButton';
-import { PauseButton } from '@/components/Studio/ControlBar/PauseButton';
-import { RootChordSlider } from '@/components/Studio/ControlBar/RootChordSlider';
+import {
+    LockOpenStringButton,
+    PauseButton,
+    RootChordSlider,
+} from '@/components';
 
 export const ControlBarView = () => {
     return (

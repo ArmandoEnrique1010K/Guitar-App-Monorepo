@@ -1,4 +1,4 @@
-import { KEYSBYROW } from '@/constants';
+import { KEYSBYROW } from '@/constants/effects';
 import { keyboardRows } from '@/data/keyboardRows';
 import type { GuitarNotes } from '@/schemas';
 

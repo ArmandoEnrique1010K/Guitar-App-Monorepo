@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 // Los custom hooks se utilizan para 'simplificar' los nombres de los estados y metodos que se traen desde el store de Zustand
 // No se incluye logica de React como un hook useEffect dentro de los custom hooks

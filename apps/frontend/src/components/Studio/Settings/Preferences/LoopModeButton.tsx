@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { RepeatAltIcon } from '@/icons/RepeatAltIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { RepeatAltIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const LoopModeButton = () => {
     const { loopMode, toggleLoopMode } = usePreferences();

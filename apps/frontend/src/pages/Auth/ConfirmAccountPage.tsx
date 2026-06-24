@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from 'reapop';
 import { Form, Formik, type FormikHelpers } from 'formik';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
-import { FormButton } from '@/components/Auth/FormButton';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
+import { handleFormikApiError } from '@/utils';
+import {
+    AuthTitle,
+    FormButton,
+    SecondaryText,
+    DigitsGroupField,
+} from '@/components';
 import type { ConfirmAccountForm } from '@/schemas';
-import { confirmAccount } from '@/api/AuthAPI';
-import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
+import { confirmAccount } from '@/api';
 
 export const ConfirmAccountPage = () => {
     const initialValues = {

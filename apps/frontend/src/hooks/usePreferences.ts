@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
+import { useAppStore } from '@/store';
 
 export const usePreferences = () => {
     // Obten la guitarra seleccionada
@@ -6,7 +6,7 @@ export const usePreferences = () => {
     const selectedGuitar = useAppStore((state) => state.selectedGuitar);
     const setSelectedGuitar = useAppStore((state) => state.setSelectedGuitar);
     const stringOrder = useAppStore((state) => state.stringOrder);
-    const setStringOrder = useAppStore((state) => state.setStringOrder);
+    const moveString = useAppStore((state) => state.moveString);
 
     const holdToPlay = useAppStore((state) => state.holdToPlay);
     const toggleHoldToPlay = useAppStore((state) => state.toggleHoldToPlay);
@@ -52,7 +52,7 @@ export const usePreferences = () => {
         selectedGuitar,
         setSelectedGuitar,
         stringOrder,
-        setStringOrder,
+        moveString,
         holdToPlay,
         toggleHoldToPlay,
         allowSameStringOverlap,

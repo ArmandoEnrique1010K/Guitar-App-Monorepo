@@ -1,4 +1,4 @@
-import { useFretboard } from '@/hooks/useFretboard';
+import { useFretboard } from '@/hooks';
 import { GuitarString } from './GuitarString';
 import { OpenStringLabel } from './OpenStringLabel';
 

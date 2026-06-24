@@ -1,10 +1,10 @@
-import { PauseIcon } from '@/icons/PauseIcon';
-import { SingleButton } from '@/ui/Studio/SingleButton';
+import { PauseIcon } from '@/icons';
+import { Button } from '@/ui';
 
 export const PauseButton = () => {
     // TODO: PENDIENTE EL MECANISMO DE SILENCIAR
     return (
-        <SingleButton
+        <Button
             text="Silenciar todo"
             onClick={() => {}}
             title="Silencia todas las notas reproducidas"

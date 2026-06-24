@@ -1,6 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import { useAssistant } from '@/hooks/useAssistant';
-import { useBottomBar } from '@/hooks/useBottomBar';
+import { useAssistant, useBottomBar } from '@/hooks';
 import {
     AssistantView,
     BottomBarView,

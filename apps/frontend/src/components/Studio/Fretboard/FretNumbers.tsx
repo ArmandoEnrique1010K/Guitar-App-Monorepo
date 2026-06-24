@@ -1,4 +1,4 @@
-import { useControlBar } from '@/hooks/useControlBar';
+import { useControlBar } from '@/hooks';
 
 export const FretNumbers = () => {
     const { rootChord, lockOpenString } = useControlBar();

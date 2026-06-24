@@ -1,6 +1,5 @@
-import { useAssistant } from '@/hooks/useAssistant';
-import { useFretboard } from '@/hooks/useFretboard';
-import { SingleButton } from '@/ui/Studio/SingleButton';
+import { useAssistant, useFretboard } from '@/hooks';
+import { Button } from '@/ui';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
@@ -96,7 +95,7 @@ min-h-0
                     // Activar el modo de teclado cuando se desenfoca el input
                     onBlur={() => setKeyboardMode(true)}
                 />
-                <SingleButton
+                <Button
                     text=""
                     disabled={isGenerating}
                     onClick={handleSubmit}

@@ -1,8 +1,10 @@
-import { AssistantDesktopButton } from '@/components/Studio/BottomBar/AssistantDesktopButton';
-import { AssistantMobileButton } from '@/components/Studio/BottomBar/AssistantMobileButton';
-import { EffectsButton } from '@/components/Studio/BottomBar/EffectsButton';
-import { PreferencesButton } from '@/components/Studio/BottomBar/PreferencesButton';
-import { RigsButton } from '@/components/Studio/BottomBar/RigsButton';
+import {
+    AssistantDesktopButton,
+    AssistantMobileButton,
+    EffectsButton,
+    PreferencesButton,
+    RigsButton,
+} from '@/components';
 import { useMediaQuery } from 'react-responsive';
 
 export const BottomBarView = () => {

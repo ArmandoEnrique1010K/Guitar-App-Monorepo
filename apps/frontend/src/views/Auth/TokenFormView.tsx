@@ -1,8 +1,7 @@
-import { validateToken } from '@/api/AuthAPI';
-import { DigitsGroupField } from '@/components/Auth/DigitsGroupField';
+import { validateToken } from '@/api';
+import { DigitsGroupField, FormButton } from '@/components';
 import type { ValidateTokenForm } from '@/schemas';
-import { FormButton } from '@/components/Auth/FormButton';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
 

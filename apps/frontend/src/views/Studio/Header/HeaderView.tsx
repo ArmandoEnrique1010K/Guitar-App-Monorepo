@@ -1,5 +1,4 @@
-import { LogoGuitar } from '@/components/LogoGuitar';
-import { BurgerMenuButton } from '@/components/Studio/Header/BurgerMenuButton';
+import { LogoGuitar, BurgerMenuButton } from '@/components';
 
 export const HeaderView = () => {
     return (

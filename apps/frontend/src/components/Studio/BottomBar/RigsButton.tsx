@@ -1,5 +1,5 @@
-import { useBottomBar } from '@/hooks/useBottomBar';
-import { LatchButton } from '@/ui/Studio/LatchButton';
+import { useBottomBar } from '@/hooks';
+import { LatchButton } from '@/ui';
 import { StackIcon } from '@radix-ui/react-icons';
 
 export const RigsButton = () => {

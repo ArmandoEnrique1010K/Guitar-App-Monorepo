@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { HandIcon } from '@/icons/HandIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { HandIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const HoldToPlayButton = () => {
     const { holdToPlay, toggleHoldToPlay } = usePreferences();

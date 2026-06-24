@@ -1,6 +1,6 @@
-import { useBottomBar } from '@/hooks/useBottomBar';
-import { EqualizerIcon } from '@/icons/EqualizerIcon';
-import { LatchButton } from '@/ui/Studio/LatchButton';
+import { useBottomBar } from '@/hooks';
+import { EqualizerIcon } from '@/icons';
+import { LatchButton } from '@/ui';
 
 export const PreferencesButton = () => {
     const { selectedPanel, setSelectedPanel } = useBottomBar();

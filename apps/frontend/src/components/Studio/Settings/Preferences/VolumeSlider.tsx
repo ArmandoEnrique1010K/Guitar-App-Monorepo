@@ -1,5 +1,5 @@
-import { usePreferences } from '@/hooks/usePreferences';
-import { HorizontalSlider } from '@/ui/Studio/HorizontalSlider';
+import { usePreferences } from '@/hooks';
+import { HorizontalSlider } from '@/ui';
 
 export const VolumeSlider = () => {
     const { volume, setVolume } = usePreferences();

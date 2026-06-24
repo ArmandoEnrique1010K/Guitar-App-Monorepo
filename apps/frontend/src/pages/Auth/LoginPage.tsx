@@ -1,14 +1,16 @@
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
-import { TextField } from '@/components/Auth/TextField';
-import { PasswordField } from '@/components/Auth/PasswordField';
-import { FormButton } from '@/components/Auth/FormButton';
-import { SecondaryText } from '@/components/Auth/SecondaryText';
-import { AuthTitle } from '@/components/Auth/AuthTitle';
-import { handleFormikApiError } from '@/utils/handleFormikApiError';
+import {
+    AuthTitle,
+    FormButton,
+    PasswordField,
+    SecondaryText,
+    TextField,
+} from '@/components';
+import { handleFormikApiError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import type { LoginForm } from '@/schemas';
-import { login } from '@/api/AuthAPI';
+import { login } from '@/api';
 
 export const LoginPage = () => {
     const initialValues: LoginForm = {

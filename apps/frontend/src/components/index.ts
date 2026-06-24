@@ -36,38 +36,32 @@ export * from './Studio/Settings/Preferences/HoldToPlayButton';
 export * from './Studio/Settings/Preferences/LoopModeButton';
 export * from './Studio/Settings/Preferences/LoopModeSlider';
 export * from './Studio/Settings/Preferences/ShowKeyboardButton';
-export * from './Studio/Settings/Preferences/StringOrderGroup';
 export * from './Studio/Settings/Preferences/VolumeSlider';
 
-export * from './Studio/Settings/Effects/EffectParameters';
+export * from './Studio/Settings/Preferences/StringOrder/SortableStringItem';
+export * from './Studio/Settings/Preferences/StringOrder/SortableStringsList';
 
-export * from './Studio/Settings/Effects/Fields/ChorusFields';
-export * from './Studio/Settings/Effects/Fields/DistortionFields';
-export * from './Studio/Settings/Effects/Fields/ReverbFields';
-export * from './Studio/Settings/Effects/Fields/TremoloFields';
-export * from './Studio/Settings/Effects/Fields/VibratoFields';
+export * from './Studio/Settings/Effects/EffectControlsContainer';
+
+export * from './Studio/Settings/Effects/Fields/ChorusControls';
+export * from './Studio/Settings/Effects/Fields/DistortionControls';
+export * from './Studio/Settings/Effects/Fields/ReverbControls';
+export * from './Studio/Settings/Effects/Fields/TremoloControls';
+export * from './Studio/Settings/Effects/Fields/VibratoControls';
 
 export * from './Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
-export * from './Studio/Settings/Effects/EffectsOrder/EffectsDragAndDropOrder';
+export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectsList';
 export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectItem';
 
-export * from './Studio/Settings/Effects/Fields/Distortion/DistortionDistortionSlider';
-export * from './Studio/Settings/Effects/Fields/Distortion/DistortionOversampleSelectButtons';
-export * from './Studio/Settings/Effects/Fields/Distortion/DistortionWetSlider';
+// Esto trae redundancia
+// export * from './Studio/Settings/Effects/Fields/Distortion/DistortionSlider';
+// export * from './Studio/Settings/Effects/Fields/Distortion/OversampleSelectButtons';
+// export * from './Studio/Settings/Effects/Fields/Distortion/WetSlider';
 
-export * from './Studio/Settings/Effects/Fields/Reverb/ReverbDecaySlider';
-export * from './Studio/Settings/Effects/Fields/Reverb/ReverbPreDelaySlider';
-export * from './Studio/Settings/Effects/Fields/Reverb/ReverbWetSlider';
-
-export * from './Studio/Settings/Effects/Fields/Tremolo/TremoloDepthSlider';
-export * from './Studio/Settings/Effects/Fields/Tremolo/TremoloFrequencySlider';
-export * from './Studio/Settings/Effects/Fields/Tremolo/TremoloSpreadSlider';
-export * from './Studio/Settings/Effects/Fields/Tremolo/TremoloTypeSelectButtons';
-export * from './Studio/Settings/Effects/Fields/Tremolo/TremoloWetSlider';
-
-export * from './Studio/Settings/Effects/Fields/Vibrato/VibratoDepthSlider';
-export * from './Studio/Settings/Effects/Fields/Vibrato/VibratoFrequencySlider';
-export * from './Studio/Settings/Effects/Fields/Vibrato/VibratoTypeSelectButtons';
-export * from './Studio/Settings/Effects/Fields/Vibrato/VibratoWetSlider';
-
-export * from './Studio/Settings/Effects/Fields/Chorus/ChorusWetSlider';
+// En su lugar se importa el namespace completo
+// Cada efecto de sonido tiene una propiedad 'Wet' que significa el porcentaje de efecto aplicado
+export * as Distortion from './Studio/Settings/Effects/Fields/Distortion';
+export * as Chorus from './Studio/Settings/Effects/Fields/Chorus';
+export * as Reverb from './Studio/Settings/Effects/Fields/Reverb';
+export * as Tremolo from './Studio/Settings/Effects/Fields/Tremolo';
+export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';

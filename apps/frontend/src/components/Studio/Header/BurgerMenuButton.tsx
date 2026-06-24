@@ -1,5 +1,5 @@
-import { logout } from '@/api/AuthAPI';
-import { useProfile } from '@/hooks/useProfile';
+import { logout } from '@/api';
+import { useProfile } from '@/hooks';
 import { Menu } from '@ark-ui/react/menu';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { Link, useNavigate } from 'react-router-dom';

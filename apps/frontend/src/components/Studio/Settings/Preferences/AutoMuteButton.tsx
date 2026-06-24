@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { VolumeOffIcon } from '@/icons/VolumeOffIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { VolumeOffIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const AutoMuteButton = () => {
     const { autoMute, toggleAutoMute } = usePreferences();

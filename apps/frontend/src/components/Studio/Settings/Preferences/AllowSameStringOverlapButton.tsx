@@ -1,6 +1,6 @@
-import { SwitchButton } from '@/ui/Studio/SwitchButton';
-import { WaveformIcon } from '@/icons/WaveformIcon';
-import { usePreferences } from '@/hooks/usePreferences';
+import { SwitchButton } from '@/ui';
+import { WaveformIcon } from '@/icons';
+import { usePreferences } from '@/hooks';
 
 export const AllowSameStringOverlapButton = () => {
     const { allowSameStringOverlap, toggleAllowSameStringOverlap } =

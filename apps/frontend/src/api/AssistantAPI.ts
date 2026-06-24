@@ -1,8 +1,8 @@
-import { startOpenRouter } from '@/config/ai';
+import { startOpenRouter } from '@/lib/ai';
 import { streamText } from 'ai';
 
 // Esta funcion se encarga de generar la respuesta del asistente de IA
-export const generateResponseForAI = async (prompt: string) => {
+export const requestAIResponse = async (prompt: string) => {
     try {
         const response = await streamText({
             // Nombre del modelo LLM que se va a utilizar
