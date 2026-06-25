@@ -1,4 +1,4 @@
-import { EFFECT_SCHEMAS } from '@/constants/effects';
+import { EFFECT_SCHEMAS } from '@/constants';
 import type { Effects } from '@/schemas';
 
 // Construye los valores por defecto de un efecto de sonido

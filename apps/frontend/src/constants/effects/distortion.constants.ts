@@ -1,5 +1,4 @@
-import { createNumberProperty } from '../createNumberProperty';
-import { createOptionProperty } from '../createOptionProperty';
+import { createOptionProperty, createNumberProperty } from '@/factories';
 
 export const DISTORTION_SCHEMA = {
     distortion: createNumberProperty(0, 1, 0.01, 0.4, 100, '%', 0),

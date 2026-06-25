@@ -1,5 +1,4 @@
-import { createNumberProperty } from '../createNumberProperty';
-import { createOptionProperty } from '../createOptionProperty';
+import { createOptionProperty, createNumberProperty } from '@/factories';
 
 export const CHORUS_SCHEMA = {
     delayTime: createNumberProperty(1, 20, 0.1, 3.5, 1, 'ms', 1),

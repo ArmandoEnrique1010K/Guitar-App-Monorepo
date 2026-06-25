@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useControlBar, useFretboard, usePreferences } from '@/hooks';
 import type { GuitarNotes } from '@/schemas';
-import { assignKeysToFrets } from '@/utils';
+import { assignKeyboardKeysToFrets } from '@/utils';
 import { useEffect, useMemo } from 'react';
 import { HeaderView } from '@/views';
 
@@ -66,11 +66,11 @@ export const StudioLayout = () => {
     // }, [guitarNotes]);
 
     // 3. Debe asignar las notas a los trastes
-    // La función de utilidad assignKeysToFrets es la encargada de hacer eso
+    // La función de utilidad assignKeyboardKeysToFrets es la encargada de hacer eso
     const newNeck = useMemo(() => {
         const reversed = stringOrder.slice();
 
-        const keys = assignKeysToFrets(
+        const keys = assignKeyboardKeysToFrets(
             guitarNotes,
             reversed[0],
             reversed[1],

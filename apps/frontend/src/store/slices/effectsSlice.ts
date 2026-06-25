@@ -5,7 +5,7 @@ import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
 import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
-import type { FretboardSliceType } from '../fretboardSlice';
+import type { FretboardSliceType } from '@/store';
 import { buildDefaultEffectConfig } from '@/utils';
 import {
     chorusHandler,
@@ -13,7 +13,7 @@ import {
     reverbHandler,
     tremoloHandler,
     vibratoHandler,
-} from './handlers';
+} from '@/handlers';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -22,7 +22,6 @@ export type EffectsSliceType = {
     effectsChain: EffectsChain;
     effectHandlers: EffectHandlers;
     currentEffectSelected: keyof Effects | null;
-    setEffectsOrder: (effectsOrder: Array<keyof Effects>) => void;
     updateEffect: <T extends keyof Effects>(
         effectName: T,
         config: Partial<Effects[T]>,
@@ -133,9 +132,6 @@ export const effectsSlice: StateCreator<
     // Efecto actual seleccionado
     currentEffectSelected: null,
 
-    setEffectsOrder: (effectsOrder) => {
-        set({ effectsOrder });
-    },
     updateEffect: (effectName, config) => {
         set((state) => ({
             effects: {

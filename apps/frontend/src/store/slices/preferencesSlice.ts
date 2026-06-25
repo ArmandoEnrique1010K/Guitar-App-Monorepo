@@ -2,7 +2,7 @@ import { getAllGuitars } from '@/api';
 import type { Instrument } from '@/schemas';
 import type { StateCreator } from 'zustand';
 import * as Tone from 'tone';
-import type { FretboardSliceType } from './fretboardSlice';
+import type { FretboardSliceType } from '@/store';
 
 export type PreferencesSliceType = {
     // Guitarra seleccionada

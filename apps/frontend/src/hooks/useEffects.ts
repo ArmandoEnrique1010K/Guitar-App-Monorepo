@@ -9,7 +9,6 @@ export const useEffects = () => {
         (state) => state.currentEffectSelected,
     );
 
-    const setEffectsOrder = useAppStore((state) => state.setEffectsOrder);
     const updateEffect = useAppStore((state) => state.updateEffect);
     const toggleEffect = useAppStore((state) => state.toggleEffect);
     const moveEffect = useAppStore((state) => state.moveEffect);
@@ -36,7 +35,6 @@ export const useEffects = () => {
         effectsChain,
         effectHandlers,
         currentEffectSelected,
-        setEffectsOrder,
         updateEffect,
         toggleEffect,
         moveEffect,

@@ -1,5 +1,4 @@
-import { createNumberProperty } from '../createNumberProperty';
-import { createOptionProperty } from '../createOptionProperty';
+import { createNumberProperty, createOptionProperty } from '@/factories';
 
 export const VIBRATO_SCHEMA = {
     frequency: createNumberProperty(0.1, 20, 0.01, 5, 1, 'Hz.', 1),

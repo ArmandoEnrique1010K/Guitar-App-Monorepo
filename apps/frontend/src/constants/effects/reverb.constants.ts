@@ -1,4 +1,4 @@
-import { createNumberProperty } from '../createNumberProperty';
+import { createNumberProperty } from '@/factories';
 
 export const REVERB_SCHEMA = {
     decay: createNumberProperty(0.1, 10, 0.1, 1.5, 1, 's.', 2),

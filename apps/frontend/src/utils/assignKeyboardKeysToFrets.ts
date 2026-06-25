@@ -1,8 +1,8 @@
-import { KEYSBYROW } from '@/constants/effects';
+import { KEYSBYROW } from '@/constants';
 import { keyboardRows } from '@/data/keyboardRows';
 import type { GuitarNotes } from '@/schemas';
 
-export const assignKeysToFrets = (
+export const assignKeyboardKeysToFrets = (
     file: GuitarNotes,
     firstRowKeys: number,
     secondRowKeys: number,
