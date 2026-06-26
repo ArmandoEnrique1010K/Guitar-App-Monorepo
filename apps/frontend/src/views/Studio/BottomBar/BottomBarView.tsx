@@ -8,7 +8,7 @@ import {
 import { useMediaQuery } from 'react-responsive';
 
 export const BottomBarView = () => {
-    const isDesktop = useMediaQuery({ minWidth: 1024 });
+    const isDesktop = useMediaQuery({ minWidth: 1280 });
 
     return (
         <div className="flex flex-row p-2 bg-linear-to-r from-slate-700 to-slate-800 justify-between">

@@ -35,9 +35,8 @@ export const HorizontalSlider = ({
     };
 
     return (
-        // TODO: INVESTIGAR COMO COLOCAR LA CLASE cursor-not-allowed EN LOS ESTILOS CSS (APARTE EN EL DIV CONTENEDOR)
         <div
-            className={`${disabled ? 'opacity-50 ' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
+            className={`${disabled ? 'opacity-50 cursor-not-allowed' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
         >
             {label && (
                 <div className="flex justify-between items-center">
@@ -52,15 +51,16 @@ export const HorizontalSlider = ({
                 value={value}
                 onChange={handleChange}
                 disabled={disabled}
-                className="
+                className={`
                     studio-slider
                     w-full
                     h-2
                     appearance-none
-                    cursor-pointer 
                     bg-transparent 
-                "
+                `}
                 style={{
+                    // Aplica el cursor según si está deshabilitado o no
+                    cursor: disabled ? 'not-allowed' : 'pointer',
                     background: getTrackColor(),
                 }}
             />
@@ -113,7 +113,6 @@ export const HorizontalSlider = ({
                                 #4b5563
                             );
 
-                        cursor: pointer;
                     }
                 `}
             </style>

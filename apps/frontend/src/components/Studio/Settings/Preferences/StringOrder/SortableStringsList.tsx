@@ -39,7 +39,7 @@ export const SortableStringsList = () => {
                 strategy={verticalListSortingStrategy}
             >
                 <div
-                    className="w-40 h-full bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
+                    className="md:w-40 w-34 h-full bg-black p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
             border-b-slate-500"
                 >
                     <ul className="flex flex-col">

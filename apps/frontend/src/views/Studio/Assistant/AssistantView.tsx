@@ -1,19 +1,22 @@
 import { useAssistant, useFretboard } from '@/hooks';
 import { Button } from '@/ui';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const AssistantView = () => {
-    const { isGenerating, generateResponse, response } = useAssistant();
+    const {
+        isGenerating,
+        generateResponse,
+        response,
+        question,
+        setQuestion,
+        request,
+    } = useAssistant();
     const { setKeyboardMode } = useFretboard();
-
-    const [question, setQuestion] = useState('');
 
     const handleSubmit = () => {
         if (!question.trim()) return;
-
         generateResponse(question);
         setQuestion('');
     };
@@ -22,12 +25,12 @@ export const AssistantView = () => {
     return (
         // TODO: SUGERENCIA, PASAR DE "to-slate-800" A "to-slate-900"
         <aside
-            className="2xl:w-150 xl:w-120 lg:w-90 w-full shrink-0 h-full min-h-0
+            className="2xl:w-180 xl:w-150  w-full shrink-0 h-full min-h-0
             bg-linear-to-l from-slate-700 to-slate-800 
             border-l-2 border-slate-900
             flex flex-col 
-            lg:p-2 lg:gap-2 p-4 gap-4
-            text-xs uppercase tracking-wide font-bold "
+            xl:p-2 xl:gap-2 p-4 gap-4
+            text-xs tracking-wide "
         >
             <div
                 className="
@@ -35,7 +38,7 @@ export const AssistantView = () => {
 min-h-0
                     bg-black
                 h-full
-
+text-sm
 
                     border-2
                     border-t-slate-900
@@ -49,14 +52,24 @@ min-h-0
                     overflow-y-auto
 
                     text-green-500
-                    text-[10px]
                     leading-relaxed
                     whitespace-pre-wrap
 
                             markdown-content
 
+                                                    scrollbar
+        scrollbar-track-black
+        scrollbar-thumb-green-600
+
+
                 "
             >
+                {request && (
+                    <>
+                        <div className="text-orange-400">{request}</div>
+                        <hr className="p-0 my-4" />
+                    </>
+                )}
                 <Markdown remarkPlugins={[remarkGfm]}>{response}</Markdown>
             </div>
             <div className="flex items-stretch lg:gap-2 gap-4">
@@ -83,7 +96,7 @@ min-h-0
                         border-l-slate-900
                         border-r-slate-500
                         border-b-slate-500
-                         text-xs uppercase tracking-wide font-bold
+                         text-sm tracking-wide 
                     "
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
@@ -138,7 +151,7 @@ min-h-0
             color: #facc15;
             padding: 1px 3px;
             border-radius: 2px;
-            font-size: 10px;
+            font-size: 12px;
         }
 
         .markdown-content pre {
@@ -160,7 +173,7 @@ min-h-0
         .markdown-content h2,
         .markdown-content h3 {
             color: #86efac;
-            margin-top: 10px;
+            margin-top: 12px;
             margin-bottom: 6px;
         }
 

@@ -1,11 +1,12 @@
 type Props = {
     children: React.ReactNode;
+    className?: string;
 };
 
-export const EffectControlsContainer = ({ children }: Props) => {
+export const EffectControlsContainer = ({ children, className }: Props) => {
     return (
         <div
-            className="
+            className={`
                 flex-1
 
                 border-2
@@ -25,8 +26,8 @@ export const EffectControlsContainer = ({ children }: Props) => {
 
                                     snap-y
                     snap-mandatory
-
-            "
+${className}
+            `}
         >
             {/* xl:grid-cols-2 */}
 

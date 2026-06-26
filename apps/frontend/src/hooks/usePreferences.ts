@@ -47,6 +47,8 @@ export const usePreferences = () => {
     const noteSamples = useAppStore((state) => state.noteSamples);
     const loadNoteSamples = useAppStore((state) => state.loadNoteSamples);
 
+    const stopAllNotes = useAppStore((state) => state.stopAllNotes);
+
     return {
         guitars,
         selectedGuitar,
@@ -74,5 +76,6 @@ export const usePreferences = () => {
         loadGuitars,
         noteSamples,
         loadNoteSamples,
+        stopAllNotes,
     };
 };

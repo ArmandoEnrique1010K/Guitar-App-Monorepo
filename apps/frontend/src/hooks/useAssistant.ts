@@ -9,6 +9,9 @@ export const useAssistant = () => {
     const response = useAppStore((state) => state.response);
     const isGenerating = useAppStore((state) => state.isGenerating);
     const generateResponse = useAppStore((state) => state.generateResponse);
+    const question = useAppStore((state) => state.question);
+    const setQuestion = useAppStore((state) => state.setQuestion);
+    const request = useAppStore((state) => state.request);
 
     return {
         isPanelOpen,
@@ -17,5 +20,8 @@ export const useAssistant = () => {
         response,
         isGenerating,
         generateResponse,
+        question,
+        setQuestion,
+        request,
     };
 };

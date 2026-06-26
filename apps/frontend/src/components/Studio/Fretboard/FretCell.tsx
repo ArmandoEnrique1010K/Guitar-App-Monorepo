@@ -29,11 +29,9 @@ export const FretCell = ({
     const [isActive, setIsActive] = useState(false);
     // Función para manejar la detencion del sonido
     const handleStopSound = () => {
-        // TODO: stopAllInstances();
         stopNote(stringIndex, noteIndex);
 
         if (loopMode) {
-            // TODO: stopRepeatingNote(stringIndex, noteIndex);
             stopRepeatingNote(stringIndex, noteIndex);
         }
     };
@@ -47,7 +45,6 @@ export const FretCell = ({
             setKeyPressed(true);
             setIsActive(true);
 
-            // TODO: playSound(stringIndex, noteIndex, audioUrl);
             playNote(stringIndex, noteIndex);
         }
     };
@@ -65,7 +62,6 @@ export const FretCell = ({
             }
 
             if (loopMode) {
-                // TODO: stopRepeatingNote(stringIndex, noteIndex);
                 stopRepeatingNote(stringIndex, noteIndex);
             }
         }
@@ -75,8 +71,6 @@ export const FretCell = ({
     const handleMouseDown = () => {
         setIsActive(true);
         playNote(stringIndex, noteIndex);
-
-        // TODO:     playSound(stringIndex, noteIndex, audioUrl);
     };
 
     // Función para manejar el mouse up
@@ -88,7 +82,6 @@ export const FretCell = ({
         }
 
         if (loopMode) {
-            // TODO: stopRepeatingNote(stringIndex, noteIndex)
             stopRepeatingNote(stringIndex, noteIndex);
         }
     };
@@ -98,7 +91,7 @@ export const FretCell = ({
     };
 
     // EFECTO SECUNDARIO
-    //* ADVERTENCIA: NO CAMBIAR EL ACORDE INICIAL 3 SE MANTIENE PULSADA UNA TECLA
+    //* ADVERTENCIA: NO CAMBIAR EL ACORDE INICIAL MIENTRAS SE MANTIENE PULSADA UNA TECLA
     // TODO: SOLUCIONAR EL ERRROR MENCIONADO
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);

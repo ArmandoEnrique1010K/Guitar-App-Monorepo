@@ -46,6 +46,9 @@ export type FretboardSliceType = {
 
     // RECONSTRUIR CADENA CUANDO SE CAMBIA UN EFECTO (CONSIDERANDO PARAMETROS INTERNOS)
     rebuildAudioGraph: () => void;
+
+    // SILENCIAR TODO
+    stopAllNotes: () => void;
 };
 
 export const fretboardSlice: StateCreator<
@@ -424,5 +427,28 @@ export const fretboardSlice: StateCreator<
         activeEffects[activeEffects.length - 1].connect(volumeNode);
 
         volumeNode.toDestination();
+    },
+
+    stopAllNotes() {
+        const state = get();
+
+        // Detener todas las notas activas
+        Object.keys(state.activeNotes).forEach((key) => {
+            const activeNote = state.activeNotes[key];
+            if (activeNote && activeNote.intervalId) {
+                clearInterval(activeNote.intervalId);
+            }
+        });
+
+        // Silenciar la reproducción de todas las notas activas
+        Object.keys(state.activeNotes).forEach((key) => {
+            const activeNote = state.activeNotes[key];
+            if (activeNote && activeNote.player) {
+                activeNote.player.stop();
+            }
+        });
+
+        // Limpiar el estado de notas activas
+        set({ activeNotes: {} });
     },
 });

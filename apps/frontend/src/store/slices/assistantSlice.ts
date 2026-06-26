@@ -7,14 +7,18 @@ export type AssistantSliceType = {
     openPanel: () => void;
     response: string;
     isGenerating: boolean;
-
     generateResponse: (prompt: string) => Promise<void>;
+    request: string;
+    question: string;
+    setQuestion: (question: string) => void;
 };
 
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
     isPanelOpen: false,
     response: '¿En qué puedo ayudarte?',
     isGenerating: false,
+    request: '',
+    question: '',
 
     togglePanel: () => {
         set((state) => ({
@@ -28,10 +32,15 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
         });
     },
 
+    setQuestion: (question) => {
+        set({ question });
+    },
+
     generateResponse: async (prompt: string) => {
         set({
             response: '',
             isGenerating: true,
+            request: prompt,
         });
 
         // console.log(`El usuario ha introducido el texto ${prompt}`);

@@ -6,6 +6,7 @@ export const VolumeSlider = () => {
 
     return (
         <HorizontalSlider
+            label="Volumen"
             value={volume}
             onChange={setVolume}
             unit="%"

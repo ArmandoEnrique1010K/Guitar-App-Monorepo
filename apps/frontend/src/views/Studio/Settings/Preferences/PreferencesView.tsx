@@ -3,6 +3,7 @@ import {
     AllowSameStringOverlapButton,
     AutoMuteButton,
     AutoMuteSlider,
+    EffectControlsContainer,
     GuitarButton,
     GuitarImage,
     HoldToPlayButton,
@@ -22,8 +23,8 @@ export const PreferencesView = () => {
                     <SortableStringsList />
                 </div>
 
-                <div className="flex flex-col gap-4 flex-1">
-                    <div className="flex xl:flex-row flex-col gap-4 xl:items-center items-start">
+                <div className="flex flex-col flex-1">
+                    <div className="flex flex-col gap-2 items-start">
                         <div className="flex flex-row gap-2">
                             <HoldToPlayButton />
                             <AllowSameStringOverlapButton />
@@ -33,16 +34,22 @@ export const PreferencesView = () => {
                             </div>
                         </div>
                         <div className="w-full">
-                            <VolumeSlider />
+                            <EffectControlsContainer className="p-2">
+                                <VolumeSlider />
+                            </EffectControlsContainer>
                         </div>
-                    </div>
-                    <div className="flex flex-row gap-2 w-full">
-                        <LoopModeButton />
-                        <LoopModeSlider />
-                    </div>
-                    <div className="flex flex-row gap-2 w-full">
-                        <AutoMuteButton />
-                        <AutoMuteSlider />
+
+                        <div className="flex flex-row gap-2 w-full">
+                            <div className="flex flex-col gap-2">
+                                <LoopModeButton />
+                                <AutoMuteButton />
+                            </div>
+                            <EffectControlsContainer className="p-2">
+                                <LoopModeSlider />
+                                <div className="py-1.5"></div>
+                                <AutoMuteSlider />
+                            </EffectControlsContainer>
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col w-44 gap-2">

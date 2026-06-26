@@ -10,7 +10,7 @@ import {
 export const StudioPage = () => {
     const { isPanelOpen } = useAssistant();
     const { selectedPanel } = useBottomBar();
-    const isDesktop = useMediaQuery({ minWidth: 1024 });
+    const isDesktop = useMediaQuery({ minWidth: 1280 });
 
     return (
         <>
