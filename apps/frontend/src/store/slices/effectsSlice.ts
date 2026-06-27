@@ -14,6 +14,8 @@ import {
     tremoloHandler,
     vibratoHandler,
 } from '@/handlers';
+import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
+import { freeverbHandler } from '@/handlers/freeverb.handler';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -92,6 +94,12 @@ export const effectsSlice: StateCreator<
             wet: CHORUS_SCHEMA.wet.defaultValue,
             enabled: false,
         },
+        freeverb: {
+            dampening: FREEVERB_SCHEMA.dampening.defaultValue,
+            roomSize: FREEVERB_SCHEMA.roomSize.defaultValue,
+            wet: FREEVERB_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
     },
 
     // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
@@ -101,6 +109,7 @@ export const effectsSlice: StateCreator<
         tremolo: null,
         vibrato: null,
         chorus: null,
+        freeverb: null,
     },
 
     // FUNCION AUXILIAR
@@ -110,6 +119,7 @@ export const effectsSlice: StateCreator<
         tremolo: tremoloHandler,
         vibrato: vibratoHandler,
         chorus: chorusHandler,
+        freeverb: freeverbHandler,
     },
 
     // Ejemplo de funcion auxliar para distortion

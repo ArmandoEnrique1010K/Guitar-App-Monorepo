@@ -12,6 +12,7 @@ import { useEffects } from '@/hooks';
 import { Button } from '@/ui';
 import { PreviousArrowIcon, NextArrowIcon, ResetIcon } from '@/icons';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
+import { FreeverbControls } from '@/components/Studio/Settings/Effects/Fields/FreeverbControls';
 
 export const EffectsView = () => {
     const {
@@ -106,6 +107,9 @@ p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
                     {currentEffectSelected === 'tremolo' && <TremoloControls />}
 
                     {currentEffectSelected === 'chorus' && <ChorusControls />}
+                    {currentEffectSelected === 'freeverb' && (
+                        <FreeverbControls />
+                    )}
                 </EffectControlsContainer>
             </div>
         </div>

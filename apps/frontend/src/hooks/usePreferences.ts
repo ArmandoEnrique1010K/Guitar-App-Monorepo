@@ -49,6 +49,9 @@ export const usePreferences = () => {
 
     const stopAllNotes = useAppStore((state) => state.stopAllNotes);
 
+    const showCredits = useAppStore((state) => state.showCredits);
+    const setShowCredits = useAppStore((state) => state.setShowCredits);
+
     return {
         guitars,
         selectedGuitar,
@@ -77,5 +80,7 @@ export const usePreferences = () => {
         noteSamples,
         loadNoteSamples,
         stopAllNotes,
+        showCredits,
+        setShowCredits,
     };
 };

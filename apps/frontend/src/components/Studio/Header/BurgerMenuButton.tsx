@@ -1,11 +1,13 @@
 import { logout } from '@/api';
-import { useProfile } from '@/hooks';
+import { usePreferences, useProfile } from '@/hooks';
 import { Menu } from '@ark-ui/react/menu';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import { CreditsModal } from '../Credits/CreditsModal';
 
 export const BurgerMenuButton = () => {
     const { profile } = useProfile();
+    const { setShowCredits } = usePreferences();
     const navigate = useNavigate();
 
     return (
@@ -23,8 +25,10 @@ export const BurgerMenuButton = () => {
                     <Menu.Content className="min-w-44 z-30 border border-gray-200 bg-white shadow-xl outline-none focus:outline-none focus-visible:outline-none flex flex-col">
                         <Menu.Item
                             value="Creditos-del-autor"
-                            className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
-                            onClick={() => {}}
+                            className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
+                            onClick={() => {
+                                setShowCredits(true);
+                            }}
                         >
                             Creditos del autor
                         </Menu.Item>
@@ -33,14 +37,14 @@ export const BurgerMenuButton = () => {
                             <>
                                 <Menu.Item
                                     value="Mi-perfil"
-                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
                                     onClick={() => {}}
                                 >
                                     Mi perfil
                                 </Menu.Item>
                                 <Menu.Item
                                     value="Cerrar-sesion"
-                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
                                     onClick={() => {
                                         logout();
                                         navigate('/auth');
@@ -53,13 +57,13 @@ export const BurgerMenuButton = () => {
                             <>
                                 <Link
                                     to="/auth"
-                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
                                 >
                                     Iniciar sesión
                                 </Link>
                                 <Link
                                     to="/auth/register"
-                                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors outline-none"
+                                    className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
                                 >
                                     Registrarse
                                 </Link>
@@ -68,6 +72,7 @@ export const BurgerMenuButton = () => {
                     </Menu.Content>
                 </Menu.Positioner>
             </Menu.Root>
+            <CreditsModal />
         </>
     );
 };

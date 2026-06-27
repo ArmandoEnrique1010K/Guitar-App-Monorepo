@@ -51,3 +51,20 @@
     --button-color: #d6dddd;
     --icon-color: #fc9e00;
 }
+/* 
+.radix-themes .rt-BaseDialogOverlay .rt-DialogOverlay {
+    background-color: rgba(255, 255, 255, 0);
+} */
+
+/* OVERLAY DE LA VENTANA MODAL DEL DIALOG DE RADIX UI */
+.rt-DialogOverlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    /* backdrop-filter: blur(4px);*/
+}
+
+/* DESACTIVA LAS ANIMACIONES QUE VIENEN POR DEFECTO EN RADIX UI */
+.rt-DialogOverlay,
+.rt-DialogContent {
+    animation: none !important;
+    transition: none !important;
+}

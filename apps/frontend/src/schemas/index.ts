@@ -78,6 +78,7 @@ export type Effects = {
     tremolo: TremoloConfig;
     vibrato: VibratoConfig;
     chorus: ChorusConfig;
+    freeverb: FreeverbConfig;
 };
 
 // export type PartialEffects = {
@@ -90,6 +91,7 @@ export type EffectsChain = {
     tremolo: Tone.Tremolo | null;
     vibrato: Tone.Vibrato | null;
     chorus: Tone.Chorus | null;
+    freeverb: Tone.Freeverb | null;
 };
 
 export type DistortionConfig = {
@@ -134,6 +136,13 @@ export type ChorusConfig = {
     wet: number;
 };
 
+export type FreeverbConfig = {
+    enabled: boolean;
+    dampening: number;
+    roomSize: number;
+    wet: number;
+};
+
 export type EffectHandler<TEffect, TConfig> = {
     create: () => TEffect;
 
@@ -148,6 +157,7 @@ export type EffectHandlers = {
     tremolo: EffectHandler<Tone.Tremolo, TremoloConfig>;
     vibrato: EffectHandler<Tone.Vibrato, VibratoConfig>;
     chorus: EffectHandler<Tone.Chorus, ChorusConfig>;
+    freeverb: EffectHandler<Tone.Freeverb, FreeverbConfig>;
 };
 
 // TIPADO DE PROPIEDADES

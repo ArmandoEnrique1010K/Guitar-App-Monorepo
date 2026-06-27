@@ -65,3 +65,4 @@ export * as Chorus from './Studio/Settings/Effects/Fields/Chorus';
 export * as Reverb from './Studio/Settings/Effects/Fields/Reverb';
 export * as Tremolo from './Studio/Settings/Effects/Fields/Tremolo';
 export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
+export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
