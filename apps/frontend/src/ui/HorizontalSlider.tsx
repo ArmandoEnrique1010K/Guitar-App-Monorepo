@@ -66,7 +66,7 @@ export const HorizontalSlider = ({
             />
             <div className="flex flex-row justify-center items-center gap-1">
                 <div
-                    className="w-10 h-6 flex items-center justify-center text-green-500 bg-black 
+                    className="w-12 h-6 flex items-center justify-center text-green-500 bg-black 
                                 border-2
                                 border-t-slate-900
                                 border-l-slate-900

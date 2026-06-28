@@ -15,6 +15,7 @@ export const FretNumbers = () => {
             className="flex flex-row w-full 
                     gap-2 px-2
                     text-sm
+                    font-bold
                     text-green-500
 
             "

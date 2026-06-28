@@ -1,21 +1,58 @@
 import { usePreferences } from '@/hooks';
-import {
-    Badge,
-    Button,
-    Container,
-    DataList,
-    Dialog,
-    Flex,
-} from '@radix-ui/themes';
+import { CrossIcon } from '@/icons';
+import { Button } from '@/ui';
+import { Dialog } from '@radix-ui/themes';
+const sections = [
+    {
+        title: 'Tecnologías',
+        items: [
+            'HTML',
+            'CSS',
+            'TypeScript',
+            'React 19',
+            'Node.js',
+            'Express.js',
+        ],
+    },
+    {
+        title: 'Librerías',
+        items: [
+            'Tone.js 15',
+            'React Icons',
+            'React Markdown',
+            'React FormKit',
+            'RadixUI',
+            'React Router',
+            'React AI SDK',
+        ],
+    },
+    {
+        title: 'Fuentes',
+        items: ['Shockwave2', 'Roboto'],
+    },
+    // TODO: FALTA IMPLEMENTAR ESTAS LIBRERIAS
+    {
+        title: 'Loaders',
+        items: ['loading.io'],
+    },
+    {
+        title: 'Logo',
+        items: ['Wikcionario'],
+    },
+    {
+        title: 'Iconos',
+        items: ['React Icons'],
+    },
+];
 
 export const CreditsModal = () => {
     const { showCredits, setShowCredits } = usePreferences();
 
-    // TODO: MEJORAR EL DISEÑO
     return (
         <Dialog.Root open={showCredits} onOpenChange={setShowCredits}>
             <Dialog.Content
                 maxWidth="600px"
+                minWidth="250px"
                 maxHeight="400px"
                 className="
                 scrollbar
@@ -33,103 +70,100 @@ export const CreditsModal = () => {
                     borderRadius: 0,
                     backgroundColor: '#0f1117',
                     transition: 'none',
+                    padding: '16px',
                 }}
             >
-                <Dialog.Title>Créditos</Dialog.Title>
-                <Dialog.Description size="2" mb="6">
-                    Esta aplicación ha sido construida con el objetivo de
-                    aprender a usar React y explorar a fondo las funcionalidades
-                    que ofrece la librería Tone.js. El diseño de la aplicación
-                    esta basada en el conocido reproductor de Winamp. También se
-                    implemento la librería React AI SDK para la integración de
-                    una IA generativa. Agredecimiento al instructor Juan Pablo
-                    de la Torre por su apoyo y enseñanzas.
-                </Dialog.Description>
-                <DataList.Root mb="4">
-                    <DataList.Label>Tecnologias</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">HTML</Badge>
-                            <Badge color="green">CSS</Badge>
-                            <Badge color="green">JavaScript</Badge>
-                            <Badge color="green">TypeScript</Badge>
-                            <Badge color="green">React 19</Badge>
-                            <Badge color="green">Node.js</Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
-                <DataList.Root mb="4">
-                    <DataList.Label>Librerias</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">Tone.js</Badge>
-                            <Badge color="green">React Icons</Badge>
-                            <Badge color="green">React Markdown</Badge>
-                            <Badge color="green">React FormKit</Badge>
-                            <Badge color="green">RadixUI</Badge>
-                            <Badge color="green">React Router</Badge>
-                            <Badge color="green">React AI SDK</Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
-                <DataList.Root mb="4">
-                    <DataList.Label>Fuentes</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">Shockwave2</Badge>
-                            <Badge color="green">Roboto</Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
-                <DataList.Root mb="4">
-                    <DataList.Label>Loader de carga</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">loading.io</Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
-                <DataList.Root mb="4">
-                    <DataList.Label>Logo</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">
-                                <a href="https://es.wiktionary.org/wiki/Archivo:Emoji_u1f3b8.svg">
-                                    Wikcionario
-                                </a>
-                            </Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
-                <DataList.Root mb="4">
-                    <DataList.Label>Iconos</DataList.Label>
-                    <DataList.Value>
-                        <Flex gap="2" wrap="wrap">
-                            <Badge color="green">React Icons</Badge>
-                        </Flex>
-                    </DataList.Value>
-                </DataList.Root>
+                <Dialog.Title size={'6'}>Créditos</Dialog.Title>
+                <Dialog.Description>
+                    <div className="flex flex-col gap-8 text-sm">
+                        <div>
+                            Esta aplicación ha sido construida con el objetivo
+                            de aprender a usar React y explorar a fondo las
+                            funcionalidades que ofrece la librería Tone.js. El
+                            diseño de la aplicación esta basada en el conocido
+                            reproductor de Winamp. También se implemento la
+                            librería React AI SDK para la integración de una IA
+                            generativa. Agredecimiento al instructor Juan Pablo
+                            de la Torre por su apoyo y enseñanzas.
+                        </div>
 
-                <Container size="1" mt="6">
-                    <Flex justify="center" align="center" gap="4">
-                        <img src="react.svg" alt="React" width="80px" />
-                        <img src="tone.png" alt="Tone" width="80px" />
-                    </Flex>
-                </Container>
-                <Flex gap="3" mt="4" justify="end">
-                    <Dialog.Close>
-                        <Button
-                            color="orange"
-                            style={{
-                                cursor: 'pointer',
-                                outline: 'none',
-                            }}
-                        >
-                            Cerrar
-                        </Button>
-                    </Dialog.Close>
-                </Flex>
+                        <div className="flex flex-col gap-4">
+                            {sections.map((section) => (
+                                <div key={section.title} className="flex">
+                                    <div className="min-w-28 font-bold">
+                                        {section.title}
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2">
+                                        {section.items.map((item) => (
+                                            <div
+                                                key={item}
+                                                className="bg-green-200 px-2 text-green-600"
+                                            >
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-row gap-6 justify-center">
+                            <img src="react.svg" alt="React" width="80px" />
+                            <img src="tone.png" alt="Tone" width="80px" />
+                        </div>
+
+                        <div className="flex justify-end">
+                            <Button
+                                onClick={() => setShowCredits(false)}
+                                icon={<CrossIcon className="size-6" />}
+                                text="Cerrar"
+                            />
+                        </div>
+                    </div>
+                </Dialog.Description>
             </Dialog.Content>
         </Dialog.Root>
     );
 };
+
+// <DataList.Root mb="4">
+//     <DataList.Label>Logo</DataList.Label>
+//     <DataList.Value>
+//         <Flex gap="2" wrap="wrap">
+//             <Badge color="green">
+//                 <a href="https://es.wiktionary.org/wiki/Archivo:Emoji_u1f3b8.svg">
+//                     Wikcionario
+//                 </a>
+//             </Badge>
+//         </Flex>
+//     </DataList.Value>
+// </DataList.Root>
+// <DataList.Root mb="4">
+//     <DataList.Label>Iconos</DataList.Label>
+//     <DataList.Value>
+//         <Flex gap="2" wrap="wrap">
+//             <Badge color="green">React Icons</Badge>
+//         </Flex>
+//     </DataList.Value>
+// </DataList.Root>
+
+// <Container size="1" mt="6">
+//     <Flex justify="center" align="center" gap="4">
+//         <img src="react.svg" alt="React" width="80px" />
+//         <img src="tone.png" alt="Tone" width="80px" />
+//     </Flex>
+// </Container>
+// <Flex gap="3" mt="4" justify="end">
+//     <Dialog.Close>
+//         <Button
+//             color="orange"
+//             style={{
+//                 cursor: 'pointer',
+//                 outline: 'none',
+//             }}
+//         >
+//             Cerrar
+//         </Button>
+//     </Dialog.Close>
+// </Flex>
