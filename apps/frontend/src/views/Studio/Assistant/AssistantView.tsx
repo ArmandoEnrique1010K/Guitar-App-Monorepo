@@ -1,4 +1,4 @@
-import { useAssistant, useFretboard } from '@/hooks';
+import { useAssistant } from '@/hooks';
 import { Button } from '@/ui';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
 import Markdown from 'react-markdown';
@@ -13,7 +13,7 @@ export const AssistantView = () => {
         setQuestion,
         request,
     } = useAssistant();
-    const { setKeyboardMode } = useFretboard();
+    // const { setKeyboardMode } = useFretboard();
 
     const handleSubmit = () => {
         if (!question.trim()) return;
@@ -26,8 +26,8 @@ export const AssistantView = () => {
         // TODO: SUGERENCIA, PASAR DE "to-slate-800" A "to-slate-900"
         <aside
             className="2xl:w-180 xl:w-150  w-full shrink-0 h-full min-h-0
-            bg-linear-to-l from-slate-700 to-slate-800 
-            border-l-2 border-slate-900
+            xl:bg-linear-to-l xl:from-slate-700 xl:to-slate-800 
+            bg-linear-to-r from-slate-700 to-slate-800 
             flex flex-col 
             xl:p-2 xl:gap-2 p-4 gap-4
             text-xs tracking-wide "
@@ -104,9 +104,11 @@ text-sm
                         }
                     }}
                     // Desactivar el modo de teclado cuando se enfoca el input
-                    onFocus={() => setKeyboardMode(false)}
-                    // Activar el modo de teclado cuando se desenfoca el input
-                    onBlur={() => setKeyboardMode(true)}
+                    // onFocus={() => setKeyboardMode(false)}
+                    // // Activar el modo de teclado cuando se desenfoca el input
+                    // onBlur={() => setKeyboardMode(true)}
+                    // // Desactivar el modo teclado cuando el cursor salga de este campo
+                    // onMouseLeave={() => setKeyboardMode(true)}
                 />
                 <Button
                     text=""

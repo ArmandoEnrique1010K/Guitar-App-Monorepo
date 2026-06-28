@@ -126,13 +126,13 @@ export const logout = async () => {
 };
 
 export interface User {
-    id: string;
+    _id: string;
     name: string;
     email: string;
 }
 
 // Obtener el perfil del usuario
-export const user = async () => {
+export const getUser = async () => {
     try {
         const url = '/profile/user';
         const { data } = await api.get<User>(url);

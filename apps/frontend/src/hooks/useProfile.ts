@@ -1,49 +1,23 @@
-import { useEffect, useState } from 'react';
-import { user, type User } from '@/api';
-import { handleFormikApiError } from '@/utils';
+import { useAppStore } from '@/store';
 
 export const useProfile = () => {
-    const [profile, setProfile] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const getProfile = async () => {
-            try {
-                setIsLoading(true);
-
-                const data = await user();
-
-                setProfile(data);
-            } catch (error) {
-                handleFormikApiError({
-                    error,
-                    // SOLUCION TEMPORAL, DEJAR LAS FUNCIONES EN BLANCO
-                    setErrors: () => {},
-                    setStatus: () => {},
-                    notify: () => {},
-                });
-                setError('Error obteniendo perfil');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        getProfile();
-    }, []);
-
-    // Logout manual
-    const cleanProfile = () => {
-        localStorage.removeItem('AUTH_TOKEN');
-
-        // limpiar usuario
-        setProfile(null);
-    };
+    const profile = useAppStore((state) => state.profile);
+    const isLoading = useAppStore((state) => state.isLoading);
+    const error = useAppStore((state) => state.error);
+    const getProfile = useAppStore((state) => state.getProfile);
+    const cleanProfile = useAppStore((state) => state.cleanProfile);
+    const setProfile = useAppStore((state) => state.setProfile);
+    const showProfile = useAppStore((state) => state.showProfile);
+    const setShowProfile = useAppStore((state) => state.setShowProfile);
 
     return {
         profile,
         isLoading,
         error,
+        getProfile,
         cleanProfile,
+        setProfile,
+        showProfile,
+        setShowProfile,
     };
 };

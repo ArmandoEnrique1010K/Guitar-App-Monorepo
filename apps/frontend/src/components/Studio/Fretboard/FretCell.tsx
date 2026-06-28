@@ -36,10 +36,23 @@ export const FretCell = ({
         }
     };
 
+    // Función para evaluar si puede tocar una nota con el teclado
+    // Solamente devuelve false cuando el usuario hace clic en un elemento input por ejemplo
+    function canPlayKeyboard() {
+        const element = document.activeElement;
+
+        return !(
+            element instanceof HTMLInputElement ||
+            element instanceof HTMLTextAreaElement ||
+            element?.getAttribute('contenteditable') === 'true'
+        );
+    }
+
     // Función para manejar el pulso del teclado
     const handleKeyDown = (event: KeyboardEvent) => {
         // Evita que se reproduzca el sonido varias veces cuando se mantiene presionada la tecla
         if (event.repeat) return;
+        if (!canPlayKeyboard()) return;
 
         if (event.code === keyToPress && !keyPressed && keyboardMode) {
             setKeyPressed(true);

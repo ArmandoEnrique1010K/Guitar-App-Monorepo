@@ -6,3 +6,4 @@ export * from './preferencesSlice';
 export * from './settingsSlice';
 
 export * from './effectsSlice';
+export * from './profileSlice';

@@ -5,6 +5,7 @@ import {
     EffectControlsContainer,
     ReverbControls,
     SortableEffectsList,
+    TextContainer,
     TremoloControls,
     VibratoControls,
 } from '@/components';
@@ -61,19 +62,10 @@ export const EffectsView = () => {
                         }
                         icon={<PreviousArrowIcon className="size-4" />}
                     />
-                    <div
-                        className="
-                flex  bg-black text-green-500 flex-1
-                        text-xs
-        uppercase        font-bold
-p-1 border-2 border-t-slate-900 border-l-slate-900 border-r-slate-500
-            border-b-slate-500
-            items-center justify-center
-                "
-                    >
+                    <TextContainer>
                         {EFFECTS_NAMES[currentEffectSelected] ||
                             'Sin efecto seleccionado'}
-                    </div>
+                    </TextContainer>
                     <Button
                         title="Establecer valores predeterminados"
                         text="Reset"

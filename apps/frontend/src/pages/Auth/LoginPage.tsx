@@ -11,6 +11,7 @@ import { handleFormikApiError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import type { LoginForm } from '@/schemas';
 import { login } from '@/api';
+import { useProfile } from '@/hooks';
 
 export const LoginPage = () => {
     const initialValues: LoginForm = {
@@ -19,6 +20,7 @@ export const LoginPage = () => {
     };
     const { notify } = useNotifications();
     const navigate = useNavigate();
+    const { getProfile } = useProfile();
 
     const handleSubmit = async (
         values: LoginForm,
@@ -29,13 +31,14 @@ export const LoginPage = () => {
             // LOGIN EXITOSO
             if (typeof response === 'string') {
                 setStatus(response);
+                await getProfile();
 
                 notify({
                     message: response,
                     status: 'success',
                 });
 
-                navigate('/');
+                navigate('/', { replace: true });
             }
 
             // El objeto response es string cuando el usuario ha iniciado sesion

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import NotificationsSystem, {
     useNotifications,
     setUpNotifications,
@@ -14,6 +14,7 @@ import {
     RequestCodePage,
     StudioPage,
 } from '@/pages';
+import { useProfile } from '@/hooks';
 
 export default function Router() {
     const { notifications, dismissNotification } = useNotifications();
@@ -26,6 +27,14 @@ export default function Router() {
             closeButton: true,
         },
     });
+
+    // Obtener perfil del usuario
+    const { profile, isLoading } = useProfile();
+    if (isLoading && profile === null) {
+        return <div>Cargando...</div>;
+    }
+
+    // console.log(profile);
 
     return (
         <BrowserRouter>
@@ -40,27 +49,31 @@ export default function Router() {
                     <Route index element={<StudioPage />} />
                 </Route>
 
-                <Route path="/auth" element={<AuthLayout />}>
-                    <Route index element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                    <Route
-                        path="confirm-account"
-                        element={<ConfirmAccountPage />}
-                    />
-                    <Route path="request-code" element={<RequestCodePage />} />
-                    <Route
-                        path="forgot-password"
-                        element={<ForgotPasswordPage />}
-                    />
-                    <Route path="new-password" element={<NewPasswordPage />} />
-                </Route>
+                {!profile && (
+                    <Route path="/auth" element={<AuthLayout />}>
+                        <Route index element={<LoginPage />} />
+                        <Route path="register" element={<RegisterPage />} />
+                        <Route
+                            path="confirm-account"
+                            element={<ConfirmAccountPage />}
+                        />
+                        <Route
+                            path="request-code"
+                            element={<RequestCodePage />}
+                        />
+                        <Route
+                            path="forgot-password"
+                            element={<ForgotPasswordPage />}
+                        />
+                        <Route
+                            path="new-password"
+                            element={<NewPasswordPage />}
+                        />
+                    </Route>
+                )}
 
-                {/* <Route element={<InstrumentLayout />}>
-                    <Route path="/" index element={<InstrumentPage />} />
-                </Route> */}
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
 }
-
-// https://github.com/ArmandoEnrique1010K/Guitar-App-3/blob/v1.2/guitar-app-client-react/src/routes/router.tsx

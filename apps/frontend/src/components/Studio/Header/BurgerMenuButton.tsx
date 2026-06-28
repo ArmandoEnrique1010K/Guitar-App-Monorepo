@@ -2,13 +2,13 @@ import { logout } from '@/api';
 import { usePreferences, useProfile } from '@/hooks';
 import { Menu } from '@ark-ui/react/menu';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CreditsModal } from '../Credits/CreditsModal';
+import { ProfileModal } from '../Profile/ProfileModal';
 
 export const BurgerMenuButton = () => {
-    const { profile } = useProfile();
+    const { profile, setShowProfile } = useProfile();
     const { setShowCredits } = usePreferences();
-    const navigate = useNavigate();
 
     return (
         <>
@@ -38,7 +38,7 @@ export const BurgerMenuButton = () => {
                                 <Menu.Item
                                     value="Mi-perfil"
                                     className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
-                                    onClick={() => {}}
+                                    onClick={() => setShowProfile(true)}
                                 >
                                     Mi perfil
                                 </Menu.Item>
@@ -47,7 +47,9 @@ export const BurgerMenuButton = () => {
                                     className="px-3 py-2 text-sm hover:bg-[#0000ff] hover:text-white cursor-pointer outline-none"
                                     onClick={() => {
                                         logout();
-                                        navigate('/auth');
+                                        window.location.reload();
+
+                                        // navigate('/auth');
                                     }}
                                 >
                                     Cerrar sesion
@@ -73,6 +75,7 @@ export const BurgerMenuButton = () => {
                 </Menu.Positioner>
             </Menu.Root>
             <CreditsModal />
+            <ProfileModal />
         </>
     );
 };

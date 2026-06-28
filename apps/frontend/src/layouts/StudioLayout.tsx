@@ -142,6 +142,11 @@ export const StudioLayout = () => {
     //         players?.dispose();
     //     };
     // }, [noteSamples, players, setPlayers]);
+    // const { getProfile, profile } = useProfile();
+
+    // useEffect(() => {
+    //     getProfile();
+    // }, [profile]);
 
     return (
         <>

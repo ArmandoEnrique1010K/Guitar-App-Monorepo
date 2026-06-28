@@ -26,6 +26,7 @@ export * from './Studio/Fretboard/OpenStringLabel';
 
 export * from './Studio/Header/BurgerMenuButton';
 
+export * from './Studio/Settings/TextContainer';
 export * from './Studio/Settings/Preferences/AllowDifferentStringOverlapButton';
 export * from './Studio/Settings/Preferences/AllowSameStringOverlapButton';
 export * from './Studio/Settings/Preferences/AutoMuteButton';
@@ -66,3 +67,5 @@ export * as Reverb from './Studio/Settings/Effects/Fields/Reverb';
 export * as Tremolo from './Studio/Settings/Effects/Fields/Tremolo';
 export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
 export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
+
+export * from './Modal';

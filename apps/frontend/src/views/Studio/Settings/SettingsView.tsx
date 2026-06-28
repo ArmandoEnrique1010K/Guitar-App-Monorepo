@@ -2,6 +2,7 @@ import { useBottomBar } from '@/hooks';
 import { ControlBarView } from '../ControlBar/ControlBarView';
 import { PreferencesView } from './Preferences/PreferencesView';
 import { EffectsView } from './Effects/EffectsView';
+import { WorkspaceView } from './Workspace/WorkspaceView';
 
 export const SettingsView = () => {
     const { selectedPanel } = useBottomBar();
@@ -14,6 +15,7 @@ export const SettingsView = () => {
             <div className="h-46 overflow-y-auto">
                 {selectedPanel === 'preferences' && <PreferencesView />}
                 {selectedPanel === 'effects' && <EffectsView />}
+                {selectedPanel === 'workspaces' && <WorkspaceView />}
             </div>
         </div>
     );

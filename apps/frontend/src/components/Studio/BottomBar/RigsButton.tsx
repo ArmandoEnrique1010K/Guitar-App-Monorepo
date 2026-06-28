@@ -8,9 +8,9 @@ export const RigsButton = () => {
     return (
         <>
             <LatchButton
-                title="Panel de pedales guardados por el usuario"
-                onClick={() => setSelectedPanel('rigs')}
-                selected={selectedPanel === 'rigs'}
+                title="Panel de espacios de trabajo guardados por el usuario"
+                onClick={() => setSelectedPanel('workspaces')}
+                selected={selectedPanel === 'workspaces'}
                 icon={<StackIcon className={'size-8'} />}
             />
         </>

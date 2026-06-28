@@ -13,9 +13,18 @@ export type AssistantSliceType = {
     setQuestion: (question: string) => void;
 };
 
+const randomGreetings = [
+    'Hazme una pregunta. Cada consulta se procesa de forma independiente.',
+    '¿Qué deseas consultar? Ten en cuenta que no conservo el contexto entre preguntas.',
+    'Estoy listo para responder una consulta. Si haces otra pregunta, incluye nuevamente toda la información necesaria.',
+    '¿Qué deseas preguntar? Cada consulta es independiente.',
+    'Puedo ayudarte con una consulta. Si realizas otra pregunta, recuerda incluir nuevamente el contexto.',
+];
+
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
     isPanelOpen: false,
-    response: '¿En qué puedo ayudarte?',
+    response:
+        randomGreetings[Math.floor(Math.random() * randomGreetings.length)],
     isGenerating: false,
     request: '',
     question: '',

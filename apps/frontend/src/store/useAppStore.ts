@@ -8,6 +8,7 @@ import {
     fretboardSlice,
     preferencesSlice,
     settingsSlice,
+    profileSlice,
     type AssistantSliceType,
     type BottomBarSliceType,
     type ControlBarSliceType,
@@ -15,6 +16,7 @@ import {
     type FretboardSliceType,
     type PreferencesSliceType,
     type SettingsSliceType,
+    type ProfileSliceType,
 } from './slices';
 
 export const useAppStore = create<
@@ -24,7 +26,8 @@ export const useAppStore = create<
         SettingsSliceType &
         ControlBarSliceType &
         BottomBarSliceType &
-        EffectsSliceType
+        EffectsSliceType &
+        ProfileSliceType
 >()(
     devtools((...a) => ({
         ...assistantSlice(...a),
@@ -34,5 +37,6 @@ export const useAppStore = create<
         ...controlBarSlice(...a),
         ...bottomBarSlice(...a),
         ...effectsSlice(...a),
+        ...profileSlice(...a),
     })),
 );
