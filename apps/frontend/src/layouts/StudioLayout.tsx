@@ -152,7 +152,6 @@ export const StudioLayout = () => {
         <>
             <div className="flex flex-col h-screen">
                 <HeaderView />
-                {/* TODO: DEBE GUARDAR LA SESION ACTUAL DEL USUARIO EN ZUSTAND */}
                 <div className="w-full flex-1 min-h-0">
                     <Outlet />
                 </div>

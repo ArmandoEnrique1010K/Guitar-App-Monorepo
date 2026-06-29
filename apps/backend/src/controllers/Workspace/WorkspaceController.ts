@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import Preset from "models/Workspace/Preset";
 import Workspace from "models/Workspace/Workspace";
 
 export class WorkSpaceController {
@@ -26,6 +27,7 @@ export class WorkSpaceController {
             res.json({
                 _id: workspace._id,
                 name: workspace.name,
+                presetCount: 0,
             });
         } catch (error) {
             console.log(error);
@@ -69,9 +71,37 @@ export class WorkSpaceController {
 
     static updateWorkspace = async (req: Request, res: Response) => {
         try {
-            req.workspace!.name = req.body.name;
+            // Si no ha editado el nombre
+            const newName = req.body.name.trim();
+
+            if (req.workspace?.name === newName) {
+                return res.status(400).json({ error: "El nombre es el mismo" });
+            }
+
+            // Debe verificar que el nombre no coincida con un nombre del resto de workspace pertenecientes al usuario
+            const existingWorkspace = await Workspace.findOne({
+                user: req.user?._id,
+                name: newName,
+                _id: { $ne: req.workspace?._id },
+            });
+
+            if (existingWorkspace) {
+                return res.status(409).json({ error: "El nombre ya existe" });
+            }
+
+            // const presetCount = await Preset.countDocuments({
+            //     workspace: req.workspace!._id,
+            // });
+
+            req.workspace!.name = newName;
             await req.workspace!.save();
-            res.send("Espacio de trabajo actualizado");
+
+            // res.send("Espacio de trabajo actualizado");
+            res.json({
+                _id: req.workspace!._id,
+                name: req.workspace!.name,
+                // presetCount: presetCount,
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
@@ -81,7 +111,10 @@ export class WorkSpaceController {
     static deleteWorkspace = async (req: Request, res: Response) => {
         try {
             await req.workspace!.deleteOne();
-            res.send("Espacio de trabajo eliminado");
+
+            // No hay respuesta al eliminar
+            // res.send("Espacio de trabajo eliminado");
+            res.send();
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

@@ -14,6 +14,16 @@ export const useSettings = () => {
     const setCurrentSelectedWorkspaceId = useAppStore(
         (state) => state.setCurrentSelectedWorkspaceId,
     );
+    const editWorkspaceModal = useAppStore((state) => state.editWorkspaceModal);
+    const editWorkspace = useAppStore((state) => state.editWorkspace);
+    const editingWorkspace = useAppStore((state) => state.editingWorkspace);
+    const openEditWorkspaceModal = useAppStore(
+        (state) => state.openEditWorkspaceModal,
+    );
+    const closeEditWorkspaceModal = useAppStore(
+        (state) => state.closeEditWorkspaceModal,
+    );
+    const deleteOneWorkspace = useAppStore((state) => state.deleteOneWorkspace);
 
     return {
         addWorkspaceModal,
@@ -23,5 +33,11 @@ export const useSettings = () => {
         addWorkspace,
         currentSelectedWorkspaceId,
         setCurrentSelectedWorkspaceId,
+        editWorkspaceModal,
+        editWorkspace,
+        editingWorkspace,
+        openEditWorkspaceModal,
+        closeEditWorkspaceModal,
+        deleteOneWorkspace,
     };
 };

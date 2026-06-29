@@ -17,3 +17,4 @@ export * from './VolumeOffIcon';
 export * from './WaveformIcon';
 export * from './ZeroCircleFillIcon';
 export * from './PlusIcon';
+export * from './DotsVerticalIcon';

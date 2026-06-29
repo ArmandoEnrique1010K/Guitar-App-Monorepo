@@ -69,5 +69,8 @@ export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
 export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
 
 export * from './Studio/Settings/Workspace/WorkspaceModal';
+export * from './Studio/Settings/Workspace/WorkspaceEditModal';
 
 export * from './Modal';
+export * from './Studio/Settings/Workspace/WorkspaceBurgerMenuButton';
+export * from './Studio/Settings/Workspace/PresetsCounterText';

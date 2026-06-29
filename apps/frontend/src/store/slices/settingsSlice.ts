@@ -1,7 +1,9 @@
 import type { StateCreator } from 'zustand';
 import {
     createWorkspace,
+    deleteWorkspace,
     getAllWorkspaces,
+    updateWorkspace,
     type Workspace,
 } from '../../api/WorkspaceAPI';
 
@@ -16,6 +18,16 @@ export type SettingsSliceType = {
     addWorkspace: (name: string) => void;
     currentSelectedWorkspaceId: string;
     setCurrentSelectedWorkspaceId: (id: string) => void;
+
+    //
+    editWorkspaceModal: boolean;
+    editWorkspace: (id: string, name: string) => void;
+    editingWorkspace: Omit<Workspace, 'presetCount'> | null;
+    openEditWorkspaceModal: (workspace: Omit<Workspace, 'presetCount'>) => void;
+    closeEditWorkspaceModal: () => void;
+    // setEditWorkspaceModal: (show: boolean) => void;
+
+    deleteOneWorkspace: (id: string) => void;
 };
 
 export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
@@ -53,5 +65,44 @@ export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
         set({
             currentSelectedWorkspaceId: id,
         });
+    },
+
+    editWorkspaceModal: false,
+    editWorkspace: async (id: string, name: string) => {
+        const workspace = await updateWorkspace(id, {
+            name,
+        });
+
+        set((state) => ({
+            workspaces: state.workspaces.map((w) =>
+                w._id === id
+                    ? // NOTA: No se debe alterar el presetCount (conteo de configuraciones)
+                      { ...w, name: workspace.name, presetCount: w.presetCount }
+                    : w,
+            ),
+        }));
+    },
+    editingWorkspace: null,
+
+    //     setEditWorkspaceModal: (show) => {
+    //     set({ editWorkspaceModal: show });
+    // },
+    openEditWorkspaceModal: (workspace) =>
+        set({
+            editWorkspaceModal: true,
+            editingWorkspace: workspace,
+        }),
+
+    closeEditWorkspaceModal: () =>
+        set({
+            editWorkspaceModal: false,
+            editingWorkspace: null,
+        }),
+
+    deleteOneWorkspace: async (id: string) => {
+        await deleteWorkspace(id);
+        set((state) => ({
+            workspaces: state.workspaces.filter((w) => w._id !== id),
+        }));
     },
 });
