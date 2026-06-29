@@ -27,7 +27,8 @@ export const useAppStore = create<
         ControlBarSliceType &
         BottomBarSliceType &
         EffectsSliceType &
-        ProfileSliceType
+        ProfileSliceType &
+        SettingsSliceType
 >()(
     devtools((...a) => ({
         ...assistantSlice(...a),
@@ -38,5 +39,6 @@ export const useAppStore = create<
         ...bottomBarSlice(...a),
         ...effectsSlice(...a),
         ...profileSlice(...a),
+        ...settingsSlice(...a),
     })),
 );

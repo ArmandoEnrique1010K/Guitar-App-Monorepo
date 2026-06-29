@@ -68,4 +68,6 @@ export * as Tremolo from './Studio/Settings/Effects/Fields/Tremolo';
 export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
 export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
 
+export * from './Studio/Settings/Workspace/WorkspaceModal';
+
 export * from './Modal';

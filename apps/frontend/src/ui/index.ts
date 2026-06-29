@@ -7,3 +7,4 @@ export * from './LatchButton';
 export * from './FullWidthSlider';
 export * from './OptionButton';
 export * from './SwitchButton';
+export * from './InputText';

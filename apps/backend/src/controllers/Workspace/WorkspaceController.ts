@@ -8,7 +8,7 @@ export class WorkSpaceController {
 
             const workspaceExists = await Workspace.findOne({ name });
             if (workspaceExists) {
-                const error = new Error("El cuaderno ya esta registrado");
+                const error = new Error("Ese nombre ya esta registrado");
                 return res.status(409).json({ error: error.message });
             }
             const userId = req.user?._id;
@@ -21,7 +21,12 @@ export class WorkSpaceController {
 
             await workspace.save();
 
-            res.send("Se creo un nuevo espacio de trabajo");
+            // res.send("Se creo un nuevo espacio de trabajo");
+
+            res.json({
+                _id: workspace._id,
+                name: workspace.name,
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

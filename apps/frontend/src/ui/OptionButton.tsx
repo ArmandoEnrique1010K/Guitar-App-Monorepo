@@ -38,7 +38,12 @@ export const OptionButton = ({ value, options, onChange, title }: Props) => {
             <select
                 id={`select-${title}`}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => {
+                    onChange(e.target.value);
+                    // Evita que el select mantenga el foco después de seleccionar
+                    // Al pulsar una tecla ya no va a seleccionar otra opción
+                    e.target.blur();
+                }}
                 className="
                     absolute
                     inset-0

@@ -12,7 +12,9 @@ export const SettingsView = () => {
             <ControlBarView />
 
             {/* La altura debe ser estatica, no debe cambiar */}
-            <div className="h-46 overflow-y-auto">
+
+            {/* overflow-y-auto */}
+            <div className="h-46 overflow-hidden">
                 {selectedPanel === 'preferences' && <PreferencesView />}
                 {selectedPanel === 'effects' && <EffectsView />}
                 {selectedPanel === 'workspaces' && <WorkspaceView />}

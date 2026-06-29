@@ -175,3 +175,8 @@ export type OptionProperty<T extends string> = {
     defaultValue: T;
     values: T[];
 };
+
+// WORKSPACE
+export type WorkspaceForm = {
+    name: string;
+};
