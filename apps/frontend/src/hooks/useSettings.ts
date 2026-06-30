@@ -8,12 +8,20 @@ export const useSettings = () => {
     const workspaces = useAppStore((state) => state.workspaces);
     const loadWorkspaces = useAppStore((state) => state.loadWorkspaces);
     const addWorkspace = useAppStore((state) => state.addWorkspace);
-    const currentSelectedWorkspaceId = useAppStore(
-        (state) => state.currentSelectedWorkspaceId,
+    // const currentSelectedWorkspaceId = useAppStore(
+    //     (state) => state.currentSelectedWorkspaceId,
+    // );
+    // const setCurrentSelectedWorkspaceId = useAppStore(
+    //     (state) => state.setCurrentSelectedWorkspaceId,
+    // );
+
+    const currentSelectedWorkspace = useAppStore(
+        (state) => state.currentSelectedWorkspace,
     );
-    const setCurrentSelectedWorkspaceId = useAppStore(
-        (state) => state.setCurrentSelectedWorkspaceId,
+    const setCurrentSelectedWorkspace = useAppStore(
+        (state) => state.setCurrentSelectedWorkspace,
     );
+
     const editWorkspaceModal = useAppStore((state) => state.editWorkspaceModal);
     const editWorkspace = useAppStore((state) => state.editWorkspace);
     const editingWorkspace = useAppStore((state) => state.editingWorkspace);
@@ -25,19 +33,27 @@ export const useSettings = () => {
     );
     const deleteOneWorkspace = useAppStore((state) => state.deleteOneWorkspace);
 
+    const workspaceView = useAppStore((state) => state.workspaceView);
+    const setWorkspaceView = useAppStore((state) => state.setWorkspaceView);
+
     return {
         addWorkspaceModal,
         setAddWorkspaceModal,
         workspaces,
         loadWorkspaces,
         addWorkspace,
-        currentSelectedWorkspaceId,
-        setCurrentSelectedWorkspaceId,
+        // currentSelectedWorkspaceId,
+        // setCurrentSelectedWorkspaceId,
+        currentSelectedWorkspace,
+        setCurrentSelectedWorkspace,
+
         editWorkspaceModal,
         editWorkspace,
         editingWorkspace,
         openEditWorkspaceModal,
         closeEditWorkspaceModal,
         deleteOneWorkspace,
+        workspaceView,
+        setWorkspaceView,
     };
 };

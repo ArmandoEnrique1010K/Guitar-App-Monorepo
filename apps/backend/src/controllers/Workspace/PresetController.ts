@@ -76,7 +76,25 @@ export class PresetController {
 
             await preset.save();
 
-            res.send("Se guardo la configuración actual");
+            // res.send("Se guardo la configuración actual");
+            res.json({
+                name: preset.name,
+                volume: preset.guitarBehavior.volume,
+                guitar: guitarId,
+                holdToPlay: preset.guitarBehavior.holdToPlay,
+                allowSameStringOverlap:
+                    preset.guitarBehavior.allowSameStringOverlap,
+                allowDifferentStringOverlap:
+                    preset.guitarBehavior.allowDifferentStringOverlap,
+                loopMode: preset.playbackSettings.loopMode,
+                loopIntervalMs: preset.playbackSettings.loopIntervalMs,
+                autoMute: preset.playbackSettings.autoMute,
+                autoMuteDelayMs: preset.playbackSettings.autoMuteDelayMs,
+                rootChord: preset.visualMapping.rootChord,
+                lockOpenString: preset.visualMapping.lockOpenString,
+                stringOrder: preset.visualMapping.stringOrder,
+                effects: preset.effects,
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
@@ -93,7 +111,27 @@ export class PresetController {
                 workspace: workspaceId,
             }).select("-workspace -__v");
 
-            res.json(presets);
+            const transformedPresets = presets.map((preset) => ({
+                _id: preset._id,
+                name: preset.name,
+                guitar: preset.guitar._id,
+                volume: preset.guitarBehavior.volume,
+                holdToPlay: preset.guitarBehavior.holdToPlay,
+                allowSameStringOverlap:
+                    preset.guitarBehavior.allowSameStringOverlap,
+                allowDifferentStringOverlap:
+                    preset.guitarBehavior.allowDifferentStringOverlap,
+                loopMode: preset.playbackSettings.loopMode,
+                loopIntervalMs: preset.playbackSettings.loopIntervalMs,
+                autoMute: preset.playbackSettings.autoMute,
+                autoMuteDelayMs: preset.playbackSettings.autoMuteDelayMs,
+                rootChord: preset.visualMapping.rootChord,
+                lockOpenString: preset.visualMapping.lockOpenString,
+                stringOrder: preset.visualMapping.stringOrder,
+                effects: preset.effects,
+            }));
+
+            res.json(transformedPresets);
         } catch (error) {
             console.log(error);
         }

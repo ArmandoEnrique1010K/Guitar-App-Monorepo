@@ -16,6 +16,7 @@ import {
 } from '@/handlers';
 import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
+import type { Preset } from '@/api/PresetAPI';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -42,6 +43,8 @@ export type EffectsSliceType = {
     addEffect: (effectName: keyof Effects) => void;
 
     setCurrentEffectSelected: (effectName: keyof Effects | null) => void;
+    resetEffectsChain: () => void;
+    loadEffectsFromPreset: (presetEffects: Preset['effects']) => void;
 };
 
 export const effectsSlice: StateCreator<
@@ -208,19 +211,32 @@ export const effectsSlice: StateCreator<
     createEffectInstance: (effectName) => {
         const state = get();
 
-        if (state.effectsChain[effectName]) {
-            return;
+        // if (state.effectsChain[effectName]) {
+        //     return;
+        // }
+
+        // const instance = state.effectHandlers[effectName].create();
+
+        // set((state) => ({
+        //     effectsChain: {
+        //         ...state.effectsChain,
+
+        //         [effectName]: instance,
+        //     },
+        // }));
+
+        let instance = state.effectsChain[effectName];
+
+        if (!instance) {
+            instance = state.effectHandlers[effectName].create();
+
+            set((state) => ({
+                effectsChain: {
+                    ...state.effectsChain,
+                    [effectName]: instance,
+                },
+            }));
         }
-
-        const instance = state.effectHandlers[effectName].create();
-
-        set((state) => ({
-            effectsChain: {
-                ...state.effectsChain,
-
-                [effectName]: instance,
-            },
-        }));
 
         state.effectHandlers[effectName].configure(
             instance as never,
@@ -363,5 +379,70 @@ export const effectsSlice: StateCreator<
     },
     setCurrentEffectSelected: (effectName) => {
         set({ currentEffectSelected: effectName });
+    },
+
+    resetEffectsChain() {
+        for (const effect of Object.values(get().effectsChain)) {
+            effect?.dispose();
+        }
+
+        set({
+            effectsChain: {
+                distortion: null,
+                reverb: null,
+                tremolo: null,
+                vibrato: null,
+                chorus: null,
+                freeverb: null,
+            },
+        });
+    },
+
+    loadEffectsFromPreset(presetEffects) {
+        const state = get();
+
+        // 1. Liberar todas las instancias actuales
+        Object.values(state.effectsChain).forEach((effect) => {
+            effect?.dispose();
+        });
+
+        // 2. Reiniciar effectsChain
+        const emptyEffectsChain = Object.keys(state.effectsChain).reduce(
+            (acc, key) => {
+                acc[key /* as keyof Effects*/] = null;
+                return acc;
+            },
+            {} as typeof state.effectsChain,
+        );
+
+        // 3. Construir el nuevo estado
+        const effectsOrder = [...presetEffects]
+            .sort((a, b) => a.order - b.order)
+            .map((effect) => effect.type) as (keyof Effects)[];
+
+        const updatedEffects = { ...state.effects };
+
+        for (const effect of presetEffects) {
+            updatedEffects[effect.type] = {
+                enabled: effect.enabled,
+                ...effect.params,
+            };
+        }
+
+        // 4. Actualizar Zustand
+        set({
+            effectsChain: emptyEffectsChain,
+            effects: updatedEffects,
+            effectsOrder,
+            currentEffectSelected: effectsOrder[0] ?? null,
+        });
+
+        // 5. Crear todas las instancias
+        for (const effectName of effectsOrder) {
+            get().createEffectInstance(effectName);
+        }
+
+        // 6. Reconstruir el grafo de audio
+        get().rebuildAudioGraph();
     },
 });

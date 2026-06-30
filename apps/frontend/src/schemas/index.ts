@@ -180,3 +180,28 @@ export type OptionProperty<T extends string> = {
 export type WorkspaceForm = {
     name: string;
 };
+
+// PRESETS
+export type PresetForm = {
+    name: string;
+    volume: number;
+    holdToPlay: boolean;
+    allowSameStringOverlap: boolean;
+    allowDifferentStringOverlap: boolean;
+    loopMode: boolean;
+    loopIntervalMs: number;
+    autoMute: boolean;
+    autoMuteDelayMs: number;
+    rootChord: number;
+    lockOpenString: boolean;
+    stringOrder: number[];
+    effects: EffectsPreset[];
+};
+
+// TODO: REVISAR EL TIPADO
+export type EffectsPreset = {
+    type: string; // ENUM CON LOS NOMBRES DE EFECTOS
+    order: number;
+    enabled: boolean;
+    params: Record<string, unknown>; // PARAMS ES UN OBJETO CON LOS PARAMETROS ESPECIFICOS DEL EFECTO
+};

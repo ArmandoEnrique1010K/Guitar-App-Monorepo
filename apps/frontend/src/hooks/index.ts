@@ -7,3 +7,4 @@ export * from './usePreferences';
 export * from './useProfile';
 export * from './useTone';
 export * from './useSettings';
+export * from './usePresets';

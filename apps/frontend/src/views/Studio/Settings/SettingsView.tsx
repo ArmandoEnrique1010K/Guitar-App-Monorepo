@@ -2,7 +2,7 @@ import { useBottomBar } from '@/hooks';
 import { ControlBarView } from '../ControlBar/ControlBarView';
 import { PreferencesView } from './Preferences/PreferencesView';
 import { EffectsView } from './Effects/EffectsView';
-import { WorkspaceView } from './Workspace/WorkspaceView';
+import { PrincipalWorkspaceView } from './Workspace/PrincipalWorkspaceView';
 
 export const SettingsView = () => {
     const { selectedPanel } = useBottomBar();
@@ -17,7 +17,7 @@ export const SettingsView = () => {
             <div className="h-46 overflow-hidden">
                 {selectedPanel === 'preferences' && <PreferencesView />}
                 {selectedPanel === 'effects' && <EffectsView />}
-                {selectedPanel === 'workspaces' && <WorkspaceView />}
+                {selectedPanel === 'workspaces' && <PrincipalWorkspaceView />}
             </div>
         </div>
     );

@@ -13,7 +13,7 @@ export const WorkspaceBurgerMenuButton = ({
     workspaceName,
 }: Props) => {
     const {
-        currentSelectedWorkspaceId,
+        currentSelectedWorkspace,
         openEditWorkspaceModal,
         deleteOneWorkspace,
     } = useSettings();
@@ -28,7 +28,7 @@ export const WorkspaceBurgerMenuButton = ({
                             
                         size-6
                         
-                        ${workspaceId === currentSelectedWorkspaceId ? 'text-black hover:text-slate-600' : 'text-green-500 hover:text-green-300'}
+                        ${workspaceId === currentSelectedWorkspace._id ? 'text-black hover:text-slate-600' : 'text-green-500 hover:text-green-300'}
                             `}
                     />
                 </Menu.Trigger>

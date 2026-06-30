@@ -16,8 +16,14 @@ export type SettingsSliceType = {
     workspaces: Workspace[];
     loadWorkspaces: () => Promise<void>;
     addWorkspace: (name: string) => void;
-    currentSelectedWorkspaceId: string;
-    setCurrentSelectedWorkspaceId: (id: string) => void;
+
+    currentSelectedWorkspace: Omit<Workspace, 'presetCount'> | null;
+    setCurrentSelectedWorkspace: (
+        workspace: Omit<Workspace, 'presetCount'>,
+    ) => void;
+
+    // currentSelectedWorkspaceId: string;
+    // setCurrentSelectedWorkspaceId: (id: string) => void;
 
     //
     editWorkspaceModal: boolean;
@@ -28,6 +34,13 @@ export type SettingsSliceType = {
     // setEditWorkspaceModal: (show: boolean) => void;
 
     deleteOneWorkspace: (id: string) => void;
+
+    //
+
+    workspaceView: 'workspaces' | 'presets';
+    setWorkspaceView: (view: 'workspaces' | 'presets') => void;
+
+    loadPresetsByWorkspace: (workspaceId: string) => void;
 };
 
 export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
@@ -43,7 +56,6 @@ export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
     loadWorkspaces: async () => {
         try {
             const data = await getAllWorkspaces();
-            console.log(data);
             set({ workspaces: data });
         } catch (error) {
             console.error(error);
@@ -60,12 +72,24 @@ export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
         }));
     },
 
-    currentSelectedWorkspaceId: '',
-    setCurrentSelectedWorkspaceId: (id) => {
+    // Nota: no puede ser null
+    currentSelectedWorkspace: {
+        _id: '',
+        name: '',
+    },
+
+    setCurrentSelectedWorkspace: (workspace) => {
         set({
-            currentSelectedWorkspaceId: id,
+            currentSelectedWorkspace: workspace,
         });
     },
+
+    // currentSelectedWorkspaceId: '',
+    // setCurrentSelectedWorkspaceId: (id) => {
+    //     set({
+    //         currentSelectedWorkspaceId: id,
+    //     });
+    // },
 
     editWorkspaceModal: false,
     editWorkspace: async (id: string, name: string) => {
@@ -104,5 +128,17 @@ export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
         set((state) => ({
             workspaces: state.workspaces.filter((w) => w._id !== id),
         }));
+    },
+
+    workspaceView: 'workspaces',
+    setWorkspaceView: (view) => {
+        set({
+            workspaceView: view,
+        });
+    },
+
+    loadPresetsByWorkspace: async () => {
+        // const presets = await getPresetsByWorkspace();
+        // console.log(presets);
     },
 });
