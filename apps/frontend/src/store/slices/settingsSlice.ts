@@ -6,6 +6,7 @@ import {
     updateWorkspace,
     type Workspace,
 } from '../../api/WorkspaceAPI';
+import type { PresetsSliceType } from './presetsSlice';
 
 export type SettingsSliceType = {
     message: string;
@@ -43,7 +44,12 @@ export type SettingsSliceType = {
     loadPresetsByWorkspace: (workspaceId: string) => void;
 };
 
-export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
+export const settingsSlice: StateCreator<
+    SettingsSliceType & PresetsSliceType,
+    [],
+    [],
+    SettingsSliceType
+> = (set, get) => ({
     message: '',
     playSoundOnPulseKeyboard: true,
     addWorkspaceModal: false,
@@ -79,6 +85,8 @@ export const settingsSlice: StateCreator<SettingsSliceType> = (set) => ({
     },
 
     setCurrentSelectedWorkspace: (workspace) => {
+        // Obtener todas las configuraciones asociadasa a ese workspace
+
         set({
             currentSelectedWorkspace: workspace,
         });

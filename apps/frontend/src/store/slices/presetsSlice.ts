@@ -62,6 +62,17 @@ export const presetsSlice: StateCreator<
                 get().currentSelectedWorkspace._id,
             );
             set({ presets: data });
+
+            // Obtiene todos los IDs de guitarra
+            const guitarIds = get().presets.map((preset) => preset.guitar);
+            const differentGuitarIds = [...new Set(guitarIds)];
+            // Debe llamar a initializePlayers por cada ID de guitarra que encuentre en el workspace
+
+            // console.log({ differentGuitarIds });
+
+            for (const guitarId of differentGuitarIds) {
+                get().initializePlayers(guitarId, get().noteSamples);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -142,7 +153,7 @@ export const presetsSlice: StateCreator<
 
     applyPresetSelected: (presetId) => {
         // LIMPIAR TODO
-        get().stopAllNotes();
+        // get().stopAllNotes();
 
         // Debe tomar la configuración desde el estado
         const selectedPreset = get().presets.find((p) => p._id === presetId);

@@ -28,9 +28,12 @@ export type FretboardSliceType = {
     keyboardMode: boolean;
     setKeyboardMode: (keyboardMode: boolean) => void;
 
-    players: Tone.Players | null;
-    setPlayers: (players: Tone.Players | null) => void;
+    // players: Tone.Players | null;
+    // TODO: IMPLEMENTAR UN ESTADO DE CARGA
+    players: Record<string, Tone.Players>;
+    setPlayers: (idGuitar: string, players: Tone.Players) => void;
     initializePlayers: (
+        guitarId: string,
         noteSamples: { _id: string; noteIndex: number; audioUrl: string }[],
     ) => Promise<void>;
 
@@ -82,12 +85,25 @@ export const fretboardSlice: StateCreator<
     setKeyboardMode: (keyboardMode: boolean) => {
         set({ keyboardMode });
     },
-    players: null,
-    setPlayers: (players: Tone.Players | null) => {
-        set({ players });
+
+    players: {},
+
+    setPlayers: (idGuitar: string, players: Tone.Players) => {
+        set({ players: { [idGuitar]: players } });
     },
 
-    initializePlayers: async (noteSamples) => {
+    initializePlayers: async (guitarId, noteSamples) => {
+        const state = get();
+
+        // Ya está cargada
+        if (state.players[guitarId]) {
+            return;
+        }
+
+        // const urls = Object.fromEntries(
+        //     noteSamples.map((sample) => [sample.noteIndex, sample.audioUrl]),
+        // );
+
         const urls = Object.fromEntries(
             noteSamples.map((sample) => [sample.noteIndex, sample.audioUrl]),
         );
@@ -96,19 +112,32 @@ export const fretboardSlice: StateCreator<
         // PULSA F12 -> MORE TOOLS -> PERFORMANCE MONITOR -> JS HEAP SIZE
 
         const players = new Tone.Players(urls);
-        const volumeNode = new Tone.Volume(0);
+        // const volumeNode = new Tone.Volume(0);
+        let volumeNode = state.volumeNode;
 
-        await Tone.loaded();
+        if (!volumeNode) {
+            volumeNode = new Tone.Volume(0);
+            volumeNode.toDestination();
+        }
 
         players.connect(volumeNode);
 
-        volumeNode.toDestination();
-
         await Tone.loaded();
 
+        // volumeNode.toDestination();
+
+        // await Tone.loaded();
+
         set({
-            players: players,
+            // players: players,
+            // players: {
+            //     [get().selectedGuitar!._id]: players,
+            // },
             volumeNode,
+            players: {
+                ...state.players,
+                [guitarId]: players,
+            },
         });
 
         // console.log('SE CARGO LOS PLAYERS')
@@ -119,9 +148,12 @@ export const fretboardSlice: StateCreator<
         // OBTIENE LOS EFECTOS DE SONIDO DEL SLICE DE EFFECTS
         // const effects = get().effects;
         // const effectsChain = get().effectsChain;
-        const player = get().players?.player(noteIndex.toString());
+        // const player = get().players?.player(noteIndex.toString());
 
-        if (!player) return;
+        const players = get().players[get().selectedGuitar!._id];
+
+        // if (!player) return;
+        if (!players) return;
 
         // EFECTOS DE SONIDO QUE SE VAN A CONECTAR
         // const activeEffects = get().rebuildEffectsChain();
@@ -129,9 +161,12 @@ export const fretboardSlice: StateCreator<
         // connectPlayerToEffects(player, activeEffects);
 
         // Duracion del archivo mp3
-        const duration = player.buffer?.duration ?? 0;
+        // const duration = player.buffer?.duration ?? 0;
+        // if (!player.loaded) return;
+        const player = players.player(noteIndex.toString());
 
-        if (!player.loaded) return;
+        const duration = player?.buffer?.duration ?? 0;
+        if (!player?.loaded) return;
 
         const key = `${stringIndex}-${noteIndex}`;
 
@@ -169,9 +204,11 @@ export const fretboardSlice: StateCreator<
         // Si el modo bucle esta activo, se reproduce la nota continuamente
         if (loopMode) {
             intervalId = window.setInterval(() => {
-                const currentPlayer = get().players?.player(
-                    noteIndex.toString(),
-                );
+                // const currentPlayer = get().players?.player(
+                //     noteIndex.toString(),
+                // );
+
+                const currentPlayer = player;
 
                 if (!currentPlayer?.loaded) return;
 
@@ -211,14 +248,18 @@ export const fretboardSlice: StateCreator<
         });
 
         get().stopNotesByConditions();
-        player.start();
+        // player.start();
+
+        player?.start();
+
         set({
             activeNotes: {
                 ...get().activeNotes,
                 [key]: {
                     stringIndex,
                     noteIndex,
-                    player,
+                    // player,
+                    player: player,
                     timeoutId,
                     intervalId,
                     isLooping: loopMode,
@@ -410,17 +451,21 @@ export const fretboardSlice: StateCreator<
         // conectar cadena
 
         if (activeEffects.length === 0) {
-            state.players?.disconnect();
-            state.players?.connect(volumeNode);
+            // state.players?.disconnect();
+            // state.players?.connect(volumeNode);
+
+            state.players[get().selectedGuitar!._id]?.disconnect();
+            state.players[get().selectedGuitar!._id]?.connect(volumeNode);
 
             volumeNode.toDestination();
 
             return;
         }
 
-        state.players?.disconnect();
-
-        state.players?.connect(activeEffects[0]);
+        // state.players?.disconnect();
+        // state.players?.connect(activeEffects[0]);
+        state.players[get().selectedGuitar!._id]?.disconnect();
+        state.players[get().selectedGuitar!._id]?.connect(activeEffects[0]);
 
         for (let i = 0; i < activeEffects.length - 1; i++) {
             activeEffects[i].connect(activeEffects[i + 1]);
