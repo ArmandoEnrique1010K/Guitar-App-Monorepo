@@ -20,6 +20,17 @@ export const usePresets = () => {
     const applyPresetSelected = useAppStore(
         (state) => state.applyPresetSelected,
     );
+    const editPresetModal = useAppStore((state) => state.editPresetModal);
+    const openEditPresetModal = useAppStore(
+        (state) => state.openEditPresetModal,
+    );
+    const closeEditPresetModal = useAppStore(
+        (state) => state.closeEditPresetModal,
+    );
+    const editingPreset = useAppStore((state) => state.editingPreset);
+    const editPreset = useAppStore((state) => state.editPreset);
+    const deleteOnePreset = useAppStore((state) => state.deleteOnePreset);
+    const clearPresets = useAppStore((state) => state.clearPresets);
 
     return {
         presets,
@@ -31,5 +42,12 @@ export const usePresets = () => {
         currentPresetSelected,
         setCurrentSelectedPreset,
         applyPresetSelected,
+        editPresetModal,
+        openEditPresetModal,
+        closeEditPresetModal,
+        editingPreset,
+        editPreset,
+        deleteOnePreset,
+        clearPresets,
     };
 };

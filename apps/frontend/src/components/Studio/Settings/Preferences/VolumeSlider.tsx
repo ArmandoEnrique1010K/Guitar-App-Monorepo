@@ -8,7 +8,10 @@ export const VolumeSlider = () => {
         <HorizontalSlider
             label="Volumen"
             value={volume}
-            onChange={setVolume}
+            onChange={(value) => {
+                // console.log(value);
+                setVolume(value);
+            }}
             unit="%"
             step={1}
         />

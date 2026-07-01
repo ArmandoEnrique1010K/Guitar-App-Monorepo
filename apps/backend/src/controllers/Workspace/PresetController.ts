@@ -188,7 +188,27 @@ export class PresetController {
             req.preset!.effects = effects;
 
             await req.preset!.save();
-            res.send("Configuración actualizada");
+            // res.send("Configuración actualizada");
+
+            // Devolver toda la respuesta:
+            res.json({
+                name: req.preset!.name,
+                volume: req.preset!.guitarBehavior.volume,
+                guitar: req.preset!.guitar,
+                holdToPlay: req.preset!.guitarBehavior.holdToPlay,
+                allowSameStringOverlap:
+                    req.preset!.guitarBehavior.allowSameStringOverlap,
+                allowDifferentStringOverlap:
+                    req.preset!.guitarBehavior.allowDifferentStringOverlap,
+                loopMode: req.preset!.playbackSettings.loopMode,
+                loopIntervalMs: req.preset!.playbackSettings.loopIntervalMs,
+                autoMute: req.preset!.playbackSettings.autoMute,
+                autoMuteDelayMs: req.preset!.playbackSettings.autoMuteDelayMs,
+                rootChord: req.preset!.visualMapping.rootChord,
+                lockOpenString: req.preset!.visualMapping.lockOpenString,
+                stringOrder: req.preset!.visualMapping.stringOrder,
+                effects: req.preset!.effects,
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
@@ -198,7 +218,8 @@ export class PresetController {
     static deletePreset = async (req: Request, res: Response) => {
         try {
             await req.preset!.deleteOne();
-            res.send("Configuración eliminada");
+            // res.send("Configuración eliminada");
+            res.send();
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

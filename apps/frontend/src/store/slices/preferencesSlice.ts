@@ -143,13 +143,14 @@ export const preferencesSlice: StateCreator<
     setVolume: (volume: number) => {
         const volumeNode = get().volumeNode;
 
+        // console.trace('setVolume', volume);
+
         if (volumeNode) {
             volumeNode.volume.value = Tone.gainToDb(volume / 100);
         }
 
         set({ volume });
     },
-
     loadGuitars: async () => {
         try {
             const data = await getAllGuitars();

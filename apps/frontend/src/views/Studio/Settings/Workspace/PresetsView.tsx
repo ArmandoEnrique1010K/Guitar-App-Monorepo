@@ -1,5 +1,6 @@
 import {
     EffectControlsContainer,
+    PresetBurgerMenuButton,
     PresetModal,
     TextContainer,
 } from '@/components';
@@ -8,13 +9,18 @@ import { PlusIcon, PreviousArrowIcon } from '@/icons';
 import { Button } from '@/ui';
 
 export const PresetsView = () => {
-    const { currentSelectedWorkspace, setWorkspaceView } = useSettings();
+    const {
+        currentSelectedWorkspace,
+        setWorkspaceView,
+        setCurrentSelectedWorkspace,
+    } = useSettings();
     const {
         openCreatePresetModal,
         presets,
         currentPresetSelected,
         setCurrentSelectedPreset,
         applyPresetSelected,
+        clearPresets,
     } = usePresets();
 
     return (
@@ -26,6 +32,13 @@ export const PresetsView = () => {
                     icon={<PreviousArrowIcon className="size-4" />}
                     onClick={() => {
                         setWorkspaceView('workspaces');
+
+                        //
+                        setCurrentSelectedWorkspace({
+                            _id: '',
+                            name: '',
+                        });
+                        clearPresets();
                     }}
                 ></Button>
                 <TextContainer>{currentSelectedWorkspace.name}</TextContainer>
@@ -75,7 +88,11 @@ export const PresetsView = () => {
                                         workspaceId={workspace._id}
                                         workspaceName={workspace.name}
                                     /> */}
-                                    Menu
+                                    {/* BurgerMenu para las configuraciones */}
+                                    <PresetBurgerMenuButton
+                                        presetId={preset._id}
+                                        presetName={preset.name}
+                                    />
                                 </div>
                             </div>
                         </div>

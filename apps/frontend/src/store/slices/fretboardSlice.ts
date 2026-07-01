@@ -119,7 +119,6 @@ export const fretboardSlice: StateCreator<
         // OBTIENE LOS EFECTOS DE SONIDO DEL SLICE DE EFFECTS
         // const effects = get().effects;
         // const effectsChain = get().effectsChain;
-
         const player = get().players?.player(noteIndex.toString());
 
         if (!player) return;
@@ -233,6 +232,9 @@ export const fretboardSlice: StateCreator<
                 get().stopNote(stringIndex, noteIndex);
             }, get().autoMuteDelayMs);
         }
+
+        // Aqui se obtiene el valor de volumeNode
+        // console.log('Desde playnote', get().volumeNode.volume.value);
     },
 
     stopNote: (stringIndex, noteIndex) => {
@@ -387,7 +389,7 @@ export const fretboardSlice: StateCreator<
 
     rebuildAudioGraph: () => {
         const state = get();
-
+        // get().stopAllNotes();
         const volumeNode = state.volumeNode;
 
         if (!volumeNode) return;

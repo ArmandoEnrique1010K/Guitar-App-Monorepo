@@ -33,3 +33,33 @@ export const getAllPresets = async (workspaceId: string) => {
         throw error;
     }
 };
+
+export const updatePreset = async (
+    presetId: string,
+    guitarId: string,
+    formData: PresetForm,
+) => {
+    try {
+        const url = `/preset/${presetId}/guitar/${guitarId}`;
+        const { data } = await api.put<Preset>(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
+};
+
+export const deletePreset = async (presetId: string) => {
+    try {
+        const url = `/preset/${presetId}`;
+        const { data } = await api.delete(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw error;
+        }
+        throw error;
+    }
+};

@@ -1,4 +1,10 @@
-import { createPreset, getAllPresets, type Preset } from '@/api/PresetAPI';
+import {
+    createPreset,
+    deletePreset,
+    getAllPresets,
+    updatePreset,
+    type Preset,
+} from '@/api/PresetAPI';
 import type { StateCreator } from 'zustand';
 import type { SettingsSliceType } from './settingsSlice';
 import type { PreferencesSliceType } from './preferencesSlice';
@@ -6,7 +12,7 @@ import type { ControlBarSliceType } from './controlBarSlice';
 import type { EffectsSliceType } from './effectsSlice';
 import { buildEffectsPayload } from '@/utils/buildEffectsPayload';
 import type { BottomBarSliceType } from './bottomBarSlice';
-import type { Effects } from '@/schemas';
+import type { FretboardSliceType } from './fretboardSlice';
 
 export type PresetsSliceType = {
     presets: Preset[];
@@ -26,6 +32,15 @@ export type PresetsSliceType = {
     }) => void;
 
     applyPresetSelected: (presetId: string) => void;
+
+    editPresetModal: boolean;
+    editingPreset: { _id: string; name: string } | null;
+    openEditPresetModal: ({ _id, name }: { _id: string; name: string }) => void;
+    closeEditPresetModal: () => void;
+
+    editPreset: (id: string, name: string) => void;
+    deleteOnePreset: (id: string) => void;
+    clearPresets: () => void;
 };
 
 export const presetsSlice: StateCreator<
@@ -34,7 +49,8 @@ export const presetsSlice: StateCreator<
         PreferencesSliceType &
         ControlBarSliceType &
         EffectsSliceType &
-        BottomBarSliceType,
+        BottomBarSliceType &
+        FretboardSliceType,
     [],
     [],
     PresetsSliceType
@@ -125,6 +141,9 @@ export const presetsSlice: StateCreator<
     },
 
     applyPresetSelected: (presetId) => {
+        // LIMPIAR TODO
+        get().stopAllNotes();
+
         // Debe tomar la configuración desde el estado
         const selectedPreset = get().presets.find((p) => p._id === presetId);
         if (!selectedPreset) return;
@@ -148,45 +167,102 @@ export const presetsSlice: StateCreator<
             lockOpenString: selectedPreset.lockOpenString,
             stringOrder: selectedPreset.stringOrder,
         });
+
         // APLICAR EL PROCEDIMIENTO INVERSO
         get().loadEffectsFromPreset(selectedPreset.effects);
 
-        // LLAMAR A UN METODO PARA DESTRUIR TODOS LOS EFECTOS DE SONIDO ANTERIORES
-        // get().resetEffectsChain();
+        // Imprime los efectos de sonido que se agregaron
+        // console.log('EFFECT CHAIN: ', get().effectsChain);
 
-        // // Ordenar efectos
-        // const presetEffects = [...selectedPreset.effects].sort(
-        //     (a, b) => a.order - b.order,
-        // );
+        // NO OLVIDAR ESTO PARA CONTROLAR EL VOLUMEN
+        // console.log(selectedPreset.volume);
+        // console.log(get().volume);
+        // get().setVolume(get().volume);
+        get().setVolume(selectedPreset.volume);
+    },
 
-        // const effectsOrder = presetEffects.map(
-        //     (effect) => effect.type,
-        // ) as (keyof Effects)[];
+    editPresetModal: false,
+    editingPreset: null,
+    openEditPresetModal: ({ _id, name }) => {
+        set({
+            editPresetModal: true,
+            editingPreset: { _id, name },
+        });
+    },
+    closeEditPresetModal: () => {
+        set({ editPresetModal: false, editingPreset: null });
+    },
 
-        // // Construir el nuevo estado de effects
-        // const updatedEffects = { ...get().effects };
+    editPreset: async (id, name) => {
+        const preset = await updatePreset(id, get().selectedGuitar._id, {
+            name: name,
+            volume: get().volume,
+            holdToPlay: get().holdToPlay,
+            allowSameStringOverlap: get().allowSameStringOverlap,
+            allowDifferentStringOverlap: get().allowDifferentStringOverlap,
+            loopMode: get().loopMode,
+            loopIntervalMs: get().loopIntervalMs,
+            autoMute: get().autoMute,
+            autoMuteDelayMs: get().autoMuteDelayMs,
+            rootChord: get().rootChord,
+            lockOpenString: get().lockOpenString,
+            stringOrder: get().stringOrder,
 
-        // for (const effect of presetEffects) {
-        //     updatedEffects[effect.type] = {
-        //         enabled: effect.enabled,
-        //         ...effect.params,
-        //     };
-        // }
+            // Aqui va el procedimiento de efectos de sonido
+            effects: buildEffectsPayload(get().effects, get().effectsOrder),
+        });
 
-        // // Actualizar Zustand una sola vez
-        // set({
-        //     effects: updatedEffects,
-        //     effectsOrder,
-        //     currentEffectSelected: effectsOrder[0],
-        // });
+        // ACTUALIZAR EL ESTADO DE PRESET CON LA RESPUESTA DEVUELTA POR LA API
+        set((state) => ({
+            presets: state.presets.map((p) =>
+                p._id === id
+                    ? {
+                          ...p,
+                          name: preset.name,
+                          volume: preset.volume,
+                          holdToPlay: preset.holdToPlay,
+                          allowSameStringOverlap: preset.allowSameStringOverlap,
+                          allowDifferentStringOverlap:
+                              preset.allowDifferentStringOverlap,
+                          loopMode: preset.loopMode,
+                          loopIntervalMs: preset.loopIntervalMs,
+                          autoMute: preset.autoMute,
+                          autoMuteDelayMs: preset.autoMuteDelayMs,
+                          rootChord: preset.rootChord,
+                          lockOpenString: preset.lockOpenString,
+                          stringOrder: preset.stringOrder,
 
-        // // Crear/configurar las instancias
-        // for (const effect of presetEffects) {
-        //     get().createEffectInstance(effect.type as keyof Effects);
-        // }
+                          // TODO: CONFIGURAR LOS EFECTOS DE SONIDO
+                          effects: preset.effects,
 
-        // // ESTE METODO NO HACE NADA
-        // // Reconectar la cadena
-        // // get().rebuildEffectsChain();
+                          // Aqui va el procedimiento de efectos de sonido
+                          //   effects: buildEffectsPayload(
+                          //       preset.effects,
+                          //       preset.effectsOrder,
+                          //   ),
+                      }
+                    : p,
+            ),
+        }));
+    },
+
+    deleteOnePreset: async (id) => {
+        await deletePreset(id);
+        set((state) => ({
+            presets: state.presets.filter((p) => p._id !== id),
+            workspaces: state.workspaces.map((w) => ({
+                ...w,
+                presetCount:
+                    w._id === get().currentSelectedWorkspace._id
+                        ? (w.presetCount = w.presetCount - 1)
+                        : w.presetCount,
+            })),
+        }));
+    },
+
+    clearPresets() {
+        set({
+            presets: [],
+        });
     },
 });

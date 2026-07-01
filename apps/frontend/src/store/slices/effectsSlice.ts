@@ -1,4 +1,14 @@
-import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
+import type {
+    ChorusConfig,
+    DistortionConfig,
+    EffectHandlers,
+    Effects,
+    EffectsChain,
+    FreeverbConfig,
+    ReverbConfig,
+    TremoloConfig,
+    VibratoConfig,
+} from '@/schemas';
 import type { StateCreator } from 'zustand';
 import { DISTORTION_SCHEMA } from '@/constants/effects/distortion.constants';
 import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
@@ -17,6 +27,7 @@ import {
 import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
 import type { Preset } from '@/api/PresetAPI';
+import * as Tone from 'tone';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -209,26 +220,10 @@ export const effectsSlice: StateCreator<
 
     // TODO: CONTINUAR EN LA CREACION DE CAMPOS PARA CADA EFECTO DE SONIDO
     createEffectInstance: (effectName) => {
-        const state = get();
-
-        // if (state.effectsChain[effectName]) {
-        //     return;
-        // }
-
-        // const instance = state.effectHandlers[effectName].create();
-
-        // set((state) => ({
-        //     effectsChain: {
-        //         ...state.effectsChain,
-
-        //         [effectName]: instance,
-        //     },
-        // }));
-
-        let instance = state.effectsChain[effectName];
+        let instance = get().effectsChain[effectName];
 
         if (!instance) {
-            instance = state.effectHandlers[effectName].create();
+            instance = get().effectHandlers[effectName].create();
 
             set((state) => ({
                 effectsChain: {
@@ -238,9 +233,9 @@ export const effectsSlice: StateCreator<
             }));
         }
 
-        state.effectHandlers[effectName].configure(
+        get().effectHandlers[effectName].configure(
             instance as never,
-            state.effects[effectName] as never,
+            get().effects[effectName] as never,
         );
     },
 
