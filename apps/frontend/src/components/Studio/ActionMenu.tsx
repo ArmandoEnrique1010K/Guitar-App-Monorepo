@@ -8,10 +8,11 @@ type Props = {
         onClick?: () => void;
         to?: string;
     }[];
+    width?: string;
 };
 
 // Componente reutilizable para mostrar las opciones del menú
-export const ActionMenu = ({ icon, options }: Props) => {
+export const ActionMenu = ({ icon, options, width = 'min-w-28' }: Props) => {
     return (
         <Menu.Root>
             <Menu.Trigger className="flex items-center justify-center cursor-pointer">
@@ -20,8 +21,8 @@ export const ActionMenu = ({ icon, options }: Props) => {
 
             <Menu.Positioner>
                 <Menu.Content
-                    className="min-w-28 z-30 border border-gray-200 bg-white shadow-xl outline-none 
-                                focus:outline-none focus-visible:outline-none flex flex-col"
+                    className={`${width} z-30 border border-gray-200 bg-white shadow-xl outline-none 
+                                focus:outline-none focus-visible:outline-none flex flex-col`}
                 >
                     {options.map((option) =>
                         !option.to ? (
