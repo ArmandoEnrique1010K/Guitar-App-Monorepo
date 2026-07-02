@@ -32,7 +32,11 @@ export const HorizontalButtonGroup = ({
                                      ? 'bg-green-500 text-black'
                                      : 'bg-black text-green-500'
                              }`}
-                        onClick={() => handleChange(option)}
+                        onClick={(e) => {
+                            handleChange(option);
+                            e.currentTarget.blur();
+                        }}
+                        tabIndex={-1}
                     >
                         {option}
                     </button>

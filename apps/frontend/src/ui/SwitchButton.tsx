@@ -45,7 +45,12 @@ export const SwitchButton = ({ text, value, onClick, title, icon }: Props) => {
             // El color de texto sirve para aplicarle color de fondo al icono
             // porque el icono usa currentColor
 
-            onClick={onClick}
+            onClick={(e) => {
+                onClick();
+                // Desactiva el focus del botón cuando se pulsa la tecla espacio
+                e.currentTarget.blur();
+            }}
+            tabIndex={-1}
             title={title}
         >
             <div

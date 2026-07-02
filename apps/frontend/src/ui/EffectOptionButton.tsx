@@ -52,6 +52,7 @@ export const EffectOptionButton = ({
                     // Al pulsar una tecla ya no va a seleccionar otra opción
                     e.target.blur();
                 }}
+                tabIndex={-1}
                 className="
                     absolute
                     inset-0

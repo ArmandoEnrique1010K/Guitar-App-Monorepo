@@ -61,7 +61,12 @@ export const LatchButton = ({
         `,
                 )}
                 // SOLUCION TEMPORAL, USAR EL COLOR SLATE EN LUGAR DE GRAY PARA LOS BORDES (CASI NO HAY DIFERENCIA VISUAL)
-                onClick={onClick}
+                onClick={(e) => {
+                    onClick();
+
+                    e.currentTarget.blur();
+                }}
+                tabIndex={-1}
                 title={title}
             >
                 {icon} {text}

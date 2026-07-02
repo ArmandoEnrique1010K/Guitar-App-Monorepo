@@ -44,6 +44,7 @@ export const OptionButton = ({ value, options, onChange, title }: Props) => {
                     // Al pulsar una tecla ya no va a seleccionar otra opción
                     e.target.blur();
                 }}
+                tabIndex={-1}
                 className="
                     absolute
                     inset-0

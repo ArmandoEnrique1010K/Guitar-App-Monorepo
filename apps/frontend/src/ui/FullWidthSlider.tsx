@@ -27,7 +27,11 @@ export const FullWidthSlider = ({
                 min={min}
                 max={max}
                 value={value}
-                onChange={handleChange}
+                tabIndex={-1}
+                onChange={(e) => {
+                    handleChange(e);
+                    e.currentTarget.blur();
+                }}
                 className="
                     long-slider
                     w-full

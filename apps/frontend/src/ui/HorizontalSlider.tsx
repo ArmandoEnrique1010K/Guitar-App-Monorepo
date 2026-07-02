@@ -49,7 +49,11 @@ export const HorizontalSlider = ({
                 max={max}
                 step={step}
                 value={value}
-                onChange={handleChange}
+                tabIndex={-1}
+                onChange={(e) => {
+                    handleChange(e);
+                    e.currentTarget.blur();
+                }}
                 disabled={disabled}
                 className={`
                     studio-slider

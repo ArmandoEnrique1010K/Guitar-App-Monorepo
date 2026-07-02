@@ -36,14 +36,15 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
                 profile: data,
             });
         } catch (error) {
-            handleFormikApiError({
-                // TODO: SOLUCION TEMPORAL, DEJAR LAS FUNCIONES EN BLANCO
-                error,
-                setErrors: () => {},
-                setStatus: () => {},
-                notify: () => {},
-            });
+            // handleFormikApiError({
+            //     // TODO: SOLUCION TEMPORAL, DEJAR LAS FUNCIONES EN BLANCO
+            //     error,
+            //     setErrors: () => {},
+            //     setStatus: () => {},
+            //     notify: () => {},
+            // });
 
+            // console.error(error);
             set({
                 error: 'Error obteniendo perfil',
             });

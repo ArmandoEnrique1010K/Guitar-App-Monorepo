@@ -167,6 +167,11 @@ export const FretCell = ({
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
+            onClick={(e) => {
+                // Desactiva el focus del botón cuando se pulsa la tecla espacio
+                e.currentTarget.blur();
+            }}
+            tabIndex={-1}
         >
             {/* CASO ESPECIAL SI SE TRATA DE LA TECLA 'Dead' */}
             {showKeyboardKeys ? (keyToShow === 'Dead' ? '`' : keyToShow) : ''}

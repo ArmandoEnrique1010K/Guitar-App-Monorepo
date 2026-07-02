@@ -1,20 +1,24 @@
 import { useFretboard, usePreferences } from '@/hooks';
 import { PauseIcon } from '@/icons';
 import { Button } from '@/ui';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Botón para silenciar todas las notas reproducidas
 export const PauseButton = () => {
     const { stopAllNotes } = usePreferences();
     const { keyboardMode } = useFretboard();
 
+    const [isKeyPressed, setIsKeyPressed] = useState(false);
+
     useEffect(() => {
+        window.addEventListener('keyup', handleKeyUp);
         window.addEventListener('keydown', handleKeyDown);
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
         };
-    }, []);
+    }, [keyboardMode]);
 
     const handleKeyDown = (event: KeyboardEvent) => {
         // Evita que se reproduzca el sonido varias veces cuando se mantiene presionada la tecla
@@ -27,8 +31,15 @@ export const PauseButton = () => {
                 event.preventDefault();
             }
 
+            setIsKeyPressed(true);
             // TODO: ES IMPOSIBLE NO EJECUTAR ESTA FUNCIÓN CUANDO KEYBOARDMODE SEA FALSE
             stopAllNotes();
+        }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+        if (event.code === 'Space') {
+            setIsKeyPressed(false);
         }
     };
 
@@ -37,6 +48,7 @@ export const PauseButton = () => {
             text="Silenciar todo"
             onClick={() => stopAllNotes()}
             title="Silencia todas las notas reproducidas"
+            isKeyPressed={isKeyPressed}
             icon={<PauseIcon className="size-6" />}
         />
     );

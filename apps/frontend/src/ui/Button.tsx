@@ -1,11 +1,10 @@
-import { useMediaQuery } from 'react-responsive';
-
 type Props = {
     text: string;
     onClick: () => void;
     title?: string;
     icon: React.ReactNode;
     disabled?: boolean;
+    isKeyPressed?: boolean;
 };
 
 export const Button = ({
@@ -14,11 +13,8 @@ export const Button = ({
     title,
     icon,
     disabled = false,
+    isKeyPressed = false,
 }: Props) => {
-    // TODO: EL TAMAÑO PODRIA CAMBIAR EN EL FUTURO
-
-    const isMobile = useMediaQuery({ maxWidth: 639.999 });
-
     return (
         <button
             className={`
@@ -45,26 +41,35 @@ export const Button = ({
                     `
                 }
 
+                
+                ${
+                    isKeyPressed &&
+                    `from-gray-400 to-gray-500
+                    
+                    border-t-gray-800 border-l-gray-800 border-r-slate-200 border-b-slate-200
+                    text-slate-800  
+                    `
+                }
+                
+
 
                 text-slate-600 
                 active:drop-shadow(0 0 4px #4ade80)
             `}
+            // TODO: REPORTAR UN BUG CUANDO USO border-r-gray-200 Y border-b-gray-200 PARA APLICAR ESITLOS CUANDO SE PULSA EL BOTON
+            // CON UNA TECLA, NO APLICA EL ESTILO, ES POR ELLO QUE LO HE SUSTITUIDO CON border-r-slate-200 Y border-b-slate-200
+
             // El color de texto sirve para aplicarle color de fondo al icono
             // porque el icono usa currentColor
 
-            onClick={onClick}
+            onClick={(e) => {
+                onClick();
+                e.currentTarget.blur();
+            }}
+            tabIndex={-1}
             title={title}
             disabled={disabled}
         >
-            {/* {isMobile ? (
-                icon
-            ) : (
-                <>
-                    <span className="text-xs w-18 h-12 flex items-center">
-                        {text}
-                    </span>
-                </>
-            )} */}
             {icon}
         </button>
     );

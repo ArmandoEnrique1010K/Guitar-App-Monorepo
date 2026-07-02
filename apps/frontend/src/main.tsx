@@ -18,15 +18,14 @@ const config = defineConfig({
 });
 const system = createSystem(defaultConfig, config);
 
+// Chakra UI Provider ha cambiado con respecto a la version 2 de Chakra UI, en su lugar opte por Ark UI, contiene los componentes y sus estilos aplicados de Chakra UI
+
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        {/* Chakra UI Provider ha cambiado con respecto a la version 2 de Chakra UI, en su lugar opte por Ark UI, contiene los componentes y sus estilos aplicados de Chakra UI */}
-        <ChakraProvider value={system}>
-            <NotificationsProvider>
-                <ThemeRadixUI>
-                    <App />
-                </ThemeRadixUI>
-            </NotificationsProvider>
-        </ChakraProvider>
-    </StrictMode>,
+    <ChakraProvider value={system}>
+        <NotificationsProvider>
+            <ThemeRadixUI>
+                <App />
+            </ThemeRadixUI>
+        </NotificationsProvider>
+    </ChakraProvider>,
 );

@@ -77,3 +77,4 @@ export * from './Studio/Settings/Workspace/PresetsCounterText';
 export * from './Studio/Settings/Workspace/PresetModal';
 export * from './Studio/Settings/Workspace/PresetBurgerMenuButton';
 export * from './Studio/Settings/Workspace/PresetEditModal';
+export * from './Studio/ActionMenu';
