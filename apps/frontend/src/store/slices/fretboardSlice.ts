@@ -73,10 +73,12 @@ export const fretboardSlice: StateCreator<
             // TODO: CARGAR LAS NOTAS Y APLICAR LOS EFECTOS DE SONIDO
             // console.log('RECONSTRUYENDO');
 
-            console.log(
-                'Players desde loadNoteSamples: ' +
-                    JSON.stringify(get().players),
-            );
+            // console.log(
+            //     'Players desde loadNoteSamples: ' +
+            //         JSON.stringify(get().players),
+            // );
+
+            // console.log(get().players)
             // get().rebuildAudioGraph();
         } catch (error) {
             console.error(error);
@@ -113,6 +115,7 @@ export const fretboardSlice: StateCreator<
 
         // Ya está cargada
         if (state.players[guitarId]) {
+            get().rebuildAudioGraph();
             return;
         }
 
@@ -157,6 +160,7 @@ export const fretboardSlice: StateCreator<
         });
 
         // console.log('SE CARGO LOS PLAYERS')
+        get().rebuildAudioGraph();
     },
 
     // Los estados de loopMode y loopModeInterval se utilizan para reproducir continuamente una nota mientras se mantiene pulsado
@@ -451,6 +455,7 @@ export const fretboardSlice: StateCreator<
         // console.log(
         //     'Players desde rebuildAudioGraph: ' + JSON.stringify(state.players),
         // );
+
         // get().stopAllNotes();
         const volumeNode = state.volumeNode;
 
@@ -460,6 +465,12 @@ export const fretboardSlice: StateCreator<
             .filter((effectName) => state.effects[effectName].enabled)
             .map((effectName) => state.effectsChain[effectName])
             .filter(Boolean);
+
+        // console.log(
+        //     'Efectos activos:',
+        //     activeEffects.length,
+        //     activeEffects.map((e) => e.name ?? e.constructor.name),
+        // );
 
         volumeNode.disconnect();
 
@@ -475,17 +486,27 @@ export const fretboardSlice: StateCreator<
 
         // get().setPlayers(guitarId, get().players[guitarId]);
 
-        console.log({
-            guitarId,
-            player: state.players[guitarId],
-        });
+        // console.log({
+        //     guitarId,
+        //     player: state.players[guitarId],
+        // });
+
+        // Object.values(state.players).forEach((player) => {
+        //     player.disconnect();
+        // });
+
+        const currentPlayer = state.players[guitarId];
+        if (!currentPlayer) return;
 
         if (activeEffects.length === 0) {
             // state.players?.disconnect();
             // state.players?.connect(volumeNode);
 
-            state.players[guitarId]?.disconnect();
-            state.players[guitarId]?.connect(volumeNode);
+            // console.log('Current player:', currentPlayer);
+            currentPlayer.disconnect();
+
+            // console.log('Current player:', currentPlayer);
+            currentPlayer.connect(volumeNode);
 
             volumeNode.toDestination();
 
@@ -494,8 +515,8 @@ export const fretboardSlice: StateCreator<
 
         // state.players?.disconnect();
         // state.players?.connect(activeEffects[0]);
-        state.players[guitarId]?.disconnect();
-        state.players[guitarId]?.connect(activeEffects[0]);
+        currentPlayer.disconnect();
+        currentPlayer.connect(activeEffects[0]);
 
         for (let i = 0; i < activeEffects.length - 1; i++) {
             activeEffects[i].connect(activeEffects[i + 1]);

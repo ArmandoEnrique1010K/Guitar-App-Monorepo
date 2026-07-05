@@ -95,17 +95,12 @@ export const StudioLayout = () => {
     }, [loadGuitars]);
 
     useEffect(() => {
-        console.log('selectedGuitar cambió:', selectedGuitar);
-
         if (!selectedGuitar?._id) return;
-
         loadNoteSamples(selectedGuitar._id);
     }, [selectedGuitar?._id, loadNoteSamples]);
 
     useEffect(() => {
         if (!noteSamples.length) return;
-        console.log('INICIALIZANDO PLAYERS');
-
         initializePlayers(selectedGuitar._id, noteSamples);
     }, [noteSamples, selectedGuitar._id]);
 

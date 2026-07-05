@@ -1,14 +1,4 @@
-import type {
-    ChorusConfig,
-    DistortionConfig,
-    EffectHandlers,
-    Effects,
-    EffectsChain,
-    FreeverbConfig,
-    ReverbConfig,
-    TremoloConfig,
-    VibratoConfig,
-} from '@/schemas';
+import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
 import type { StateCreator } from 'zustand';
 import { DISTORTION_SCHEMA } from '@/constants/effects/distortion.constants';
 import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
