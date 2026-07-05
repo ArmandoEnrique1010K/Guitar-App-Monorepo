@@ -14,7 +14,8 @@ export const PrincipalWorkspaceView = () => {
     }, []);
 
     useEffect(() => {
-        if (currentSelectedWorkspace) {
+        if (currentSelectedWorkspace._id !== '') {
+            console.log({ currentSelectedWorkspace });
             loadPresets();
         }
     }, [currentSelectedWorkspace]);

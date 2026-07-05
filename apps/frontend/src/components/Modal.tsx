@@ -35,6 +35,9 @@ export const Modal = ({ open, onOpenChange, children, title }: Props) => {
                 <Dialog.Title>
                     <div className="text-2xl font-bold mb-4">{title}</div>
                 </Dialog.Title>
+
+                {/* Este campo se ignora porque segun la consola del navegador dice que es necesario */}
+                <Dialog.Description></Dialog.Description>
                 <div className="flex flex-col gap-6 text-sm">{children}</div>
             </Dialog.Content>
         </Dialog.Root>

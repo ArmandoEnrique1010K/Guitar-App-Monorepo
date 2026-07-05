@@ -132,7 +132,7 @@ export interface User {
 }
 
 // Obtener el perfil del usuario
-export const getUser = async () => {
+export const getUser = async (): Promise<User | null> => {
     try {
         const url = '/profile/user';
         const { data } = await api.get<User>(url);

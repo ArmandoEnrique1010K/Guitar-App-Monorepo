@@ -1,4 +1,5 @@
 import type { ChangeEvent } from 'react';
+import { Value } from './Value';
 
 type Props = {
     value: number;
@@ -44,7 +45,7 @@ export const FullWidthSlider = ({
                 }}
             />
             <div className="flex flex-row justify-center items-center gap-1">
-                <div
+                {/* <div
                     className="w-8 h-6 flex items-center justify-center text-green-500 bg-black 
                                 border-2
                                 border-t-slate-900
@@ -54,7 +55,8 @@ export const FullWidthSlider = ({
                 "
                 >
                     {value}
-                </div>
+                </div> */}
+                <Value value={value} min={min} max={max} onChange={onChange} />
             </div>
 
             {/* Estilos aplicados dinámicamente a la barra del slider y al boton para arrastrar el slider*/}

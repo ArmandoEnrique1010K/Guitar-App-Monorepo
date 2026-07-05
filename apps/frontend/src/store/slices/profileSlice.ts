@@ -1,5 +1,4 @@
 import { getUser, type User } from '@/api';
-import { handleFormikApiError } from '@/utils';
 import type { StateCreator } from 'zustand';
 
 export type ProfileSliceType = {

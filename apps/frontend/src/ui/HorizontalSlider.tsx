@@ -1,4 +1,6 @@
 import type { ChangeEvent } from 'react';
+import { Value } from './Value';
+import { formatEffectValue } from '@/utils';
 
 type Props = {
     label?: string;
@@ -10,6 +12,10 @@ type Props = {
     step?: number;
     onChange: (value: number) => void;
     formatedValue?: number;
+    factor?: number;
+    decimals?: number;
+    format?: (value: number) => number;
+    parse?: (value: number) => number;
 };
 
 export const HorizontalSlider = ({
@@ -21,7 +27,11 @@ export const HorizontalSlider = ({
     unit = '',
     step = 1,
     onChange,
-    formatedValue,
+    // formatedValue,
+    factor = 1,
+    decimals = 0,
+    format,
+    parse,
 }: Props) => {
     const percentage = ((value - min) / (max - min)) * 100;
 
@@ -34,12 +44,17 @@ export const HorizontalSlider = ({
         onChange(Number(e.target.value));
     };
 
+    // const displayValue = formatEffectValue(value, factor, decimals);
+    const displayValue = format ? format(value) : value;
+    const displayMin = format ? format(min) : min;
+    const displayMax = format ? format(max) : max;
+
     return (
         <div
             className={`${disabled ? 'opacity-50 cursor-not-allowed' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
         >
             {label && (
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center w-max">
                     {<span className="text-green-500">{label}</span>}
                 </div>
             )}
@@ -56,6 +71,7 @@ export const HorizontalSlider = ({
                 }}
                 disabled={disabled}
                 className={`
+                    flex-1
                     studio-slider
                     w-full
                     h-2
@@ -69,7 +85,7 @@ export const HorizontalSlider = ({
                 }}
             />
             <div className="flex flex-row justify-center items-center gap-1">
-                <div
+                {/* <div
                     className="w-12 h-6 flex items-center justify-center text-green-500 bg-black 
                                 border-2
                                 border-t-slate-900
@@ -79,7 +95,39 @@ export const HorizontalSlider = ({
                 "
                 >
                     {formatedValue !== undefined ? formatedValue : value}
-                </div>
+                </div> */}
+
+                <Value
+                    // value={formatedValue !== undefined ? formatedValue : value}
+                    // min={min}
+                    // max={max}
+                    value={displayValue}
+                    // min={formatEffectValue(min, factor, decimals)}
+                    // max={formatEffectValue(max, factor, decimals)}
+                    // onChange={onChange}
+                    // onChange={(displayValue) => {
+                    //     onChange(
+                    //         formatEffectValue(displayValue, factor, decimals),
+                    //     );
+                    // }}
+
+                    min={displayMin}
+                    max={displayMax}
+                    factor={factor}
+                    decimals={decimals}
+                    // onChange={(displayValue) => {
+                    //     onChange(parse ? parse(displayValue) : displayValue);
+                    // }}
+
+                    onChange={(displayValue) => {
+                        const internalValue = parse
+                            ? parse(displayValue)
+                            : displayValue;
+
+                        onChange(internalValue);
+                    }}
+                    disabled={disabled}
+                />
                 {unit && (
                     <>
                         <div className="text-green-500">{unit}</div>

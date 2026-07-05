@@ -70,6 +70,7 @@ export const BurgerMenuButton = () => {
                     "
                     />
                 }
+                width="min-w-44"
                 options={buildOptions()}
             />
             <CreditsModal />

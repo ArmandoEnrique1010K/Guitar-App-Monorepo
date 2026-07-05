@@ -8,7 +8,7 @@ export const DelayTImeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Tiempo de retraso"
+            label="Retraso"
             value={effects.chorus.delayTime}
             onChange={(value) => updateEffect('chorus', { delayTime: value })}
             unit={CHORUS_SCHEMA.delayTime.unit}
