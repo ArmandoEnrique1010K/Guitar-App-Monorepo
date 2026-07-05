@@ -152,7 +152,7 @@ export const presetsSlice: StateCreator<
     },
 
     applyPresetSelected: (presetId) => {
-        // LIMPIAR TODO
+        // TODO: CREAR UNA OPCION PARA LIMPIAR TODO CUANDO SE CAMBIA DE CONFIGURACIÓN
         // get().stopAllNotes();
 
         // Debe tomar la configuración desde el estado

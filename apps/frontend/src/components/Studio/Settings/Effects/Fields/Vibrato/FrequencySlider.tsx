@@ -1,7 +1,12 @@
 import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    VIBRATO_SCHEMA.frequency.factor,
+    VIBRATO_SCHEMA.frequency.decimals,
+);
 
 export const FrequencySlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const FrequencySlider = () => {
             min={VIBRATO_SCHEMA.frequency.min}
             max={VIBRATO_SCHEMA.frequency.max}
             step={VIBRATO_SCHEMA.frequency.step}
-            formatedValue={formatEffectValue(
-                effects.vibrato.frequency,
-                VIBRATO_SCHEMA.frequency.factor,
-                VIBRATO_SCHEMA.frequency.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={VIBRATO_SCHEMA.frequency.decimals}
         />
     );
 };

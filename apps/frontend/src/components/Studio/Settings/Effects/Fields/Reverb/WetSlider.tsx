@@ -1,7 +1,12 @@
 import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue, parseEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    REVERB_SCHEMA.wet.factor,
+    REVERB_SCHEMA.wet.decimals,
+);
 
 export const WetSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,21 +20,9 @@ export const WetSlider = () => {
             min={REVERB_SCHEMA.wet.min}
             max={REVERB_SCHEMA.wet.max}
             step={REVERB_SCHEMA.wet.step}
-            // formatedValue={formatEffectValue(
-            //     effects.reverb.wet,
-            //     REVERB_SCHEMA.wet.factor,
-            //     REVERB_SCHEMA.wet.decimals,
-            // )}
-            format={(v) =>
-                formatEffectValue(
-                    v,
-                    REVERB_SCHEMA.wet.factor,
-                    REVERB_SCHEMA.wet.decimals,
-                )
-            }
-            parse={(v) => parseEffectValue(v, REVERB_SCHEMA.wet.factor)}
+            format={format}
+            parse={parse}
             decimals={REVERB_SCHEMA.wet.decimals}
-            factor={REVERB_SCHEMA.wet.factor}
         />
     );
 };

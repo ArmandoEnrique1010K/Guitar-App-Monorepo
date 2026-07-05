@@ -39,6 +39,9 @@ export const FullWidthSlider = ({
                     appearance-none
                     cursor-pointer 
                     bg-transparent 
+                    focus:outline-none
+                    focus:ring-0
+
                 "
                 style={{
                     background: 'oklch(55.4% 0.046 257.417)',
@@ -56,7 +59,12 @@ export const FullWidthSlider = ({
                 >
                     {value}
                 </div> */}
-                <Value value={value} min={min} max={max} onChange={onChange} />
+                <Value
+                    value={value}
+                    min={min}
+                    max={max}
+                    onChange={(value) => onChange(value)}
+                />
             </div>
 
             {/* Estilos aplicados dinámicamente a la barra del slider y al boton para arrastrar el slider*/}

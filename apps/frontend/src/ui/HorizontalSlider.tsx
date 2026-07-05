@@ -1,6 +1,5 @@
 import type { ChangeEvent } from 'react';
 import { Value } from './Value';
-import { formatEffectValue } from '@/utils';
 
 type Props = {
     label?: string;
@@ -11,8 +10,6 @@ type Props = {
     unit?: string;
     step?: number;
     onChange: (value: number) => void;
-    formatedValue?: number;
-    factor?: number;
     decimals?: number;
     format?: (value: number) => number;
     parse?: (value: number) => number;
@@ -27,8 +24,6 @@ export const HorizontalSlider = ({
     unit = '',
     step = 1,
     onChange,
-    // formatedValue,
-    factor = 1,
     decimals = 0,
     format,
     parse,
@@ -77,6 +72,10 @@ export const HorizontalSlider = ({
                     h-2
                     appearance-none
                     bg-transparent 
+
+                    focus:outline-none
+                    focus:ring-0
+
                 `}
                 style={{
                     // Aplica el cursor según si está deshabilitado o no
@@ -113,7 +112,6 @@ export const HorizontalSlider = ({
 
                     min={displayMin}
                     max={displayMax}
-                    factor={factor}
                     decimals={decimals}
                     // onChange={(displayValue) => {
                     //     onChange(parse ? parse(displayValue) : displayValue);

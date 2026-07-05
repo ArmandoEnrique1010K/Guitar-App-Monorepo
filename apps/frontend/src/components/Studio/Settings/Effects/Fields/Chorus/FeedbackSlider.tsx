@@ -1,7 +1,12 @@
 import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    CHORUS_SCHEMA.feedback.factor,
+    CHORUS_SCHEMA.feedback.decimals,
+);
 
 export const FeedbackSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const FeedbackSlider = () => {
             min={CHORUS_SCHEMA.feedback.min}
             max={CHORUS_SCHEMA.feedback.max}
             step={CHORUS_SCHEMA.feedback.step}
-            formatedValue={formatEffectValue(
-                effects.chorus.feedback,
-                CHORUS_SCHEMA.feedback.factor,
-                CHORUS_SCHEMA.feedback.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={CHORUS_SCHEMA.feedback.decimals}
         />
     );
 };

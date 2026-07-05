@@ -69,6 +69,15 @@ export const fretboardSlice: StateCreator<
         try {
             const data = await getAllNoteSamples(guitarId);
             set({ noteSamples: data });
+
+            // TODO: CARGAR LAS NOTAS Y APLICAR LOS EFECTOS DE SONIDO
+            // console.log('RECONSTRUYENDO');
+
+            console.log(
+                'Players desde loadNoteSamples: ' +
+                    JSON.stringify(get().players),
+            );
+            // get().rebuildAudioGraph();
         } catch (error) {
             console.error(error);
         }
@@ -88,8 +97,15 @@ export const fretboardSlice: StateCreator<
 
     players: {},
 
-    setPlayers: (idGuitar: string, players: Tone.Players) => {
-        set({ players: { [idGuitar]: players } });
+    // setPlayers: (idGuitar: string, players: Tone.Players) => {
+    //     set({ players: { [idGuitar]: players } });
+    setPlayers: (idGuitar, players) => {
+        set((state) => ({
+            players: {
+                ...state.players,
+                [idGuitar]: players,
+            },
+        }));
     },
 
     initializePlayers: async (guitarId, noteSamples) => {
@@ -430,6 +446,11 @@ export const fretboardSlice: StateCreator<
 
     rebuildAudioGraph: () => {
         const state = get();
+
+        // TypeError: Converting circular structure to JSON --> starting at object with constructor 'AudioContext'
+        // console.log(
+        //     'Players desde rebuildAudioGraph: ' + JSON.stringify(state.players),
+        // );
         // get().stopAllNotes();
         const volumeNode = state.volumeNode;
 
@@ -450,12 +471,21 @@ export const fretboardSlice: StateCreator<
 
         // conectar cadena
 
+        const guitarId = state.selectedGuitar!._id;
+
+        // get().setPlayers(guitarId, get().players[guitarId]);
+
+        console.log({
+            guitarId,
+            player: state.players[guitarId],
+        });
+
         if (activeEffects.length === 0) {
             // state.players?.disconnect();
             // state.players?.connect(volumeNode);
 
-            state.players[get().selectedGuitar!._id]?.disconnect();
-            state.players[get().selectedGuitar!._id]?.connect(volumeNode);
+            state.players[guitarId]?.disconnect();
+            state.players[guitarId]?.connect(volumeNode);
 
             volumeNode.toDestination();
 
@@ -464,8 +494,8 @@ export const fretboardSlice: StateCreator<
 
         // state.players?.disconnect();
         // state.players?.connect(activeEffects[0]);
-        state.players[get().selectedGuitar!._id]?.disconnect();
-        state.players[get().selectedGuitar!._id]?.connect(activeEffects[0]);
+        state.players[guitarId]?.disconnect();
+        state.players[guitarId]?.connect(activeEffects[0]);
 
         for (let i = 0; i < activeEffects.length - 1; i++) {
             activeEffects[i].connect(activeEffects[i + 1]);

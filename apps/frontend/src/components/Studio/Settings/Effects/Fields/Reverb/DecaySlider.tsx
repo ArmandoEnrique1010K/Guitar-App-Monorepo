@@ -1,10 +1,33 @@
 import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue, parseEffectValue } from '@/utils';
+
+// Solamente se ejecuta la función una sola vez y no en cada render
+const { format, parse } = createEffectTransform(
+    REVERB_SCHEMA.decay.factor,
+    REVERB_SCHEMA.decay.decimals,
+);
 
 export const DecaySlider = () => {
     const { updateEffect, effects } = useEffects();
+
+    // Evita que se vuelva a crear la función cada vez que hay un nuevo
+    // renderizado
+    // const format = useCallback(
+    //     (v: number) =>
+    //         formatEffectValue(
+    //             v,
+    //             REVERB_SCHEMA.decay.factor,
+    //             REVERB_SCHEMA.decay.decimals,
+    //         ),
+    //     [],
+    // );
+
+    // const parse = useCallback(
+    //     (v: number) => parseEffectValue(v, REVERB_SCHEMA.decay.factor),
+    //     [],
+    // );
 
     return (
         <HorizontalSlider
@@ -15,21 +38,9 @@ export const DecaySlider = () => {
             min={REVERB_SCHEMA.decay.min}
             max={REVERB_SCHEMA.decay.max}
             step={REVERB_SCHEMA.decay.step}
-            // formatedValue={formatEffectValue(
-            //     effects.reverb.decay,
-            //     REVERB_SCHEMA.decay.factor,
-            //     REVERB_SCHEMA.decay.decimals,
-            // )}
-            format={(v) =>
-                formatEffectValue(
-                    v,
-                    REVERB_SCHEMA.decay.factor,
-                    REVERB_SCHEMA.decay.decimals,
-                )
-            }
-            parse={(v) => parseEffectValue(v, REVERB_SCHEMA.decay.factor)}
+            format={format}
+            parse={parse}
             decimals={REVERB_SCHEMA.decay.decimals}
-            factor={REVERB_SCHEMA.decay.factor}
         />
     );
 };

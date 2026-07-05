@@ -1,7 +1,12 @@
 import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    TREMOLO_SCHEMA.wet.factor,
+    TREMOLO_SCHEMA.wet.decimals,
+);
 
 export const WetSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const WetSlider = () => {
             min={TREMOLO_SCHEMA.wet.min}
             max={TREMOLO_SCHEMA.wet.max}
             step={TREMOLO_SCHEMA.wet.step}
-            formatedValue={formatEffectValue(
-                effects.tremolo.wet,
-                TREMOLO_SCHEMA.wet.factor,
-                TREMOLO_SCHEMA.wet.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={TREMOLO_SCHEMA.wet.decimals}
         />
     );
 };

@@ -1,14 +1,7 @@
-import {
-    useControlBar,
-    useEffects,
-    useFretboard,
-    usePreferences,
-} from '@/hooks';
-import { useAppStore } from '@/store';
+import { useControlBar, useFretboard, usePreferences } from '@/hooks';
 import { useEffect, useState } from 'react';
 
 type Props = {
-    audioUrl: string;
     noteIndex: number;
     keyToPress: string;
     keyToShow: string;
@@ -16,7 +9,6 @@ type Props = {
 };
 
 export const FretCell = ({
-    audioUrl,
     noteIndex,
     keyToPress,
     keyToShow,
@@ -28,7 +20,10 @@ export const FretCell = ({
     const { keyboardMode, playNote, stopNote, stopRepeatingNote } =
         useFretboard();
 
-    const volumeNode = useAppStore((state) => state.volumeNode);
+    // const { selectedGuitar } = usePreferences();
+    // const { effects } = useEffects();
+
+    // const volumeNode = useAppStore((state) => state.volumeNode);
 
     // Tecla presionada
     const [keyPressed, setKeyPressed] = useState(false);
@@ -131,6 +126,9 @@ export const FretCell = ({
         holdToPlay,
         loopMode,
         loopIntervalMs,
+
+        // selectedGuitar,
+        // effects,
     ]);
 
     return (

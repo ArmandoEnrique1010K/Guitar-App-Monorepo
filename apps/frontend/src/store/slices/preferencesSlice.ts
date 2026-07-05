@@ -81,6 +81,7 @@ export const preferencesSlice: StateCreator<
     autoMuteDelayMs: 100,
     showKeyboardKeys: true,
 
+    // TODO: CUANDO CAMBIE DE GUITARRA TAMBIEN DEBE CONSTRUIR LOS EFECTOS DE SONIDO NUEVAMENTE PARA QUE LOS APLIQUE
     setSelectedGuitar: (guitar: Instrument) => {
         set({ selectedGuitar: guitar });
     },

@@ -1,7 +1,12 @@
 import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    VIBRATO_SCHEMA.depth.factor,
+    VIBRATO_SCHEMA.depth.decimals,
+);
 
 export const DepthSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const DepthSlider = () => {
             min={VIBRATO_SCHEMA.depth.min}
             max={VIBRATO_SCHEMA.depth.max}
             step={VIBRATO_SCHEMA.depth.step}
-            formatedValue={formatEffectValue(
-                effects.vibrato.depth,
-                VIBRATO_SCHEMA.depth.factor,
-                VIBRATO_SCHEMA.depth.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={VIBRATO_SCHEMA.depth.decimals}
         />
     );
 };

@@ -7,7 +7,6 @@ type Props = {
     disabled?: boolean;
     onChange: (value: number) => void;
     decimals?: number;
-    factor?: number;
 };
 
 export const Value = ({
@@ -16,8 +15,7 @@ export const Value = ({
     max,
     disabled = false,
     onChange,
-    decimals,
-    factor,
+    decimals = 0,
 }: Props) => {
     const [inputValue, setInputValue] = useState(value.toString());
     // Sincroniza el estado local cuando cambia el valor desde el padre

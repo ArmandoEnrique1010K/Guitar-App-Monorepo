@@ -12,7 +12,6 @@ export const GuitarString = ({ frets, stringIndex }: Props) => {
             {frets.map((fret) => (
                 <FretCell
                     key={fret.noteIndex}
-                    audioUrl={fret.audioUrl}
                     noteIndex={fret.noteIndex}
                     keyToPress={fret.key?.code}
                     keyToShow={fret.key?.label}

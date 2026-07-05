@@ -2,3 +2,4 @@
 
 export * from './createNumberProperty';
 export * from './createOptionProperty';
+export * from './createEffectTransform';

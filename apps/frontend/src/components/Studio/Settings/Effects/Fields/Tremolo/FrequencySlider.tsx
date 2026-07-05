@@ -1,7 +1,12 @@
 import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    TREMOLO_SCHEMA.frequency.factor,
+    TREMOLO_SCHEMA.frequency.decimals,
+);
 
 export const FrequencySlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const FrequencySlider = () => {
             min={TREMOLO_SCHEMA.frequency.min}
             max={TREMOLO_SCHEMA.frequency.max}
             step={TREMOLO_SCHEMA.frequency.step}
-            formatedValue={formatEffectValue(
-                effects.tremolo.frequency,
-                TREMOLO_SCHEMA.frequency.factor,
-                TREMOLO_SCHEMA.frequency.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={TREMOLO_SCHEMA.frequency.decimals}
         />
     );
 };

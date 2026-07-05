@@ -1,7 +1,12 @@
 import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    CHORUS_SCHEMA.delayTime.factor,
+    CHORUS_SCHEMA.delayTime.decimals,
+);
 
 export const DelayTImeSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const DelayTImeSlider = () => {
             min={CHORUS_SCHEMA.delayTime.min}
             max={CHORUS_SCHEMA.delayTime.max}
             step={CHORUS_SCHEMA.delayTime.step}
-            formatedValue={formatEffectValue(
-                effects.chorus.delayTime,
-                CHORUS_SCHEMA.delayTime.factor,
-                CHORUS_SCHEMA.delayTime.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={CHORUS_SCHEMA.delayTime.decimals}
         />
     );
 };

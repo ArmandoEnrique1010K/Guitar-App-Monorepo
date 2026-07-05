@@ -1,7 +1,12 @@
 import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    FREEVERB_SCHEMA.dampening.factor,
+    FREEVERB_SCHEMA.dampening.decimals,
+);
 
 export const DampeningSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const DampeningSlider = () => {
             min={FREEVERB_SCHEMA.dampening.min}
             max={FREEVERB_SCHEMA.dampening.max}
             step={FREEVERB_SCHEMA.dampening.step}
-            formatedValue={formatEffectValue(
-                effects.freeverb.dampening,
-                FREEVERB_SCHEMA.dampening.factor,
-                FREEVERB_SCHEMA.dampening.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={FREEVERB_SCHEMA.dampening.decimals}
         />
     );
 };

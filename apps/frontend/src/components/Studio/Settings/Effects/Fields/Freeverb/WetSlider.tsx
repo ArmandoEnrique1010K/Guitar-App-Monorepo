@@ -1,7 +1,12 @@
 import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    FREEVERB_SCHEMA.wet.factor,
+    FREEVERB_SCHEMA.wet.decimals,
+);
 
 export const WetSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const WetSlider = () => {
             min={FREEVERB_SCHEMA.wet.min}
             max={FREEVERB_SCHEMA.wet.max}
             step={FREEVERB_SCHEMA.wet.step}
-            formatedValue={formatEffectValue(
-                effects.freeverb.wet,
-                FREEVERB_SCHEMA.wet.factor,
-                FREEVERB_SCHEMA.wet.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={FREEVERB_SCHEMA.wet.decimals}
         />
     );
 };

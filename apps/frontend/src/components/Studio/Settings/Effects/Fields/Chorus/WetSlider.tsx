@@ -1,7 +1,12 @@
 import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    CHORUS_SCHEMA.wet.factor,
+    CHORUS_SCHEMA.wet.decimals,
+);
 
 export const WetSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const WetSlider = () => {
             min={CHORUS_SCHEMA.wet.min}
             max={CHORUS_SCHEMA.wet.max}
             step={CHORUS_SCHEMA.wet.step}
-            formatedValue={formatEffectValue(
-                effects.chorus.wet,
-                CHORUS_SCHEMA.wet.factor,
-                CHORUS_SCHEMA.wet.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={CHORUS_SCHEMA.wet.decimals}
         />
     );
 };

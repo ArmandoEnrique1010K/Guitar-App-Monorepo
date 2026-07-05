@@ -1,7 +1,12 @@
 import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
+import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
-import { formatEffectValue } from '@/utils';
+
+const { format, parse } = createEffectTransform(
+    TREMOLO_SCHEMA.spread.factor,
+    TREMOLO_SCHEMA.spread.decimals,
+);
 
 export const SpreadSlider = () => {
     const { updateEffect, effects } = useEffects();
@@ -15,11 +20,9 @@ export const SpreadSlider = () => {
             min={TREMOLO_SCHEMA.spread.min}
             max={TREMOLO_SCHEMA.spread.max}
             step={TREMOLO_SCHEMA.spread.step}
-            formatedValue={formatEffectValue(
-                effects.tremolo.spread,
-                TREMOLO_SCHEMA.spread.factor,
-                TREMOLO_SCHEMA.spread.decimals,
-            )}
+            format={format}
+            parse={parse}
+            decimals={TREMOLO_SCHEMA.spread.decimals}
         />
     );
 };
