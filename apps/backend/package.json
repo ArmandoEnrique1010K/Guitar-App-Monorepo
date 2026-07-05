@@ -34,7 +34,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "guitar-seed": "ts-node -r tsconfig-paths/register src/seeds/Guitar/index.ts",
-    "workspace-destroy": "ts-node -r tsconfig-paths/register src/seeds/Workspace/index.ts",
+    "workspace-seed": "ts-node -r tsconfig-paths/register src/seeds/Workspace/index.ts",
     "format": "prettier --write \"src/**/*.ts\""
   }
 }

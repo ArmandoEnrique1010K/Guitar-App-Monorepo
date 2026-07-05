@@ -45,15 +45,24 @@ export interface IPreset extends Document {
 
 const GuitarBehaviorSchema = new Schema(
     {
-        volume: { type: Number, required: true },
-        holdToPlay: { type: Boolean, required: true },
+        volume: {
+            // Tipo número
+            type: Number,
+            // Requerido
+            required: true,
+            // Valor por defecto
+            default: 1,
+        },
+        holdToPlay: { type: Boolean, required: true, default: false },
         allowSameStringOverlap: {
             type: Boolean,
             required: true,
+            default: false,
         },
         allowDifferentStringOverlap: {
             type: Boolean,
             required: true,
+            default: true,
         },
     },
     { _id: false },
@@ -61,21 +70,22 @@ const GuitarBehaviorSchema = new Schema(
 
 const PlaybackSettingsSchema = new Schema(
     {
-        loopMode: { type: Boolean, required: true },
-        loopIntervalMs: { type: Number, required: true },
-        autoMute: { type: Boolean, required: true },
-        autoMuteDelayMs: { type: Number, required: true },
+        loopMode: { type: Boolean, required: true, default: false },
+        loopIntervalMs: { type: Number, required: true, default: 50 },
+        autoMute: { type: Boolean, required: true, default: false },
+        autoMuteDelayMs: { type: Number, required: true, default: 100 },
     },
     { _id: false },
 );
 
 const VisualMappingSchema = new Schema(
     {
-        rootChord: { type: Number, required: true },
-        lockOpenString: { type: Boolean, required: true },
+        rootChord: { type: Number, required: true, default: 0 },
+        lockOpenString: { type: Boolean, required: true, default: false },
         stringOrder: {
             type: [Number],
             required: true,
+            default: [0, 1, 2, 3, 4, 5],
         },
     },
     { _id: false },

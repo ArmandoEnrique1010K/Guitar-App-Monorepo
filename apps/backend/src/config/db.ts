@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 import colors from "colors";
 import { exit } from "node:process";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export const connectDB = async () => {
     try {
@@ -12,7 +9,7 @@ export const connectDB = async () => {
         );
 
         console.log(
-            colors.magenta(
+            colors.green(
                 `MongoDB Conectado: ${connection.host}:${connection.port}`,
             ),
         );

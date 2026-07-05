@@ -1,16 +1,26 @@
-import { ProfileController } from "controllers/User/ProfileController";
 import { Router } from "express";
 import { body } from "express-validator";
 import { authenticate } from "middlewares/User/auth";
 import { handleInputErrors } from "middlewares/validation";
+import { ProfileController } from "controllers/User/ProfileController";
 
 const router = Router();
 
-router.get("/user", authenticate, ProfileController.user);
+// Para utilizar el middleware en todas las rutas se puede optar por usar
+// router.use() seguido del middleware
+
+// Con ello se evita llamar al middleware en cada ruta
+router.use(authenticate);
+
+router.get(
+    "/user",
+    // Llama al middleware desde la ruta
+    //authenticate,
+    ProfileController.user,
+);
 
 router.put(
     "/",
-    authenticate,
     body("name").notEmpty().withMessage("El nombre no puede ir vacio"),
     body("email").isEmail().withMessage("Email no válido"),
     handleInputErrors,
@@ -19,7 +29,6 @@ router.put(
 
 router.post(
     "/update-password",
-    authenticate,
     body("current_password")
         .notEmpty()
         .withMessage("La contraseña actual no puede estar vacia"),
@@ -38,7 +47,6 @@ router.post(
 
 router.post(
     "/check-password",
-    authenticate,
     body("password").notEmpty().withMessage("La contraseña no puede ir vacia"),
     handleInputErrors,
     ProfileController.checkPassword,

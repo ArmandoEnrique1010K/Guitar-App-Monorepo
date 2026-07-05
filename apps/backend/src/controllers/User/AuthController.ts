@@ -41,6 +41,9 @@ export class AuthController {
             });
             console.log("DESPUES DE SEND CONFIRMATION");
             res.send("Cuenta creada, revisa tu email para confirmarla");
+
+            // TODO: CADA VEZ QUE SE CREA UN USUARIO DEBE AÑADIRSE UNA SEED RELACIONADA A CONFIGURACIONES
+            // INICIALES DE PRUEBA QUE SE GENERAN CUANDO SE AÑADE UN USUARIO
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Hubo un error" });

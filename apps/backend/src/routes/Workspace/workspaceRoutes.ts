@@ -10,7 +10,6 @@ import {
 
 const router = Router();
 
-// A todas las rutas, van a pasar primero por el middleware de authenticate
 router.use(authenticate);
 
 router.post(
@@ -22,15 +21,15 @@ router.post(
 
 router.get("/", WorkSpaceController.getAllWorkspaces);
 
-// A partir de las siguientes rutas, siempre debe verificar que el cuaderno exista
+// A partir de las siguientes rutas, siempre se tiene que verificar que el workspace
+// exista por ID, para aquello se utiliza router.param para tomar el parametro de la URL
+// seguido del nombre del middleware
 router.param("workspaceId", workspaceExists);
 
 router.put(
     "/:workspaceId",
     param("workspaceId").isMongoId().withMessage("ID no válido"),
-    body("name")
-        .notEmpty()
-        .withMessage("El nombre del cuaderno es obligatorio"),
+    body("name").notEmpty().withMessage("El nombre es obligatorio"),
     handleInputErrors,
     isAuthorOfWorkspace,
     WorkSpaceController.updateWorkspace,

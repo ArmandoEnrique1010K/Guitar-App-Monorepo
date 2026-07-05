@@ -1,57 +1,97 @@
 import type { Request, Response, NextFunction } from "express";
 import Preset from "models/Workspace/Preset";
 import Workspace from "models/Workspace/Workspace";
+import { splitNameAndNumber } from "utils/formatName";
 
+const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Genera un nuevo nombre cuando se trata de crear una nueva configuración
+// Ten en cuenta el siguiente orden cuando se trata del nombre:
+// Tu escribes -> resultado
+// "prueba" -> "prueba"
+// "prueba" -> "prueba 1"
+// "prueba 3" -> "prueba 3"
+// "prueba 3" -> "prueba 4"
+// "prueba 1" -> "prueba 2"
+// "prueba 1" -> "prueba 5" ...
 export async function generateNameForCreate(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        // Nombre tomado desde el body
+        // Nombre enviado por el cliente (desde el body).
         const rawName = req.body.name;
 
         if (!rawName) {
             return res.status(400).json({ error: "El nombre es obligatorio" });
         }
 
-        // Normalizar nombre base (clave)
-        const normalizeBaseName = (name: string) =>
-            name.trim().replace(/ \d+$/, "");
+        // Devuelve un objeto con el nombre y el sufijo numerico que aparece al final del nombre
+        const parsed = splitNameAndNumber(rawName);
 
-        const baseName = normalizeBaseName(rawName);
+        if (!parsed) {
+            return res.status(400).json({ error: "Nombre inválido" });
+        }
 
-        // Evita problema con nombrs de simbolos (regex)
-        const escapeRegex = (str: string) =>
-            str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const { baseName, number: requestedNumber } = parsed;
 
+        // Escapa caracteres especiales para construir un RegExp seguro.
         const safeName = escapeRegex(baseName);
 
-        const presetId = req.params.presetId;
+        // Obtiene los IDs de los parametros dinamicos del endpoint
+        const workspaceId = req.params.workspaceId;
 
+        // Busca todos los nombres que pertenezcan a la misma familia.
+        // Ejemplo:
+        // prueba
+        // prueba 1
+        // prueba 2
+        const nameRegex = new RegExp(`^${safeName}(?: (\\d+))?$`, "i");
+
+        // Lista todas las configuraciones existentes por espacio de trabajo y nombre
         const existingConfigs = await Preset.find({
-            preset: presetId,
-            name: { $regex: `^${safeName}( \\d+)?$`, $options: "i" },
+            workspace: workspaceId,
+            name: {
+                $regex: nameRegex,
+            },
         }).select("name");
 
-        const existingNames = existingConfigs.map((c) => c.name.toLowerCase());
-        if (!existingNames.includes(baseName.toLowerCase())) {
-            req.presetName = baseName;
+        // Guarda todos los sufijos numéricos ya utilizados.
+        // El nombre base sin número se representa como 0.
+        //
+        // Ejemplo:
+        // prueba      -> 0
+        // prueba 1    -> 1
+        // prueba 2    -> 2
+        const usedNumbers = new Set<number>();
+
+        for (const { name } of existingConfigs) {
+            const match = name.match(nameRegex);
+
+            if (!match) continue;
+
+            usedNumbers.add(match[1] ? Number(match[1]) : 0);
+        }
+
+        // Si el número solicitado aún no existe, se conserva el nombre.
+        if (!usedNumbers.has(requestedNumber)) {
+            req.presetName =
+                requestedNumber === 0
+                    ? baseName
+                    : `${baseName} ${requestedNumber}`;
+
             return next();
         }
 
-        const numbers = existingConfigs.map((config) => {
-            const match = config.name.match(/(\d+)$/);
-            return match ? parseInt(match[1], 10) : 1;
-        });
+        // Busca el siguiente número disponible.
+        // Si el usuario escribió solo el nombre base,
+        // la búsqueda comienza desde 1.
+        let nextNumber = Math.max(requestedNumber, 1);
 
-        const numbersSet = new Set(numbers);
-
-        let nextNumber = 1;
-        while (numbersSet.has(nextNumber)) {
+        while (usedNumbers.has(nextNumber)) {
             nextNumber++;
         }
-
         req.presetName = `${baseName} ${nextNumber}`;
 
         next();
@@ -72,56 +112,60 @@ export async function generateNameForUpdate(
             return res.status(400).json({ error: "El nombre es obligatorio" });
         }
 
-        const normalizeBaseName = (name: string) =>
-            name.trim().replace(/ \d+$/, "");
+        // Excluirse a sí mismo SOLO en update
+        // Excluir el registro que tenga el mismo ID que la configuración
+        if (
+            req.preset!.name.trim().toLowerCase() ===
+            rawName.trim().toLowerCase()
+        ) {
+            return next();
+        }
 
-        const baseName = normalizeBaseName(rawName);
+        const parsed = splitNameAndNumber(rawName);
+        if (!parsed) {
+            return res.status(400).json({ error: "Nombre inválido" });
+        }
 
-        const escapeRegex = (str: string) =>
-            str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const { baseName, number: requestedNumber } = parsed;
 
         const safeName = escapeRegex(baseName);
 
-        const workspaceId = req.preset!.workspace;
+        const workspaceId = req.params.workspaceId;
 
-        // Excluirse a sí mismo SOLO en update
-        // Excluir el registro que tenga el mismo ID que la configuración
-        if (req.preset!.name === rawName) {
-            req.presetName = rawName;
-            return next();
-        }
-
-        // Buscar configuraciones con nombres similares
+        const nameRegex = new RegExp(`^${safeName}(?: (\\d+))?$`, "i");
         const existingConfigs = await Preset.find({
             workspace: workspaceId,
-            _id: { $ne: req.preset!._id }, // 🔥 clave
-            name: { $regex: `^${safeName}( \\d+)?$`, $options: "i" },
+            _id: { $ne: req.preset!._id },
+            name: {
+                $regex: nameRegex,
+            },
         }).select("name");
 
-        // Construir conjunto de nombres existentes
-        const existingNames = existingConfigs.map((c) => c.name.toLowerCase());
+        // Si el número solicitado aún no existe, se conserva el nombre.
+        const usedNumbers = new Set<number>();
 
-        // Caso base disponible
-        if (!existingNames.includes(baseName.toLowerCase())) {
-            req.presetName = baseName;
+        for (const { name } of existingConfigs) {
+            const match = name.match(nameRegex);
+
+            if (!match) continue;
+
+            usedNumbers.add(match[1] ? Number(match[1]) : 0);
+        }
+
+        if (!usedNumbers.has(requestedNumber)) {
+            req.presetName =
+                requestedNumber === 0
+                    ? baseName
+                    : `${baseName} ${requestedNumber}`;
+
             return next();
         }
 
-        // Extraer números existentes
-        const numbers = existingConfigs.map((config) => {
-            const match = config.name.match(/(\d+)$/);
-            return match ? parseInt(match[1], 10) : 1;
-        });
+        let nextNumber = Math.max(requestedNumber, 1);
 
-        // Obtener el siguiente número
-        const numbersSet = new Set(numbers);
-
-        let nextNumber = 1;
-        while (numbersSet.has(nextNumber)) {
+        while (usedNumbers.has(nextNumber)) {
             nextNumber++;
         }
-
-        // Generar nombre final SIEMPRE desde baseName
         req.presetName = `${baseName} ${nextNumber}`;
 
         next();
