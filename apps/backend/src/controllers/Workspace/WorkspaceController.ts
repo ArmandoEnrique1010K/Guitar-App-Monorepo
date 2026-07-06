@@ -1,20 +1,26 @@
 import type { Request, Response } from "express";
-import Preset from "models/Workspace/Preset";
 import Workspace from "models/Workspace/Workspace";
 
 export class WorkSpaceController {
+    // Crea un espacio de trabajo
     static createWorkspace = async (req: Request, res: Response) => {
         try {
             const { name } = req.body;
+            const userId = req.user!._id;
 
-            const workspaceExists = await Workspace.findOne({ name });
+            // Verifica si el usuario ya tiene un espacio de trabajo
+            // registrado con el mismo nombre.
+            const workspaceExists = await Workspace.findOne({
+                user: userId,
+                name: name,
+            });
+
             if (workspaceExists) {
                 const error = new Error("Ese nombre ya esta registrado");
                 return res.status(409).json({ error: error.message });
             }
-            const userId = req.user?._id;
 
-            // Crear cuaderno de configuraciones
+            // Crea el nuevo espacio de trabajo asociado al usuario.
             const workspace = new Workspace({
                 name,
                 user: userId,
@@ -22,9 +28,8 @@ export class WorkSpaceController {
 
             await workspace.save();
 
-            // res.send("Se creo un nuevo espacio de trabajo");
-
-            res.json({
+            // Devuelve un objeto con los datos del espacio de trabajo
+            res.status(201).json({
                 _id: workspace._id,
                 name: workspace.name,
                 presetCount: 0,
@@ -35,11 +40,15 @@ export class WorkSpaceController {
         }
     };
 
+    // Obtiene todos los espacios de trabajo del usuario autenticado.
     static getAllWorkspaces = async (req: Request, res: Response) => {
         try {
-            const notebooks = await Workspace.aggregate([
+            const workspaces = await Workspace.aggregate([
+                // Filtra únicamente los espacios de trabajo del usuario.
                 { $match: { user: req.user?._id } },
 
+                // Obtiene todas las configuraciones (presets) asociadas
+                // a cada espacio de trabajo.
                 {
                     $lookup: {
                         from: "presets",
@@ -48,37 +57,44 @@ export class WorkSpaceController {
                         as: "presets",
                     },
                 },
-                // Nuevos campos
+
+                // Agrega un nuevo campo con la cantidad de configuraciones
+                // que contiene cada espacio de trabajo.
                 {
                     $addFields: {
                         presetCount: { $size: "$presets" },
                     },
                 },
-                // Ocultar campos
+
+                // Excluye información que no será enviada al cliente.
                 {
                     $project: {
-                        presets: 0, // opcional: no devolver array completo
+                        presets: 0,
                         user: 0,
                         __v: 0,
                     },
                 },
             ]);
-            res.json(notebooks);
+            res.status(200).json(workspaces);
         } catch (error) {
             console.log(error);
+            res.status(500).json({ error: "Hubo un error" });
         }
     };
 
+    // Actualiza el nombre de un espacio de trabajo.
     static updateWorkspace = async (req: Request, res: Response) => {
         try {
-            // Si no ha editado el nombre
+            // Obtiene el nuevo nombre enviado por el cliente.
             const newName = req.body.name.trim();
 
+            // Evita actualizar si el nombre no ha cambiado.
             if (req.workspace?.name === newName) {
                 return res.status(400).json({ error: "El nombre es el mismo" });
             }
 
-            // Debe verificar que el nombre no coincida con un nombre del resto de workspace pertenecientes al usuario
+            // Verifica que el usuario no tenga otro espacio de trabajo
+            // con el mismo nombre.
             const existingWorkspace = await Workspace.findOne({
                 user: req.user?._id,
                 name: newName,
@@ -89,18 +105,16 @@ export class WorkSpaceController {
                 return res.status(409).json({ error: "El nombre ya existe" });
             }
 
-            // const presetCount = await Preset.countDocuments({
-            //     workspace: req.workspace!._id,
-            // });
-
+            // Actualiza el nombre del espacio de trabajo.
             req.workspace!.name = newName;
+
             await req.workspace!.save();
 
-            // res.send("Espacio de trabajo actualizado");
-            res.json({
+            // En la respuesta se omite el campo 'presetCount' porque no es necesario
+            // cuando se trata de actualizar un espacio de trabajo
+            res.status(200).json({
                 _id: req.workspace!._id,
                 name: req.workspace!.name,
-                // presetCount: presetCount,
             });
         } catch (error) {
             console.log(error);
@@ -108,13 +122,14 @@ export class WorkSpaceController {
         }
     };
 
+    // Elimina un espacio de trabajo.
     static deleteWorkspace = async (req: Request, res: Response) => {
         try {
+            // Elimina el espacio de trabajo obtenido por el middleware.
             await req.workspace!.deleteOne();
 
-            // No hay respuesta al eliminar
-            // res.send("Espacio de trabajo eliminado");
-            res.send();
+            // Respuesta vacía (HTTP 204 según la configuración).
+            res.status(204).send();
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

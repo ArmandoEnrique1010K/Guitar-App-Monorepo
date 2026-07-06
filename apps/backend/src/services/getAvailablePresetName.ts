@@ -1,5 +1,6 @@
-import Preset from "models/Workspace/Preset";
-import { splitNameAndNumber } from "utils/formatName";
+import { QueryFilter } from "mongoose";
+import Preset, { IPreset } from "models/Workspace/Preset";
+import { splitNameAndNumber } from "utils/format";
 
 // A diferencia de los utils, los servicios son funciones que se encargan de realizar operaciones más complejas
 // y que pueden ser reutilizadas en diferentes partes del código.
@@ -46,8 +47,13 @@ export async function getAvailablePresetName(
     //     },
     // }).select("name");
 
-    // Pero para optimizar la consulta se realiza el siguiente filtro
-    const filter: Record<string, unknown> = {
+    // Pero para optimizar la consulta se construye el siguiente filtro de busqueda
+    // En una actualización se excluye la configuración actual para evitar
+    // que se detecte como un nombre duplicado.
+
+    // El tipo QueryFilter de mongoose sirve para definir filtros de búsqueda
+    // más específicos y tipados para un modelo.
+    const filter: QueryFilter<IPreset> = {
         workspace: workspaceId,
         name: nameRegex,
     };
@@ -90,5 +96,6 @@ export async function getAvailablePresetName(
     while (usedNumbers.has(nextNumber)) {
         nextNumber++;
     }
+
     return `${baseName} ${nextNumber}`;
 }

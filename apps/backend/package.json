@@ -31,6 +31,7 @@
   },
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node -r tsconfig-paths/register --files src/index.ts",
+    "dev:api": "nodemon --watch src --exec ts-node -r tsconfig-paths/register --files src/index.ts --api",
     "build": "tsc",
     "start": "node dist/index.js",
     "guitar-seed": "ts-node -r tsconfig-paths/register src/seeds/Guitar/index.ts",

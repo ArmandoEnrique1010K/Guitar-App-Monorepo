@@ -3,8 +3,10 @@ import Guitar from "models/Guitar/Guitar";
 import Preset from "models/Workspace/Preset";
 
 export class PresetController {
+    // Crea una nueva configuración
     static createPreset = async (req: Request, res: Response) => {
         try {
+            // Todas esas propiedades se toman desde el body
             const {
                 volume,
                 holdToPlay,
@@ -20,37 +22,21 @@ export class PresetController {
                 effects,
             } = req.body;
 
+            // Los IDs se toman de los parametros dinamicos
             const { workspaceId, guitarId } = req.params;
-            const name = req.presetName;
 
-            // Validar efectos
-            // const allowedEffects = ["distortion", "reverb", "tremolo", "eq3"];
+            // Se obtiene el nombre desde req.presetName que fue almacenado desde un
+            // middleware
+            const presetName = req.presetName;
 
-            // for (const effect of effects) {
-            //   if (!allowedEffects.includes(effect.type)) {
-            //     throw new Error("Tipo de efecto inválido");
-            //   }
-
-            //   if (typeof effect.order !== "number") {
-            //     throw new Error("Order inválido");
-            //   }
-
-            //   if (typeof effect.enabled !== "boolean") {
-            //     throw new Error("Enabled inválido");
-            //   }
-
-            //   if (typeof effect.params !== "object") {
-            //     throw new Error("Params inválido");
-            //   }
-            // }
-
-            // Crear una configuracion
+            // Crea una configuracion
             const preset = new Preset({
-                name,
-                // Debe ser el workspace y la guitarra seleccionada por URL
+                name: presetName,
                 workspace: workspaceId,
                 guitar: guitarId,
 
+                // En los 3 subdocumentos embebidos se guardan los mismos valores enviados
+                // por el usuario
                 guitarBehavior: {
                     volume,
                     holdToPlay,
@@ -76,11 +62,12 @@ export class PresetController {
 
             await preset.save();
 
-            // res.send("Se guardo la configuración actual");
-            res.json({
+            // Devuelve una respuesta con los datos de la configuración
+            res.status(201).json({
                 name: preset.name,
-                volume: preset.guitarBehavior.volume,
+                // Solamente se devuelve el ID de la guitarra
                 guitar: guitarId,
+                volume: preset.guitarBehavior.volume,
                 holdToPlay: preset.guitarBehavior.holdToPlay,
                 allowSameStringOverlap:
                     preset.guitarBehavior.allowSameStringOverlap,
@@ -93,6 +80,7 @@ export class PresetController {
                 rootChord: preset.visualMapping.rootChord,
                 lockOpenString: preset.visualMapping.lockOpenString,
                 stringOrder: preset.visualMapping.stringOrder,
+                // Devuelve un arreglo cuyos elementos son de tipo IEffect
                 effects: preset.effects,
             });
         } catch (error) {
@@ -101,16 +89,19 @@ export class PresetController {
         }
     };
 
-    // Debe obtener todas las configuraciones por id de notebook con todos los parametros
+    // Obtiene todas las configuraciones
     static getAllPresets = async (req: Request, res: Response) => {
         try {
             const { workspaceId } = req.params;
 
-            // Con select puedes quitar los campos que no son necesarios
+            // Filtra las configuraciones por ID de espacio de trabajo y omite
+            // los campo workspace y '__v'
             const presets = await Preset.find({
                 workspace: workspaceId,
             }).select("-workspace -__v");
 
+            // Transforma las configuraciones obtenidas, las inserta en un nuevo arreglo
+            // donde cada elemento es un objeto de configuración
             const transformedPresets = presets.map((preset) => ({
                 _id: preset._id,
                 name: preset.name,
@@ -131,12 +122,14 @@ export class PresetController {
                 effects: preset.effects,
             }));
 
-            res.json(transformedPresets);
+            res.status(200).json(transformedPresets);
         } catch (error) {
             console.log(error);
+            res.status(500).json({ error: "Hubo un error" });
         }
     };
 
+    // Actualiza la configuración
     static updatePreset = async (req: Request, res: Response) => {
         try {
             const { guitarId } = req.params;
@@ -158,16 +151,19 @@ export class PresetController {
                 effects,
             } = req.body;
 
+            // Para un entorno de desarrollo se tiene que validar que el ID de la guitarra exista
             const guitarExists = await Guitar.findById(guitarId);
             if (!guitarExists) {
                 const error = new Error("Guitarra no encontrada");
                 return res.status(404).json({ error: error.message });
             }
 
-            req.preset!.guitar = guitarExists._id;
+            // Recordar que el nombre se obtiene del req.presetName porque ha pasado por el middleware
+            const presetName = req.presetName;
 
-            // Recordar que el nombre se obtiene del req.configurationName porque ha pasado por el middleware
-            req.preset!.name = req.presetName!;
+            // Establece los valores en cada uno de los campos de preset (obtenido desde request)
+            req.preset!.name = presetName!;
+            req.preset!.guitar = guitarExists._id;
 
             req.preset!.guitarBehavior.volume = volume;
             req.preset!.guitarBehavior.holdToPlay = holdToPlay;
@@ -188,10 +184,8 @@ export class PresetController {
             req.preset!.effects = effects;
 
             await req.preset!.save();
-            // res.send("Configuración actualizada");
 
-            // Devolver toda la respuesta:
-            res.json({
+            res.status(200).json({
                 name: req.preset!.name,
                 volume: req.preset!.guitarBehavior.volume,
                 guitar: req.preset!.guitar,
@@ -215,11 +209,17 @@ export class PresetController {
         }
     };
 
+    // Elimina la configuración
     static deletePreset = async (req: Request, res: Response) => {
         try {
+            // deleteOne elimina un registro
+            // Como hay un middleware que almacena la configuracion en req.preset,
+            // se elimina ese registro
             await req.preset!.deleteOne();
-            // res.send("Configuración eliminada");
-            res.send();
+
+            // No se envia ninguna respuesta
+            // Por defecto se establece un status 204
+            res.status(204).send();
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });

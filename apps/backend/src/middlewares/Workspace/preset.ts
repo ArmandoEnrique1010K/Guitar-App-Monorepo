@@ -1,7 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import Preset from "models/Workspace/Preset";
 import Workspace from "models/Workspace/Workspace";
-import { splitNameAndNumber } from "utils/formatName";
+import { getAvailablePresetName } from "services/getAvailablePresetName";
+import { splitNameAndNumber } from "utils/format";
 
 const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -27,79 +28,30 @@ export async function generateNameForCreate(
             return res.status(400).json({ error: "El nombre es obligatorio" });
         }
 
-        // Devuelve un objeto con el nombre y el sufijo numerico que aparece al final del nombre
-        const parsed = splitNameAndNumber(rawName);
-
-        if (!parsed) {
-            return res.status(400).json({ error: "Nombre inválido" });
-        }
-
-        const { baseName, number: requestedNumber } = parsed;
-
-        // Escapa caracteres especiales para construir un RegExp seguro.
-        const safeName = escapeRegex(baseName);
-
         // Obtiene los IDs de los parametros dinamicos del endpoint
-        const workspaceId = req.params.workspaceId;
+        // Se establece que workspaceId es solamente de tipo string y que no sea
+        // de tipo string o arreglo de string
+        const workspaceId = req.params.workspaceId as string;
 
-        // Busca todos los nombres que pertenezcan a la misma familia.
-        // Ejemplo:
-        // prueba
-        // prueba 1
-        // prueba 2
-        const nameRegex = new RegExp(`^${safeName}(?: (\\d+))?$`, "i");
+        const name = await getAvailablePresetName(workspaceId, rawName);
 
-        // Lista todas las configuraciones existentes por espacio de trabajo y nombre
-        const existingConfigs = await Preset.find({
-            workspace: workspaceId,
-            name: {
-                $regex: nameRegex,
-            },
-        }).select("name");
-
-        // Guarda todos los sufijos numéricos ya utilizados.
-        // El nombre base sin número se representa como 0.
-        //
-        // Ejemplo:
-        // prueba      -> 0
-        // prueba 1    -> 1
-        // prueba 2    -> 2
-        const usedNumbers = new Set<number>();
-
-        for (const { name } of existingConfigs) {
-            const match = name.match(nameRegex);
-
-            if (!match) continue;
-
-            usedNumbers.add(match[1] ? Number(match[1]) : 0);
+        if (!name) {
+            return res.status(400).json({
+                error: "Nombre inválido",
+            });
         }
 
-        // Si el número solicitado aún no existe, se conserva el nombre.
-        if (!usedNumbers.has(requestedNumber)) {
-            req.presetName =
-                requestedNumber === 0
-                    ? baseName
-                    : `${baseName} ${requestedNumber}`;
-
-            return next();
-        }
-
-        // Busca el siguiente número disponible.
-        // Si el usuario escribió solo el nombre base,
-        // la búsqueda comienza desde 1.
-        let nextNumber = Math.max(requestedNumber, 1);
-
-        while (usedNumbers.has(nextNumber)) {
-            nextNumber++;
-        }
-        req.presetName = `${baseName} ${nextNumber}`;
-
+        // Se establece en el request el nombre disponible porque ese nombre
+        // se va a utilizar en el controlador
+        req.presetName = name;
         next();
     } catch (error) {
         res.status(500).json({ error: "Hubo un error" });
     }
 }
 
+// Genera un nuevo nombre cuando se trata de editar una configuración existente
+// Pero en el caso de no cambiarle el nombre, se mantiene intacto
 export async function generateNameForUpdate(
     req: Request,
     res: Response,
@@ -112,8 +64,8 @@ export async function generateNameForUpdate(
             return res.status(400).json({ error: "El nombre es obligatorio" });
         }
 
-        // Excluirse a sí mismo SOLO en update
-        // Excluir el registro que tenga el mismo ID que la configuración
+        // Se saltea el proceso de editar el nombre si no ha cambiado
+        // el nombre de la configuración
         if (
             req.preset!.name.trim().toLowerCase() ===
             rawName.trim().toLowerCase()
@@ -121,85 +73,61 @@ export async function generateNameForUpdate(
             return next();
         }
 
-        const parsed = splitNameAndNumber(rawName);
-        if (!parsed) {
-            return res.status(400).json({ error: "Nombre inválido" });
+        const workspaceId = req.params.workspaceId as string;
+        const presetId = req.params.presetId as string;
+
+        const name = await getAvailablePresetName(
+            workspaceId,
+            rawName,
+            presetId,
+        );
+
+        if (!name) {
+            return res.status(400).json({
+                error: "Nombre inválido",
+            });
         }
 
-        const { baseName, number: requestedNumber } = parsed;
-
-        const safeName = escapeRegex(baseName);
-
-        const workspaceId = req.params.workspaceId;
-
-        const nameRegex = new RegExp(`^${safeName}(?: (\\d+))?$`, "i");
-        const existingConfigs = await Preset.find({
-            workspace: workspaceId,
-            _id: { $ne: req.preset!._id },
-            name: {
-                $regex: nameRegex,
-            },
-        }).select("name");
-
-        // Si el número solicitado aún no existe, se conserva el nombre.
-        const usedNumbers = new Set<number>();
-
-        for (const { name } of existingConfigs) {
-            const match = name.match(nameRegex);
-
-            if (!match) continue;
-
-            usedNumbers.add(match[1] ? Number(match[1]) : 0);
-        }
-
-        if (!usedNumbers.has(requestedNumber)) {
-            req.presetName =
-                requestedNumber === 0
-                    ? baseName
-                    : `${baseName} ${requestedNumber}`;
-
-            return next();
-        }
-
-        let nextNumber = Math.max(requestedNumber, 1);
-
-        while (usedNumbers.has(nextNumber)) {
-            nextNumber++;
-        }
-        req.presetName = `${baseName} ${nextNumber}`;
-
+        req.presetName = name;
         next();
     } catch (error) {
         res.status(500).json({ error: "Hubo un error" });
     }
 }
 
+// Verifica si existe una configuración
 export async function presetExists(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
-        // console.log("params:", req.params);
-
         const { presetId } = req.params;
-        // console.log(presetId);
 
+        // Busca por ID si existe la configuración
         const preset = await Preset.findById(presetId);
+
         if (!preset) {
             const error = new Error("Configuración no encontrada");
             return res.status(404).json({ error: error.message });
         }
 
+        // Busca el espacio de trabajo por ID del espacio de trabajo asociada a la
+        // configuración
         const workspace = await Workspace.findById(preset.workspace);
+
         if (!workspace) {
             const error = new Error("Espacio de trabajo no encontrado");
             return res.status(404).json({ error: error.message });
         }
 
+        // Guarda la configuración y el espacio de trabajo en el request
         req.preset = preset;
-        // AQUI DEBE GUARDAR EL AUTOR DEL NOTEBOOK
         req.workspace = workspace;
+
+        // Al imprimir req.workspace se tiene el ID del usuario en la propiedad
+        // user
+        // console.log(req.workspace);
 
         next();
     } catch (error) {
@@ -207,12 +135,16 @@ export async function presetExists(
     }
 }
 
+// Verifica si es el autor de la configuración
 export async function isAuthorOfPreset(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
     try {
+        // El mismo usuario que ha iniciado sesion debe ser el mismo usuario que
+        // aparece en la propiedad user del espacio de trabajo (workspace)
+        // para que pase la validación
         if (req.user?._id.toString() !== req.workspace?.user.toString()) {
             return res.status(400).json({ error: "Acción no válida" });
         }

@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import Workspace from "models/Workspace/Workspace";
 
+// Verifica si existe un espacio de trabajo
 export async function workspaceExists(
     req: Request,
     res: Response,
@@ -9,10 +10,12 @@ export async function workspaceExists(
     try {
         const { workspaceId } = req.params;
         const workspace = await Workspace.findById(workspaceId);
+
         if (!workspace) {
             const error = new Error("Espacio de trabajo no encontrado");
             return res.status(404).json({ error: error.message });
         }
+
         req.workspace = workspace;
         next();
     } catch (error) {
@@ -20,6 +23,7 @@ export async function workspaceExists(
     }
 }
 
+// Verifica si el usuario es el autor del espacio de trabajo
 export async function isAuthorOfWorkspace(
     req: Request,
     res: Response,
@@ -30,6 +34,7 @@ export async function isAuthorOfWorkspace(
             const error = new Error("Acción no válida");
             return res.status(400).json({ error: error.message });
         }
+
         next();
     } catch (error) {
         res.status(500).json({ error: "Hubo un error" });

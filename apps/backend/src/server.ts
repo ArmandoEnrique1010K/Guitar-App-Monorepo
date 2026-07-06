@@ -1,15 +1,15 @@
+import workspaceRoutes from "routes/Workspace/workspaceRoutes";
+import profileRoutes from "routes/User/profileRoutes";
+import presetRoutes from "routes/Workspace/presetRoutes";
+import noteSampleRoutes from "routes/Guitar/noteSampleRoutes";
+import guitarRoutes from "routes/Guitar/guitarRoutes";
 import express from "express";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import { connectDB } from "config/db";
-import profileRoutes from "routes/User/profileRoutes";
-import authRoutes from "routes/User/authRoutes";
-import workspaceRoutes from "routes/Workspace/workspaceRoutes";
-import presetRoutes from "routes/Workspace/presetRoutes";
-import guitarRoutes from "routes/Guitar/guitarRoutes";
-import noteSampleRoutes from "routes/Guitar/noteSampleRoutes";
-import { corsConfig } from "config/cors";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import authRoutes from "routes/User/authRoutes";
+import { corsConfig } from "config/cors";
+import { connectDB } from "config/db";
 
 // Habilita dotenv de forma global
 dotenv.config();

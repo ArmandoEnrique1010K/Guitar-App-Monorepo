@@ -55,14 +55,14 @@ router.post(
     "/forgot-password",
     body("email").isEmail().withMessage("Email no válido"),
     handleInputErrors,
-    AuthController.forgotPassword,
+    AuthController.requestPasswordReset,
 );
 
 router.post(
     "/validate-token",
     body("token").notEmpty().withMessage("El Token no puede ir vacio"),
     handleInputErrors,
-    AuthController.validateToken,
+    AuthController.validatePasswordResetToken,
 );
 
 router.post(
@@ -80,7 +80,7 @@ router.post(
         return true;
     }),
     handleInputErrors,
-    AuthController.updatePasswordWithToken,
+    AuthController.resetPassword,
 );
 
 router.post("/logout", AuthController.logout);

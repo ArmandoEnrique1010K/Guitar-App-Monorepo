@@ -3,7 +3,7 @@
 // Formatear una palabra para que quede de la siguiente forma:
 // Clean Solo -> cleanSolo
 // Distortion Solo -> distortionSolo
-export const formatWord = (word: string): string => {
+export const formatLowerCamelCase = (word: string): string => {
     const words = word.split(" ");
     return words
         .map((word, index) => {
@@ -21,7 +21,7 @@ export const formatWord = (word: string): string => {
 // 9 -> 09
 // 10 -> 10
 // 46 -> 46
-export const formatNumber = (number: string): string => {
+export const formatTwoDigits = (number: string): string => {
     return number.padStart(2, "0");
 };
 

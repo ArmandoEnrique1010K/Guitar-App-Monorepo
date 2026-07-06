@@ -7,11 +7,14 @@ import { generateJWT } from "utils/jwt";
 import { generateToken } from "utils/token";
 
 export class AuthController {
+    // Crea una cuenta de usuario
     static createAccount = async (req: Request, res: Response) => {
         try {
+            // Obtiene los parametros desde el body (el cuerpo de la petición)
             const { password, email } = req.body;
 
-            // Prevenir duplicados
+            // Para prevenir un email duplicado se hace una busqueda por el email
+            // en la base de datos
             const userExists = await User.findOne({ email });
             if (userExists) {
                 const error = new Error("El usuario ya esta registrado");
@@ -21,136 +24,164 @@ export class AuthController {
             // Crea un usuario
             const user = new User(req.body);
 
-            // Hash Password
+            // Realiza un hasheo de la contraseña
             user.password = await hashPassword(password);
 
-            // Generar el token
+            // Genera el token
             const token = new Token();
             token.token = generateToken();
             token.user = user._id;
-            await Promise.all([user.save(), token.save()]);
-            console.log("ANTES DE SEND CONFIRMATION");
 
-            // enviar el email
-            // ADVERTENCIA: RESEND SOLAMENTE FUNCIONA CON EL EMAIL DEL USUARIO QUE HA CREADO EL API KEY DE PRUEBA
-            // EN UN ENTORNO DE PRODUCCIÓN SE TENDRIA QUE COMPRAR UN DOMINIO EN CLOUDFLARE
+            // El uso de Promise.all permite hacer el guardado de los datos en paralelo
+            // es decir, al mismo tiempo
+            await Promise.all([user.save(), token.save()]);
+
+            // Envia el correo de confirmación
             await AuthEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
                 token: token.token,
             });
-            console.log("DESPUES DE SEND CONFIRMATION");
-            res.send("Cuenta creada, revisa tu email para confirmarla");
 
-            // TODO: CADA VEZ QUE SE CREA UN USUARIO DEBE AÑADIRSE UNA SEED RELACIONADA A CONFIGURACIONES
-            // INICIALES DE PRUEBA QUE SE GENERAN CUANDO SE AÑADE UN USUARIO
+            // El método res.send sirve para enviar un string como respuesta
+            res.status(200).send(
+                "Cuenta creada, revisa tu email para confirmarla",
+            );
         } catch (error) {
-            console.error(error);
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
+    // Confirma la cuenta
     static confirmAccount = async (req: Request, res: Response) => {
         try {
             const { token } = req.body;
 
+            // Busca el token en la base de datos
             const tokenExists = await Token.findOne({ token });
             if (!tokenExists) {
                 const error = new Error("Token no válido");
                 return res.status(404).json({ error: error.message });
             }
 
+            // Busca el usuario en la base de datos por el usuario que se encuentra en el token
             const user = await User.findById(tokenExists.user);
             if (!user) {
                 const error = new Error("Usuario no encontrado");
                 return res.status(404).json({ error: error.message });
             }
+
+            // Si el usuario no ha sido confirmado aun, puede agregar las configuraciones
+            // de prueba para el usuario
+            if (!user.confirmed) {
+                // TODO: CADA VEZ QUE SE CREA UN USUARIO DEBE AÑADIRSE UNA SEED RELACIONADA A CONFIGURACIONES
+                // INICIALES DE PRUEBA QUE SE GENERAN CUANDO SE AÑADE UN USUARIO
+            }
+
+            // Confirma la cuenta
             user.confirmed = true;
 
             await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
-            res.send("Cuenta confirmada correctamente");
+
+            res.status(200).send("Cuenta confirmada correctamente");
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
+    // Inicia sesion
     static login = async (req: Request, res: Response) => {
         try {
             const { email, password } = req.body;
+
+            // Busca el usuario en la base de datos por email
             const user = await User.findOne({ email });
             if (!user) {
                 const error = new Error("Usuario no encontrado");
                 return res.status(404).json({ error: error.message });
             }
 
+            // Si el usuario no ha sido confirmado aun, no puede iniciar sesion
+            // Por lo que generara un nuevo token
             if (!user.confirmed) {
                 const token = new Token();
                 token.user = user._id;
                 token.token = generateToken();
                 await token.save();
 
-                // enviar el email
+                // Envía el email de confirmación
                 AuthEmail.sendConfirmationEmail({
                     email: user.email,
                     name: user.name,
                     token: token.token,
                 });
 
+                // Devuelve un mensaje de error en la respuesta
                 const error = new Error(
                     "La cuenta no ha sido confirmada, hemos enviado un e-mail de confirmación",
                 );
+
                 return res.status(401).json({ error: error.message });
             }
 
-            // Revisar password
+            // Si el usuario ha sido confirmado, entonces se procede a revisar
+            // la contraseña
             const isPasswordCorrect = await checkPassword(
                 password,
                 user.password,
             );
+
             if (!isPasswordCorrect) {
                 const error = new Error("Password Incorrecto");
-                return res.status(401).json({ error: error.message });
+                return res.status(400).json({ error: error.message });
             }
 
+            // Genera un JWT y lo guarda en las cookies
             const token = generateJWT({ id: user.id });
 
-            // El token debe guardarse en las cookies
-            // res.send(token);
             res.cookie("token", token, {
-                httpOnly: true, // 🔒 no accesible desde JS (evita XSS)
-                secure: process.env.NODE_ENV === "production", // solo HTTPS en prod
-                sameSite: "strict", // protección CSRF básica
-                maxAge: 1000 * 60 * 60 * 24 * 30, // 30 días
+                // Evita que el token sea accedido desde JavaScript (evita XSS)
+                httpOnly: true,
+                // Solo se envía el token en requests HTTPS en producción
+                secure: process.env.NODE_ENV === "production",
+                // Protección CSRF básica
+                sameSite: "strict",
+                // Expira en 30 días
+                maxAge: 1000 * 60 * 60 * 24 * 30,
             });
 
-            res.send("Bienvenido " + user.name);
+            res.status(200).send("Bienvenido " + user.name);
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
+    // Solicitar un nuevo codigo de confirmacion
     static requestConfirmationCode = async (req: Request, res: Response) => {
         try {
             const { email } = req.body;
 
-            // Usuario existe
             const user = await User.findOne({ email });
             if (!user) {
                 const error = new Error("El Usuario no esta registrado");
                 return res.status(404).json({ error: error.message });
             }
 
+            // Si el usuario ya esta confirmado, no se puede solicitar un nuevo codigo
             if (user.confirmed) {
                 const error = new Error("El Usuario ya esta confirmado");
-                return res.status(403).json({ error: error.message });
+                return res.status(400).json({ error: error.message });
             }
 
-            // Generar el token
+            // Genera el token
             const token = new Token();
             token.token = generateToken();
             token.user = user._id;
 
-            // enviar el email
+            // Envia el email
             AuthEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
@@ -159,42 +190,43 @@ export class AuthController {
 
             await Promise.allSettled([user.save(), token.save()]);
 
-            res.send("Se envió un nuevo token a tu e-mail");
+            res.status(200).send("Se envió un nuevo token a tu e-mail");
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static forgotPassword = async (req: Request, res: Response) => {
+    // Solicitar un nuevo codigo de recuperacion de contraseña
+    static requestPasswordReset = async (req: Request, res: Response) => {
         try {
             const { email } = req.body;
 
-            // Usuario existe
             const user = await User.findOne({ email });
             if (!user) {
                 const error = new Error("El Usuario no esta registrado");
                 return res.status(404).json({ error: error.message });
             }
 
-            // Generar el token
             const token = new Token();
             token.token = generateToken();
             token.user = user._id;
             await token.save();
 
-            // enviar el email
             AuthEmail.sendPasswordResetToken({
                 email: user.email,
                 name: user.name,
                 token: token.token,
             });
-            res.send("Revisa tu email y sigue las instrucciones");
+            res.status(200).send("Revisa tu email y sigue las instrucciones");
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static validateToken = async (req: Request, res: Response) => {
+    // Valida el token de recuperacion de contraseña
+    static validatePasswordResetToken = async (req: Request, res: Response) => {
         try {
             const { token } = req.body;
 
@@ -203,13 +235,15 @@ export class AuthController {
                 const error = new Error("Token no válido");
                 return res.status(404).json({ error: error.message });
             }
-            res.send("Token válido, define tu nueva contraseña");
+            res.status(200).send("Token válido, define tu nueva contraseña");
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static updatePasswordWithToken = async (req: Request, res: Response) => {
+    // Actualizar la contraseña
+    static resetPassword = async (req: Request, res: Response) => {
         try {
             const { token } = req.params;
             const { password } = req.body;
@@ -230,19 +264,23 @@ export class AuthController {
 
             await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
 
-            res.send("El password se modificó correctamente");
+            res.status(200).send("El password se modificó correctamente");
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
     };
 
-    static logout = (req: Request, res: Response) => {
+    // Cerrar sesion
+    static logout = (_req: Request, res: Response) => {
+        // No se utiliza un bloque try-catch en este controlador
+        // Elimina la cookie del token
         res.clearCookie("token", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
         });
 
-        return res.send("Sesión cerrada correctamente");
+        res.status(200).send("Sesión cerrada correctamente");
     };
 }

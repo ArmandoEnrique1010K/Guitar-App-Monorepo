@@ -15,8 +15,8 @@ router.use(authenticate);
 router.get(
     "/user",
     // Llama al middleware desde la ruta
-    //authenticate,
-    ProfileController.user,
+    // authenticate,
+    ProfileController.getCurrentUser,
 );
 
 router.put(
@@ -42,14 +42,7 @@ router.post(
         return true;
     }),
     handleInputErrors,
-    ProfileController.updateCurrentUserPassword,
-);
-
-router.post(
-    "/check-password",
-    body("password").notEmpty().withMessage("La contraseña no puede ir vacia"),
-    handleInputErrors,
-    ProfileController.checkPassword,
+    ProfileController.updatePassword,
 );
 
 export default router;
