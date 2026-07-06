@@ -83,11 +83,11 @@ router.put(
     body("effects").isArray(),
 
     handleInputErrors,
-    generateNameForUpdate,
-
     // Middleware para verificar si el usuario autenticado es el autor de la
     // configuración que se va a actualizar
     isAuthorOfPreset,
+    generateNameForUpdate,
+
     PresetController.updatePreset,
 );
 

@@ -45,28 +45,28 @@ router.post(
     AuthController.login,
 );
 router.post(
-    "/request-code",
+    "/request-confirmation-code",
     body("email").isEmail().withMessage("Email no válido"),
     handleInputErrors,
     AuthController.requestConfirmationCode,
 );
 
 router.post(
-    "/forgot-password",
+    "/request-password-reset",
     body("email").isEmail().withMessage("Email no válido"),
     handleInputErrors,
     AuthController.requestPasswordReset,
 );
 
 router.post(
-    "/validate-token",
+    "/validate-password-reset-token",
     body("token").notEmpty().withMessage("El Token no puede ir vacio"),
     handleInputErrors,
     AuthController.validatePasswordResetToken,
 );
 
 router.post(
-    "/update-password/:token",
+    "/reset-password/:token",
     // param sirve para obtener el valor de un parametro dinamico del endpoint
     // isNumeric valida que el token sea un numero
     param("token").isNumeric().withMessage("Token no válido"),

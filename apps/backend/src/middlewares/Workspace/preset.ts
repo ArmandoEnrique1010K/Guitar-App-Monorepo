@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import Preset from "models/Workspace/Preset";
 import Workspace from "models/Workspace/Workspace";
+import { Types } from "mongoose";
 import { getAvailablePresetName } from "services/getAvailablePresetName";
 import { splitNameAndNumber } from "utils/format";
 
@@ -70,11 +71,22 @@ export async function generateNameForUpdate(
             req.preset!.name.trim().toLowerCase() ===
             rawName.trim().toLowerCase()
         ) {
+            // Guarda en presetName el mismo valor que rawName
+            req.presetName = rawName.trim().toLowerCase();
             return next();
         }
 
-        const workspaceId = req.params.workspaceId as string;
-        const presetId = req.params.presetId as string;
+        // Puedes usar el presetId obtenido desde los parametros o desde el request
+        const presetId = req.preset!._id.toString();
+        // const presetId = req.params.presetId as string;
+
+        // Esto puede ser confuso, el workspaceId no se obtiene de los parametros
+        // devuelve undefined
+        // const workspaceId = req.params.workspaceId as string;
+
+        // El workspace se toma desde el req.workspace porque desde el middleware presetExists
+        // se guarda en req.workspace
+        const workspaceId = req.workspace!._id.toString();
 
         const name = await getAvailablePresetName(
             workspaceId,
@@ -114,7 +126,7 @@ export async function presetExists(
 
         // Busca el espacio de trabajo por ID del espacio de trabajo asociada a la
         // configuración
-        const workspace = await Workspace.findById(preset.workspace);
+        const workspace = await Workspace.findById(preset.workspace.toString());
 
         if (!workspace) {
             const error = new Error("Espacio de trabajo no encontrado");
@@ -124,10 +136,6 @@ export async function presetExists(
         // Guarda la configuración y el espacio de trabajo en el request
         req.preset = preset;
         req.workspace = workspace;
-
-        // Al imprimir req.workspace se tiene el ID del usuario en la propiedad
-        // user
-        // console.log(req.workspace);
 
         next();
     } catch (error) {

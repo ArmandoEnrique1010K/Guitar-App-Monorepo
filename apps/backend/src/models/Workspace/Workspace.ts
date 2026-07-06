@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
+import Preset from "./Preset";
 
 export interface IWorkspace extends Document {
     name: string;
@@ -26,6 +27,19 @@ const workspaceSchema: Schema = new Schema({
     //     required: true
     // },
 });
+
+// Middleware que se ejecuta antes de eliminar un Workspace mediante
+// document.deleteOne().
+workspaceSchema.pre(
+    "deleteOne",
+    { document: true },
+    async function (this: IWorkspace) {
+        // Elimina todas las configuraciones que pertenecen al Workspace.
+        await Preset.deleteMany({
+            workspace: this._id,
+        });
+    },
+);
 
 const Workspace = mongoose.model<IWorkspace>("Workspace", workspaceSchema);
 export default Workspace;

@@ -27,8 +27,8 @@ router.put(
     ProfileController.updateProfile,
 );
 
-router.post(
-    "/update-password",
+router.put(
+    "/password",
     body("current_password")
         .notEmpty()
         .withMessage("La contraseña actual no puede estar vacia"),
