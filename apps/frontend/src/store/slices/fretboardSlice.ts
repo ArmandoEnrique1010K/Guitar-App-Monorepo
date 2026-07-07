@@ -1,8 +1,9 @@
 import type { StateCreator } from 'zustand';
 import * as Tone from 'tone';
 import { getAllNoteSamples } from '@/api';
-import type { GuitarNotes, Note } from '@/schemas';
+import type { GuitarNotes } from '@/types';
 import type { PreferencesSliceType, EffectsSliceType } from '@/store';
+import type { Note } from '@/types';
 
 export type FretboardSliceType = {
     currentNote: Note | null;

@@ -1,4 +1,4 @@
-import type { FretNote } from '@/schemas';
+import type { FretNote } from '@/types';
 import { FretCell } from './FretCell';
 
 type Props = {

@@ -10,13 +10,15 @@ type Props = {
     token: string;
 };
 
+const initialValues: ResetPasswordForm = {
+    password: '',
+    password_confirmation: '',
+};
+
 export const ResetPasswordView = ({ token }: Props) => {
     const navigate = useNavigate();
-    const initialValues: ResetPasswordForm = {
-        password: '',
-        password_confirmation: '',
-    };
     const { notify } = useNotifications();
+
     const handleSubmit = async (
         values: ResetPasswordForm,
         { setErrors, setStatus }: FormikHelpers<ResetPasswordForm>,
@@ -29,6 +31,7 @@ export const ResetPasswordView = ({ token }: Props) => {
                 message: response,
                 status: 'success',
             });
+
             navigate('/auth');
         } else {
             handleFormikApiError({

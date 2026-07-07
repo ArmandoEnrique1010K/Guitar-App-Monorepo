@@ -1,4 +1,4 @@
-import type { ChorusConfig } from '@/schemas';
+import type { ChorusConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const chorusHandler = {

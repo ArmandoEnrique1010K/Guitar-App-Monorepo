@@ -1,18 +1,18 @@
 import { getAllGuitars } from '@/api';
-import type { Instrument } from '@/schemas';
 import type { StateCreator } from 'zustand';
 import * as Tone from 'tone';
 import type { FretboardSliceType } from '@/store';
+import type { Guitar } from '@/types';
 
 export type PreferencesSliceType = {
     // Guitarra seleccionada
-    selectedGuitar: Instrument;
+    selectedGuitar: Guitar;
     // Cambiar la guitarra seleccionada
-    setSelectedGuitar: (guitar: Instrument) => void;
+    setSelectedGuitar: (guitar: Guitar) => void;
     // Lista de guitarras
-    guitars: Instrument[];
+    guitars: Guitar[];
     // Establecer la lista de guitarras
-    setGuitars: (guitars: Instrument[]) => void;
+    setGuitars: (guitars: Guitar[]) => void;
 
     // El orden de las cuerdas
     stringOrder: number[];
@@ -82,7 +82,7 @@ export const preferencesSlice: StateCreator<
     showKeyboardKeys: true,
 
     // TODO: CUANDO CAMBIE DE GUITARRA TAMBIEN DEBE CONSTRUIR LOS EFECTOS DE SONIDO NUEVAMENTE PARA QUE LOS APLIQUE
-    setSelectedGuitar: (guitar: Instrument) => {
+    setSelectedGuitar: (guitar: Guitar) => {
         set({ selectedGuitar: guitar });
     },
 
@@ -100,7 +100,7 @@ export const preferencesSlice: StateCreator<
         });
     },
 
-    setGuitars: (guitars: Instrument[]) => {
+    setGuitars: (guitars: Guitar[]) => {
         set({ guitars: guitars });
     },
 

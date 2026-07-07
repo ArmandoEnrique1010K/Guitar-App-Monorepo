@@ -1,5 +1,5 @@
 import { useEffects } from '@/hooks';
-import type { Effects } from '@/schemas';
+import type { Effects } from '@/types';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 import { useSortable } from '@dnd-kit/sortable';
 

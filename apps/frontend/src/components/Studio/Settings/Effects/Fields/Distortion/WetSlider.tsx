@@ -8,6 +8,8 @@ const { format, parse } = createEffectTransform(
     DISTORTION_SCHEMA.wet.decimals,
 );
 
+// TODO: REPARAR LAS FUNCIONES format Y parse, EN ALGUN PUNTO CUANDO EL USUARIO CAMBIA MANUALMENTE
+// EL VALOR DESDE UN STRING, EL VALOR SE MULTIPLICA * 100
 export const WetSlider = () => {
     const { updateEffect, effects } = useEffects();
 

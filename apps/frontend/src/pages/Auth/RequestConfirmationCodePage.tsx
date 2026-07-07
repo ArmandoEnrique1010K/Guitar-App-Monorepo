@@ -5,10 +5,11 @@ import type { RequestConfirmationCodeForm } from '@/types';
 import { requestConfirmationCode } from '@/api';
 import { AuthTitle, FormButton, TextField } from '@/components';
 
+const initialValues: RequestConfirmationCodeForm = {
+    email: '',
+};
+
 export const RequestConfirmationCodePage = () => {
-    const initialValues: RequestConfirmationCodeForm = {
-        email: '',
-    };
     const { notify } = useNotifications();
 
     const handleSubmit = async (
@@ -17,7 +18,6 @@ export const RequestConfirmationCodePage = () => {
     ) => {
         const response = await requestConfirmationCode(values);
 
-        // LOGIN EXITOSO
         if (typeof response === 'string') {
             setStatus(response);
 

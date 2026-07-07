@@ -6,7 +6,6 @@ export const useProfile = () => {
     const error = useAppStore((state) => state.error);
     const getProfile = useAppStore((state) => state.getProfile);
     const cleanProfile = useAppStore((state) => state.cleanProfile);
-    const setProfile = useAppStore((state) => state.setProfile);
     const showProfile = useAppStore((state) => state.showProfile);
     const setShowProfile = useAppStore((state) => state.setShowProfile);
 
@@ -16,7 +15,6 @@ export const useProfile = () => {
         error,
         getProfile,
         cleanProfile,
-        setProfile,
         showProfile,
         setShowProfile,
     };

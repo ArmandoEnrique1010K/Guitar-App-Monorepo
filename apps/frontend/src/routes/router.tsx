@@ -1,9 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import NotificationsSystem, {
-    useNotifications,
-    setUpNotifications,
-    wyboTheme,
-} from 'reapop';
 import { AuthLayout, StudioLayout } from '@/layouts';
 import {
     ConfirmAccountPage,
@@ -17,64 +12,59 @@ import {
 import { useProfile } from '@/hooks';
 
 export default function Router() {
-    const { notifications, dismissNotification } = useNotifications();
-    setUpNotifications({
-        defaultProps: {
-            position: 'top-right',
-            dismissAfter: 5000,
-            dismissible: true,
-            showDismissButton: true,
-            closeButton: true,
-        },
-    });
-
-    // Obtener perfil del usuario
-    const { profile, isLoading } = useProfile();
-    if (isLoading && profile === null) {
-        return <div>Cargando...</div>;
-    }
-
-    // console.log(profile);
+    // Obtiene el perfil del usuario autenticado.
+    // Si es null significa que no existe una sesión iniciada.
+    const { profile } = useProfile();
 
     return (
         <BrowserRouter>
-            {/* Configuración del sistema de notificaciones de Reapop */}
-            <NotificationsSystem
-                notifications={notifications}
-                dismissNotification={(id) => dismissNotification(id)}
-                theme={wyboTheme}
-            />
             <Routes>
+                {/* Rutas principales de la aplicación */}
                 <Route path="/" element={<StudioLayout />}>
-                    <Route index element={<StudioPage />} />
+                    <Route
+                        // index significa que es la página principal del conjunto de rutas
+                        index
+                        element={<StudioPage />}
+                    />
                 </Route>
 
-                {!profile && (
-                    <Route path="/auth" element={<AuthLayout />}>
-                        <Route index element={<LoginPage />} />
-                        <Route
-                            path="register"
-                            element={<CreateAccountPage />}
-                        />
-                        <Route
-                            path="confirm-account"
-                            element={<ConfirmAccountPage />}
-                        />
-                        <Route
-                            path="request-code"
-                            element={<RequestConfirmationCodePage />}
-                        />
-                        <Route
-                            path="forgot-password"
-                            element={<RequestPasswordResetPage />}
-                        />
-                        <Route
-                            path="new-password"
-                            element={<NewPasswordPage />}
-                        />
-                    </Route>
-                )}
+                {/* Las rutas que dependen del perfil del usuario se pueden definir de 2 formas: */}
+                {/* 1. Mediante un operador ternario simplificado que agrupe todas las rutas */}
+                {/*{ !profile && ( <Route> ... </Route> ) } */}
 
+                {/* 2. Usando un operador ternario para evaluar que contenido se renderizara cuando
+                se acceda a esa ruta */}
+
+                {/* Rutas de autenticación.*/}
+                {/* Si el usuario ya inició sesión se redirige automáticamente al inicio para 
+                impedir que vuelva a acceder a las pantallas de autenticación. */}
+
+                <Route
+                    path="/auth"
+                    // <Navigate> sirve para navegar hacia esa ruta y replace
+                    // sirve para reemplazar el contenido actual
+                    element={
+                        profile ? <Navigate to="/" replace /> : <AuthLayout />
+                    }
+                >
+                    <Route index element={<LoginPage />} />
+                    <Route path="register" element={<CreateAccountPage />} />
+                    <Route
+                        path="confirm-account"
+                        element={<ConfirmAccountPage />}
+                    />
+                    <Route
+                        path="request-code"
+                        element={<RequestConfirmationCodePage />}
+                    />
+                    <Route
+                        path="forgot-password"
+                        element={<RequestPasswordResetPage />}
+                    />
+                    <Route path="new-password" element={<NewPasswordPage />} />
+                </Route>
+
+                {/* Cualquier ruta no registrada redirige a la página principal. */}
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>

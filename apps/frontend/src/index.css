@@ -34,27 +34,7 @@
     --breakpoint-xsm: 400px;
     --font-shockwave: 'Shockwave2';
     --font-roboto: 'Roboto';
-    --color-primary: rgb(1, 236, 2);
-    --primary-color: rgb(1, 236, 2);
-    --range-color: #d9fc2e;
-    --background-color: #38384e;
-    /* --menu-dark-color:rgb(26, 26, 38);*/
-    --menu-dark-color: #595983;
-
-    --title-container-color: #0e0e13;
-
-    --menu-bar-button-color: #ffee93;
-    /* --primary-color-dark: rgb(27, 57, 40); */
-
-    --primary-color-dark: #106b37;
-
-    --button-color: #d6dddd;
-    --icon-color: #fc9e00;
 }
-/* 
-.radix-themes .rt-BaseDialogOverlay .rt-DialogOverlay {
-    background-color: rgba(255, 255, 255, 0);
-} */
 
 /* OVERLAY DE LA VENTANA MODAL DEL DIALOG DE RADIX UI */
 .rt-DialogOverlay {

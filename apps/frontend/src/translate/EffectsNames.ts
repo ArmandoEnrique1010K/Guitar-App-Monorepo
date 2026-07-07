@@ -1,4 +1,4 @@
-import type { Effects } from '@/schemas';
+import type { Effects } from '@/types';
 
 export const EFFECTS_NAMES: Record<keyof Effects, string> = {
     distortion: 'Distorsión',

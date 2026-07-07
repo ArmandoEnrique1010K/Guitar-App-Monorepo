@@ -1,4 +1,4 @@
-import type { ReverbConfig } from '@/schemas';
+import type { ReverbConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const reverbHandler = {

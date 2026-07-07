@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { Theme as ThemeRadixUI } from '@radix-ui/themes';
@@ -11,15 +10,21 @@ import {
 } from '@chakra-ui/react';
 import App from './App';
 
-// Configuracion de Chakra UI para desactivar el reset de estilos por defecto
-// Es util cuando se quiere usar los estilos de Tailwind CSS junto con Chakra UI
+// Configuración de Chakra UI para desactivar el reset global de estilos.
+// Esto permite utilizar Tailwind CSS sin que Chakra sobrescriba sus estilos.
 const config = defineConfig({
     preflight: false,
 });
+
+// Crea el sistema de diseño de Chakra UI utilizando la configuración por defecto
+// junto con la configuración personalizada.
 const system = createSystem(defaultConfig, config);
 
-// Chakra UI Provider ha cambiado con respecto a la version 2 de Chakra UI, en su lugar opte por Ark UI, contiene los componentes y sus estilos aplicados de Chakra UI
-
+// Punto de entrada de la aplicación.
+// Se registran los proveedores globales:
+// - ChakraProvider: sistema de diseño y componentes de Chakra UI.
+// - NotificationsProvider: contexto para el sistema de notificaciones Reapop.
+// - ThemeRadixUI: tema global utilizado por los componentes de Radix UI.
 createRoot(document.getElementById('root')!).render(
     <ChakraProvider value={system}>
         <NotificationsProvider>

@@ -11,14 +11,14 @@ import { useNotifications } from 'reapop';
 import { handleFormikApiError } from '@/utils';
 import type { CreateAccountForm } from '@/types';
 
-export const CreateAccountPage = () => {
-    const initialValues: CreateAccountForm = {
-        email: '',
-        password: '',
-        password_confirmation: '',
-        name: '',
-    };
+const initialValues: CreateAccountForm = {
+    email: '',
+    password: '',
+    password_confirmation: '',
+    name: '',
+};
 
+export const CreateAccountPage = () => {
     const { notify } = useNotifications();
 
     const handleSubmit = async (
@@ -26,9 +26,8 @@ export const CreateAccountPage = () => {
         { setErrors, setStatus }: FormikHelpers<CreateAccountForm>,
     ) => {
         const response = await createAccount(values);
-        // console.log(response);
+        console.log(response);
 
-        // REGISTRO EXITOSO
         if (typeof response === 'string') {
             notify({
                 message: response,

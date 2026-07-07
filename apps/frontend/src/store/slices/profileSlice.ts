@@ -9,7 +9,6 @@ export type ProfileSliceType = {
 
     getProfile: () => Promise<void>;
     cleanProfile: () => void;
-    setProfile: (profile: User | null) => void;
 
     showProfile: boolean;
     setShowProfile: (showProfile: boolean) => void;
@@ -30,9 +29,16 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
                 error: null,
             });
 
-            // TODO: POBRIA HABER OTRA SOLUCIÓN
-            const data = (await getUser()) as User;
+            const data = await getUser();
 
+            // Si se tiene la propiedad 'error' en la respuesta
+            if ('error' in data) {
+                // console.log(data.error);
+                set({
+                    profile: null,
+                });
+                return;
+            }
             set({
                 profile: data,
             });
@@ -54,10 +60,6 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
             profile: null,
             error: null,
         });
-    },
-
-    setProfile: (profile) => {
-        set({ profile });
     },
 
     showProfile: false,

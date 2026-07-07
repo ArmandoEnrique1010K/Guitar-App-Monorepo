@@ -3,16 +3,16 @@ import {
     deletePreset,
     getAllPresets,
     updatePreset,
-    type Preset,
 } from '@/api/PresetAPI';
 import type { StateCreator } from 'zustand';
 import type { SettingsSliceType } from './settingsSlice';
 import type { PreferencesSliceType } from './preferencesSlice';
 import type { ControlBarSliceType } from './controlBarSlice';
 import type { EffectsSliceType } from './effectsSlice';
-import { buildEffectsPayload } from '@/utils/buildEffectsPayload';
+import { buildEffectsPayload, isErrorResponse } from '@/utils';
 import type { BottomBarSliceType } from './bottomBarSlice';
 import type { FretboardSliceType } from './fretboardSlice';
+import type { Preset } from '@/types';
 
 export type PresetsSliceType = {
     presets: Preset[];
@@ -61,6 +61,11 @@ export const presetsSlice: StateCreator<
             const data = await getAllPresets(
                 get().currentSelectedWorkspace._id,
             );
+
+            if ('error' in data) {
+                return;
+            }
+
             set({ presets: data });
 
             // Obtiene todos los IDs de guitarra
@@ -120,6 +125,10 @@ export const presetsSlice: StateCreator<
                 },
             );
 
+            if ('error' in preset || 'errors' in preset) {
+                return;
+            }
+
             set((state) => ({
                 workspaces: state.workspaces.map((workspace) =>
                     workspace._id === get().currentSelectedWorkspace?._id
@@ -130,7 +139,8 @@ export const presetsSlice: StateCreator<
                           }
                         : workspace,
                 ),
-                presets: [...state.presets, preset],
+                // presets: [...state.presets, preset],
+                presets: [...state.presets, preset as Preset],
             }));
         } catch (error) {
             console.error(error);
@@ -222,6 +232,11 @@ export const presetsSlice: StateCreator<
             // Aqui va el procedimiento de efectos de sonido
             effects: buildEffectsPayload(get().effects, get().effectsOrder),
         });
+
+        // TODO: INVESTIGAR
+        if (isErrorResponse(preset)) {
+            return;
+        }
 
         // ACTUALIZAR EL ESTADO DE PRESET CON LA RESPUESTA DEVUELTA POR LA API
         set((state) => ({

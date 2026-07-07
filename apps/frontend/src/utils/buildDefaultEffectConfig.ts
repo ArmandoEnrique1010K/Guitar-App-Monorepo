@@ -4,7 +4,7 @@ import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
-import type { Effects } from '@/schemas';
+import type { Effects } from '@/types';
 
 // Schema de definición de efectos
 export const EFFECT_SCHEMAS = {

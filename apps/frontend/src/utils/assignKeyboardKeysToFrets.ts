@@ -1,5 +1,5 @@
 import { keyboardRows } from '@/data/keyboardRows';
-import type { GuitarNotes } from '@/schemas';
+import type { GuitarNotes } from '@/types';
 
 // Número de notas por una cuerda
 const NOTES_BY_ROW = 11;

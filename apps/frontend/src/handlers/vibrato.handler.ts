@@ -1,4 +1,4 @@
-import type { VibratoConfig } from '@/schemas';
+import type { VibratoConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const vibratoHandler = {

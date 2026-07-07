@@ -1,4 +1,4 @@
-import type { TremoloConfig } from '@/schemas';
+import type { TremoloConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const tremoloHandler = {

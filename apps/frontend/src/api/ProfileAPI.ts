@@ -9,7 +9,7 @@ export const getUser = async (): Promise<User | ErrorResponse> => {
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -24,7 +24,7 @@ export const updateProfile = async (): Promise<
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -39,7 +39,7 @@ export const updatePassword = async (): Promise<
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }

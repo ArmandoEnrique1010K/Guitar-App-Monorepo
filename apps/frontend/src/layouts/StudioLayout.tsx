@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useControlBar, useFretboard, usePreferences } from '@/hooks';
-import type { GuitarNotes } from '@/schemas';
+import type { GuitarNotes } from '@/types';
 import { assignKeyboardKeysToFrets } from '@/utils';
 import { useEffect, useMemo } from 'react';
 import { HeaderView } from '@/views';

@@ -5,10 +5,11 @@ import { AuthTitle, TextField, FormButton, SecondaryText } from '@/components';
 import type { RequestPasswordResetForm } from '@/types';
 import { requestPasswordReset } from '@/api';
 
+const initialValues: RequestPasswordResetForm = {
+    email: '',
+};
+
 export const RequestPasswordResetPage = () => {
-    const initialValues: RequestPasswordResetForm = {
-        email: '',
-    };
     const { notify } = useNotifications();
 
     const handleSubmit = async (
@@ -17,7 +18,6 @@ export const RequestPasswordResetPage = () => {
     ) => {
         const response = await requestPasswordReset(values);
 
-        // LOGIN EXITOSO
         if (typeof response === 'string') {
             setStatus(response);
 

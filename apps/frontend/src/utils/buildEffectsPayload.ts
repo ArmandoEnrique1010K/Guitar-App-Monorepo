@@ -1,4 +1,4 @@
-import type { Effects } from '@/schemas';
+import type { Effects } from '@/types';
 
 // Función para transformar los efectos de sonido
 // ENTRA:

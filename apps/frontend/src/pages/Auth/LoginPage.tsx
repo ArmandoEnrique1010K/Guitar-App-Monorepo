@@ -13,11 +13,12 @@ import { login } from '@/api';
 import { useProfile } from '@/hooks';
 import { handleFormikApiError } from '@/utils';
 
+const initialValues: LoginForm = {
+    email: '',
+    password: '',
+};
+
 export const LoginPage = () => {
-    const initialValues: LoginForm = {
-        email: '',
-        password: '',
-    };
     const { notify } = useNotifications();
     const navigate = useNavigate();
     const { getProfile } = useProfile();
@@ -27,10 +28,6 @@ export const LoginPage = () => {
         { setErrors, setStatus }: FormikHelpers<LoginForm>,
     ) => {
         const response = await login(values);
-        // LOGIN EXITOSO
-        // console.log(typeof response);
-
-        // Las respuestas de exito siempre son strings
         if (typeof response === 'string') {
             setStatus(response);
             await getProfile();
@@ -58,14 +55,8 @@ export const LoginPage = () => {
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                // `validateOnBlur` indica si se va a validar el formulario cuando el usuario saca el foco de un campo de entrada. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
                 validateOnBlur={false}
-                // `validateOnChange` indica si se va a validar el formulario cuando se modifica un campo de entrada. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación a medida que el usuario está ingresando los datos.
                 validateOnChange={false}
-                // `validateOnMount` indica si se va a validar el formulario cuando se monta el componente. Por defecto es `true`.
-                // Es útil cuando quieres que se realice la validación al inicio del componente, antes de que el usuario haya ingresado ningún dato.
                 validateOnMount={false}
             >
                 {() => (

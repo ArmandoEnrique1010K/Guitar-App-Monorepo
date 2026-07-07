@@ -1,4 +1,4 @@
-import type { DistortionConfig } from '@/schemas';
+import type { DistortionConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const distortionHandler = {

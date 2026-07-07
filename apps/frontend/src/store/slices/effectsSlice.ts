@@ -1,4 +1,4 @@
-import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
+import type { EffectHandlers, Effects, EffectsChain } from '@/types';
 import type { StateCreator } from 'zustand';
 import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
 import { REVERB_SCHEMA } from '@/constants/reverb.constants';

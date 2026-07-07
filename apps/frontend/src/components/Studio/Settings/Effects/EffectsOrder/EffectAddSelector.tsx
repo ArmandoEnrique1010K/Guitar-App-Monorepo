@@ -1,5 +1,5 @@
 import { useEffects } from '@/hooks';
-import type { Effects } from '@/schemas';
+import type { Effects } from '@/types';
 // import { EffectOptionButton } from '@/ui';
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 import { ActionMenu } from '@/components';

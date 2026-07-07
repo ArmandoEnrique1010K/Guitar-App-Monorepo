@@ -16,6 +16,8 @@ export const ValidatePasswordResetTokenView = ({
     setToken,
     setIsValidToken,
 }: Props) => {
+    // En este caso como se pasa el token de 6 digitos como prop, se
+    // define dentro de la función del componente el valor inicial
     const initialValues = {
         token,
     };
@@ -35,6 +37,7 @@ export const ValidatePasswordResetTokenView = ({
                 status: 'success',
             });
 
+            // El token se vuelve valido
             setIsValidToken(true);
         } else {
             handleFormikApiError({

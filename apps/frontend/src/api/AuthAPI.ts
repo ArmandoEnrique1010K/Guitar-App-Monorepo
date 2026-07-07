@@ -35,7 +35,7 @@ export const createAccount = async (
     } catch (error) {
         // De esta forma se maneja el mensaje de error devuelto
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -50,7 +50,7 @@ export const confirmAccount = async (
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -66,7 +66,6 @@ export const login = async (
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             return error.response.data;
-            // throw error;
         }
         throw error;
     }
@@ -81,7 +80,7 @@ export const requestConfirmationCode = async (
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -96,7 +95,7 @@ export const requestPasswordReset = async (
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -111,7 +110,7 @@ export const validatePasswordResetToken = async (
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -127,7 +126,7 @@ export const resetPassword = async (
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }
@@ -140,7 +139,7 @@ export const logout = async (): Promise<string> => {
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw error;
+            return error.response.data;
         }
         throw error;
     }

@@ -1,4 +1,4 @@
-import type { FreeverbConfig } from '@/schemas';
+import type { FreeverbConfig } from '@/types';
 import * as Tone from 'tone';
 
 export const freeverbHandler = {
