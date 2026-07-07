@@ -1,45 +1,5 @@
 import * as Tone from 'tone';
 
-export interface LoginForm {
-    email: string;
-    password: string;
-}
-
-export interface CreateAccountForm {
-    email: string;
-    password: string;
-    password_confirmation: string;
-    name: string;
-}
-export interface ConfirmAccountForm {
-    token: string;
-}
-
-export interface RequestCodeForm {
-    email: string;
-}
-export interface ForgotPasswordForm {
-    email: string;
-}
-export interface ValidateTokenForm {
-    token: string;
-}
-export interface UpdatePasswordForm {
-    password: string;
-    password_confirmation: string;
-}
-
-export type Neck = {
-    rope: number;
-    frets: Frets;
-}[];
-
-export type Frets = {
-    chord: number;
-    file: string;
-    key?: string;
-}[];
-
 export type Note = {
     stringIndex: number | null;
     noteIndex: number | null;
@@ -63,14 +23,6 @@ export type GuitarStringNotes = {
 };
 
 export type GuitarNotes = GuitarStringNotes[];
-
-export type KeyboardsRows = {
-    row: number;
-    keys: {
-        code: string;
-        label: string;
-    }[];
-}[];
 
 export type Effects = {
     distortion: DistortionConfig;
@@ -158,50 +110,4 @@ export type EffectHandlers = {
     vibrato: EffectHandler<Tone.Vibrato, VibratoConfig>;
     chorus: EffectHandler<Tone.Chorus, ChorusConfig>;
     freeverb: EffectHandler<Tone.Freeverb, FreeverbConfig>;
-};
-
-// TIPADO DE PROPIEDADES
-export type NumberProperty = {
-    min: number;
-    max: number;
-    step: number;
-    defaultValue: number;
-    factor: number;
-    unit: string;
-    decimals: number;
-};
-
-export type OptionProperty<T extends string> = {
-    defaultValue: T;
-    values: T[];
-};
-
-// WORKSPACE
-export type WorkspaceForm = {
-    name: string;
-};
-
-// PRESETS
-export type PresetForm = {
-    name: string;
-    volume: number;
-    holdToPlay: boolean;
-    allowSameStringOverlap: boolean;
-    allowDifferentStringOverlap: boolean;
-    loopMode: boolean;
-    loopIntervalMs: number;
-    autoMute: boolean;
-    autoMuteDelayMs: number;
-    rootChord: number;
-    lockOpenString: boolean;
-    stringOrder: number[];
-    effects: EffectsPreset[];
-};
-
-// TODO: REVISAR EL TIPADO
-export type EffectsPreset = {
-    type: string; // ENUM CON LOS NOMBRES DE EFECTOS
-    order: number;
-    enabled: boolean;
-    params: Record<string, unknown>; // PARAMS ES UN OBJETO CON LOS PARAMETROS ESPECIFICOS DEL EFECTO
 };

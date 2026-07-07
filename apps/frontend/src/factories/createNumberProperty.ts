@@ -1,4 +1,4 @@
-import type { NumberProperty } from '@/schemas';
+import type { NumberProperty } from '@/types';
 
 export const createNumberProperty = (
     min: number, // Valor minimo

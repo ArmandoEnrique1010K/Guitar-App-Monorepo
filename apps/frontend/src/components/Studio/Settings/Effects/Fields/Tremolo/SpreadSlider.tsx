@@ -1,4 +1,4 @@
-import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
+import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

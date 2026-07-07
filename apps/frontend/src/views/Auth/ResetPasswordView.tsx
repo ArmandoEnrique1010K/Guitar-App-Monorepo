@@ -1,6 +1,6 @@
-import { updatePasswordWithToken } from '@/api';
+import { resetPassword } from '@/api';
 import { FormButton, PasswordField } from '@/components';
-import type { UpdatePasswordForm } from '@/schemas';
+import type { ResetPasswordForm } from '@/types';
 import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
@@ -10,31 +10,29 @@ type Props = {
     token: string;
 };
 
-export const NewPasswordFormView = ({ token }: Props) => {
+export const ResetPasswordView = ({ token }: Props) => {
     const navigate = useNavigate();
-    const initialValues: UpdatePasswordForm = {
+    const initialValues: ResetPasswordForm = {
         password: '',
         password_confirmation: '',
     };
     const { notify } = useNotifications();
     const handleSubmit = async (
-        values: UpdatePasswordForm,
-        { setErrors, setStatus }: FormikHelpers<UpdatePasswordForm>,
+        values: ResetPasswordForm,
+        { setErrors, setStatus }: FormikHelpers<ResetPasswordForm>,
     ) => {
-        try {
-            const response = await updatePasswordWithToken(token, values);
-            if (typeof response === 'string') {
-                setStatus(response);
+        const response = await resetPassword(token, values);
+        if (typeof response === 'string') {
+            setStatus(response);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
-                navigate('/auth');
-            }
-        } catch (error) {
+            notify({
+                message: response,
+                status: 'success',
+            });
+            navigate('/auth');
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

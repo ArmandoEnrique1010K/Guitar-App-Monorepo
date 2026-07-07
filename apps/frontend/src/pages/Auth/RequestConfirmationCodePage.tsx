@@ -1,37 +1,33 @@
 import { useNotifications } from 'reapop';
 import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
-import type { RequestCodeForm } from '@/schemas';
-import { requestCode } from '@/api';
+import type { RequestConfirmationCodeForm } from '@/types';
+import { requestConfirmationCode } from '@/api';
 import { AuthTitle, FormButton, TextField } from '@/components';
 
-export const RequestCodePage = () => {
-    const initialValues: RequestCodeForm = {
+export const RequestConfirmationCodePage = () => {
+    const initialValues: RequestConfirmationCodeForm = {
         email: '',
     };
     const { notify } = useNotifications();
 
     const handleSubmit = async (
-        values: RequestCodeForm,
-        { setErrors, setStatus }: FormikHelpers<RequestCodeForm>,
+        values: RequestConfirmationCodeForm,
+        { setErrors, setStatus }: FormikHelpers<RequestConfirmationCodeForm>,
     ) => {
-        try {
-            const response = await requestCode(values);
+        const response = await requestConfirmationCode(values);
 
-            // LOGIN EXITOSO
-            if (typeof response === 'string') {
-                setStatus(response);
+        // LOGIN EXITOSO
+        if (typeof response === 'string') {
+            setStatus(response);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
-            }
-
-            // El objeto response es string cuando el usuario ha iniciado sesion
-        } catch (error) {
+            notify({
+                message: response,
+                status: 'success',
+            });
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

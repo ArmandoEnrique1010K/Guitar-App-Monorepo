@@ -9,5 +9,5 @@ export * from './Studio/Settings/Preferences/PreferencesView';
 export * from './Studio/Settings/Workspace/PresetsView';
 export * from './Studio/Settings/Workspace/PrincipalWorkspaceView';
 
-export * from './Auth/NewPasswordFormView';
-export * from './Auth/TokenFormView';
+export * from './Auth/ResetPasswordView';
+export * from './Auth/ValidatePasswordResetTokenView';

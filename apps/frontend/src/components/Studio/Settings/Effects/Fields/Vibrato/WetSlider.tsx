@@ -1,4 +1,4 @@
-import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
+import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

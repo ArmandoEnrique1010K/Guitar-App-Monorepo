@@ -1,4 +1,4 @@
-import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
+import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

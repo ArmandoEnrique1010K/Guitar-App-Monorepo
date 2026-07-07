@@ -1,10 +1,11 @@
-import type { KeyboardsRows } from '@/schemas';
+import type { KeyboardsRows } from '@/types';
 
 // Filas de teclas del teclado
 export const keyboardRows: KeyboardsRows = [
     {
+        // Fila
         row: 1,
-        // keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', "'"],
+        // Arreglo de teclas (código y palabra)
         keys: [
             { code: 'Digit1', label: '1' },
             { code: 'Digit2', label: '2' },
@@ -19,10 +20,8 @@ export const keyboardRows: KeyboardsRows = [
             { code: 'Minus', label: "'" },
         ],
     },
-    // El caracter (`), se reemplaza por (Dead)
     {
         row: 2,
-        // keys: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'Dead'],
         keys: [
             { code: 'KeyQ', label: 'q' },
             { code: 'KeyW', label: 'w' },
@@ -34,12 +33,12 @@ export const keyboardRows: KeyboardsRows = [
             { code: 'KeyI', label: 'i' },
             { code: 'KeyO', label: 'o' },
             { code: 'KeyP', label: 'p' },
+            // El caracter (`), se reemplaza por (Dead)
             { code: 'BracketLeft', label: 'Dead' },
         ],
     },
     {
         row: 3,
-        // keys: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', '{'],
         keys: [
             { code: 'KeyA', label: 'a' },
             { code: 'KeyS', label: 's' },
@@ -56,7 +55,6 @@ export const keyboardRows: KeyboardsRows = [
     },
     {
         row: 4,
-        // keys: ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', 'Shift'],
         keys: [
             {
                 code: 'KeyZ',

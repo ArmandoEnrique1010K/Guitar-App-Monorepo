@@ -1,4 +1,5 @@
-import { getUser, type User } from '@/api';
+import { getUser } from '@/api';
+import type { User } from '@/types';
 import type { StateCreator } from 'zustand';
 
 export type ProfileSliceType = {
@@ -29,21 +30,13 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
                 error: null,
             });
 
-            const data = await getUser();
+            // TODO: POBRIA HABER OTRA SOLUCIÓN
+            const data = (await getUser()) as User;
 
             set({
                 profile: data,
             });
         } catch (error) {
-            // handleFormikApiError({
-            //     // TODO: SOLUCION TEMPORAL, DEJAR LAS FUNCIONES EN BLANCO
-            //     error,
-            //     setErrors: () => {},
-            //     setStatus: () => {},
-            //     notify: () => {},
-            // });
-
-            // console.error(error);
             set({
                 error: 'Error obteniendo perfil',
             });

@@ -1,6 +1,6 @@
-import { validateToken } from '@/api';
+import { validatePasswordResetToken } from '@/api';
 import { DigitsGroupField, FormButton } from '@/components';
-import type { ValidateTokenForm } from '@/schemas';
+import type { ValidatePasswordResetTokenForm } from '@/types';
 import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNotifications } from 'reapop';
@@ -11,7 +11,11 @@ type Props = {
     setIsValidToken: (isValidToken: boolean) => void;
 };
 
-export const TokenFormView = ({ token, setToken, setIsValidToken }: Props) => {
+export const ValidatePasswordResetTokenView = ({
+    token,
+    setToken,
+    setIsValidToken,
+}: Props) => {
     const initialValues = {
         token,
     };
@@ -19,24 +23,22 @@ export const TokenFormView = ({ token, setToken, setIsValidToken }: Props) => {
     const { notify } = useNotifications();
 
     const handleSubmit = async (
-        values: ValidateTokenForm,
-        { setErrors, setStatus }: FormikHelpers<ValidateTokenForm>,
+        values: ValidatePasswordResetTokenForm,
+        { setErrors, setStatus }: FormikHelpers<ValidatePasswordResetTokenForm>,
     ) => {
-        try {
-            const response = await validateToken(values);
-            if (typeof response === 'string') {
-                setStatus(response);
+        const response = await validatePasswordResetToken(values);
+        if (typeof response === 'string') {
+            setStatus(response);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
+            notify({
+                message: response,
+                status: 'success',
+            });
 
-                setIsValidToken(true);
-            }
-        } catch (error) {
+            setIsValidToken(true);
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

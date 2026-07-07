@@ -7,11 +7,11 @@ import NotificationsSystem, {
 import { AuthLayout, StudioLayout } from '@/layouts';
 import {
     ConfirmAccountPage,
-    ForgotPasswordPage,
+    RequestPasswordResetPage,
     LoginPage,
     NewPasswordPage,
-    RegisterPage,
-    RequestCodePage,
+    CreateAccountPage,
+    RequestConfirmationCodePage,
     StudioPage,
 } from '@/pages';
 import { useProfile } from '@/hooks';
@@ -52,18 +52,21 @@ export default function Router() {
                 {!profile && (
                     <Route path="/auth" element={<AuthLayout />}>
                         <Route index element={<LoginPage />} />
-                        <Route path="register" element={<RegisterPage />} />
+                        <Route
+                            path="register"
+                            element={<CreateAccountPage />}
+                        />
                         <Route
                             path="confirm-account"
                             element={<ConfirmAccountPage />}
                         />
                         <Route
                             path="request-code"
-                            element={<RequestCodePage />}
+                            element={<RequestConfirmationCodePage />}
                         />
                         <Route
                             path="forgot-password"
-                            element={<ForgotPasswordPage />}
+                            element={<RequestPasswordResetPage />}
                         />
                         <Route
                             path="new-password"

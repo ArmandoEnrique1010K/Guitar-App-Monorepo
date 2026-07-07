@@ -9,9 +9,9 @@ import {
 import { createAccount } from '@/api';
 import { useNotifications } from 'reapop';
 import { handleFormikApiError } from '@/utils';
-import type { CreateAccountForm } from '@/schemas';
+import type { CreateAccountForm } from '@/types';
 
-export const RegisterPage = () => {
+export const CreateAccountPage = () => {
     const initialValues: CreateAccountForm = {
         email: '',
         password: '',
@@ -25,46 +25,22 @@ export const RegisterPage = () => {
         values: CreateAccountForm,
         { setErrors, setStatus }: FormikHelpers<CreateAccountForm>,
     ) => {
-        try {
-            const response = await createAccount(values);
-            // console.log(response);
+        const response = await createAccount(values);
+        // console.log(response);
 
-            // REGISTRO EXITOSO
-            if (typeof response === 'string') {
-                notify({
-                    message: response,
-                    status: 'success',
-                });
-            }
-        } catch (error) {
+        // REGISTRO EXITOSO
+        if (typeof response === 'string') {
+            notify({
+                message: response,
+                status: 'success',
+            });
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,
             });
-
-            // const data = error.response.data;
-            // console.log(data);
-
-            // if (data.errors) {
-            //     const formikErrors: Record<string, string> = {};
-
-            //     data.errors.forEach((err: { path: string; msg: string }) => {
-            //         formikErrors[err.path] = err.msg;
-            //     });
-
-            //     setErrors(formikErrors);
-            // }
-
-            // if (data.error) {
-            //     setStatus(data.error);
-
-            //     notify({
-            //         message: data.error,
-            //         status: 'error',
-            //     });
-            // }
         }
     };
 

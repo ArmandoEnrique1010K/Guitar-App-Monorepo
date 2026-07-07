@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AuthTitle, SecondaryText } from '@/components';
-import type { ConfirmAccountForm } from '@/schemas';
-import { NewPasswordFormView, TokenFormView } from '@/views';
+import type { ConfirmAccountForm } from '@/types';
+import { ResetPasswordView, ValidatePasswordResetTokenView } from '@/views';
 
 export const NewPasswordPage = () => {
     const [token, setToken] = useState<ConfirmAccountForm['token']>('');
@@ -12,13 +12,13 @@ export const NewPasswordPage = () => {
             <AuthTitle title="Reestablecer contraseña" />
 
             {!isValidToken ? (
-                <TokenFormView
+                <ValidatePasswordResetTokenView
                     token={token}
                     setToken={setToken}
                     setIsValidToken={setIsValidToken}
                 />
             ) : (
-                <NewPasswordFormView token={token} />
+                <ResetPasswordView token={token} />
             )}
 
             <SecondaryText

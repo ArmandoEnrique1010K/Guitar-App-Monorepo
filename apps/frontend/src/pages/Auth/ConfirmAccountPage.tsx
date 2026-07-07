@@ -8,7 +8,7 @@ import {
     SecondaryText,
     DigitsGroupField,
 } from '@/components';
-import type { ConfirmAccountForm } from '@/schemas';
+import type { ConfirmAccountForm } from '@/types';
 import { confirmAccount } from '@/api';
 
 export const ConfirmAccountPage = () => {
@@ -23,20 +23,19 @@ export const ConfirmAccountPage = () => {
         values: ConfirmAccountForm,
         { setErrors, setStatus }: FormikHelpers<ConfirmAccountForm>,
     ) => {
-        try {
-            const response = await confirmAccount(values);
-            if (typeof response === 'string') {
-                setStatus(response);
+        const response = await confirmAccount(values);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
-                navigate('/auth');
-            }
-        } catch (error) {
+        if (typeof response === 'string') {
+            setStatus(response);
+
+            notify({
+                message: response,
+                status: 'success',
+            });
+            navigate('/auth');
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

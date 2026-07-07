@@ -2,36 +2,32 @@ import { useNotifications } from 'reapop';
 import { handleFormikApiError } from '@/utils';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { AuthTitle, TextField, FormButton, SecondaryText } from '@/components';
-import type { RequestCodeForm } from '@/schemas';
-import { forgotPassword } from '@/api';
+import type { RequestPasswordResetForm } from '@/types';
+import { requestPasswordReset } from '@/api';
 
-export const ForgotPasswordPage = () => {
-    const initialValues: RequestCodeForm = {
+export const RequestPasswordResetPage = () => {
+    const initialValues: RequestPasswordResetForm = {
         email: '',
     };
     const { notify } = useNotifications();
 
     const handleSubmit = async (
-        values: RequestCodeForm,
-        { setErrors, setStatus }: FormikHelpers<RequestCodeForm>,
+        values: RequestPasswordResetForm,
+        { setErrors, setStatus }: FormikHelpers<RequestPasswordResetForm>,
     ) => {
-        try {
-            const response = await forgotPassword(values);
+        const response = await requestPasswordReset(values);
 
-            // LOGIN EXITOSO
-            if (typeof response === 'string') {
-                setStatus(response);
+        // LOGIN EXITOSO
+        if (typeof response === 'string') {
+            setStatus(response);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
-            }
-
-            // El objeto response es string cuando el usuario ha iniciado sesion
-        } catch (error) {
+            notify({
+                message: response,
+                status: 'success',
+            });
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

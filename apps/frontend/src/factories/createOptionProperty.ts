@@ -1,4 +1,4 @@
-import type { OptionProperty } from '@/schemas';
+import type { OptionProperty } from '@/types';
 
 export const createOptionProperty = <T extends string>(
     defaultOption: T,

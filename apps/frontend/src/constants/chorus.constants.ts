@@ -1,5 +1,7 @@
 import { createOptionProperty, createNumberProperty } from '@/factories';
 
+// Se crea constantes que contienen propiedades para cada uno de los parametros de cada efecto de sonido
+// Recuerda que los factories crean objetos como constantes
 export const CHORUS_SCHEMA = {
     delayTime: createNumberProperty(1, 20, 0.1, 3.5, 1, 'ms', 1),
     depth: createNumberProperty(0, 1, 0.01, 0.7, 100, '%', 0),

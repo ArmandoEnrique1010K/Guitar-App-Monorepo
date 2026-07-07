@@ -68,7 +68,9 @@ export const fretboardSlice: StateCreator<
     loadNoteSamples: async (guitarId: string) => {
         try {
             const data = await getAllNoteSamples(guitarId);
-            set({ noteSamples: data });
+
+            // set({ noteSamples: data });
+            set({ noteSamples: data instanceof Array ? data : [] });
 
             // TODO: CARGAR LAS NOTAS Y APLICAR LOS EFECTOS DE SONIDO
             // console.log('RECONSTRUYENDO');

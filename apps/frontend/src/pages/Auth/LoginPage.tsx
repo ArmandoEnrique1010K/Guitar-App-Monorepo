@@ -7,11 +7,11 @@ import {
     SecondaryText,
     TextField,
 } from '@/components';
-import { handleFormikApiError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
-import type { LoginForm } from '@/schemas';
+import type { LoginForm } from '@/types';
 import { login } from '@/api';
 import { useProfile } from '@/hooks';
+import { handleFormikApiError } from '@/utils';
 
 export const LoginPage = () => {
     const initialValues: LoginForm = {
@@ -26,25 +26,24 @@ export const LoginPage = () => {
         values: LoginForm,
         { setErrors, setStatus }: FormikHelpers<LoginForm>,
     ) => {
-        try {
-            const response = await login(values);
-            // LOGIN EXITOSO
-            if (typeof response === 'string') {
-                setStatus(response);
-                await getProfile();
+        const response = await login(values);
+        // LOGIN EXITOSO
+        // console.log(typeof response);
 
-                notify({
-                    message: response,
-                    status: 'success',
-                });
+        // Las respuestas de exito siempre son strings
+        if (typeof response === 'string') {
+            setStatus(response);
+            await getProfile();
 
-                navigate('/', { replace: true });
-            }
+            notify({
+                message: response,
+                status: 'success',
+            });
 
-            // El objeto response es string cuando el usuario ha iniciado sesion
-        } catch (error) {
+            navigate('/', { replace: true });
+        } else {
             handleFormikApiError({
-                error,
+                response,
                 setErrors,
                 setStatus,
                 notify,

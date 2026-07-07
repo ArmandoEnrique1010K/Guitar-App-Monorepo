@@ -1,10 +1,10 @@
 import type { EffectHandlers, Effects, EffectsChain } from '@/schemas';
 import type { StateCreator } from 'zustand';
-import { DISTORTION_SCHEMA } from '@/constants/effects/distortion.constants';
-import { REVERB_SCHEMA } from '@/constants/effects/reverb.constants';
-import { TREMOLO_SCHEMA } from '@/constants/effects/tremolo.constants';
-import { VIBRATO_SCHEMA } from '@/constants/effects/vibrato.constants';
-import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
+import { REVERB_SCHEMA } from '@/constants/reverb.constants';
+import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
+import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
+import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import type { FretboardSliceType } from '@/store';
 import { buildDefaultEffectConfig } from '@/utils';
 import {
@@ -14,10 +14,9 @@ import {
     tremoloHandler,
     vibratoHandler,
 } from '@/handlers';
-import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
+import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
-import type { Preset } from '@/api/PresetAPI';
-import * as Tone from 'tone';
+import type { Preset } from '@/types';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {

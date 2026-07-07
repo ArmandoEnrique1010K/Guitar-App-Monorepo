@@ -1,4 +1,4 @@
-import { CHORUS_SCHEMA } from '@/constants/effects/chorus.constants';
+import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

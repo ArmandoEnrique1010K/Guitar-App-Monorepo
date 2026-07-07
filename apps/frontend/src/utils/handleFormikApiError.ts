@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import type { ErrorResponseWithFields } from '@/types';
 import type { FormikErrors, FormikHelpers } from 'formik';
 
 interface BackendValidationError {
@@ -6,13 +6,8 @@ interface BackendValidationError {
     msg: string;
 }
 
-interface BackendErrorResponse {
-    errors?: BackendValidationError[];
-    error?: string;
-}
-
 interface HandleFormikApiErrorParams<T> {
-    error: unknown;
+    response: ErrorResponseWithFields;
     setErrors: FormikHelpers<T>['setErrors'];
     setStatus?: FormikHelpers<T>['setStatus'];
     notify: ({
@@ -25,35 +20,28 @@ interface HandleFormikApiErrorParams<T> {
 }
 
 export const handleFormikApiError = <T>({
-    error,
+    response,
     setErrors,
     setStatus,
     notify,
 }: HandleFormikApiErrorParams<T>) => {
-    const axiosError = error as AxiosError<BackendErrorResponse>;
+    // Si la respuesta tiene
+    if (response.errors) {
+        const handleFormikApiError: Record<string, string> = {};
 
-    const data = axiosError.response?.data;
-    // console.log(data);
-
-    if (!data) return;
-
-    // VALIDACIONES
-    if (data.errors) {
-        const formikErrors: Record<string, string> = {};
-
-        data.errors.forEach((err: BackendValidationError) => {
-            formikErrors[err.path] = err.msg;
+        response.errors.forEach((err: BackendValidationError) => {
+            handleFormikApiError[err.path] = err.msg;
         });
 
-        setErrors(formikErrors as FormikErrors<T>);
+        setErrors(handleFormikApiError as FormikErrors<T>);
     }
 
     // ERROR GENERAL
-    if (data.error) {
-        setStatus?.(data.error);
+    if (response.error) {
+        setStatus?.(response.error);
 
         notify({
-            message: data.error,
+            message: response.error,
             status: 'error',
         });
     }

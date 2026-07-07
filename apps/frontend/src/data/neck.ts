@@ -1,11 +1,15 @@
-import type { Neck } from '@/schemas';
+import type { Neck } from '@/types';
 
 export const neck: Neck = [
     {
+        // Número de cuerda
         rope: 1,
+        // Grupo de notas musicales
         frets: [
             {
+                // Acorde
                 chord: 0,
+                // Archivo
                 file: '00',
             },
             {

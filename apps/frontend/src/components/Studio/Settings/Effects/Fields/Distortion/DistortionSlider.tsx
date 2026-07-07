@@ -1,4 +1,4 @@
-import { DISTORTION_SCHEMA } from '@/constants/effects/distortion.constants';
+import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

@@ -1,4 +1,4 @@
-import { FREEVERB_SCHEMA } from '@/constants/effects/freeverb.constants';
+import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

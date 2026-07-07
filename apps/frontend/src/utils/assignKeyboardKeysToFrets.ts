@@ -1,6 +1,8 @@
-import { KEYSBYROW } from '@/constants';
 import { keyboardRows } from '@/data/keyboardRows';
 import type { GuitarNotes } from '@/schemas';
+
+// Número de notas por una cuerda
+const NOTES_BY_ROW = 11;
 
 export const assignKeyboardKeysToFrets = (
     file: GuitarNotes,
@@ -76,7 +78,7 @@ export const assignKeyboardKeysToFrets = (
             // Asignación de teclas si `lockTheZeroChord` es verdadero
             if (index !== 0 && lockTheZeroChord) {
                 if (index >= startFromTheChord) {
-                    if (index < assignRowKeys?.length + KEYSBYROW + 1) {
+                    if (index < assignRowKeys?.length + NOTES_BY_ROW + 1) {
                         const assignedKey =
                             assignRowKeys[index - startFromTheChord + 1];
                         element.key =
@@ -91,7 +93,7 @@ export const assignKeyboardKeysToFrets = (
 
             // Asignación de teclas normal si `lockTheZeroChord` es falso
             if (!lockTheZeroChord) {
-                if (index <= assignRowKeys?.length + KEYSBYROW) {
+                if (index <= assignRowKeys?.length + NOTES_BY_ROW) {
                     element.key = assignRowKeys[index - startFromTheChord];
                 } else {
                     element.key = undefined;
@@ -105,12 +107,12 @@ export const assignKeyboardKeysToFrets = (
 
             if (
                 lockTheZeroChord &&
-                index === KEYSBYROW + startFromTheChord - 1
+                index === NOTES_BY_ROW + startFromTheChord - 1
             ) {
                 element.key = { code: 'OCULTAR', label: 'OCULTAR' };
             }
 
-            if (index > KEYSBYROW - 1 + startFromTheChord) {
+            if (index > NOTES_BY_ROW - 1 + startFromTheChord) {
                 element.key = { code: 'OCULTAR', label: 'OCULTAR' };
             }
         }
