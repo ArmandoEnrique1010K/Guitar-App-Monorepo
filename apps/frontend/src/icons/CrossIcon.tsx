@@ -12,7 +12,6 @@ export const CrossIcon = ({ className = '' }: Props) => {
             id="cross"
             data-name="Flat Color"
             xmlns="http://www.w3.org/2000/svg"
-            // className="icon flat-color"
             className={className}
         >
             <path

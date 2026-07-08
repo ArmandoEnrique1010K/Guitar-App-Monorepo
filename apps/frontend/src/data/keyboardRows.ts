@@ -1,5 +1,7 @@
 import type { KeyboardsRows } from '@/types';
 
+// La carpeta data contiene los datos estaticos que nunca van a cambiar
+
 // Filas de teclas del teclado
 export const keyboardRows: KeyboardsRows = [
     {

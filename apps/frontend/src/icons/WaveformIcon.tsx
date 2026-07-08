@@ -2,8 +2,6 @@ type Props = {
     className?: string;
 };
 export const WaveformIcon = ({ className = '' }: Props) => {
-    // Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools
-
     return (
         <svg
             className={className}

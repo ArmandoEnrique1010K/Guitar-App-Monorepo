@@ -1,6 +1,7 @@
 type Props = {
     className?: string;
 };
+
 export const ResetIcon = ({ className = '' }: Props) => {
     return (
         <svg

@@ -1,6 +1,8 @@
 import { ErrorMessage, Field } from 'formik';
 import { useState } from 'react';
 import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
+import { Button } from '@/ui';
+import { BackwardIcon, EyeOpenedIcon } from '@/icons';
 
 type Props = {
     id: string;
@@ -25,7 +27,19 @@ export const PasswordField = ({ id, label, placeholder }: Props) => {
                     className="border border-gray-300 rounded px-3 py-2 flex-1"
                 />
 
-                <button
+                <Button
+                    text=""
+                    type={'button'}
+                    onClick={() => setShowPassword(!showPassword)}
+                    icon={
+                        showPassword ? (
+                            <EyeOpenedIcon className="size-6" />
+                        ) : (
+                            <EyeClosedIcon className="size-6" />
+                        )
+                    }
+                />
+                {/* <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="px-3 text-sm bg-zinc-300 rounded hover:bg-zinc-400 "
@@ -35,7 +49,7 @@ export const PasswordField = ({ id, label, placeholder }: Props) => {
                     ) : (
                         <EyeClosedIcon className="size-6" />
                     )}
-                </button>
+                </button> */}
             </div>
             <div className="h-4">
                 <ErrorMessage

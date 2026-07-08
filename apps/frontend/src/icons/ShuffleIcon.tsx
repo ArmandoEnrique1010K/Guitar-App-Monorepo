@@ -3,8 +3,6 @@ type Props = {
 };
 
 export const ShuffleIcon = ({ className = '' }: Props) => {
-    // <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-
     return (
         <>
             <svg
@@ -18,7 +16,8 @@ export const ShuffleIcon = ({ className = '' }: Props) => {
                 viewBox="0 0 512 512"
                 xmlSpace="preserve"
             >
-                {/* Algunos iconos pueden tener una etiqueta style, para aquello la forma correcta es usar template literals */}
+                {/* Algunos iconos pueden tener una etiqueta style, para habilitarlo, la forma correcta es 
+                usar template literals */}
                 <style type="text/css">
                     {`.st0 {
                         fill: currentColor;

@@ -1,9 +1,8 @@
 type Props = {
     className?: string;
 };
-export const KeyboardIcon = ({ className = '' }: Props) => {
-    // <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 
+export const KeyboardIcon = ({ className = '' }: Props) => {
     return (
         <svg
             height="800px"

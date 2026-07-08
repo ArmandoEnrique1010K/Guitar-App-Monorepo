@@ -5,6 +5,7 @@ type Props = {
     icon: React.ReactNode;
     disabled?: boolean;
     isKeyPressed?: boolean;
+    type?: 'button' | 'submit';
 };
 
 export const Button = ({
@@ -14,6 +15,7 @@ export const Button = ({
     icon,
     disabled = false,
     isKeyPressed = false,
+    type,
 }: Props) => {
     return (
         <button
@@ -69,6 +71,7 @@ export const Button = ({
             tabIndex={-1}
             title={title}
             disabled={disabled}
+            type={type}
         >
             {icon}
         </button>

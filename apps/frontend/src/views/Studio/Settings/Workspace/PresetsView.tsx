@@ -5,8 +5,14 @@ import {
     TextContainer,
 } from '@/components';
 import { usePresets, useSettings } from '@/hooks';
-import { PlusIcon, PreviousArrowIcon } from '@/icons';
+import {
+    BackwardIcon,
+    NextArrowIcon,
+    PlusIcon,
+    PreviousArrowIcon,
+} from '@/icons';
 import { Button } from '@/ui';
+import { ArrowBottomLeftIcon } from '@radix-ui/react-icons';
 
 export const PresetsView = () => {
     const {
@@ -29,7 +35,7 @@ export const PresetsView = () => {
                 <Button
                     text="Atras"
                     title="Volver a espacios de trabajo"
-                    icon={<PreviousArrowIcon className="size-4" />}
+                    icon={<BackwardIcon className="size-4" />}
                     onClick={() => {
                         setWorkspaceView('workspaces');
 
@@ -40,14 +46,29 @@ export const PresetsView = () => {
                         });
                         clearPresets();
                     }}
-                ></Button>
+                />
+
+                {/* TODO: AGREGAR LOGICA A LOS BOTONES DE CAMBIO DE CONFIGURACION DE SONIDO */}
+                <Button
+                    text="Anterior"
+                    title="Cambio"
+                    icon={<PreviousArrowIcon className="size-4" />}
+                    onClick={() => {}}
+                />
                 <TextContainer>{currentSelectedWorkspace.name}</TextContainer>
+                <Button
+                    text="Anterior"
+                    title="Cambio"
+                    icon={<NextArrowIcon className="size-4" />}
+                    onClick={() => {}}
+                />
+
                 <Button
                     text="Atras"
                     title="Agregar la configuración y efectos actuales"
                     icon={<PlusIcon className="size-4" />}
                     onClick={() => openCreatePresetModal()}
-                ></Button>
+                />
             </div>
 
             {/* <div>{JSON.stringify(profile, null, 2)}</div> */}

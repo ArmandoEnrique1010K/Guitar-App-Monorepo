@@ -1,6 +1,6 @@
 import { useAssistant } from '@/hooks';
+import { PaperPlaneIcon } from '@/icons';
 import { Button } from '@/ui';
-import { PaperPlaneIcon } from '@radix-ui/react-icons';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -111,7 +111,7 @@ text-sm
                     text=""
                     disabled={isGenerating}
                     onClick={handleSubmit}
-                    icon={<PaperPlaneIcon className="size-5" />}
+                    icon={<PaperPlaneIcon className="size-6" />}
                     title="Responder con IA"
                 />
             </div>

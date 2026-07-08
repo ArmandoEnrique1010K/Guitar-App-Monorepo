@@ -15,7 +15,6 @@ export const AuthLayout = () => {
                     </h1>
                 </Link>
 
-                {/* Elimine la fuente 'font-roboto' */}
                 <div className="shadow-lg  sm:rounded-xl sm:p-6 p-4 bg-white flex flex-col items-center justify-center sm:min-w-md min-w-full">
                     <Outlet />
                 </div>

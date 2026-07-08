@@ -1,6 +1,7 @@
 type Props = {
     className?: string;
 };
+
 export const RadioSignalIcon = ({ className = '' }: Props) => {
     return (
         <svg

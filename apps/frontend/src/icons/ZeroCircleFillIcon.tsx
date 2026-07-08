@@ -3,7 +3,6 @@ type Props = {
 };
 
 export const ZeroCircleFillIcon = ({ className = '' }: Props) => {
-    // <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
     return (
         <>
             <svg
@@ -14,7 +13,6 @@ export const ZeroCircleFillIcon = ({ className = '' }: Props) => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
             >
-                {/* Recordar que currentColor hereda el color del elemento padre (por ejemplo, el color del texto) */}
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"

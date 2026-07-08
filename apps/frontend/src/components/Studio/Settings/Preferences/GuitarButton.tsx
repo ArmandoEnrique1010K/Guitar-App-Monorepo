@@ -59,6 +59,7 @@ export const GuitarButton = () => {
                 "
                         >
                             <span className="text-xs flex-1 text-left">
+                                {/* TODO: DEBE MOSTRAR UN ESTADO DE LOADING */}
                                 {selectedGuitar?.name || 'Seleccionar guitarra'}
                             </span>
                             <div className="border-l border-l-gray-700 pl-1 sm:flex hidden">

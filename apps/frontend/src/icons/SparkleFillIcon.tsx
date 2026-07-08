@@ -1,6 +1,7 @@
 type Props = {
     className?: string;
 };
+
 export const SparkleFillIcon = ({ className = '' }: Props) => {
     return (
         <svg

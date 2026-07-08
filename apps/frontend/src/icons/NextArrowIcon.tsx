@@ -13,6 +13,7 @@ export const NextArrowIcon = ({ className = '' }: Props) => {
             id="next"
             data-name="Flat Color"
             xmlns="http://www.w3.org/2000/svg"
+            // Si vienen atributos class o style, pueden ser eliminados segun el caso necesario
             // class="icon flat-color"
         >
             <path

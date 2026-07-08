@@ -12,23 +12,6 @@ const { format, parse } = createEffectTransform(
 export const DecaySlider = () => {
     const { updateEffect, effects } = useEffects();
 
-    // Evita que se vuelva a crear la función cada vez que hay un nuevo
-    // renderizado
-    // const format = useCallback(
-    //     (v: number) =>
-    //         formatEffectValue(
-    //             v,
-    //             REVERB_SCHEMA.decay.factor,
-    //             REVERB_SCHEMA.decay.decimals,
-    //         ),
-    //     [],
-    // );
-
-    // const parse = useCallback(
-    //     (v: number) => parseEffectValue(v, REVERB_SCHEMA.decay.factor),
-    //     [],
-    // );
-
     return (
         <HorizontalSlider
             label="Caida"

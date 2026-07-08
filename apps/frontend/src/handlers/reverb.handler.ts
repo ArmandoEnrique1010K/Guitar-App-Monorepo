@@ -7,7 +7,7 @@ export const reverbHandler = {
     },
 
     configure: (effect: Tone.Reverb, config: ReverbConfig) => {
-        effect.decay = config.dampening;
+        effect.decay = config.decay;
         effect.preDelay = config.preDelay;
         effect.wet.value = config.wet;
     },

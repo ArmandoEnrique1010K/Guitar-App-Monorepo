@@ -3,7 +3,6 @@ type Props = {
 };
 
 export const HandIcon = ({ className = '' }: Props) => {
-    // Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools
     return (
         <>
             <svg

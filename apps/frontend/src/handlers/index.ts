@@ -1,5 +1,3 @@
-// Funciones auxiliares que se utilizan dentro de store
-
 export * from './distortion.handler';
 export * from './reverb.handler';
 export * from './chorus.handler';

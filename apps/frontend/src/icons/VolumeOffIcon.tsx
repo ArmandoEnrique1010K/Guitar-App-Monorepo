@@ -3,8 +3,6 @@ type Props = {
 };
 
 export const VolumeOffIcon = ({ className = '' }: Props) => {
-    //     <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-
     return (
         <>
             <svg
