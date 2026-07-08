@@ -186,9 +186,10 @@ export class PresetController {
             await req.preset!.save();
 
             res.status(200).json({
+                _id: req.preset!._id,
                 name: req.preset!.name,
-                volume: req.preset!.guitarBehavior.volume,
                 guitar: req.preset!.guitar,
+                volume: req.preset!.guitarBehavior.volume,
                 holdToPlay: req.preset!.guitarBehavior.holdToPlay,
                 allowSameStringOverlap:
                     req.preset!.guitarBehavior.allowSameStringOverlap,

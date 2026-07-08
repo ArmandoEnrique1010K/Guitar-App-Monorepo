@@ -39,8 +39,10 @@ export const HorizontalSlider = ({
         onChange(Number(e.target.value));
     };
 
-    // const displayValue = formatEffectValue(value, factor, decimals);
-    const displayValue = format ? format(value) : value;
+    // const formatValue = formatEffectValue(value, factor, decimals);
+
+    // Los siguientes valores se mostrara al usuario en la vista
+    const formatValue = format ? format(value) : value;
     const displayMin = format ? format(min) : min;
     const displayMax = format ? format(max) : max;
 
@@ -97,27 +99,14 @@ export const HorizontalSlider = ({
                 </div> */}
 
                 <Value
-                    // value={formatedValue !== undefined ? formatedValue : value}
-                    // min={min}
-                    // max={max}
-                    value={displayValue}
-                    // min={formatEffectValue(min, factor, decimals)}
-                    // max={formatEffectValue(max, factor, decimals)}
-                    // onChange={onChange}
-                    // onChange={(displayValue) => {
-                    //     onChange(
-                    //         formatEffectValue(displayValue, factor, decimals),
-                    //     );
-                    // }}
-
+                    value={formatValue}
                     min={displayMin}
                     max={displayMax}
                     decimals={decimals}
-                    // onChange={(displayValue) => {
-                    //     onChange(parse ? parse(displayValue) : displayValue);
-                    // }}
-
                     onChange={(displayValue) => {
+                        // Cuando se cambia el valor del formulario desde aqui
+                        // El usuario tiene que escribir un valor para que luego se transforme al valor original
+                        // 100 -> 1 en el caso de distortion o limite de distortion
                         const internalValue = parse
                             ? parse(displayValue)
                             : displayValue;
