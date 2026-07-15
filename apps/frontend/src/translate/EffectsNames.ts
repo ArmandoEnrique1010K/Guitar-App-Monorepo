@@ -7,6 +7,8 @@ export const EFFECTS_NAMES: Record<keyof Effects, string> = {
     tremolo: 'Tremolo',
     vibrato: 'Vibrato',
     freeverb: 'Libre Reverb.',
+    autoFilter: 'Filtro autom.',
+    feedbackDelay: 'Atrazo de ret.',
     // gain:        'Ganancia',
     // eq3:         'Ecualizador',
     // bitcrusher:  'Bitcrusher',

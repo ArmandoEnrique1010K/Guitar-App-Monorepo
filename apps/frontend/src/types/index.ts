@@ -208,6 +208,8 @@ export type Effects = {
     vibrato: VibratoConfig;
     chorus: ChorusConfig;
     freeverb: FreeverbConfig;
+    autoFilter: AutoFilterConfig;
+    feedbackDelay: FeedBackDelayConfig;
 };
 
 export type EffectsChain = {
@@ -217,6 +219,8 @@ export type EffectsChain = {
     vibrato: Tone.Vibrato | null;
     chorus: Tone.Chorus | null;
     freeverb: Tone.Freeverb | null;
+    autoFilter: Tone.AutoFilter | null;
+    feedbackDelay: Tone.FeedbackDelay | null;
 };
 
 export type DistortionConfig = {
@@ -268,6 +272,24 @@ export type FreeverbConfig = {
     wet: number;
 };
 
+export type AutoFilterConfig = {
+    enabled: boolean;
+    baseFrequency: number;
+    depth: number;
+    // filter: string;
+    frequency: number;
+    octaves: number;
+    type: 'sine' | 'square' | 'triangle' | 'sawtooth';
+    wet: number;
+};
+
+export type FeedBackDelayConfig = {
+    enabled: boolean;
+    delayTime: number;
+    feedback: number;
+    wet: number;
+};
+
 export type EffectHandler<TEffect, TConfig> = {
     create: () => TEffect;
 
@@ -283,4 +305,6 @@ export type EffectHandlers = {
     vibrato: EffectHandler<Tone.Vibrato, VibratoConfig>;
     chorus: EffectHandler<Tone.Chorus, ChorusConfig>;
     freeverb: EffectHandler<Tone.Freeverb, FreeverbConfig>;
+    autoFilter: EffectHandler<Tone.AutoFilter, AutoFilterConfig>;
+    feedbackDelay: EffectHandler<Tone.FeedbackDelay, FeedBackDelayConfig>;
 };

@@ -49,6 +49,9 @@ export * from './Studio/Settings/Effects/Fields/DistortionControls';
 export * from './Studio/Settings/Effects/Fields/ReverbControls';
 export * from './Studio/Settings/Effects/Fields/TremoloControls';
 export * from './Studio/Settings/Effects/Fields/VibratoControls';
+export * from './Studio/Settings/Effects/Fields/AutoFilterControls';
+export * from './Studio/Settings/Effects/Fields/FreeverbControls';
+export * from './Studio/Settings/Effects/Fields/FeedbackDelayControls';
 
 export * from './Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
 export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectsList';
@@ -67,6 +70,8 @@ export * as Reverb from './Studio/Settings/Effects/Fields/Reverb';
 export * as Tremolo from './Studio/Settings/Effects/Fields/Tremolo';
 export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
 export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
+export * as AutoFilter from './Studio/Settings/Effects/Fields/AutoFilter';
+export * as FeedbackDelay from './Studio/Settings/Effects/Fields/FeedbackDelay';
 
 export * from './Studio/Settings/Workspace/WorkspaceModal';
 export * from './Studio/Settings/Workspace/WorkspaceEditModal';

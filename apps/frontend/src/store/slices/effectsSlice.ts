@@ -8,15 +8,19 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import type { FretboardSliceType } from '@/store';
 import { buildDefaultEffectConfig } from '@/utils';
 import {
+    autofilterHandler,
     chorusHandler,
     distortionHandler,
     reverbHandler,
     tremoloHandler,
     vibratoHandler,
+    feedbackdelayHandler,
 } from '@/handlers';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
 import type { Preset } from '@/types';
+import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
+import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -103,6 +107,21 @@ export const effectsSlice: StateCreator<
             wet: FREEVERB_SCHEMA.wet.defaultValue,
             enabled: false,
         },
+        autoFilter: {
+            baseFrequency: AUTOFILTER_SCHEMA.baseFrequency.defaultValue,
+            depth: AUTOFILTER_SCHEMA.depth.defaultValue,
+            frequency: AUTOFILTER_SCHEMA.frequency.defaultValue,
+            octaves: AUTOFILTER_SCHEMA.octaves.defaultValue,
+            type: AUTOFILTER_SCHEMA.type.defaultValue,
+            wet: AUTOFILTER_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        feedbackDelay: {
+            delayTime: FEEDBACKDELAY_SCHEMA.delayTime.defaultValue,
+            feedback: FEEDBACKDELAY_SCHEMA.feedback.defaultValue,
+            wet: FEEDBACKDELAY_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
     },
 
     // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
@@ -113,6 +132,8 @@ export const effectsSlice: StateCreator<
         vibrato: null,
         chorus: null,
         freeverb: null,
+        autoFilter: null,
+        feedbackDelay: null,
     },
 
     // FUNCION AUXILIAR
@@ -123,6 +144,8 @@ export const effectsSlice: StateCreator<
         vibrato: vibratoHandler,
         chorus: chorusHandler,
         freeverb: freeverbHandler,
+        autoFilter: autofilterHandler,
+        feedbackDelay: feedbackdelayHandler,
     },
 
     // Ejemplo de funcion auxliar para distortion
@@ -378,6 +401,8 @@ export const effectsSlice: StateCreator<
                 vibrato: null,
                 chorus: null,
                 freeverb: null,
+                autoFilter: null,
+                feedbackDelay: null,
             },
         });
     },

@@ -1,5 +1,7 @@
+import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
+import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
@@ -14,6 +16,8 @@ export const EFFECT_SCHEMAS = {
     vibrato: VIBRATO_SCHEMA,
     chorus: CHORUS_SCHEMA,
     freeverb: FREEVERB_SCHEMA,
+    autoFilter: AUTOFILTER_SCHEMA,
+    feedbackDelay: FEEDBACKDELAY_SCHEMA,
 };
 
 // Construye los valores por defecto de un efecto de sonido
