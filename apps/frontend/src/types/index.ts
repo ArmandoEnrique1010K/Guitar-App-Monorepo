@@ -210,6 +210,8 @@ export type Effects = {
     freeverb: FreeverbConfig;
     autoFilter: AutoFilterConfig;
     feedbackDelay: FeedBackDelayConfig;
+    phaser: PhaserConfig;
+    pingPongDelay: PingPongDelayConfig;
 };
 
 export type EffectsChain = {
@@ -221,6 +223,8 @@ export type EffectsChain = {
     freeverb: Tone.Freeverb | null;
     autoFilter: Tone.AutoFilter | null;
     feedbackDelay: Tone.FeedbackDelay | null;
+    phaser: Tone.Phaser | null;
+    pingPongDelay: Tone.PingPongDelay | null;
 };
 
 export type DistortionConfig = {
@@ -290,6 +294,23 @@ export type FeedBackDelayConfig = {
     wet: number;
 };
 
+export type PhaserConfig = {
+    enabled: boolean;
+    q: number;
+    frequency: number;
+    octaves: number;
+    baseFrequency: number;
+    // stages: number;
+    wet: number;
+};
+
+export type PingPongDelayConfig = {
+    enabled: boolean;
+    delayTime: number;
+    feedback: number;
+    wet: number;
+};
+
 export type EffectHandler<TEffect, TConfig> = {
     create: () => TEffect;
 
@@ -307,4 +328,6 @@ export type EffectHandlers = {
     freeverb: EffectHandler<Tone.Freeverb, FreeverbConfig>;
     autoFilter: EffectHandler<Tone.AutoFilter, AutoFilterConfig>;
     feedbackDelay: EffectHandler<Tone.FeedbackDelay, FeedBackDelayConfig>;
+    phaser: EffectHandler<Tone.Phaser, PhaserConfig>;
+    pingPongDelay: EffectHandler<Tone.PingPongDelay, PingPongDelayConfig>;
 };

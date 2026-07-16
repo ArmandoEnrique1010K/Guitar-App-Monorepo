@@ -11,6 +11,8 @@ import {
     TremoloControls,
     VibratoControls,
     FeedbackDelayControls,
+    PhaserControls,
+    PingPongDelayControls,
 } from '@/components';
 import { useEffects } from '@/hooks';
 import { Button } from '@/ui';
@@ -110,6 +112,11 @@ export const EffectsView = () => {
 
                     {currentEffectSelected === 'feedbackDelay' && (
                         <FeedbackDelayControls />
+                    )}
+
+                    {currentEffectSelected === 'phaser' && <PhaserControls />}
+                    {currentEffectSelected === 'pingPongDelay' && (
+                        <PingPongDelayControls />
                     )}
                 </EffectControlsContainer>
             </div>

@@ -52,6 +52,8 @@ export * from './Studio/Settings/Effects/Fields/VibratoControls';
 export * from './Studio/Settings/Effects/Fields/AutoFilterControls';
 export * from './Studio/Settings/Effects/Fields/FreeverbControls';
 export * from './Studio/Settings/Effects/Fields/FeedbackDelayControls';
+export * from './Studio/Settings/Effects/Fields/PhaserControls';
+export * from './Studio/Settings/Effects/Fields/PingPongDelayControls';
 
 export * from './Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
 export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectsList';
@@ -72,6 +74,8 @@ export * as Vibrato from './Studio/Settings/Effects/Fields/Vibrato';
 export * as Freeverb from './Studio/Settings/Effects/Fields/Freeverb';
 export * as AutoFilter from './Studio/Settings/Effects/Fields/AutoFilter';
 export * as FeedbackDelay from './Studio/Settings/Effects/Fields/FeedbackDelay';
+export * as Phaser from './Studio/Settings/Effects/Fields/Phaser';
+export * as PingPongDelay from './Studio/Settings/Effects/Fields/PingPongDelay';
 
 export * from './Studio/Settings/Workspace/WorkspaceModal';
 export * from './Studio/Settings/Workspace/WorkspaceEditModal';

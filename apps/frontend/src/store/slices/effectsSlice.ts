@@ -15,12 +15,16 @@ import {
     tremoloHandler,
     vibratoHandler,
     feedbackdelayHandler,
+    phaserHandler,
+    pingPongDelayHandler,
 } from '@/handlers';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
 import type { Preset } from '@/types';
 import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
+import { PHASER_SCHEMA } from '@/constants/phaser.constants';
+import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -122,6 +126,21 @@ export const effectsSlice: StateCreator<
             wet: FEEDBACKDELAY_SCHEMA.wet.defaultValue,
             enabled: false,
         },
+        phaser: {
+            frequency: PHASER_SCHEMA.frequency.defaultValue,
+            baseFrequency: PHASER_SCHEMA.baseFrequency.defaultValue,
+            octaves: PHASER_SCHEMA.octaves.defaultValue,
+            q: PHASER_SCHEMA.Q.defaultValue,
+            stages: PHASER_SCHEMA.stages.defaultValue,
+            wet: PHASER_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        pingPongDelay: {
+            delayTime: PINGPONGDELAY_SCHEMA.delayTime.defaultValue,
+            feedback: PINGPONGDELAY_SCHEMA.feedback.defaultValue,
+            wet: PINGPONGDELAY_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
     },
 
     // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
@@ -134,6 +153,8 @@ export const effectsSlice: StateCreator<
         freeverb: null,
         autoFilter: null,
         feedbackDelay: null,
+        phaser: null,
+        pingPongDelay: null,
     },
 
     // FUNCION AUXILIAR
@@ -146,6 +167,8 @@ export const effectsSlice: StateCreator<
         freeverb: freeverbHandler,
         autoFilter: autofilterHandler,
         feedbackDelay: feedbackdelayHandler,
+        phaser: phaserHandler,
+        pingPongDelay: pingPongDelayHandler,
     },
 
     // Ejemplo de funcion auxliar para distortion
@@ -403,6 +426,8 @@ export const effectsSlice: StateCreator<
                 freeverb: null,
                 autoFilter: null,
                 feedbackDelay: null,
+                phaser: null,
+                pingPongDelay: null,
             },
         });
     },

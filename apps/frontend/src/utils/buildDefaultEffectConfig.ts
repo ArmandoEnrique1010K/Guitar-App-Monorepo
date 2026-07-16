@@ -3,9 +3,11 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
 import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
+import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
+import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
 import type { Effects } from '@/types';
 
 // Schema de definición de efectos
@@ -18,6 +20,8 @@ export const EFFECT_SCHEMAS = {
     freeverb: FREEVERB_SCHEMA,
     autoFilter: AUTOFILTER_SCHEMA,
     feedbackDelay: FEEDBACKDELAY_SCHEMA,
+    phaser: PHASER_SCHEMA,
+    pingPongDelay: PINGPONGDELAY_SCHEMA,
 };
 
 // Construye los valores por defecto de un efecto de sonido
