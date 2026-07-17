@@ -8,3 +8,5 @@ export * from './autoFilter.handler';
 export * from './feedbackdelay.handler';
 export * from './phaser.handler';
 export * from './pingPongDelay.handler';
+export * from './pitchShift.handler';
+export * from './gate.handler';

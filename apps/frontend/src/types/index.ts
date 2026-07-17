@@ -212,6 +212,10 @@ export type Effects = {
     feedbackDelay: FeedBackDelayConfig;
     phaser: PhaserConfig;
     pingPongDelay: PingPongDelayConfig;
+    pitchShift: PitchShiftConfig;
+
+    // Componentes como efectos
+    gate: GateConfig;
 };
 
 export type EffectsChain = {
@@ -225,6 +229,8 @@ export type EffectsChain = {
     feedbackDelay: Tone.FeedbackDelay | null;
     phaser: Tone.Phaser | null;
     pingPongDelay: Tone.PingPongDelay | null;
+    pitchShift: Tone.PitchShift | null;
+    gate: Tone.Gate | null;
 };
 
 export type DistortionConfig = {
@@ -311,6 +317,21 @@ export type PingPongDelayConfig = {
     wet: number;
 };
 
+export type PitchShiftConfig = {
+    enabled: boolean;
+    delayTime: number;
+    feedback: number;
+    pitch: number;
+    windowSize: number;
+    wet: number;
+};
+
+export type GateConfig = {
+    enabled: boolean;
+    threshold: number;
+    smoothing: number;
+};
+
 export type EffectHandler<TEffect, TConfig> = {
     create: () => TEffect;
 
@@ -330,4 +351,6 @@ export type EffectHandlers = {
     feedbackDelay: EffectHandler<Tone.FeedbackDelay, FeedBackDelayConfig>;
     phaser: EffectHandler<Tone.Phaser, PhaserConfig>;
     pingPongDelay: EffectHandler<Tone.PingPongDelay, PingPongDelayConfig>;
+    pitchShift: EffectHandler<Tone.PitchShift, PitchShiftConfig>;
+    gate: EffectHandler<Tone.Gate, GateConfig>;
 };

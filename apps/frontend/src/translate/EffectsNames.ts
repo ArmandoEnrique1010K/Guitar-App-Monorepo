@@ -14,6 +14,8 @@ export const EFFECTS_NAMES: Record<keyof Effects, string> = {
     // bitcrusher:  'Bitcrusher',
     phaser: 'Fase modular',
     pingPongDelay: 'Ping Pong R.',
+    pitchShift: 'Cambio de t.',
     // compressor:  'Compresor',
     // autowah:     'Auto Wah'
+    gate: 'Zero zumbido',
 };

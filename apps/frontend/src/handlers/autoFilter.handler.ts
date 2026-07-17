@@ -9,6 +9,7 @@ export const autofilterHandler = {
     configure: (effect: Tone.AutoFilter, config: AutoFilterConfig) => {
         effect.baseFrequency = config.baseFrequency;
         effect.depth.value = config.depth;
+        // Esta propiedad es de solo lectura, no se puede modificar
         // effect.filter = config.filter;
         effect.frequency.value = config.frequency;
         effect.octaves = config.octaves;

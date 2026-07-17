@@ -9,6 +9,8 @@ import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
 import type { Effects } from '@/types';
+import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
+import { GATE_SCHEMA } from '@/constants/gate.contants';
 
 // Schema de definición de efectos
 export const EFFECT_SCHEMAS = {
@@ -22,6 +24,8 @@ export const EFFECT_SCHEMAS = {
     feedbackDelay: FEEDBACKDELAY_SCHEMA,
     phaser: PHASER_SCHEMA,
     pingPongDelay: PINGPONGDELAY_SCHEMA,
+    pitchShift: PITCHSHIFT_SCHEMA,
+    gate: GATE_SCHEMA,
 };
 
 // Construye los valores por defecto de un efecto de sonido

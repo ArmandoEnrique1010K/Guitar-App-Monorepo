@@ -17,6 +17,8 @@ import {
     feedbackdelayHandler,
     phaserHandler,
     pingPongDelayHandler,
+    pitchShiftHandler,
+    gateHandler,
 } from '@/handlers';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
@@ -25,6 +27,8 @@ import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
+import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
+import { GATE_SCHEMA } from '@/constants/gate.contants';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -141,6 +145,19 @@ export const effectsSlice: StateCreator<
             wet: PINGPONGDELAY_SCHEMA.wet.defaultValue,
             enabled: false,
         },
+        pitchShift: {
+            delayTime: PITCHSHIFT_SCHEMA.delayTime.defaultValue,
+            feedback: PITCHSHIFT_SCHEMA.feedback.defaultValue,
+            pitch: PITCHSHIFT_SCHEMA.pitch.defaultValue,
+            windowSize: PITCHSHIFT_SCHEMA.windowSize.defaultValue,
+            wet: PITCHSHIFT_SCHEMA.wet.defaultValue,
+            enabled: false,
+        },
+        gate: {
+            smoothing: GATE_SCHEMA.smoothing.defaultValue,
+            threshold: GATE_SCHEMA.threshold.defaultValue,
+            enabled: false,
+        },
     },
 
     // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
@@ -155,6 +172,8 @@ export const effectsSlice: StateCreator<
         feedbackDelay: null,
         phaser: null,
         pingPongDelay: null,
+        pitchShift: null,
+        gate: null,
     },
 
     // FUNCION AUXILIAR
@@ -169,6 +188,8 @@ export const effectsSlice: StateCreator<
         feedbackDelay: feedbackdelayHandler,
         phaser: phaserHandler,
         pingPongDelay: pingPongDelayHandler,
+        pitchShift: pitchShiftHandler,
+        gate: gateHandler,
     },
 
     // Ejemplo de funcion auxliar para distortion
@@ -428,6 +449,8 @@ export const effectsSlice: StateCreator<
                 feedbackDelay: null,
                 phaser: null,
                 pingPongDelay: null,
+                pitchShift: null,
+                gate: null,
             },
         });
     },

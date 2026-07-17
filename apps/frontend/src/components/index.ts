@@ -54,6 +54,8 @@ export * from './Studio/Settings/Effects/Fields/FreeverbControls';
 export * from './Studio/Settings/Effects/Fields/FeedbackDelayControls';
 export * from './Studio/Settings/Effects/Fields/PhaserControls';
 export * from './Studio/Settings/Effects/Fields/PingPongDelayControls';
+export * from './Studio/Settings/Effects/Fields/PitchShiftControls';
+export * from './Studio/Settings/Effects/Fields/GateControls';
 
 export * from './Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
 export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectsList';
@@ -76,6 +78,8 @@ export * as AutoFilter from './Studio/Settings/Effects/Fields/AutoFilter';
 export * as FeedbackDelay from './Studio/Settings/Effects/Fields/FeedbackDelay';
 export * as Phaser from './Studio/Settings/Effects/Fields/Phaser';
 export * as PingPongDelay from './Studio/Settings/Effects/Fields/PingPongDelay';
+export * as PitchShift from './Studio/Settings/Effects/Fields/PitchShift';
+export * as Gate from './Studio/Settings/Effects/Fields/Gate';
 
 export * from './Studio/Settings/Workspace/WorkspaceModal';
 export * from './Studio/Settings/Workspace/WorkspaceEditModal';

@@ -13,6 +13,8 @@ import {
     FeedbackDelayControls,
     PhaserControls,
     PingPongDelayControls,
+    PitchShiftControls,
+    GateControls,
 } from '@/components';
 import { useEffects } from '@/hooks';
 import { Button } from '@/ui';
@@ -118,6 +120,11 @@ export const EffectsView = () => {
                     {currentEffectSelected === 'pingPongDelay' && (
                         <PingPongDelayControls />
                     )}
+                    {currentEffectSelected === 'pitchShift' && (
+                        <PitchShiftControls />
+                    )}
+
+                    {currentEffectSelected === 'gate' && <GateControls />}
                 </EffectControlsContainer>
             </div>
         </div>
