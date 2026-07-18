@@ -19,6 +19,8 @@ import {
     pingPongDelayHandler,
     pitchShiftHandler,
     gateHandler,
+    compressorHandler,
+    eq3Handler,
 } from '@/handlers';
 import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { freeverbHandler } from '@/handlers/freeverb.handler';
@@ -29,6 +31,8 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
 import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
 import { GATE_SCHEMA } from '@/constants/gate.contants';
+import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
+import { EQ3_SCHEMA } from '@/constants/eq3.constants';
 
 // TIPADO DE EFECTOS
 export type EffectsSliceType = {
@@ -158,6 +162,22 @@ export const effectsSlice: StateCreator<
             threshold: GATE_SCHEMA.threshold.defaultValue,
             enabled: false,
         },
+        compressor: {
+            attack: COMPRESSOR_SCHEMA.attack.defaultValue,
+            knee: COMPRESSOR_SCHEMA.knee.defaultValue,
+            ratio: COMPRESSOR_SCHEMA.ratio.defaultValue,
+            release: COMPRESSOR_SCHEMA.release.defaultValue,
+            threshold: COMPRESSOR_SCHEMA.threshold.defaultValue,
+            enabled: false,
+        },
+        eq3: {
+            low: EQ3_SCHEMA.low.defaultValue,
+            mid: EQ3_SCHEMA.mid.defaultValue,
+            high: EQ3_SCHEMA.high.defaultValue,
+            lowFrequency: EQ3_SCHEMA.lowFrequency.defaultValue,
+            highFrequency: EQ3_SCHEMA.highFrequency.defaultValue,
+            enabled: false,
+        },
     },
 
     // AQUI ESTAN LOS EFECTOS REALES (DEBEN SER TODOS)
@@ -174,6 +194,8 @@ export const effectsSlice: StateCreator<
         pingPongDelay: null,
         pitchShift: null,
         gate: null,
+        compressor: null,
+        eq3: null,
     },
 
     // FUNCION AUXILIAR
@@ -190,6 +212,8 @@ export const effectsSlice: StateCreator<
         pingPongDelay: pingPongDelayHandler,
         pitchShift: pitchShiftHandler,
         gate: gateHandler,
+        compressor: compressorHandler,
+        eq3: eq3Handler,
     },
 
     // Ejemplo de funcion auxliar para distortion
@@ -451,6 +475,8 @@ export const effectsSlice: StateCreator<
                 pingPongDelay: null,
                 pitchShift: null,
                 gate: null,
+                compressor: null,
+                eq3: null,
             },
         });
     },

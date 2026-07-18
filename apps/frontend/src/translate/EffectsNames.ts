@@ -10,12 +10,12 @@ export const EFFECTS_NAMES: Record<keyof Effects, string> = {
     autoFilter: 'Filtro autom.',
     feedbackDelay: 'Atrazo de ret.',
     // gain:        'Ganancia',
-    // eq3:         'Ecualizador',
+    eq3: 'Ecualizador',
     // bitcrusher:  'Bitcrusher',
     phaser: 'Fase modular',
     pingPongDelay: 'Ping Pong R.',
     pitchShift: 'Cambio de t.',
-    // compressor:  'Compresor',
+    compressor: 'Compresor',
     // autowah:     'Auto Wah'
     gate: 'Zero zumbido',
 };

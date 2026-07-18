@@ -216,6 +216,8 @@ export type Effects = {
 
     // Componentes como efectos
     gate: GateConfig;
+    compressor: CompressorConfig;
+    eq3: EQ3Config;
 };
 
 export type EffectsChain = {
@@ -231,6 +233,8 @@ export type EffectsChain = {
     pingPongDelay: Tone.PingPongDelay | null;
     pitchShift: Tone.PitchShift | null;
     gate: Tone.Gate | null;
+    compressor: Tone.Compressor | null;
+    eq3: Tone.EQ3 | null;
 };
 
 export type DistortionConfig = {
@@ -332,6 +336,24 @@ export type GateConfig = {
     smoothing: number;
 };
 
+export type CompressorConfig = {
+    enabled: boolean;
+    attack: number;
+    knee: number;
+    ratio: number;
+    release: number;
+    threshold: number;
+};
+
+export type EQ3Config = {
+    enabled: boolean;
+    low: number;
+    mid: number;
+    high: number;
+    lowFrequency: number;
+    highFrequency: number;
+};
+
 export type EffectHandler<TEffect, TConfig> = {
     create: () => TEffect;
 
@@ -353,4 +375,6 @@ export type EffectHandlers = {
     pingPongDelay: EffectHandler<Tone.PingPongDelay, PingPongDelayConfig>;
     pitchShift: EffectHandler<Tone.PitchShift, PitchShiftConfig>;
     gate: EffectHandler<Tone.Gate, GateConfig>;
+    compressor: EffectHandler<Tone.Compressor, CompressorConfig>;
+    eq3: EffectHandler<Tone.EQ3, EQ3Config>;
 };

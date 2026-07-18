@@ -56,6 +56,8 @@ export * from './Studio/Settings/Effects/Fields/PhaserControls';
 export * from './Studio/Settings/Effects/Fields/PingPongDelayControls';
 export * from './Studio/Settings/Effects/Fields/PitchShiftControls';
 export * from './Studio/Settings/Effects/Fields/GateControls';
+export * from './Studio/Settings/Effects/Fields/CompressorControls';
+export * from './Studio/Settings/Effects/Fields/EQ3Controls';
 
 export * from './Studio/Settings/Effects/EffectsOrder/EffectAddSelector';
 export * from './Studio/Settings/Effects/EffectsOrder/SortableEffectsList';
@@ -80,6 +82,8 @@ export * as Phaser from './Studio/Settings/Effects/Fields/Phaser';
 export * as PingPongDelay from './Studio/Settings/Effects/Fields/PingPongDelay';
 export * as PitchShift from './Studio/Settings/Effects/Fields/PitchShift';
 export * as Gate from './Studio/Settings/Effects/Fields/Gate';
+export * as Compressor from './Studio/Settings/Effects/Fields/Compressor';
+export * as EQ3 from './Studio/Settings/Effects/Fields/EQ3';
 
 export * from './Studio/Settings/Workspace/WorkspaceModal';
 export * from './Studio/Settings/Workspace/WorkspaceEditModal';

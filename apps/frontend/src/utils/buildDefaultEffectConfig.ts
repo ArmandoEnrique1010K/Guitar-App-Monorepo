@@ -1,3 +1,4 @@
+import type { Effects } from '@/types';
 import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
@@ -8,9 +9,10 @@ import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
-import type { Effects } from '@/types';
 import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
 import { GATE_SCHEMA } from '@/constants/gate.contants';
+import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
+import { EQ3_SCHEMA } from '@/constants/eq3.constants';
 
 // Schema de definición de efectos
 export const EFFECT_SCHEMAS = {
@@ -26,6 +28,8 @@ export const EFFECT_SCHEMAS = {
     pingPongDelay: PINGPONGDELAY_SCHEMA,
     pitchShift: PITCHSHIFT_SCHEMA,
     gate: GATE_SCHEMA,
+    compressor: COMPRESSOR_SCHEMA,
+    eq3: EQ3_SCHEMA,
 };
 
 // Construye los valores por defecto de un efecto de sonido

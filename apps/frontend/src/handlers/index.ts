@@ -10,3 +10,5 @@ export * from './phaser.handler';
 export * from './pingPongDelay.handler';
 export * from './pitchShift.handler';
 export * from './gate.handler';
+export * from './compressor.handler';
+export * from './eq3.handler';

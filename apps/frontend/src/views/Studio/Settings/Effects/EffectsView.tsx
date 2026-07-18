@@ -15,6 +15,8 @@ import {
     PingPongDelayControls,
     PitchShiftControls,
     GateControls,
+    CompressorControls,
+    EQ3Controls,
 } from '@/components';
 import { useEffects } from '@/hooks';
 import { Button } from '@/ui';
@@ -125,6 +127,10 @@ export const EffectsView = () => {
                     )}
 
                     {currentEffectSelected === 'gate' && <GateControls />}
+                    {currentEffectSelected === 'compressor' && (
+                        <CompressorControls />
+                    )}
+                    {currentEffectSelected === 'eq3' && <EQ3Controls />}
                 </EffectControlsContainer>
             </div>
         </div>
