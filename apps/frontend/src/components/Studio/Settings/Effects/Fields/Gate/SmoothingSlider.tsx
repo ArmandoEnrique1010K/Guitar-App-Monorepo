@@ -1,4 +1,4 @@
-import { GATE_SCHEMA } from '@/constants/gate.contants';
+import { GATE_SCHEMA } from '@/constants/gate.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

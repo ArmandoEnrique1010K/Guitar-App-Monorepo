@@ -1,21 +1,19 @@
 import { useAppStore } from '@/store';
 
 export const useProfile = () => {
-    const profile = useAppStore((state) => state.profile);
     const isLoading = useAppStore((state) => state.isLoading);
-    const error = useAppStore((state) => state.error);
+    const profile = useAppStore((state) => state.profile);
+    const showProfileModal = useAppStore((state) => state.showProfileModal);
     const getProfile = useAppStore((state) => state.getProfile);
-    const cleanProfile = useAppStore((state) => state.cleanProfile);
-    const showProfile = useAppStore((state) => state.showProfile);
-    const setShowProfile = useAppStore((state) => state.setShowProfile);
+    const openProfileModal = useAppStore((state) => state.openProfileModal);
+    const closeProfileModal = useAppStore((state) => state.closeProfileModal);
 
     return {
-        profile,
         isLoading,
-        error,
+        profile,
+        showProfileModal,
         getProfile,
-        cleanProfile,
-        showProfile,
-        setShowProfile,
+        openProfileModal,
+        closeProfileModal,
     };
 };

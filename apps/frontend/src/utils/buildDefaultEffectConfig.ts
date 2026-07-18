@@ -8,9 +8,9 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
-import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
-import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
-import { GATE_SCHEMA } from '@/constants/gate.contants';
+import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.constants';
+import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
+import { GATE_SCHEMA } from '@/constants/gate.constants';
 import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { EQ3_SCHEMA } from '@/constants/eq3.constants';
 

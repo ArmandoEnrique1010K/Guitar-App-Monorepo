@@ -6,6 +6,7 @@ import NotificationsSystem, {
     setUpNotifications,
     wyboTheme,
 } from 'reapop';
+import { Loader } from './components';
 
 export default function App() {
     // Obtiene el listado de notificaciones activas y la función para cerrarlas.
@@ -34,7 +35,7 @@ export default function App() {
     // Mientras se verifica si existe una sesión iniciada, se muestra una
     // pantalla de carga para evitar renderizar la aplicación prematuramente.
     if (isLoading) {
-        return <div>Cargando...</div>;
+        return <Loader />;
     }
 
     return (

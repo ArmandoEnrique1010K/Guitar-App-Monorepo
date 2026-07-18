@@ -1,23 +1,21 @@
 import { getUser } from '@/api';
 import type { User } from '@/types';
+import { isErrorResponse, sleep } from '@/utils';
 import type { StateCreator } from 'zustand';
 
 export type ProfileSliceType = {
-    profile: User | null;
     isLoading: boolean;
-    error: string | null;
-
+    profile: User | null;
+    showProfileModal: boolean;
     getProfile: () => Promise<void>;
-    cleanProfile: () => void;
-
-    showProfile: boolean;
-    setShowProfile: (showProfile: boolean) => void;
+    openProfileModal: () => void;
+    closeProfileModal: () => void;
 };
 
 export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
-    profile: null,
     isLoading: false,
-    error: null,
+    profile: null,
+    showProfileModal: false,
 
     getProfile: async () => {
         // Evita hacer la petición si ya existe el perfil
@@ -26,26 +24,30 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
         try {
             set({
                 isLoading: true,
-                error: null,
             });
+
+            // Retraso de 1.5 segundos
+            await sleep(1500);
 
             const data = await getUser();
 
-            // Si se tiene la propiedad 'error' en la respuesta
-            if ('error' in data) {
-                // console.log(data.error);
+            // Si se tiene la propiedad 'error' en la respuesta, detiene la ejecución
+            if (isErrorResponse(data)) {
                 set({
                     profile: null,
                 });
                 return;
             }
+
             set({
                 profile: data,
             });
         } catch (error) {
             set({
-                error: 'Error obteniendo perfil',
+                profile: null,
             });
+
+            console.log(error);
         } finally {
             set({
                 isLoading: false,
@@ -53,17 +55,11 @@ export const profileSlice: StateCreator<ProfileSliceType> = (set, get) => ({
         }
     },
 
-    cleanProfile: () => {
-        localStorage.removeItem('AUTH_TOKEN');
-
-        set({
-            profile: null,
-            error: null,
-        });
+    openProfileModal: () => {
+        set({ showProfileModal: true });
     },
 
-    showProfile: false,
-    setShowProfile: (showProfile) => {
-        set({ showProfile });
+    closeProfileModal: () => {
+        set({ showProfileModal: false });
     },
 });

@@ -35,7 +35,7 @@ export type KeyboardsRows = {
 
 //
 
-// Factories - Objetos que definen constantes
+// Factories
 
 // Tipado de propiedades para un campo de tipo range
 export type NumberProperty = {
@@ -53,6 +53,10 @@ export type OptionProperty<T extends string> = {
     defaultValue: T;
     values: T[];
 };
+
+//
+
+// MODULOS
 
 //
 
@@ -111,10 +115,11 @@ export type Workspace = {
 };
 
 // No se incluye la propiedad presetCount
-export type WorkspaceSummary = {
-    _id: string;
-    name: string;
-};
+// export type WorkspaceSummary = {
+//     _id: string;
+//     name: string;
+// };
+export type WorkspaceSummary = Omit<Workspace, 'presetCount'>;
 
 export type WorkspaceForm = {
     name: string;
@@ -199,27 +204,9 @@ export type Note = {
     noteIndex: number | null;
 };
 
+//
+
 // EFECTOS DE SONIDO
-
-export type Effects = {
-    distortion: DistortionConfig;
-    reverb: ReverbConfig;
-    tremolo: TremoloConfig;
-    vibrato: VibratoConfig;
-    chorus: ChorusConfig;
-    freeverb: FreeverbConfig;
-    autoFilter: AutoFilterConfig;
-    feedbackDelay: FeedBackDelayConfig;
-    phaser: PhaserConfig;
-    pingPongDelay: PingPongDelayConfig;
-    pitchShift: PitchShiftConfig;
-
-    // Componentes como efectos
-    gate: GateConfig;
-    compressor: CompressorConfig;
-    eq3: EQ3Config;
-};
-
 export type EffectsChain = {
     distortion: Tone.Distortion | null;
     reverb: Tone.Reverb | null;
@@ -377,4 +364,23 @@ export type EffectHandlers = {
     gate: EffectHandler<Tone.Gate, GateConfig>;
     compressor: EffectHandler<Tone.Compressor, CompressorConfig>;
     eq3: EffectHandler<Tone.EQ3, EQ3Config>;
+};
+
+export type Effects = {
+    distortion: DistortionConfig;
+    reverb: ReverbConfig;
+    tremolo: TremoloConfig;
+    vibrato: VibratoConfig;
+    chorus: ChorusConfig;
+    freeverb: FreeverbConfig;
+    autoFilter: AutoFilterConfig;
+    feedbackDelay: FeedBackDelayConfig;
+    phaser: PhaserConfig;
+    pingPongDelay: PingPongDelayConfig;
+    pitchShift: PitchShiftConfig;
+
+    // Componentes como efectos
+    gate: GateConfig;
+    compressor: CompressorConfig;
+    eq3: EQ3Config;
 };

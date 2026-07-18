@@ -1,4 +1,4 @@
-import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.contants';
+import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';

@@ -89,6 +89,7 @@ export * from './Studio/Settings/Workspace/WorkspaceModal';
 export * from './Studio/Settings/Workspace/WorkspaceEditModal';
 
 export * from './Modal';
+export * from './Loader';
 export * from './Studio/Settings/Workspace/WorkspaceBurgerMenuButton';
 export * from './Studio/Settings/Workspace/PresetsCounterText';
 export * from './Studio/Settings/Workspace/PresetModal';

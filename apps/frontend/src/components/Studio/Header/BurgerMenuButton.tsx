@@ -6,7 +6,7 @@ import { ProfileModal } from '../Profile/ProfileModal';
 import { ActionMenu } from '@/components';
 
 export const BurgerMenuButton = () => {
-    const { profile, setShowProfile } = useProfile();
+    const { profile, openProfileModal } = useProfile();
     const { setShowCredits } = usePreferences();
 
     const buildOptions = (): {
@@ -33,13 +33,15 @@ export const BurgerMenuButton = () => {
             {
                 label: 'Mi perfil',
                 onClick: () => {
-                    setShowProfile(true);
+                    openProfileModal();
                 },
             },
             {
                 label: 'Cerrar sesion',
                 onClick: () => {
                     logout();
+
+                    // Recarga toda la página
                     window.location.reload();
                 },
             },

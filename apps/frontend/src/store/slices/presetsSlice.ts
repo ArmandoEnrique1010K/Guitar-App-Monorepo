@@ -9,7 +9,11 @@ import type { SettingsSliceType } from './settingsSlice';
 import type { PreferencesSliceType } from './preferencesSlice';
 import type { ControlBarSliceType } from './controlBarSlice';
 import type { EffectsSliceType } from './effectsSlice';
-import { buildEffectsPayload, isErrorResponse } from '@/utils';
+import {
+    buildEffectsPayload,
+    isErrorResponse,
+    isErrorResponseWithFields,
+} from '@/utils';
 import type { BottomBarSliceType } from './bottomBarSlice';
 import type { FretboardSliceType } from './fretboardSlice';
 import type { Preset } from '@/types';
@@ -234,7 +238,7 @@ export const presetsSlice: StateCreator<
         });
 
         // TODO: INVESTIGAR
-        if (isErrorResponse(preset)) {
+        if (isErrorResponseWithFields(preset)) {
             return;
         }
 

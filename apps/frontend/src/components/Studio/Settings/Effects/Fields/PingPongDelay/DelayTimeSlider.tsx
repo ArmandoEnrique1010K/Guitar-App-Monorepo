@@ -1,4 +1,4 @@
-import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.contants';
+import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
