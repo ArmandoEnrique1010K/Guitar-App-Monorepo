@@ -1,5 +1,5 @@
 import type { FretNote } from '@/types';
-import { FretCell } from './FretCell';
+import { FretCell } from '@/components';
 
 type Props = {
     frets: FretNote[];

@@ -3,9 +3,19 @@ import { useProfile } from '@/hooks';
 import { CrossIcon, PlusIcon } from '@/icons';
 import type { Error } from '@/types';
 import { Button, InputText } from '@/ui';
-import { isErrorResponse, isErrorResponseWithFields } from '@/utils';
+import {
+    getErrorMessage,
+    isErrorResponse,
+    isErrorResponseWithFields,
+} from '@/utils';
 import { useState } from 'react';
 import { useNotifications } from 'reapop';
+
+const initialValues = {
+    current_password: '',
+    password: '',
+    password_confirmation: '',
+};
 
 export const UpdatePasswordModal = () => {
     const { notify } = useNotifications();
@@ -15,38 +25,30 @@ export const UpdatePasswordModal = () => {
         updatePassword,
     } = useProfile();
 
-    const [dataForm, setDataForm] = useState({
-        current_password: '',
-        password: '',
-        password_confirmation: '',
-    });
+    const [dataForm, setDataForm] = useState(initialValues);
 
-    const [errorMessagesFields, setErrorMessagesFields] = useState({
-        current_password: '',
-        password: '',
-        password_confirmation: '',
-    });
+    const [errorMessagesFields, setErrorMessagesFields] =
+        useState(initialValues);
 
     const handleSubmitUpdatePassword = async () => {
         try {
             const data = await updatePassword(dataForm);
 
-            setErrorMessagesFields({
-                current_password: '',
-                password: '',
-                password_confirmation: '',
-            });
+            setErrorMessagesFields(initialValues);
 
             if (isErrorResponseWithFields(data)) {
                 const errors = data.errors as Error[];
 
-                const getMessage = (path: string) =>
-                    errors.find((e) => e.path === path)?.msg ?? '';
-
                 setErrorMessagesFields({
-                    current_password: getMessage('current_password'),
-                    password: getMessage('password'),
-                    password_confirmation: getMessage('password_confirmation'),
+                    current_password: getErrorMessage(
+                        errors,
+                        'current_password',
+                    ),
+                    password: getErrorMessage(errors, 'password'),
+                    password_confirmation: getErrorMessage(
+                        errors,
+                        'password_confirmation',
+                    ),
                 });
 
                 return;
@@ -67,11 +69,7 @@ export const UpdatePasswordModal = () => {
                 status: 'success',
             });
 
-            setDataForm({
-                current_password: '',
-                password: '',
-                password_confirmation: '',
-            });
+            setDataForm(initialValues);
 
             toggleUpdatePasswordModal();
         } catch (error) {
@@ -83,7 +81,6 @@ export const UpdatePasswordModal = () => {
         <Modal
             title="Cambio de contraseña"
             open={showUpdatePasswordModal}
-            onOpenChange={toggleUpdatePasswordModal}
             children={
                 <div className="flex flex-col gap-4">
                     <InputText
@@ -141,9 +138,7 @@ export const UpdatePasswordModal = () => {
                     <div className="flex flex-row justify-between gap-2">
                         <Button
                             icon={<CrossIcon className="size-6" />}
-                            onClick={() => {
-                                toggleUpdatePasswordModal();
-                            }}
+                            onClick={toggleUpdatePasswordModal}
                             text="Cancelar"
                         />
                         <Button

@@ -17,8 +17,7 @@ export const OpenStringLabel = ({ value, title }: Props) => {
                 h-full
                 gap-2
 
-                shrink-0
-            "
+                shrink-0"
         >
             <div className="w-1 flex-1 bg-green-700" />
 

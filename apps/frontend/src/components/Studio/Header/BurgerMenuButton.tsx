@@ -1,11 +1,13 @@
 import { logout } from '@/api';
-import { usePreferences, useProfile } from '@/hooks';
+import { useCredits, useProfile } from '@/hooks';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
-import { CreditsModal } from '../Credits/CreditsModal';
-import { ProfileModal } from '../Profile/ProfileModal';
 import { ActionMenu } from '@/components';
-import { EditProfileModal } from '../Profile/EditProfileModal';
-import { UpdatePasswordModal } from '../Profile/UpdatePasswordModal';
+import {
+    CreditsModal,
+    EditProfileModal,
+    ProfileModal,
+    UpdatePasswordModal,
+} from '@/views';
 
 export const BurgerMenuButton = () => {
     const {
@@ -14,7 +16,7 @@ export const BurgerMenuButton = () => {
         toggleEditProfileModal,
         toggleUpdatePasswordModal,
     } = useProfile();
-    const { setShowCredits } = usePreferences();
+    const { toggleCreditsModal } = useCredits();
 
     const buildOptions = (): {
         label: string;
@@ -23,9 +25,7 @@ export const BurgerMenuButton = () => {
     }[] => {
         const initialOptions = {
             label: 'Creditos del autor',
-            onClick: () => {
-                setShowCredits(true);
-            },
+            onClick: () => toggleCreditsModal(),
         };
 
         if (profile) {
@@ -50,7 +50,7 @@ export const BurgerMenuButton = () => {
                 },
             },
             {
-                label: 'Actualizar contraseña',
+                label: 'Cambio de contraseña',
                 onClick: () => {
                     toggleUpdatePasswordModal();
                 },

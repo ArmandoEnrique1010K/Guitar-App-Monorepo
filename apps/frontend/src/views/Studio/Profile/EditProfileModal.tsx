@@ -1,11 +1,20 @@
-import { Modal } from '@/components/Modal';
+import { Modal } from '@/components';
 import { useProfile } from '@/hooks';
 import { CrossIcon, PlusIcon } from '@/icons';
 import type { Error } from '@/types';
 import { Button, InputText } from '@/ui';
-import { isErrorResponse, isErrorResponseWithFields } from '@/utils';
+import {
+    getErrorMessage,
+    isErrorResponse,
+    isErrorResponseWithFields,
+} from '@/utils';
 import { useState } from 'react';
 import { useNotifications } from 'reapop';
+
+const initialValues = {
+    name: '',
+    email: '',
+};
 
 export const EditProfileModal = () => {
     const { notify } = useNotifications();
@@ -16,34 +25,26 @@ export const EditProfileModal = () => {
         profile,
     } = useProfile();
 
+    // Toma los datos de perfil del usuario
     const [dataForm, setDataForm] = useState({
         name: profile?.name,
         email: profile?.email,
     });
 
-    const [errorMessagesFields, setErrorMessagesFields] = useState({
-        name: '',
-        email: '',
-    });
+    const [errorMessagesFields, setErrorMessagesFields] =
+        useState(initialValues);
 
     const handleSubmitEditProfile = async () => {
         try {
             const data = await editProfile(dataForm);
-
-            setErrorMessagesFields({
-                name: '',
-                email: '',
-            });
+            setErrorMessagesFields(initialValues);
 
             if (isErrorResponseWithFields(data)) {
                 const errors = data.errors as Error[];
 
-                const getMessage = (path: string) =>
-                    errors.find((e) => e.path === path)?.msg ?? '';
-
                 setErrorMessagesFields({
-                    name: getMessage('name'),
-                    email: getMessage('email'),
+                    name: getErrorMessage(errors, 'name'),
+                    email: getErrorMessage(errors, 'email'),
                 });
 
                 return;
@@ -74,7 +75,6 @@ export const EditProfileModal = () => {
         <Modal
             title="Editar perfil"
             open={showEditProfileModal}
-            onOpenChange={toggleEditProfileModal}
             children={
                 <div className="flex flex-col gap-4">
                     <InputText

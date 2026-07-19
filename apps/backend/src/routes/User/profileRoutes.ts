@@ -37,7 +37,7 @@ router.put(
         .withMessage("La contraseña es muy corta, minimo 8 caracteres"),
     body("password_confirmation").custom((value, { req }) => {
         if (value !== req.body.password) {
-            throw new Error("Los Password no son iguales");
+            throw new Error("Las contraseñas no son iguales");
         }
         return true;
     }),

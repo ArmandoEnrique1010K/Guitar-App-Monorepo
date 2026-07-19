@@ -36,28 +36,40 @@ export default function App() {
     // Mientras se verifica si existe una sesión iniciada, se muestra una
     // pantalla de carga para evitar renderizar la aplicación prematuramente.
     if (isLoading) {
-        return <Loader />;
+        return (
+            <Loader
+                label="Admira el poder de React y ToneJS"
+                className="mb-5"
+                height="h-screen"
+            />
+        );
     }
 
-    // Función para manejar clics en el contenedor de notificaciones
-    const handleNotificationContainerClick = (e) => {
-        // Detener la propagación para que no cierre el modal
+    // Evita que los clics sobre las notificaciones se propaguen al overlay
+    // del modal de Radix UI, ya que el overlay podría interpretar el clic
+    // como una acción para cerrar el modal.
+    const handleNotificationContainerClick = (e: React.MouseEvent) => {
         e.stopPropagation();
     };
 
-    // Renderizar notificaciones en el body
+    // Se utiliza un Portal para renderizar las notificaciones directamente
+    // en document.body y no dentro del árbol principal de la aplicación.
+    //
+    // ¿Por qué?
+    // - Radix UI renderiza los modales usando un Portal propio con un z-index alto.
+    // - Si Reapop se renderiza dentro de <Router /> o dentro del contenedor raíz,
+    //   las notificaciones pueden quedar por detrás del modal debido al stacking context.
+    // - Al renderizarlas en document.body, las notificaciones quedan fuera de ese
+    //   contexto de apilamiento y pueden mostrarse por encima del modal.
+    // - Esto evita tener que manipular z-index extremadamente altos o depender
+    //   de estilos internos de Radix o Reapop.
     const notificationsPortal = createPortal(
         <div
             onClick={handleNotificationContainerClick}
-            onMouseDown={handleNotificationContainerClick} // También prevenir mousedown
-            style={{
-                position: 'relative',
-                zIndex: 999999,
-                pointerEvents: 'none', // Permitir clics solo en las notificaciones
-            }}
+            onMouseDown={handleNotificationContainerClick}
         >
             <div style={{ pointerEvents: 'auto' }}>
-                {/* Las notificaciones sí son clicables */}
+                {/* Las notificaciones sí pueden recibir eventos del mouse */}
                 <NotificationsSystem
                     notifications={notifications}
                     dismissNotification={(id) => dismissNotification(id)}
@@ -70,23 +82,11 @@ export default function App() {
 
     return (
         <>
+            {/* Portal global de notificaciones */}
             {notificationsPortal}
+
+            {/* Enrutador principal de la aplicación */}
             <Router />
         </>
     );
-
-    // return (
-    //     <div className="">
-    //         {/* Sistema global encargado de renderizar las notificaciones */}
-    //         <NotificationsSystem
-    //             notifications={notifications}
-    //             // Permite cerrar manualmente la notificación
-    //             dismissNotification={(id) => dismissNotification(id)}
-    //             theme={wyboTheme}
-    //         />
-
-    //         {/* Enrutador principal de la aplicación */}
-    //         <Router />
-    //     </div>
-    // );
 }

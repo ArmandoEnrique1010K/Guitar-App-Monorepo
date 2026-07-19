@@ -1,6 +1,5 @@
 import { useFretboard } from '@/hooks';
-import { GuitarString } from './GuitarString';
-import { OpenStringLabel } from './OpenStringLabel';
+import { OpenStringLabel, GuitarString } from '@/components';
 
 export const GuitarNeck = () => {
     const { neck } = useFretboard();

@@ -18,7 +18,6 @@ export * from './Studio/ControlBar/RootChordSlider';
 export * from './Studio/ControlBar/PauseButton';
 
 export * from './Studio/Fretboard/FretCell';
-export * from './Studio/Fretboard/FretMarkers';
 export * from './Studio/Fretboard/FretNumbers';
 export * from './Studio/Fretboard/GuitarNeck';
 export * from './Studio/Fretboard/GuitarString';

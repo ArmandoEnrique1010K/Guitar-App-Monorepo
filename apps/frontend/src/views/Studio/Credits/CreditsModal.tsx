@@ -1,5 +1,5 @@
-import { Modal } from '@/components/Modal';
-import { usePreferences } from '@/hooks';
+import { Modal } from '@/components';
+import { useCredits } from '@/hooks';
 import { CrossIcon } from '@/icons';
 import { Button } from '@/ui';
 const sections = [
@@ -30,7 +30,6 @@ const sections = [
         title: 'Fuentes',
         items: ['Shockwave2', 'Roboto'],
     },
-    // TODO: FALTA IMPLEMENTAR ESTAS LIBRERIAS
     {
         title: 'Loaders',
         items: ['loading.io'],
@@ -46,13 +45,13 @@ const sections = [
 ];
 
 export const CreditsModal = () => {
-    const { showCredits, setShowCredits } = usePreferences();
+    const { showCredits, toggleCreditsModal } = useCredits();
 
     return (
         <Modal
             title="Creditos"
             open={showCredits}
-            onOpenChange={setShowCredits}
+            onOpenChange={toggleCreditsModal}
             children={
                 <div className="flex flex-col gap-8 text-sm">
                     <div>
@@ -62,8 +61,8 @@ export const CreditsModal = () => {
                         diseño de la aplicación esta basada en el conocido
                         reproductor de Winamp. También se implemento la librería
                         React AI SDK para la integración de una IA generativa.
-                        Agredecimiento al instructor Juan Pablo de la Torre por
-                        su apoyo y enseñanzas.
+                        Agredecimiento a los instructores Juan Pablo de la Torre
+                        y Fernando Herrera por sus enseñanzas en Udemy.
                     </div>
 
                     <div className="flex flex-col gap-4">
@@ -94,7 +93,7 @@ export const CreditsModal = () => {
 
                     <div className="flex justify-end">
                         <Button
-                            onClick={() => setShowCredits(false)}
+                            onClick={toggleCreditsModal}
                             icon={<CrossIcon className="size-6" />}
                             text="Cerrar"
                         />

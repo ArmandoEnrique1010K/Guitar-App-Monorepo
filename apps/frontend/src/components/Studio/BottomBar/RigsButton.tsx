@@ -1,6 +1,6 @@
 import { useBottomBar } from '@/hooks';
+import { StackIcon } from '@/icons';
 import { LatchButton } from '@/ui';
-import { StackIcon } from '@radix-ui/react-icons';
 
 export const RigsButton = () => {
     const { selectedPanel, setSelectedPanel } = useBottomBar();

@@ -8,3 +8,4 @@ export * from './settingsSlice';
 export * from './effectsSlice';
 export * from './profileSlice';
 export * from './presetsSlice';
+export * from './creditsSlice';

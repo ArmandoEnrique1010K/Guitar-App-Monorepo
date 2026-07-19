@@ -48,9 +48,6 @@ export type PreferencesSliceType = {
     loadGuitars: () => Promise<void>;
 
     volumeNode: Tone.Volume | null;
-
-    showCredits: boolean;
-    setShowCredits: (showCredits: boolean) => void;
 };
 
 export const preferencesSlice: StateCreator<
@@ -168,9 +165,4 @@ export const preferencesSlice: StateCreator<
     },
 
     volumeNode: null,
-
-    showCredits: false,
-    setShowCredits: (showCredits: boolean) => {
-        set({ showCredits });
-    },
 });

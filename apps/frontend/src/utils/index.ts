@@ -5,3 +5,4 @@ export * from './buildEffectsPayload';
 export * from './isErrorResponseWithFields';
 export * from './isErrorResponse';
 export * from './sleep';
+export * from './getErrorMessage';

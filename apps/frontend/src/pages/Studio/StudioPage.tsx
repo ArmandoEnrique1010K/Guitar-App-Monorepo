@@ -10,6 +10,8 @@ import {
 export const StudioPage = () => {
     const { isAssistantPanelOpen } = useAssistant();
     const { selectedPanel } = useBottomBar();
+
+    // Con react-responsive puedes controlar el ancho de la pantalla
     const isDesktop = useMediaQuery({ minWidth: 1280 });
 
     return (
@@ -17,7 +19,6 @@ export const StudioPage = () => {
             <div className="flex flex-row w-full h-full overflow-hidden min-h-0">
                 <div className="flex flex-col w-full min-h-0">
                     <div className="flex flex-col flex-1 min-w-0 min-h-0">
-                        {/* En pantallas menores que el corte de tailwind 'lg' el panel del asistente de IA debe cubrir toda la pantalla */}
                         {!isDesktop && selectedPanel === 'assistant' ? (
                             <div className="w-full h-full">
                                 <AssistantView />
@@ -40,6 +41,3 @@ export const StudioPage = () => {
         </>
     );
 };
-// <div className="hidden lg:block">
-//     {isAssistantPanelOpen && <AssistantView />}
-// </div>

@@ -17,18 +17,8 @@ export const FretCell = ({
     const { showKeyboardKeys, loopMode, loopIntervalMs, autoMute, holdToPlay } =
         usePreferences();
     const { rootChord } = useControlBar();
-    const {
-        keyboardMode,
-        playNote,
-        stopNote,
-        stopRepeatingNote,
-        keyboardLocked,
-    } = useFretboard();
-
-    // const { selectedGuitar } = usePreferences();
-    // const { effects } = useEffects();
-
-    // const volumeNode = useAppStore((state) => state.volumeNode);
+    const { playNote, stopNote, stopRepeatingNote, keyboardLocked } =
+        useFretboard();
 
     // Tecla presionada
     const [keyPressed, setKeyPressed] = useState(false);
@@ -65,7 +55,7 @@ export const FretCell = ({
         if (event.repeat) return;
         if (!canPlayKeyboard()) return;
 
-        if (event.code === keyToPress && !keyPressed && keyboardMode) {
+        if (event.code === keyToPress && !keyPressed) {
             setKeyPressed(true);
             setIsActive(true);
             playNote(stringIndex, noteIndex);
@@ -115,7 +105,6 @@ export const FretCell = ({
 
     // EFECTO SECUNDARIO
     //* ADVERTENCIA: NO CAMBIAR EL ACORDE INICIAL MIENTRAS SE MANTIENE PULSADA UNA TECLA
-    // TODO: SOLUCIONAR EL ERRROR MENCIONADO
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
@@ -129,7 +118,6 @@ export const FretCell = ({
     }, [
         keyToPress,
         autoMute,
-        keyboardMode,
         rootChord,
         holdToPlay,
         loopMode,
@@ -137,14 +125,10 @@ export const FretCell = ({
 
         // No olvidar esta dependencia
         keyboardLocked,
-        // selectedGuitar,
-        // effects,
     ]);
 
     return (
         <button
-            // transition-all
-
             className={`
                 z-20
                     h-full

@@ -61,10 +61,6 @@ export const StudioLayout = () => {
         }));
     }, [noteSamples]);
 
-    // useEffect(() => {
-    //     console.log(guitarNotes);
-    // }, [guitarNotes]);
-
     // 3. Debe asignar las notas a los trastes
     // La función de utilidad assignKeyboardKeysToFrets es la encargada de hacer eso
     const newNeck = useMemo(() => {
@@ -86,7 +82,6 @@ export const StudioLayout = () => {
 
     useEffect(() => {
         setNeck(newNeck);
-        // console.log(newNeck);
     }, [newNeck, setNeck]);
 
     // AQUI DEBE CARGARSE LOS EFECTOS SECUNDARIOS PORQUE ES EL COMPONENTE CONTENEDOR

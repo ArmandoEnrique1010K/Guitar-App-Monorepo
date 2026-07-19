@@ -5,13 +5,6 @@ import { TriangleDownIcon } from '@radix-ui/react-icons';
 export const GuitarButton = () => {
     const { selectedGuitar, guitars, setSelectedGuitar } = usePreferences();
 
-    // const handleChange = (value: string) => {
-    //     const guitar = guitars.find((guitar) => guitar.name === value);
-    //     if (guitar) {
-    //         setSelectedGuitar(guitar);
-    //     }
-    // };
-
     return (
         <>
             <ActionMenu

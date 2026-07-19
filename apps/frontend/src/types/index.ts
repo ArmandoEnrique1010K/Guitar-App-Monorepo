@@ -185,6 +185,13 @@ export type NoteSample = {
     audioUrl: string;
 };
 
+// BOTTOM BAR (Barra inferior)
+export type SelectedPanel =
+    | 'effects'
+    | 'preferences'
+    | 'workspaces'
+    | 'assistant';
+
 // FRETS (CUERDA DE LA GUITARRA)
 
 // Nota musical dentro de una cuerda

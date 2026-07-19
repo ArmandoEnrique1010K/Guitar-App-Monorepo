@@ -3,7 +3,6 @@ import { LogoGuitar, BurgerMenuButton } from '@/components';
 export const HeaderView = () => {
     return (
         <>
-            {/* bg-linear-to-r from-slate-600 to-slate-700 */}
             <div className="flex flex-row justify-between items-center bg-black sm:px-6 px-4 py-2 gap-4">
                 <LogoGuitar size="small" />
                 <div className="bg-amber-200 flex-1 sm:h-[4px] h-0 hidden sm:block" />

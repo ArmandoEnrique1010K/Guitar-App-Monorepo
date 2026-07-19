@@ -19,6 +19,8 @@ import {
     type SettingsSliceType,
     type ProfileSliceType,
     type PresetsSliceType,
+    type CreditsSliceType,
+    creditsSlice,
 } from './slices';
 
 export const useAppStore = create<
@@ -31,7 +33,8 @@ export const useAppStore = create<
         EffectsSliceType &
         ProfileSliceType &
         SettingsSliceType &
-        PresetsSliceType
+        PresetsSliceType &
+        CreditsSliceType
 >()(
     devtools((...a) => ({
         ...assistantSlice(...a),
@@ -44,5 +47,6 @@ export const useAppStore = create<
         ...profileSlice(...a),
         ...settingsSlice(...a),
         ...presetsSlice(...a),
+        ...creditsSlice(...a),
     })),
 );

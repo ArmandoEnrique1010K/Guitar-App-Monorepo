@@ -100,12 +100,6 @@ text-sm
                             handleSubmit();
                         }
                     }}
-                    // Desactivar el modo de teclado cuando se enfoca el input
-                    // onFocus={() => setKeyboardMode(false)}
-                    // // Activar el modo de teclado cuando se desenfoca el input
-                    // onBlur={() => setKeyboardMode(true)}
-                    // // Desactivar el modo teclado cuando el cursor salga de este campo
-                    // onMouseLeave={() => setKeyboardMode(true)}
                 />
                 <Button
                     text=""

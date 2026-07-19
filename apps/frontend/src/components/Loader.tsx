@@ -1,14 +1,24 @@
-export const Loader = () => {
+type Props = {
+    label?: string;
+    className?: string;
+    height?: string;
+};
+
+export const Loader = ({ label, className, height = 'h-full' }: Props) => {
     return (
-        <div className="bg-black flex flex-col justify-center items-center h-screen text-center">
+        <div
+            className={`bg-black flex flex-col justify-center items-center  text-center ${height}`}
+        >
             <img
                 src="/green-spinner.svg"
-                className="mb-5"
+                className={className}
                 alt="Spinner verde"
             />
-            <h2 className="text-green-500 font-shockwave text-4xl font-thin">
-                Admira el poder de React y ToneJS
-            </h2>
+            {label && (
+                <h2 className="text-green-500 font-shockwave text-4xl font-thin">
+                    {label}
+                </h2>
+            )}
         </div>
     );
 };

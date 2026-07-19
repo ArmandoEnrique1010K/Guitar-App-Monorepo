@@ -1,7 +1,6 @@
 import { useAppStore } from '@/store';
 
 export const usePreferences = () => {
-    // Obten la guitarra seleccionada
     const guitars = useAppStore((state) => state.guitars);
     const selectedGuitar = useAppStore((state) => state.selectedGuitar);
     const setSelectedGuitar = useAppStore((state) => state.setSelectedGuitar);
@@ -47,11 +46,6 @@ export const usePreferences = () => {
     const noteSamples = useAppStore((state) => state.noteSamples);
     const loadNoteSamples = useAppStore((state) => state.loadNoteSamples);
 
-    const stopAllNotes = useAppStore((state) => state.stopAllNotes);
-
-    const showCredits = useAppStore((state) => state.showCredits);
-    const setShowCredits = useAppStore((state) => state.setShowCredits);
-
     return {
         guitars,
         selectedGuitar,
@@ -79,8 +73,5 @@ export const usePreferences = () => {
         loadGuitars,
         noteSamples,
         loadNoteSamples,
-        stopAllNotes,
-        showCredits,
-        setShowCredits,
     };
 };
