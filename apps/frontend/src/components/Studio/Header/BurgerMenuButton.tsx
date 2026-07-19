@@ -4,9 +4,16 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { CreditsModal } from '../Credits/CreditsModal';
 import { ProfileModal } from '../Profile/ProfileModal';
 import { ActionMenu } from '@/components';
+import { EditProfileModal } from '../Profile/EditProfileModal';
+import { UpdatePasswordModal } from '../Profile/UpdatePasswordModal';
 
 export const BurgerMenuButton = () => {
-    const { profile, openProfileModal } = useProfile();
+    const {
+        profile,
+        toggleProfileModal,
+        toggleEditProfileModal,
+        toggleUpdatePasswordModal,
+    } = useProfile();
     const { setShowCredits } = usePreferences();
 
     const buildOptions = (): {
@@ -33,7 +40,19 @@ export const BurgerMenuButton = () => {
             {
                 label: 'Mi perfil',
                 onClick: () => {
-                    openProfileModal();
+                    toggleProfileModal();
+                },
+            },
+            {
+                label: 'Editar Perfil',
+                onClick: () => {
+                    toggleEditProfileModal();
+                },
+            },
+            {
+                label: 'Actualizar contraseña',
+                onClick: () => {
+                    toggleUpdatePasswordModal();
                 },
             },
             {
@@ -77,6 +96,8 @@ export const BurgerMenuButton = () => {
             />
             <CreditsModal />
             <ProfileModal />
+            <EditProfileModal />
+            <UpdatePasswordModal />
         </>
     );
 };

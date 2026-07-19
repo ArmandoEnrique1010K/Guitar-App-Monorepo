@@ -1,5 +1,11 @@
 import { isAxiosError } from 'axios';
-import type { ErrorResponse, ErrorResponseWithFields, User } from '@/types';
+import type {
+    ErrorResponse,
+    ErrorResponseWithFields,
+    ProfileForm,
+    UpdatePasswordForm,
+    User,
+} from '@/types';
 import { api } from '@/lib/axios';
 
 export const getUser = async (): Promise<User | ErrorResponse> => {
@@ -15,12 +21,12 @@ export const getUser = async (): Promise<User | ErrorResponse> => {
     }
 };
 
-export const updateProfile = async (): Promise<
-    string | ErrorResponseWithFields
-> => {
+export const updateProfile = async (
+    formData: ProfileForm,
+): Promise<string | ErrorResponseWithFields | ErrorResponse> => {
     try {
         const url = `/profile`;
-        const { data } = await api.put(url);
+        const { data } = await api.put(url, formData);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -30,12 +36,12 @@ export const updateProfile = async (): Promise<
     }
 };
 
-export const updatePassword = async (): Promise<
-    string | ErrorResponseWithFields
-> => {
+export const updatePassword = async (
+    formData: UpdatePasswordForm,
+): Promise<string | ErrorResponseWithFields | ErrorResponse> => {
     try {
         const url = `/profile/password`;
-        const { data } = await api.put(url);
+        const { data } = await api.put(url, formData);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

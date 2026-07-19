@@ -21,6 +21,10 @@ export const useFretboard = () => {
     );
     const stopRepeatingNote = useAppStore((state) => state.stopRepeatingNote);
 
+    const keyboardLocked = useAppStore((state) => state.keyboardLocked);
+    const lockKeyboard = useAppStore((state) => state.lockKeyboard);
+    const unlockKeyboard = useAppStore((state) => state.unlockKeyboard);
+
     return {
         currentNote,
         previousNote,
@@ -38,5 +42,8 @@ export const useFretboard = () => {
         stopNote,
         stopNotesByConditions,
         stopRepeatingNote,
+        keyboardLocked,
+        lockKeyboard,
+        unlockKeyboard,
     };
 };

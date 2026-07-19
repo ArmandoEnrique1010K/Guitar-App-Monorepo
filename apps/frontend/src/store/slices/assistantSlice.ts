@@ -1,63 +1,66 @@
 import { requestAIResponse } from '@/api';
+import { greetingsAI } from '@/data/greetingsAI';
 import type { StateCreator } from 'zustand';
 
 export type AssistantSliceType = {
-    isPanelOpen: boolean;
-    togglePanel: () => void;
-    openPanel: () => void;
-    response: string;
     isGenerating: boolean;
-    generateResponse: (prompt: string) => Promise<void>;
-    request: string;
+    isAssistantPanelOpen: boolean;
+
+    // Texto escrito por el usuario
     question: string;
+
+    // Pregunta enviada a la IA
+    request: string;
+
+    // Respuesta generada por IA
+    response: string;
+
+    toggleAssistantPanel: () => void;
+    openAssistantPanel: () => void;
     setQuestion: (question: string) => void;
+    generateResponse: (prompt: string) => Promise<void>;
 };
 
-const randomGreetings = [
-    'Hazme una pregunta. Cada consulta se procesa de forma independiente.',
-    '¿Qué deseas consultar? Ten en cuenta que no conservo el contexto entre preguntas.',
-    'Estoy listo para responder una consulta. Si haces otra pregunta, incluye nuevamente toda la información necesaria.',
-    '¿Qué deseas preguntar? Cada consulta es independiente.',
-    'Puedo ayudarte con una consulta. Si realizas otra pregunta, recuerda incluir nuevamente el contexto.',
-];
+// Obtiene un texto como texto inicial
+const randomGreeting =
+    greetingsAI[Math.floor(Math.random() * greetingsAI.length)];
 
 export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
-    isPanelOpen: false,
-    response:
-        randomGreetings[Math.floor(Math.random() * randomGreetings.length)],
     isGenerating: false,
-    request: '',
+    isAssistantPanelOpen: false,
     question: '',
+    request: '',
+    response: randomGreeting,
 
-    togglePanel: () => {
+    // Alterna el estado del panel de la IA Generativa
+    toggleAssistantPanel: () => {
         set((state) => ({
-            isPanelOpen: !state.isPanelOpen,
+            isAssistantPanelOpen: !state.isAssistantPanelOpen,
         }));
     },
 
-    openPanel: () => {
+    openAssistantPanel: () => {
         set({
-            isPanelOpen: true,
+            isAssistantPanelOpen: true,
         });
     },
 
+    // Cambia el estado de la pregunta
     setQuestion: (question) => {
         set({ question });
     },
 
+    // Genera la respuesta de la IA (función asincrona)
     generateResponse: async (prompt: string) => {
         set({
+            request: prompt,
             response: '',
             isGenerating: true,
-            request: prompt,
         });
 
-        // console.log(`El usuario ha introducido el texto ${prompt}`);
-
         try {
+            // Llama a la función para obtener la respuesta de la IA
             const stream = await requestAIResponse(prompt);
-
-            // console.log('Stream recibido:', stream);
 
             set({
                 response: '...',
@@ -65,6 +68,8 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
 
             let fullResponse = '';
 
+            // Se generan pequeños fragmentos de texto como la respuesta, los cuales deben ser acomodados
+            // en el estado de response
             for await (const chunk of stream) {
                 fullResponse += chunk;
 
@@ -79,10 +84,10 @@ export const assistantSlice: StateCreator<AssistantSliceType> = (set) => ({
                 });
             }
         } catch (error) {
-            console.error('Error en generateResponse:', error);
+            console.error('Error al generar la respuesta: ', error);
 
             set({
-                response: 'Error al obtener respuesta de la IA.',
+                response: 'Ha ocurrido un error al obtener respuesta de la IA.',
             });
         } finally {
             set({

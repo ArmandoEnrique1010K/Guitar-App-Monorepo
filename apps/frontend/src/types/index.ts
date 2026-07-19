@@ -105,6 +105,14 @@ export type User = {
     email: string;
 };
 
+export type ProfileForm = Omit<User, '_id'>;
+
+export type UpdatePasswordForm = {
+    current_password: string;
+    password: string;
+    password_confirmation: string;
+};
+
 //
 
 // WORKSPACE

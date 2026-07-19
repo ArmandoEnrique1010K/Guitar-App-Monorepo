@@ -53,6 +53,11 @@ export type FretboardSliceType = {
 
     // SILENCIAR TODO
     stopAllNotes: () => void;
+
+    keyboardLocked: boolean;
+
+    lockKeyboard: () => void;
+    unlockKeyboard: () => void;
 };
 
 export const fretboardSlice: StateCreator<
@@ -551,5 +556,15 @@ export const fretboardSlice: StateCreator<
 
         // Limpiar el estado de notas activas
         set({ activeNotes: {} });
+    },
+
+    keyboardLocked: false,
+
+    lockKeyboard: () => {
+        set({ keyboardLocked: true });
+    },
+
+    unlockKeyboard: () => {
+        set({ keyboardLocked: false });
     },
 });

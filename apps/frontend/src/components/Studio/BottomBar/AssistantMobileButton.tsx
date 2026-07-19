@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 // Este componente se mostrara en pantalla menores que 1024 px
 export const AssistantMobileButton = () => {
-    const { openPanel } = useAssistant();
+    const { openAssistantPanel } = useAssistant();
     const { selectedPanel, setSelectedPanel } = useBottomBar();
 
     /**
@@ -62,7 +62,7 @@ export const AssistantMobileButton = () => {
                 setSelectedPanel('assistant');
 
                 // Muestra el panel del asistente
-                openPanel();
+                openAssistantPanel();
             }}
             selected={selectedPanel === 'assistant'}
             icon={<SparkleFillIcon className={'size-8'} />}

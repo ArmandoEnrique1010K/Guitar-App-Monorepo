@@ -7,6 +7,7 @@ import NotificationsSystem, {
     wyboTheme,
 } from 'reapop';
 import { Loader } from './components';
+import { createPortal } from 'react-dom';
 
 export default function App() {
     // Obtiene el listado de notificaciones activas y la función para cerrarlas.
@@ -38,18 +39,54 @@ export default function App() {
         return <Loader />;
     }
 
+    // Función para manejar clics en el contenedor de notificaciones
+    const handleNotificationContainerClick = (e) => {
+        // Detener la propagación para que no cierre el modal
+        e.stopPropagation();
+    };
+
+    // Renderizar notificaciones en el body
+    const notificationsPortal = createPortal(
+        <div
+            onClick={handleNotificationContainerClick}
+            onMouseDown={handleNotificationContainerClick} // También prevenir mousedown
+            style={{
+                position: 'relative',
+                zIndex: 999999,
+                pointerEvents: 'none', // Permitir clics solo en las notificaciones
+            }}
+        >
+            <div style={{ pointerEvents: 'auto' }}>
+                {/* Las notificaciones sí son clicables */}
+                <NotificationsSystem
+                    notifications={notifications}
+                    dismissNotification={(id) => dismissNotification(id)}
+                    theme={wyboTheme}
+                />
+            </div>
+        </div>,
+        document.body,
+    );
+
     return (
         <>
-            {/* Sistema global encargado de renderizar las notificaciones */}
-            <NotificationsSystem
-                notifications={notifications}
-                // Permite cerrar manualmente la notificación
-                dismissNotification={(id) => dismissNotification(id)}
-                theme={wyboTheme}
-            />
-
-            {/* Enrutador principal de la aplicación */}
+            {notificationsPortal}
             <Router />
         </>
     );
+
+    // return (
+    //     <div className="">
+    //         {/* Sistema global encargado de renderizar las notificaciones */}
+    //         <NotificationsSystem
+    //             notifications={notifications}
+    //             // Permite cerrar manualmente la notificación
+    //             dismissNotification={(id) => dismissNotification(id)}
+    //             theme={wyboTheme}
+    //         />
+
+    //         {/* Enrutador principal de la aplicación */}
+    //         <Router />
+    //     </div>
+    // );
 }

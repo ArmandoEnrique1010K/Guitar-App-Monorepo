@@ -17,8 +17,13 @@ export const FretCell = ({
     const { showKeyboardKeys, loopMode, loopIntervalMs, autoMute, holdToPlay } =
         usePreferences();
     const { rootChord } = useControlBar();
-    const { keyboardMode, playNote, stopNote, stopRepeatingNote } =
-        useFretboard();
+    const {
+        keyboardMode,
+        playNote,
+        stopNote,
+        stopRepeatingNote,
+        keyboardLocked,
+    } = useFretboard();
 
     // const { selectedGuitar } = usePreferences();
     // const { effects } = useEffects();
@@ -53,6 +58,9 @@ export const FretCell = ({
 
     // Función para manejar el pulso del teclado
     const handleKeyDown = (event: KeyboardEvent) => {
+        // Si esta bloqueado las teclas al abrir una ventana modal
+        if (keyboardLocked) return;
+
         // Evita que se reproduzca el sonido varias veces cuando se mantiene presionada la tecla
         if (event.repeat) return;
         if (!canPlayKeyboard()) return;
@@ -127,6 +135,8 @@ export const FretCell = ({
         loopMode,
         loopIntervalMs,
 
+        // No olvidar esta dependencia
+        keyboardLocked,
         // selectedGuitar,
         // effects,
     ]);

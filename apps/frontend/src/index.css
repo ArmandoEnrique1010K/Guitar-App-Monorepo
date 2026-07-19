@@ -39,6 +39,7 @@
 /* OVERLAY DE LA VENTANA MODAL DEL DIALOG DE RADIX UI */
 .rt-DialogOverlay {
     background-color: rgba(0, 0, 0, 0.75);
+    z-index: 0;
     /* backdrop-filter: blur(4px);*/
 }
 
@@ -47,4 +48,28 @@
 .rt-DialogContent {
     animation: none !important;
     transition: none !important;
+}
+/* notifications-override.css */
+
+/* Forzar que Reapop esté por encima de todo */
+.reapop,
+.reapop__container,
+.reapop__notification {
+    z-index: 999999 !important;
+}
+
+/* Asegurar que el overlay de Radix no bloquee las notificaciones */
+.rt-DialogOverlay {
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+}
+
+.rt-DialogContent {
+    z-index: 1001 !important;
+}
+
+/* Hacer que las notificaciones sean clicables incluso sobre el modal */
+.reapop__notification {
+    pointer-events: auto !important;
+    cursor: pointer !important;
 }

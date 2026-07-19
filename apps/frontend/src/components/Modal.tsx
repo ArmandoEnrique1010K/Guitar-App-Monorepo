@@ -1,5 +1,6 @@
+import { useFretboard } from '@/hooks';
 import { Dialog } from '@radix-ui/themes';
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 
 type Props = {
     open: boolean;
@@ -9,8 +10,39 @@ type Props = {
 };
 
 export const Modal = ({ open, onOpenChange, children, title }: Props) => {
+    const { lockKeyboard, unlockKeyboard } = useFretboard();
+    useEffect(() => {
+        if (open) {
+            lockKeyboard();
+        } else {
+            unlockKeyboard();
+        }
+
+        return () => {
+            unlockKeyboard();
+        };
+    }, [open]);
     return (
-        <Dialog.Root open={open} onOpenChange={onOpenChange}>
+        <Dialog.Root
+            open={open}
+            // onOpenChange={onOpenChange}
+            onOpenChange={(newOpen) => {
+                // Solo permitir cerrar si no estamos haciendo clic en una notificación
+                if (newOpen === false) {
+                    // Verificar si el clic fue en una notificación
+                    const target = document.activeElement;
+                    const isNotification = target?.closest?.(
+                        '.reapop__notification',
+                    );
+
+                    if (!isNotification) {
+                        onOpenChange(newOpen);
+                    }
+                } else {
+                    onOpenChange(newOpen);
+                }
+            }}
+        >
             <Dialog.Content
                 maxWidth="600px"
                 minWidth="250px"
@@ -30,6 +62,14 @@ export const Modal = ({ open, onOpenChange, children, title }: Props) => {
                     backgroundColor: '#0f1117',
                     transition: 'none',
                     padding: '16px',
+                }}
+                // Evitar que el overlay cierre el modal al hacer clic
+                onPointerDownOutside={(e) => {
+                    // Prevenir cierre si el clic fue en una notificación
+                    const target = e.target as HTMLElement;
+                    if (target.closest?.('.reapop__notification')) {
+                        e.preventDefault();
+                    }
                 }}
             >
                 <Dialog.Title>

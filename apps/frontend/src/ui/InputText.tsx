@@ -1,21 +1,35 @@
 import React from 'react';
 
 type Props = {
+    label?: string;
     name: string;
     placeholder: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const InputText = ({ name, placeholder, value, onChange }: Props) => {
+export const InputText = ({
+    label,
+    name,
+    placeholder,
+    value,
+    onChange,
+}: Props) => {
     return (
-        <input
-            type="text"
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            className="w-full                         flex-1
+        <div className="flex flex-col">
+            {label && (
+                <label htmlFor={name} className="font-bold mb-2">
+                    {label}:
+                </label>
+            )}
+            <input
+                id={name}
+                type="text"
+                name={name}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                className="w-full flex-1
 
                         bg-black
                         text-green-400
@@ -30,6 +44,7 @@ export const InputText = ({ name, placeholder, value, onChange }: Props) => {
                         border-slate-800
                          text-sm tracking-wide 
 "
-        />
+            />
+        </div>
     );
 };

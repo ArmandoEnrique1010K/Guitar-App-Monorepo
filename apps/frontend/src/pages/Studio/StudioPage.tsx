@@ -8,7 +8,7 @@ import {
 } from '@/views';
 
 export const StudioPage = () => {
-    const { isPanelOpen } = useAssistant();
+    const { isAssistantPanelOpen } = useAssistant();
     const { selectedPanel } = useBottomBar();
     const isDesktop = useMediaQuery({ minWidth: 1280 });
 
@@ -35,11 +35,11 @@ export const StudioPage = () => {
                     <BottomBarView />
                 </div>
 
-                {isDesktop && isPanelOpen && <AssistantView />}
+                {isDesktop && isAssistantPanelOpen && <AssistantView />}
             </div>
         </>
     );
 };
 // <div className="hidden lg:block">
-//     {isPanelOpen && <AssistantView />}
+//     {isAssistantPanelOpen && <AssistantView />}
 // </div>
