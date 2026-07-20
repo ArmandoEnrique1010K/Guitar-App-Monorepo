@@ -2,6 +2,7 @@ import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     VIBRATO_SCHEMA.depth.factor,
@@ -13,7 +14,10 @@ export const DepthSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Profundidad"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof VIBRATO_SCHEMA>('depth'),
+            )}
+            title={VIBRATO_SCHEMA.depth.label}
             value={effects.vibrato.depth}
             onChange={(value) => updateEffect('vibrato', { depth: value })}
             unit={VIBRATO_SCHEMA.depth.unit}

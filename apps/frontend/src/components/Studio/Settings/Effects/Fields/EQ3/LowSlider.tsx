@@ -2,6 +2,7 @@ import { EQ3_SCHEMA } from '@/constants/eq3.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     EQ3_SCHEMA.low.factor,
@@ -13,7 +14,10 @@ export const LowSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Graves"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof EQ3_SCHEMA>('low'),
+            )}
+            title={EQ3_SCHEMA.low.label}
             value={effects.eq3.low}
             onChange={(value) => updateEffect('eq3', { low: value })}
             unit={EQ3_SCHEMA.low.unit}

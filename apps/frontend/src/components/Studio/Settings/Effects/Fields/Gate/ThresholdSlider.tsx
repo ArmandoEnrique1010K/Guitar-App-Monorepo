@@ -2,6 +2,7 @@ import { GATE_SCHEMA } from '@/constants/gate.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     GATE_SCHEMA.threshold.factor,
@@ -13,7 +14,10 @@ export const ThresholdSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Umbral"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof GATE_SCHEMA>('threshold'),
+            )}
+            title={GATE_SCHEMA.threshold.label}
             value={effects.gate.threshold}
             onChange={(value) => updateEffect('gate', { threshold: value })}
             unit={GATE_SCHEMA.threshold.unit}

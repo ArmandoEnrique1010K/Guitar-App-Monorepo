@@ -2,6 +2,8 @@ import type { NumberProperty } from '@/types';
 
 // Crea un objeto con las propiedades para un campo de tipo rango
 export const createNumberProperty = (
+    // Nombre en español
+    label: string,
     // Valor minimo
     min: number,
     // Valor maximo
@@ -17,6 +19,7 @@ export const createNumberProperty = (
     // Cantidad máxima de cifras decimales
     decimals: number,
 ): NumberProperty => ({
+    label,
     min,
     max,
     step,

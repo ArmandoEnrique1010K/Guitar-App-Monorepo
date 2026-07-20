@@ -2,6 +2,7 @@ import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PITCHSHIFT_SCHEMA.pitch.factor,
@@ -13,7 +14,10 @@ export const PitchSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Paso"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PITCHSHIFT_SCHEMA>('pitch'),
+            )}
+            title={PITCHSHIFT_SCHEMA.pitch.label}
             value={effects.pitchShift.pitch}
             onChange={(value) => updateEffect('pitchShift', { pitch: value })}
             unit={PITCHSHIFT_SCHEMA.pitch.unit}

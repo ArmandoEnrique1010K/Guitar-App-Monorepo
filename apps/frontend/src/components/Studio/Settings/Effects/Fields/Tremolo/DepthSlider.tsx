@@ -2,6 +2,7 @@ import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     TREMOLO_SCHEMA.depth.factor,
@@ -13,7 +14,10 @@ export const DepthSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Profundidad"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof TREMOLO_SCHEMA>('depth'),
+            )}
+            title={TREMOLO_SCHEMA.depth.label}
             value={effects.tremolo.depth}
             onChange={(value) => updateEffect('tremolo', { depth: value })}
             unit={TREMOLO_SCHEMA.depth.unit}

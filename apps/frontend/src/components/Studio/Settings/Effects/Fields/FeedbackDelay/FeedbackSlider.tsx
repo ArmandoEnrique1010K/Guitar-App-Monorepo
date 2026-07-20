@@ -2,6 +2,7 @@ import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     FEEDBACKDELAY_SCHEMA.feedback.factor,
@@ -13,7 +14,10 @@ export const FeedbackSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Retroalimentación"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof FEEDBACKDELAY_SCHEMA>('feedback'),
+            )}
+            title={FEEDBACKDELAY_SCHEMA.feedback.label}
             value={effects.feedbackDelay.feedback}
             onChange={(value) =>
                 updateEffect('feedbackDelay', { feedback: value })

@@ -6,3 +6,5 @@ export * from './isErrorResponseWithFields';
 export * from './isErrorResponse';
 export * from './sleep';
 export * from './getErrorMessage';
+export * from './formatCamelCaseToWords';
+export * from './getPropertyName';

@@ -2,6 +2,7 @@ import { EQ3_SCHEMA } from '@/constants/eq3.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     EQ3_SCHEMA.highFrequency.factor,
@@ -13,7 +14,10 @@ export const HighFrequencySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Frecuencia entre M. y A."
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof EQ3_SCHEMA>('highFrequency'),
+            )}
+            title={EQ3_SCHEMA.highFrequency.label}
             value={effects.eq3.highFrequency}
             onChange={(value) => updateEffect('eq3', { highFrequency: value })}
             unit={EQ3_SCHEMA.highFrequency.unit}

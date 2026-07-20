@@ -2,6 +2,7 @@ import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PITCHSHIFT_SCHEMA.delayTime.factor,
@@ -13,7 +14,10 @@ export const DelayTimeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Tiempo de retraso"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PITCHSHIFT_SCHEMA>('delayTime'),
+            )}
+            title={PITCHSHIFT_SCHEMA.delayTime.label}
             value={effects.pitchShift.delayTime}
             onChange={(value) =>
                 updateEffect('pitchShift', { delayTime: value })

@@ -2,6 +2,7 @@ import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     TREMOLO_SCHEMA.spread.factor,
@@ -13,7 +14,10 @@ export const SpreadSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Angulo"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof TREMOLO_SCHEMA>('spread'),
+            )}
+            title={TREMOLO_SCHEMA.spread.label}
             value={effects.tremolo.spread}
             onChange={(value) => updateEffect('tremolo', { spread: value })}
             unit={TREMOLO_SCHEMA.spread.unit}

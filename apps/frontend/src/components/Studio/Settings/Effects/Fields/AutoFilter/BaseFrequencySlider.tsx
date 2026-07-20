@@ -2,6 +2,7 @@ import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     AUTOFILTER_SCHEMA.baseFrequency.factor,
@@ -13,7 +14,10 @@ export const BaseFrequencySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Frecuencia base"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof AUTOFILTER_SCHEMA>('baseFrequency'),
+            )}
+            title={AUTOFILTER_SCHEMA.baseFrequency.label}
             value={effects.autoFilter.baseFrequency}
             onChange={(value) =>
                 updateEffect('autoFilter', { baseFrequency: value })

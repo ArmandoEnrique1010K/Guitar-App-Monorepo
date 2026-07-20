@@ -2,6 +2,7 @@ import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     COMPRESSOR_SCHEMA.attack.factor,
@@ -13,7 +14,10 @@ export const AttackSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Ataque"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof COMPRESSOR_SCHEMA>('attack'),
+            )}
+            title={COMPRESSOR_SCHEMA.attack.label}
             value={effects.compressor.attack}
             onChange={(value) => updateEffect('compressor', { attack: value })}
             unit={COMPRESSOR_SCHEMA.attack.unit}

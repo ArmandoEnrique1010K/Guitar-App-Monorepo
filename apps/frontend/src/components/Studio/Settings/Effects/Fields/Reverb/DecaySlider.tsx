@@ -2,6 +2,7 @@ import { REVERB_SCHEMA } from '@/constants/reverb.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 // Solamente se ejecuta la función una sola vez y no en cada render
 const { format, parse } = createEffectTransform(
@@ -14,7 +15,10 @@ export const DecaySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Caida"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof REVERB_SCHEMA>('decay'),
+            )}
+            title={REVERB_SCHEMA.decay.label}
             value={effects.reverb.decay}
             onChange={(value) => updateEffect('reverb', { decay: value })}
             unit={REVERB_SCHEMA.decay.unit}

@@ -2,6 +2,7 @@ import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     AUTOFILTER_SCHEMA.depth.factor,
@@ -12,7 +13,10 @@ export const DepthSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Profundidad"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof AUTOFILTER_SCHEMA>('depth'),
+            )}
+            title={AUTOFILTER_SCHEMA.depth.label}
             value={effects.autoFilter.depth}
             onChange={(value) => updateEffect('autoFilter', { depth: value })}
             unit={AUTOFILTER_SCHEMA.depth.unit}

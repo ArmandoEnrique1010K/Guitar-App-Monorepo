@@ -2,6 +2,7 @@ import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     TREMOLO_SCHEMA.wet.factor,
@@ -13,7 +14,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof TREMOLO_SCHEMA>('wet'),
+            )}
+            title={TREMOLO_SCHEMA.wet.label}
             value={effects.tremolo.wet}
             onChange={(value) => updateEffect('tremolo', { wet: value })}
             unit={TREMOLO_SCHEMA.wet.unit}

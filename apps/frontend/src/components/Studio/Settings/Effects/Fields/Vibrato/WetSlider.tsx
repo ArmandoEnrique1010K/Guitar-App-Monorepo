@@ -2,6 +2,7 @@ import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     VIBRATO_SCHEMA.wet.factor,
@@ -13,7 +14,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof VIBRATO_SCHEMA>('wet'),
+            )}
+            title={VIBRATO_SCHEMA.wet.label}
             value={effects.vibrato.wet}
             onChange={(value) => updateEffect('vibrato', { wet: value })}
             unit={VIBRATO_SCHEMA.wet.unit}

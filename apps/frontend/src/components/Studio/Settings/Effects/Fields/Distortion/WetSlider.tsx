@@ -2,6 +2,7 @@ import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     DISTORTION_SCHEMA.wet.factor,
@@ -15,7 +16,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof DISTORTION_SCHEMA>('wet'),
+            )}
+            title={DISTORTION_SCHEMA.wet.label}
             value={effects.distortion.wet}
             onChange={(value) => updateEffect('distortion', { wet: value })}
             unit={DISTORTION_SCHEMA.wet.unit}

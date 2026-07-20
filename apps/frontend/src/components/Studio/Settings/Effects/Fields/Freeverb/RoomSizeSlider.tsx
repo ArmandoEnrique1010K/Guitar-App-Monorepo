@@ -2,6 +2,7 @@ import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     FREEVERB_SCHEMA.roomSize.factor,
@@ -13,7 +14,10 @@ export const RoomSizeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Tamaño del cuarto"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof FREEVERB_SCHEMA>('roomSize'),
+            )}
+            title={FREEVERB_SCHEMA.roomSize.label}
             value={effects.freeverb.roomSize}
             onChange={(value) => updateEffect('freeverb', { roomSize: value })}
             unit={FREEVERB_SCHEMA.roomSize.unit}

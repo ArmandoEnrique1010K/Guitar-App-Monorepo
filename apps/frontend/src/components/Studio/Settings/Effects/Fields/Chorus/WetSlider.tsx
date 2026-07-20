@@ -2,6 +2,7 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     CHORUS_SCHEMA.wet.factor,
@@ -13,7 +14,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof CHORUS_SCHEMA>('wet'),
+            )}
+            title={CHORUS_SCHEMA.wet.label}
             value={effects.chorus.wet}
             onChange={(value) => updateEffect('chorus', { wet: value })}
             unit={CHORUS_SCHEMA.wet.unit}

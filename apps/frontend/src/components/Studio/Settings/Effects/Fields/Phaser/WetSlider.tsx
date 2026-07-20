@@ -2,6 +2,7 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PHASER_SCHEMA.wet.factor,
@@ -13,7 +14,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PHASER_SCHEMA>('wet'),
+            )}
+            title={PHASER_SCHEMA.wet.label}
             value={effects.phaser.wet}
             onChange={(value) => updateEffect('phaser', { wet: value })}
             unit={PHASER_SCHEMA.wet.unit}

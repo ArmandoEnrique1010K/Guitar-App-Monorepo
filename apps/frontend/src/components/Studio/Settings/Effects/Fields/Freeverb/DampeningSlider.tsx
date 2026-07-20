@@ -2,6 +2,7 @@ import { FREEVERB_SCHEMA } from '@/constants/freeverb.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     FREEVERB_SCHEMA.dampening.factor,
@@ -13,7 +14,10 @@ export const DampeningSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Amortiguamiento"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof FREEVERB_SCHEMA>('dampening'),
+            )}
+            title={FREEVERB_SCHEMA.dampening.label}
             value={effects.freeverb.dampening}
             onChange={(value) => updateEffect('freeverb', { dampening: value })}
             unit={FREEVERB_SCHEMA.dampening.unit}

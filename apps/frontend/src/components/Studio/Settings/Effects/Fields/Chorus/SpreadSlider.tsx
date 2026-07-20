@@ -2,6 +2,7 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     CHORUS_SCHEMA.spread.factor,
@@ -13,7 +14,10 @@ export const SpreadSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Angulo"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof CHORUS_SCHEMA>('spread'),
+            )}
+            title={CHORUS_SCHEMA.spread.label}
             value={effects.chorus.spread}
             onChange={(value) => updateEffect('chorus', { spread: value })}
             unit={CHORUS_SCHEMA.spread.unit}

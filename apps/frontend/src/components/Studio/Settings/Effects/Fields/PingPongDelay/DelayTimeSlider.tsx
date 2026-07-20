@@ -2,6 +2,7 @@ import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PINGPONGDELAY_SCHEMA.delayTime.factor,
@@ -13,7 +14,10 @@ export const DelayTimeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Tiempo de retraso"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PINGPONGDELAY_SCHEMA>('delayTime'),
+            )}
+            title={PINGPONGDELAY_SCHEMA.delayTime.label}
             value={effects.pingPongDelay.delayTime}
             onChange={(value) =>
                 updateEffect('pingPongDelay', { delayTime: value })

@@ -3,6 +3,7 @@ import { Value } from './Value';
 
 type Props = {
     label?: string;
+    title?: string;
     value: number;
     min?: number;
     max?: number;
@@ -17,6 +18,7 @@ type Props = {
 
 export const HorizontalSlider = ({
     label,
+    title,
     value,
     min = 0,
     max = 100,
@@ -51,7 +53,10 @@ export const HorizontalSlider = ({
             className={`${disabled ? 'opacity-50 cursor-not-allowed' : ''} flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide`}
         >
             {label && (
-                <div className="flex justify-between items-center w-max">
+                <div
+                    className="flex justify-between items-center w-max"
+                    title={title ? title : ''}
+                >
                     {<span className="text-green-500">{label}</span>}
                 </div>
             )}

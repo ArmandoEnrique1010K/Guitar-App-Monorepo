@@ -1,5 +1,6 @@
 type Props = {
-    label: string;
+    label?: string;
+    title?: string;
     options: string[];
     value: string;
     onChange: (value: string) => void;
@@ -7,6 +8,7 @@ type Props = {
 
 export const HorizontalButtonGroup = ({
     label,
+    title,
     options,
     value,
     onChange,
@@ -18,7 +20,10 @@ export const HorizontalButtonGroup = ({
     return (
         <div className="flex flex-row gap-2 items-center w-full text-xs font-bold uppercase tracking-wide">
             {label && (
-                <div className="flex justify-between items-center">
+                <div
+                    className="flex justify-between items-center"
+                    title={title ? title : ''}
+                >
                     {<span className="text-green-500">{label}</span>}
                 </div>
             )}

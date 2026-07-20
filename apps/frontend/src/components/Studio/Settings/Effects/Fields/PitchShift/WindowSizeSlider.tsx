@@ -2,6 +2,7 @@ import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PITCHSHIFT_SCHEMA.windowSize.factor,
@@ -13,7 +14,10 @@ export const WindowSizeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Tamaño de la ventana"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PITCHSHIFT_SCHEMA>('windowSize'),
+            )}
+            title={PITCHSHIFT_SCHEMA.windowSize.label}
             value={effects.pitchShift.windowSize}
             onChange={(value) =>
                 updateEffect('pitchShift', { windowSize: value })

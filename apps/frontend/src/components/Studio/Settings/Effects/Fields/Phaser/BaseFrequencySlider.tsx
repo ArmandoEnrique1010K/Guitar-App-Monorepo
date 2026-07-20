@@ -2,6 +2,7 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PHASER_SCHEMA.baseFrequency.factor,
@@ -13,7 +14,10 @@ export const BaseFrequencySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Frequencia base"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PHASER_SCHEMA>('baseFrequency'),
+            )}
+            title={PHASER_SCHEMA.baseFrequency.label}
             value={effects.phaser.baseFrequency}
             onChange={(value) =>
                 updateEffect('phaser', { baseFrequency: value })

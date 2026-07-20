@@ -2,6 +2,7 @@ import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     COMPRESSOR_SCHEMA.release.factor,
@@ -13,7 +14,10 @@ export const ReleaseSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Liberación"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof COMPRESSOR_SCHEMA>('release'),
+            )}
+            title={COMPRESSOR_SCHEMA.release.label}
             value={effects.compressor.release}
             onChange={(value) => updateEffect('compressor', { release: value })}
             unit={COMPRESSOR_SCHEMA.release.unit}

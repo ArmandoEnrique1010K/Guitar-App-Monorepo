@@ -2,6 +2,7 @@ import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     COMPRESSOR_SCHEMA.threshold.factor,
@@ -13,7 +14,10 @@ export const ThresholdSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Umbral"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof COMPRESSOR_SCHEMA>('threshold'),
+            )}
+            title={COMPRESSOR_SCHEMA.threshold.label}
             value={effects.compressor.threshold}
             onChange={(value) =>
                 updateEffect('compressor', { threshold: value })

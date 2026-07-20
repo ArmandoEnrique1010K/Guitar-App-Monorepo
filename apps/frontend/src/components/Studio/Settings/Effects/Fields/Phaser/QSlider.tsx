@@ -2,6 +2,7 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PHASER_SCHEMA.Q.factor,
@@ -13,7 +14,10 @@ export const QSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Resonancia"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PHASER_SCHEMA>('Q'),
+            )}
+            title={PHASER_SCHEMA.Q.label}
             value={effects.phaser.q}
             onChange={(value) => updateEffect('phaser', { q: value })}
             unit={PHASER_SCHEMA.Q.unit}

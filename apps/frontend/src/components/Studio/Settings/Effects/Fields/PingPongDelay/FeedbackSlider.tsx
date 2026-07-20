@@ -2,6 +2,7 @@ import { PINGPONGDELAY_SCHEMA } from '@/constants/pingPongDelay.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PINGPONGDELAY_SCHEMA.feedback.factor,
@@ -13,7 +14,10 @@ export const FeedbackSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Retroalimentación"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PINGPONGDELAY_SCHEMA>('feedback'),
+            )}
+            title={PINGPONGDELAY_SCHEMA.feedback.label}
             value={effects.pingPongDelay.feedback}
             onChange={(value) =>
                 updateEffect('pingPongDelay', { feedback: value })

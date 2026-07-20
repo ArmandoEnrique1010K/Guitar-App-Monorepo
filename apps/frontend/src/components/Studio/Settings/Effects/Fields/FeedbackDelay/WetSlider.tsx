@@ -2,6 +2,7 @@ import { FEEDBACKDELAY_SCHEMA } from '@/constants/feedbackDelay.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     FEEDBACKDELAY_SCHEMA.wet.factor,
@@ -13,7 +14,10 @@ export const WetSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Límite"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof FEEDBACKDELAY_SCHEMA>('wet'),
+            )}
+            title={FEEDBACKDELAY_SCHEMA.wet.label}
             value={effects.feedbackDelay.wet}
             onChange={(value) => updateEffect('feedbackDelay', { wet: value })}
             unit={FEEDBACKDELAY_SCHEMA.wet.unit}

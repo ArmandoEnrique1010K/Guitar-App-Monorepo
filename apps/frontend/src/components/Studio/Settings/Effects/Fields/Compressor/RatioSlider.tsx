@@ -2,6 +2,7 @@ import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     COMPRESSOR_SCHEMA.ratio.factor,
@@ -13,7 +14,10 @@ export const RatioSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Compresión"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof COMPRESSOR_SCHEMA>('ratio'),
+            )}
+            title={COMPRESSOR_SCHEMA.ratio.label}
             value={effects.compressor.ratio}
             onChange={(value) => updateEffect('compressor', { ratio: value })}
             unit={COMPRESSOR_SCHEMA.ratio.unit}

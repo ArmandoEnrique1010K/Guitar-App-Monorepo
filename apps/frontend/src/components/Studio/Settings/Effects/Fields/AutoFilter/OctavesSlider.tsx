@@ -2,6 +2,7 @@ import { AUTOFILTER_SCHEMA } from '@/constants/autoFilter.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     AUTOFILTER_SCHEMA.octaves.factor,
@@ -13,7 +14,10 @@ export const OctavesSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Octavas"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof AUTOFILTER_SCHEMA>('octaves'),
+            )}
+            title={AUTOFILTER_SCHEMA.octaves.label}
             value={effects.autoFilter.octaves}
             onChange={(value) => updateEffect('autoFilter', { octaves: value })}
             unit={AUTOFILTER_SCHEMA.octaves.unit}

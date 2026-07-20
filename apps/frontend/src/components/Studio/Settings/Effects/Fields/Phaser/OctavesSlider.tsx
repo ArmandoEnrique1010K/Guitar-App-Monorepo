@@ -2,6 +2,7 @@ import { PHASER_SCHEMA } from '@/constants/phaser.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PHASER_SCHEMA.octaves.factor,
@@ -13,7 +14,10 @@ export const OctavesSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Octavas"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PHASER_SCHEMA>('octaves'),
+            )}
+            title={PHASER_SCHEMA.octaves.label}
             value={effects.phaser.octaves}
             onChange={(value) => updateEffect('phaser', { octaves: value })}
             unit={PHASER_SCHEMA.octaves.unit}

@@ -2,6 +2,7 @@ import { TREMOLO_SCHEMA } from '@/constants/tremolo.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     TREMOLO_SCHEMA.frequency.factor,
@@ -13,7 +14,10 @@ export const FrequencySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Frecuencia"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof TREMOLO_SCHEMA>('frequency'),
+            )}
+            title={TREMOLO_SCHEMA.frequency.label}
             value={effects.tremolo.frequency}
             onChange={(value) => updateEffect('tremolo', { frequency: value })}
             unit={TREMOLO_SCHEMA.frequency.unit}

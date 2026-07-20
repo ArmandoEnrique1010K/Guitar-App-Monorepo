@@ -2,6 +2,7 @@ import { DISTORTION_SCHEMA } from '@/constants/distortion.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     DISTORTION_SCHEMA.distortion.factor,
@@ -13,7 +14,10 @@ export const DistortionSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Distorsión"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof DISTORTION_SCHEMA>('distortion'),
+            )}
+            title={DISTORTION_SCHEMA.distortion.label}
             value={effects.distortion.distortion}
             unit={DISTORTION_SCHEMA.distortion.unit}
             min={DISTORTION_SCHEMA.distortion.min}

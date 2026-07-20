@@ -39,6 +39,7 @@ export type KeyboardsRows = {
 
 // Tipado de propiedades para un campo de tipo range
 export type NumberProperty = {
+    label?: string;
     min: number;
     max: number;
     step: number;
@@ -50,6 +51,7 @@ export type NumberProperty = {
 
 // Tipado para un campo de tipo options
 export type OptionProperty<T extends string> = {
+    label?: string;
     defaultValue: T;
     values: T[];
 };

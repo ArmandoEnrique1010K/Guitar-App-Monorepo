@@ -2,6 +2,7 @@ import { VIBRATO_SCHEMA } from '@/constants/vibrato.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     VIBRATO_SCHEMA.frequency.factor,
@@ -13,7 +14,10 @@ export const FrequencySlider = () => {
 
     return (
         <HorizontalSlider
-            label="Frecuencia"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof VIBRATO_SCHEMA>('frequency'),
+            )}
+            title={VIBRATO_SCHEMA.frequency.label}
             value={effects.vibrato.frequency}
             onChange={(value) => updateEffect('vibrato', { frequency: value })}
             unit={VIBRATO_SCHEMA.frequency.unit}

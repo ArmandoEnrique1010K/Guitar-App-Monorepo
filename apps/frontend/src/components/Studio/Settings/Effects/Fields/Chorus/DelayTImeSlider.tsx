@@ -2,6 +2,7 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     CHORUS_SCHEMA.delayTime.factor,
@@ -13,7 +14,10 @@ export const DelayTImeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Retraso"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof CHORUS_SCHEMA>('delayTime'),
+            )}
+            title={CHORUS_SCHEMA.delayTime.label}
             value={effects.chorus.delayTime}
             onChange={(value) => updateEffect('chorus', { delayTime: value })}
             unit={CHORUS_SCHEMA.delayTime.unit}

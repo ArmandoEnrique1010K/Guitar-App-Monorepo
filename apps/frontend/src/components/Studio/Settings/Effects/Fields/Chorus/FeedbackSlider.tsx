@@ -2,6 +2,7 @@ import { CHORUS_SCHEMA } from '@/constants/chorus.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     CHORUS_SCHEMA.feedback.factor,
@@ -13,7 +14,10 @@ export const FeedbackSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Retroalimentación"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof CHORUS_SCHEMA>('feedback'),
+            )}
+            title={CHORUS_SCHEMA.feedback.label}
             value={effects.chorus.feedback}
             onChange={(value) => updateEffect('chorus', { feedback: value })}
             unit={CHORUS_SCHEMA.feedback.unit}

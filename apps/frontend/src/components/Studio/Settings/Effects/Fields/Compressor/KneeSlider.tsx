@@ -2,6 +2,7 @@ import { COMPRESSOR_SCHEMA } from '@/constants/compressor.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     COMPRESSOR_SCHEMA.knee.factor,
@@ -13,7 +14,10 @@ export const KneeSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Suavidad"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof COMPRESSOR_SCHEMA>('knee'),
+            )}
+            title={COMPRESSOR_SCHEMA.knee.label}
             value={effects.compressor.knee}
             onChange={(value) => updateEffect('compressor', { knee: value })}
             unit={COMPRESSOR_SCHEMA.knee.unit}

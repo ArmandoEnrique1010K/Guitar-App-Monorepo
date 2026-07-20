@@ -2,6 +2,7 @@ import { PITCHSHIFT_SCHEMA } from '@/constants/pitchShift.constants';
 import { createEffectTransform } from '@/factories';
 import { useEffects } from '@/hooks';
 import { HorizontalSlider } from '@/ui';
+import { formatCamelCaseToWords, getPropertyName } from '@/utils';
 
 const { format, parse } = createEffectTransform(
     PITCHSHIFT_SCHEMA.feedback.factor,
@@ -13,7 +14,10 @@ export const FeedbackSlider = () => {
 
     return (
         <HorizontalSlider
-            label="Retroalimentación"
+            label={formatCamelCaseToWords(
+                getPropertyName<typeof PITCHSHIFT_SCHEMA>('feedback'),
+            )}
+            title={PITCHSHIFT_SCHEMA.feedback.label}
             value={effects.pitchShift.feedback}
             onChange={(value) =>
                 updateEffect('pitchShift', { feedback: value })
