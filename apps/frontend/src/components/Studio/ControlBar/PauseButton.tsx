@@ -25,7 +25,6 @@ export const PauseButton = () => {
 
         if (event.code === 'Space') {
             setIsKeyPressed(true);
-            // TODO: ES IMPOSIBLE NO EJECUTAR ESTA FUNCIÓN CUANDO KEYBOARDMODE SEA FALSE
             stopAllNotes();
         }
     };

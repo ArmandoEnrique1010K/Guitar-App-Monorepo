@@ -1,11 +1,11 @@
-import { useBottomBar } from '@/hooks';
+import { useSettings } from '@/hooks';
 import { ControlBarView } from '../ControlBar/ControlBarView';
 import { PreferencesView } from './Preferences/PreferencesView';
 import { EffectsView } from './Effects/EffectsView';
 import { PrincipalWorkspaceView } from './Workspace/PrincipalWorkspaceView';
 
 export const SettingsView = () => {
-    const { selectedPanel } = useBottomBar();
+    const { selectedPanel } = useSettings();
 
     return (
         <div className="bg-linear-to-r from-slate-700 to-slate-800 sm:px-2 sm:pt-2 px-1 pt-1 gap-2 flex flex-col">

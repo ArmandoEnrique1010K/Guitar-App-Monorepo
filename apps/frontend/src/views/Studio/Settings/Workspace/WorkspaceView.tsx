@@ -5,7 +5,7 @@ import {
     WorkspaceBurgerMenuButton,
     WorkspaceModal,
 } from '@/components';
-import { useProfile, useSettings } from '@/hooks';
+import { useProfile, useWorkspace } from '@/hooks';
 import { PlusIcon } from '@/icons';
 import { Button } from '@/ui';
 
@@ -18,7 +18,7 @@ export const WorkspaceView = () => {
         setWorkspaceView,
         currentSelectedWorkspace,
         setCurrentSelectedWorkspace,
-    } = useSettings();
+    } = useWorkspace();
 
     return (
         <div className="flex h-full min-h-0 flex-col gap-2">

@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
     assistantSlice,
-    bottomBarSlice,
-    controlBarSlice,
     effectsSlice,
     fretboardSlice,
     preferencesSlice,
@@ -11,8 +9,6 @@ import {
     profileSlice,
     presetsSlice,
     type AssistantSliceType,
-    type BottomBarSliceType,
-    type ControlBarSliceType,
     type EffectsSliceType,
     type FretboardSliceType,
     type PreferencesSliceType,
@@ -21,6 +17,8 @@ import {
     type PresetsSliceType,
     type CreditsSliceType,
     creditsSlice,
+    type WorkspaceSliceType,
+    workspaceSlice,
 } from './slices';
 
 export const useAppStore = create<
@@ -28,25 +26,23 @@ export const useAppStore = create<
         FretboardSliceType &
         PreferencesSliceType &
         SettingsSliceType &
-        ControlBarSliceType &
-        BottomBarSliceType &
         EffectsSliceType &
         ProfileSliceType &
         SettingsSliceType &
         PresetsSliceType &
-        CreditsSliceType
+        CreditsSliceType &
+        WorkspaceSliceType
 >()(
     devtools((...a) => ({
         ...assistantSlice(...a),
         ...fretboardSlice(...a),
         ...preferencesSlice(...a),
         ...settingsSlice(...a),
-        ...controlBarSlice(...a),
-        ...bottomBarSlice(...a),
         ...effectsSlice(...a),
         ...profileSlice(...a),
         ...settingsSlice(...a),
         ...presetsSlice(...a),
         ...creditsSlice(...a),
+        ...workspaceSlice(...a),
     })),
 );

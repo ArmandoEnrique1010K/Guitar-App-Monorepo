@@ -5,7 +5,9 @@ export * from './AssistantAPI';
 export * from './AuthAPI';
 export * from './GuitarAPI';
 export * from './NoteSamplesAPI';
+export * from './PresetAPI';
 export * from './ProfileAPI';
+export * from './WorkspaceAPI';
 
 // Sin archivo de barril:
 // import { login } from '@/api/AuthAPI';

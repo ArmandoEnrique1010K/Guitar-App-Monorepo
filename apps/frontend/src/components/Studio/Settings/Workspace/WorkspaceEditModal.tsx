@@ -1,5 +1,5 @@
 import { Modal } from '@/components/Modal';
-import { useSettings } from '@/hooks';
+import { useWorkspace } from '@/hooks';
 import { CrossIcon } from '@/icons';
 import { Button, InputText } from '@/ui';
 import { PlusIcon } from '@radix-ui/react-icons';
@@ -12,7 +12,7 @@ export const WorkspaceEditModal = () => {
         editWorkspaceModal,
         editingWorkspace,
         closeEditWorkspaceModal,
-    } = useSettings();
+    } = useWorkspace();
 
     const [name, setName] = useState(editingWorkspace?.name || '');
     const [errorMessage, setErrorMessage] = useState('');

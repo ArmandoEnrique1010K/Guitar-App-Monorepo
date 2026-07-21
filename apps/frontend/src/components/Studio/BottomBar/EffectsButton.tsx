@@ -1,9 +1,9 @@
-import { useBottomBar } from '@/hooks';
+import { useSettings } from '@/hooks';
 import { RadioSignalIcon } from '@/icons';
 import { LatchButton } from '@/ui';
 
 export const EffectsButton = () => {
-    const { selectedPanel, setSelectedPanel } = useBottomBar();
+    const { selectedPanel, setSelectedPanel } = useSettings();
 
     return (
         <>

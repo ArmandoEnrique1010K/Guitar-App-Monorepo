@@ -1,9 +1,9 @@
-import { useControlBar } from '@/hooks';
+import { useSettings } from '@/hooks';
 import { FullWidthSlider } from '@/ui';
 
 export const RootChordSlider = () => {
     const { rootChord, setRootChord, minRootChord, maxRootChord } =
-        useControlBar();
+        useSettings();
 
     return (
         <>

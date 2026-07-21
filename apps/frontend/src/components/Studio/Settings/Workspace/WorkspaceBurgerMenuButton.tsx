@@ -1,6 +1,5 @@
-import { useSettings } from '@/hooks';
+import { useWorkspace } from '@/hooks';
 import { DotsVerticalIcon } from '@/icons';
-import { Menu } from '@ark-ui/react/menu';
 import { WorkspaceEditModal } from './WorkspaceEditModal';
 import { ActionMenu } from '@/components';
 
@@ -17,7 +16,7 @@ export const WorkspaceBurgerMenuButton = ({
         currentSelectedWorkspace,
         openEditWorkspaceModal,
         deleteOneWorkspace,
-    } = useSettings();
+    } = useWorkspace();
 
     return (
         <>
@@ -52,7 +51,6 @@ export const WorkspaceBurgerMenuButton = ({
                 ]}
             />
 
-            {/* TODO: GENERAR VENTANA MODAL PARA EDITAR ESPACIO DE TRABAJO */}
             <WorkspaceEditModal />
         </>
     );

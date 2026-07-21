@@ -1,47 +1,24 @@
 import type { StateCreator } from 'zustand';
-import {
-    createWorkspace,
-    deleteWorkspace,
-    getAllWorkspaces,
-    updateWorkspace,
-    type Workspace,
-} from '../../api/WorkspaceAPI';
 import type { PresetsSliceType } from './presetsSlice';
+import type { SelectedPanel } from '@/types';
 
 export type SettingsSliceType = {
-    message: string;
-    playSoundOnPulseKeyboard: boolean; // Tocar sonido cuando pulsa una tecla
-    addWorkspaceModal: boolean;
-    setAddWorkspaceModal: (show: boolean) => void;
+    selectedPanel: SelectedPanel;
+    setSelectedPanel: (panel: SelectedPanel) => void;
 
-    workspaces: Workspace[];
-    loadWorkspaces: () => Promise<void>;
-    addWorkspace: (name: string) => void;
+    // Acorde inicial
+    rootChord: number;
+    minRootChord: number;
+    maxRootChord: number;
+    setRootChord: (rootChord: number) => void;
 
-    currentSelectedWorkspace: Omit<Workspace, 'presetCount'> | null;
-    setCurrentSelectedWorkspace: (
-        workspace: Omit<Workspace, 'presetCount'>,
-    ) => void;
-
-    // currentSelectedWorkspaceId: string;
-    // setCurrentSelectedWorkspaceId: (id: string) => void;
-
-    //
-    editWorkspaceModal: boolean;
-    editWorkspace: (id: string, name: string) => void;
-    editingWorkspace: Omit<Workspace, 'presetCount'> | null;
-    openEditWorkspaceModal: (workspace: Omit<Workspace, 'presetCount'>) => void;
-    closeEditWorkspaceModal: () => void;
-    // setEditWorkspaceModal: (show: boolean) => void;
-
-    deleteOneWorkspace: (id: string) => void;
+    // Bloquear acorde 0
+    lockOpenString: boolean;
+    toggleLockOpenString: () => void;
 
     //
 
-    workspaceView: 'workspaces' | 'presets';
-    setWorkspaceView: (view: 'workspaces' | 'presets') => void;
-
-    loadPresetsByWorkspace: (workspaceId: string) => void;
+    //
 };
 
 export const settingsSlice: StateCreator<
@@ -50,103 +27,48 @@ export const settingsSlice: StateCreator<
     [],
     SettingsSliceType
 > = (set, get) => ({
-    message: '',
-    playSoundOnPulseKeyboard: true,
-    addWorkspaceModal: false,
-    setAddWorkspaceModal: (showWorkspaceModal) => {
-        set({ addWorkspaceModal: showWorkspaceModal });
+    selectedPanel: 'preferences',
+    setSelectedPanel: (panel) => {
+        set({
+            selectedPanel: panel,
+        });
     },
 
-    workspaces: [],
+    rootChord: 0,
+    minRootChord: 0,
+    maxRootChord: 12,
 
-    loadWorkspaces: async () => {
-        try {
-            const data = await getAllWorkspaces();
-            set({ workspaces: data });
-        } catch (error) {
-            console.error(error);
+    setRootChord: (rootChord: number) => {
+        set({ rootChord });
+    },
+
+    lockOpenString: false,
+    toggleLockOpenString: () => {
+        set({ lockOpenString: !get().lockOpenString });
+
+        // Cada vez que se bloquea el acorde inicial debe cambiar los rangos de los sliders
+        if (get().lockOpenString) {
+            set({
+                minRootChord: 1,
+                maxRootChord: 13,
+            });
+
+            if (get().rootChord === 0) {
+                set({ rootChord: 1 });
+            }
+        }
+
+        if (!get().lockOpenString) {
+            set({
+                minRootChord: 0,
+                maxRootChord: 12,
+            });
+
+            if (get().rootChord === 13) {
+                set({ rootChord: 12 });
+            }
         }
     },
 
-    addWorkspace: async (name: string) => {
-        const workspace = await createWorkspace({
-            name,
-        });
-
-        set((state) => ({
-            workspaces: [...state.workspaces, workspace],
-        }));
-    },
-
-    // Nota: no puede ser null
-    currentSelectedWorkspace: {
-        _id: '',
-        name: '',
-    },
-
-    setCurrentSelectedWorkspace: (workspace) => {
-        // Obtener todas las configuraciones asociadasa a ese workspace
-
-        set({
-            currentSelectedWorkspace: workspace,
-        });
-    },
-
-    // currentSelectedWorkspaceId: '',
-    // setCurrentSelectedWorkspaceId: (id) => {
-    //     set({
-    //         currentSelectedWorkspaceId: id,
-    //     });
-    // },
-
-    editWorkspaceModal: false,
-    editWorkspace: async (id: string, name: string) => {
-        const workspace = await updateWorkspace(id, {
-            name,
-        });
-
-        set((state) => ({
-            workspaces: state.workspaces.map((w) =>
-                w._id === id
-                    ? // NOTA: No se debe alterar el presetCount (conteo de configuraciones)
-                      { ...w, name: workspace.name, presetCount: w.presetCount }
-                    : w,
-            ),
-        }));
-    },
-    editingWorkspace: null,
-
-    //     setEditWorkspaceModal: (show) => {
-    //     set({ editWorkspaceModal: show });
-    // },
-    openEditWorkspaceModal: (workspace) =>
-        set({
-            editWorkspaceModal: true,
-            editingWorkspace: workspace,
-        }),
-
-    closeEditWorkspaceModal: () =>
-        set({
-            editWorkspaceModal: false,
-            editingWorkspace: null,
-        }),
-
-    deleteOneWorkspace: async (id: string) => {
-        await deleteWorkspace(id);
-        set((state) => ({
-            workspaces: state.workspaces.filter((w) => w._id !== id),
-        }));
-    },
-
-    workspaceView: 'workspaces',
-    setWorkspaceView: (view) => {
-        set({
-            workspaceView: view,
-        });
-    },
-
-    loadPresetsByWorkspace: async () => {
-        // const presets = await getPresetsByWorkspace();
-        // console.log(presets);
-    },
+    //
 });

@@ -1,4 +1,4 @@
-import { useAssistant, useBottomBar } from '@/hooks';
+import { useAssistant, useSettings } from '@/hooks';
 import { SparkleFillIcon } from '@/icons';
 import { LatchButton } from '@/ui';
 import { useEffect, useRef } from 'react';
@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 // Este componente se mostrara en pantalla menores que 1024 px
 export const AssistantMobileButton = () => {
     const { openAssistantPanel } = useAssistant();
-    const { selectedPanel, setSelectedPanel } = useBottomBar();
+    const { selectedPanel, setSelectedPanel } = useSettings();
 
     /**
      * useRef se utiliza para conservar el valor más reciente de selectedPanel

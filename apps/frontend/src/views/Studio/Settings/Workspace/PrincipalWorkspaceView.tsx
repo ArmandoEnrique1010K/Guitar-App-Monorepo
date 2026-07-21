@@ -1,11 +1,11 @@
-import { usePresets, useProfile, useSettings } from '@/hooks';
+import { usePresets, useProfile, useWorkspace } from '@/hooks';
 import { WorkspaceView } from './WorkspaceView';
 import { PresetsView } from './PresetsView';
 import { useEffect } from 'react';
 
 export const PrincipalWorkspaceView = () => {
     const { workspaceView, loadWorkspaces, currentSelectedWorkspace } =
-        useSettings();
+        useWorkspace();
     const { profile } = useProfile();
     const { loadPresets } = usePresets();
 

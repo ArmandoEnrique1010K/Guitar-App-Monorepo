@@ -3,6 +3,7 @@ import type { StateCreator } from 'zustand';
 import * as Tone from 'tone';
 import type { FretboardSliceType } from '@/store';
 import type { Guitar } from '@/types';
+import { isErrorResponse } from '@/utils';
 
 export type PreferencesSliceType = {
     // Guitarra seleccionada
@@ -152,6 +153,18 @@ export const preferencesSlice: StateCreator<
     loadGuitars: async () => {
         try {
             const data = await getAllGuitars();
+
+            if (isErrorResponse(data)) {
+                set({
+                    guitars: null,
+                    selectedGuitar: {
+                        _id: '0',
+                        name: 'Sin selección',
+                    },
+                });
+
+                return;
+            }
 
             set({
                 guitars: data,

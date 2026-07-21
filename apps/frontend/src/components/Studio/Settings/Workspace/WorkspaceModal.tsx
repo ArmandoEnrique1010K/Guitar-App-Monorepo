@@ -1,13 +1,13 @@
 import { Modal } from '@/components';
-import { useSettings } from '@/hooks';
-import { CrossIcon, PlusIcon, UpArrowIcon } from '@/icons';
+import { useWorkspace } from '@/hooks';
+import { CrossIcon, PlusIcon } from '@/icons';
 import { Button, InputText } from '@/ui';
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
 
 export const WorkspaceModal = () => {
     const { addWorkspaceModal, setAddWorkspaceModal, addWorkspace } =
-        useSettings();
+        useWorkspace();
 
     const [workspaceName, setWorkspaceName] = useState('');
 

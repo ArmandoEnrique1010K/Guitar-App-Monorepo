@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import { useAssistant, useBottomBar } from '@/hooks';
+import { useAssistant, useSettings } from '@/hooks';
 import {
     AssistantView,
     BottomBarView,
@@ -9,7 +9,7 @@ import {
 
 export const StudioPage = () => {
     const { isAssistantPanelOpen } = useAssistant();
-    const { selectedPanel } = useBottomBar();
+    const { selectedPanel } = useSettings();
 
     // Con react-responsive puedes controlar el ancho de la pantalla
     const isDesktop = useMediaQuery({ minWidth: 1280 });

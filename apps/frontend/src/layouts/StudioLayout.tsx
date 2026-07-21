@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useControlBar, useFretboard, usePreferences } from '@/hooks';
+import { useFretboard, usePreferences, useSettings } from '@/hooks';
 import type { GuitarNotes } from '@/types';
 import { assignKeyboardKeysToFrets } from '@/utils';
 import { useEffect, useMemo } from 'react';
@@ -9,7 +9,7 @@ export const StudioLayout = () => {
     const { loadGuitars, selectedGuitar, stringOrder } = usePreferences();
     const { loadNoteSamples, noteSamples, initializePlayers, setNeck } =
         useFretboard();
-    const { lockOpenString, rootChord } = useControlBar();
+    const { lockOpenString, rootChord } = useSettings();
 
     // CARGA INICIAL DE NOTAS DE LA GUITARRA
     // 1. Debe llamar a la API REST para obtener las notas de la guitarra

@@ -1,18 +1,12 @@
-import {
-    createPreset,
-    deletePreset,
-    getAllPresets,
-    updatePreset,
-} from '@/api/PresetAPI';
+import { createPreset, deletePreset, getAllPresets, updatePreset } from '@/api';
 import type { StateCreator } from 'zustand';
 import type { SettingsSliceType } from './settingsSlice';
 import type { PreferencesSliceType } from './preferencesSlice';
-import type { ControlBarSliceType } from './controlBarSlice';
 import type { EffectsSliceType } from './effectsSlice';
 import { buildEffectsPayload, isErrorResponseWithFields } from '@/utils';
-import type { BottomBarSliceType } from './bottomBarSlice';
 import type { FretboardSliceType } from './fretboardSlice';
 import type { Preset } from '@/types';
+import type { WorkspaceSliceType } from './workspaceSlice';
 
 export type PresetsSliceType = {
     presets: Preset[];
@@ -47,10 +41,9 @@ export const presetsSlice: StateCreator<
     PresetsSliceType &
         SettingsSliceType &
         PreferencesSliceType &
-        ControlBarSliceType &
         EffectsSliceType &
-        BottomBarSliceType &
-        FretboardSliceType,
+        FretboardSliceType &
+        WorkspaceSliceType,
     [],
     [],
     PresetsSliceType
@@ -232,7 +225,7 @@ export const presetsSlice: StateCreator<
             effects: buildEffectsPayload(get().effects, get().effectsOrder),
         });
 
-        // TODO: INVESTIGAR
+        // Esto nunca pasara porque siempre hay campos
         if (isErrorResponseWithFields(preset)) {
             return;
         }
@@ -257,14 +250,7 @@ export const presetsSlice: StateCreator<
                           lockOpenString: preset.lockOpenString,
                           stringOrder: preset.stringOrder,
 
-                          // TODO: CONFIGURAR LOS EFECTOS DE SONIDO
                           effects: preset.effects,
-
-                          // Aqui va el procedimiento de efectos de sonido
-                          //   effects: buildEffectsPayload(
-                          //       preset.effects,
-                          //       preset.effectsOrder,
-                          //   ),
                       }
                     : p,
             ),

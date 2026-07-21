@@ -1,4 +1,4 @@
-import { useControlBar, useFretboard, usePreferences } from '@/hooks';
+import { useFretboard, usePreferences, useSettings } from '@/hooks';
 import { useEffect, useState } from 'react';
 
 type Props = {
@@ -16,7 +16,7 @@ export const FretCell = ({
 }: Props) => {
     const { showKeyboardKeys, loopMode, loopIntervalMs, autoMute, holdToPlay } =
         usePreferences();
-    const { rootChord } = useControlBar();
+    const { rootChord } = useSettings();
     const { playNote, stopNote, stopRepeatingNote, keyboardLocked } =
         useFretboard();
 

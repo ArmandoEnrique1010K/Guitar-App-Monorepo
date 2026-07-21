@@ -1,9 +1,9 @@
-import { useControlBar } from '@/hooks';
+import { useSettings } from '@/hooks';
 import { ZeroCircleFillIcon } from '@/icons';
 import { SwitchButton } from '@/ui';
 
 export const LockOpenStringButton = () => {
-    const { lockOpenString, toggleLockOpenString } = useControlBar();
+    const { lockOpenString, toggleLockOpenString } = useSettings();
 
     return (
         <SwitchButton

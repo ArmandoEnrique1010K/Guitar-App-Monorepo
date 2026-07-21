@@ -13,7 +13,6 @@ export const DigitsGroupField = ({ id, label, onChange }: Props) => {
     const [value, setValue] = useState<string[]>([]);
     const { setFieldValue } = useFormikContext();
 
-    // TODO: ¿ES POSIBLE MODIFICAR EL CODIGO PARA QUE NO UTILIZAR 'setFieldValue'?
     const handleValueChange = (details: PinInput.ValueChangeDetails) => {
         setValue(details.value);
 

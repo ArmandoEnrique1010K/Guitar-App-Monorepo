@@ -4,7 +4,7 @@ import {
     PresetModal,
     TextContainer,
 } from '@/components';
-import { usePresets, useSettings } from '@/hooks';
+import { usePresets, useWorkspace } from '@/hooks';
 import {
     BackwardIcon,
     NextArrowIcon,
@@ -12,14 +12,13 @@ import {
     PreviousArrowIcon,
 } from '@/icons';
 import { Button } from '@/ui';
-import { ArrowBottomLeftIcon } from '@radix-ui/react-icons';
 
 export const PresetsView = () => {
     const {
         currentSelectedWorkspace,
         setWorkspaceView,
         setCurrentSelectedWorkspace,
-    } = useSettings();
+    } = useWorkspace();
     const {
         openCreatePresetModal,
         presets,
@@ -48,7 +47,7 @@ export const PresetsView = () => {
                     }}
                 />
 
-                {/* TODO: AGREGAR LOGICA A LOS BOTONES DE CAMBIO DE CONFIGURACION DE SONIDO */}
+                {/* TODO: AGREGAR LOGICA A LOS BOTONES DE CAMBIO DE CONFIGURACION DE SONIDO AL PULSAR TECLAS DERECHA E IZQUIERDA */}
                 <Button
                     text="Anterior"
                     title="Cambio"

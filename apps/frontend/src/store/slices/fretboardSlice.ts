@@ -4,6 +4,7 @@ import { getAllNoteSamples } from '@/api';
 import type { GuitarNotes } from '@/types';
 import type { PreferencesSliceType, EffectsSliceType } from '@/store';
 import type { Note } from '@/types';
+import { isErrorResponse } from '@/utils';
 
 type ActiveNote = {
     stringIndex: number;
@@ -177,7 +178,14 @@ export const fretboardSlice: StateCreator<
             }
 
             const data = await getAllNoteSamples(guitarId);
-            set({ noteSamples: data instanceof Array ? data : [] });
+            // set({ noteSamples: data instanceof Array ? data : [] });
+
+            if (isErrorResponse(data)) {
+                set({ noteSamples: [] });
+                return;
+            }
+
+            set({ noteSamples: data });
             set({ loadingFretboard: false });
         } catch (error) {
             console.error(error);

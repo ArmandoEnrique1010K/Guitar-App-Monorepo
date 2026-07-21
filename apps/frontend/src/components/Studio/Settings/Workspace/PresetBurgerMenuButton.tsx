@@ -42,7 +42,6 @@ export const PresetBurgerMenuButton = ({ presetId, presetName }: Props) => {
                 ]}
             />
 
-            {/* TODO: GENERAR VENTANA MODAL PARA EDITAR PRESET */}
             <PresetEditModal />
         </>
     );

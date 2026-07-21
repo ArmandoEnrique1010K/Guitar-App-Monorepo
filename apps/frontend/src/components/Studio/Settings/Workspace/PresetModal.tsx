@@ -1,5 +1,5 @@
 import { Modal } from '@/components';
-import { usePresets, useSettings } from '@/hooks';
+import { usePresets, useWorkspace } from '@/hooks';
 import { CrossIcon, PlusIcon } from '@/icons';
 import { Button, InputText } from '@/ui';
 import { isAxiosError } from 'axios';
@@ -12,7 +12,7 @@ export const PresetModal = () => {
     const [presetName, setPresetName] = useState('');
 
     // OBTIENE EL ESPACIO DE TRABAJO ACTUAL
-    const { currentSelectedWorkspace } = useSettings();
+    const { currentSelectedWorkspace } = useWorkspace();
 
     const [errorMessage, setErrorMessage] = useState('');
 

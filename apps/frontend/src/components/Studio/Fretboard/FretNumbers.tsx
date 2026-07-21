@@ -1,7 +1,7 @@
-import { useControlBar } from '@/hooks';
+import { useSettings } from '@/hooks';
 
 export const FretNumbers = () => {
-    const { rootChord, lockOpenString } = useControlBar();
+    const { rootChord, lockOpenString } = useSettings();
 
     // Debe renderizar los números de los trastes comenzando desde el traste seleccionado hasta los siguientes 10
     // Pero si el acorde inicial esta bloqueado, debe ser los siguientes 9
