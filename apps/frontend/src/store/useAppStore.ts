@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+
+// No utilizar @/store para importar
 import {
     assistantSlice,
     effectsSlice,
@@ -8,6 +10,8 @@ import {
     settingsSlice,
     profileSlice,
     presetsSlice,
+    creditsSlice,
+    workspaceSlice,
     type AssistantSliceType,
     type EffectsSliceType,
     type FretboardSliceType,
@@ -16,9 +20,7 @@ import {
     type ProfileSliceType,
     type PresetsSliceType,
     type CreditsSliceType,
-    creditsSlice,
     type WorkspaceSliceType,
-    workspaceSlice,
 } from './slices';
 
 export const useAppStore = create<
