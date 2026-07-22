@@ -55,11 +55,9 @@ export type EffectsSliceType = {
 
     removeEffectInstance: (effectName: keyof Effects) => void;
 
-    rebuildEffectsChain: () => EffectsChain[keyof EffectsChain][];
     addEffect: (effectName: keyof Effects) => void;
 
     setCurrentEffectSelected: (effectName: keyof Effects | null) => void;
-    resetEffectsChain: () => void;
     loadEffectsFromPreset: (presetEffects: Preset['effects']) => void;
 };
 
@@ -298,7 +296,6 @@ export const effectsSlice: StateCreator<
         get().rebuildAudioGraph();
     },
 
-    // TODO: CONTINUAR EN LA CREACION DE CAMPOS PARA CADA EFECTO DE SONIDO
     createEffectInstance: (effectName) => {
         let instance = get().effectsChain[effectName];
 
@@ -414,16 +411,6 @@ export const effectsSlice: StateCreator<
         // }
         state.rebuildAudioGraph();
     },
-    rebuildEffectsChain: () => {
-        const state = get();
-
-        const activeEffects = state.effectsOrder
-            .filter((effectName) => state.effects[effectName].enabled)
-            .map((effectName) => state.effectsChain[effectName])
-            .filter(Boolean);
-
-        return activeEffects;
-    },
     addEffect: (effectName) => {
         const state = get();
 
@@ -454,31 +441,6 @@ export const effectsSlice: StateCreator<
     },
     setCurrentEffectSelected: (effectName) => {
         set({ currentEffectSelected: effectName });
-    },
-
-    resetEffectsChain() {
-        for (const effect of Object.values(get().effectsChain)) {
-            effect?.dispose();
-        }
-
-        set({
-            effectsChain: {
-                distortion: null,
-                reverb: null,
-                tremolo: null,
-                vibrato: null,
-                chorus: null,
-                freeverb: null,
-                autoFilter: null,
-                feedbackDelay: null,
-                phaser: null,
-                pingPongDelay: null,
-                pitchShift: null,
-                gate: null,
-                compressor: null,
-                eq3: null,
-            },
-        });
     },
 
     loadEffectsFromPreset(presetEffects) {

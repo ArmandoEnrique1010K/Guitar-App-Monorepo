@@ -15,10 +15,6 @@ export type SettingsSliceType = {
     // Bloquear acorde 0
     lockOpenString: boolean;
     toggleLockOpenString: () => void;
-
-    //
-
-    //
 };
 
 export const settingsSlice: StateCreator<
