@@ -1,7 +1,6 @@
 import { usePresets } from '@/hooks';
 import { DotsVerticalIcon } from '@/icons';
-import { PresetEditModal } from './PresetEditModal';
-import { ActionMenu } from '@/components';
+import { PresetEditModal, ActionMenu } from '@/components';
 
 type Props = {
     presetId: string;

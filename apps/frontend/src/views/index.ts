@@ -28,9 +28,13 @@ export * from './Studio/Profile/UpdatePasswordModal';
 // SETTINGS
 export * from './Studio/Settings/SettingsView';
 
+// PREFERENCES
+export * from './Studio/Settings/Preferences/PreferencesView';
+
 // EFFECTS
 export * from './Studio/Settings/Effects/EffectsView';
 
-export * from './Studio/Settings/Preferences/PreferencesView';
+// WORKSPACE
 export * from './Studio/Settings/Workspace/PresetsView';
 export * from './Studio/Settings/Workspace/PrincipalWorkspaceView';
+export * from './Studio/Settings/Workspace/WorkspaceView';

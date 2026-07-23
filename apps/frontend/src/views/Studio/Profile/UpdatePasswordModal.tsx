@@ -1,4 +1,4 @@
-import { Modal } from '@/components/Modal';
+import { Modal } from '@/components';
 import { useProfile } from '@/hooks';
 import { CrossIcon, PlusIcon } from '@/icons';
 import type { Error } from '@/types';

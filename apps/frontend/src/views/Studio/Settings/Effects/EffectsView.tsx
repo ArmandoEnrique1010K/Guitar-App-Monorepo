@@ -21,6 +21,8 @@ import {
 import { useEffects } from '@/hooks';
 import { Button } from '@/ui';
 import { PreviousArrowIcon, NextArrowIcon, ResetIcon } from '@/icons';
+
+// TODO: CAMBIAR LA RUTA
 import { EFFECTS_NAMES } from '@/translate/EffectsNames';
 
 export const EffectsView = () => {

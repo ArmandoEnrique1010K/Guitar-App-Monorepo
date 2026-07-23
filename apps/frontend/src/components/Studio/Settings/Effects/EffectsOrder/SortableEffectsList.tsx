@@ -7,7 +7,7 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import type { Effects } from '@/types';
-import { SortableEffectItem } from './SortableEffectItem';
+import { SortableEffectItem } from '@/components';
 import {
     restrictToVerticalAxis,
     restrictToParentElement,

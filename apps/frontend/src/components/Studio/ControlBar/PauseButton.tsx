@@ -22,6 +22,13 @@ export const PauseButton = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
         // Evita que se reproduzca el sonido varias veces cuando se mantiene presionada la tecla
         if (event.repeat) return;
+        const element = document.activeElement;
+
+        // No detiene las notas si el elemento en el que esta situado el cursor o el usuario es un
+        // elemento <input>
+        if (element instanceof HTMLInputElement) {
+            return;
+        }
 
         if (event.code === 'Space') {
             setIsKeyPressed(true);

@@ -1,13 +1,13 @@
+import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
-import { useProfile } from './hooks';
-import Router from './routes/router';
 import NotificationsSystem, {
     useNotifications,
     setUpNotifications,
     wyboTheme,
 } from 'reapop';
-import { Loader } from './components';
-import { createPortal } from 'react-dom';
+import { useProfile } from '@/hooks';
+import { Loader } from '@/components';
+import Router from './routes/router';
 
 export default function App() {
     // Obtiene el listado de notificaciones activas y la función para cerrarlas.

@@ -1,7 +1,6 @@
 import { useWorkspace } from '@/hooks';
 import { DotsVerticalIcon } from '@/icons';
-import { WorkspaceEditModal } from './WorkspaceEditModal';
-import { ActionMenu } from '@/components';
+import { WorkspaceEditModal, ActionMenu } from '@/components';
 
 type Props = {
     workspaceId: string;

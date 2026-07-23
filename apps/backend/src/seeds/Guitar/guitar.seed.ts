@@ -12,6 +12,7 @@ export const guitarSeed = async () => {
     await Guitar.insertMany([
         { name: "Clean Solo" },
         { name: "Distortion Solo" },
+        { name: "Arm The Homeless" },
     ]);
 
     console.log(colors.green("Datos insertados, se ha ejecutado guitars.seed"));

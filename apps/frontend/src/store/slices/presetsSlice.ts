@@ -1,12 +1,14 @@
 import { createPreset, deletePreset, getAllPresets, updatePreset } from '@/api';
 import type { StateCreator } from 'zustand';
-import type { SettingsSliceType } from './settingsSlice';
-import type { PreferencesSliceType } from './preferencesSlice';
-import type { EffectsSliceType } from './effectsSlice';
 import { buildEffectsPayload, isErrorResponseWithFields } from '@/utils';
-import type { FretboardSliceType } from './fretboardSlice';
 import type { Preset } from '@/types';
-import type { WorkspaceSliceType } from './workspaceSlice';
+import type {
+    PreferencesSliceType,
+    EffectsSliceType,
+    FretboardSliceType,
+    WorkspaceSliceType,
+    SettingsSliceType,
+} from '@/store';
 
 export type PresetsSliceType = {
     presets: Preset[];

@@ -1,7 +1,7 @@
 import { usePreferences } from '@/hooks';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
-import { SortableStringItem } from './SortableStringItem';
+import { SortableStringItem } from '@/components';
 import {
     restrictToParentElement,
     restrictToVerticalAxis,

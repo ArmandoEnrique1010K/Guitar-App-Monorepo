@@ -1,8 +1,10 @@
 import { useSettings } from '@/hooks';
-import { ControlBarView } from '../ControlBar/ControlBarView';
-import { PreferencesView } from './Preferences/PreferencesView';
-import { EffectsView } from './Effects/EffectsView';
-import { PrincipalWorkspaceView } from './Workspace/PrincipalWorkspaceView';
+import {
+    ControlBarView,
+    EffectsView,
+    PrincipalWorkspaceView,
+    PreferencesView,
+} from '@/views';
 
 export const SettingsView = () => {
     const { selectedPanel } = useSettings();

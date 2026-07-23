@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import { Value } from './Value';
+import { Value } from '@/ui';
 
 type Props = {
     value: number;

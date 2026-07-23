@@ -1,6 +1,6 @@
 import type { StateCreator } from 'zustand';
-import type { PresetsSliceType } from './presetsSlice';
 import type { SelectedPanel } from '@/types';
+import type { PresetsSliceType } from '@/store';
 
 export type SettingsSliceType = {
     selectedPanel: SelectedPanel;
