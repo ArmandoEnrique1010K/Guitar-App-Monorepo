@@ -29,10 +29,10 @@ export const PHASER_SCHEMA = {
     ),
 
     // Resonancia del filtro (Quality Factor)
-    Q: createNumberProperty('Resonancia', 0, 20, 0.1, 10, 1, '', 1),
+    Q: createNumberProperty('Resonancia', 0, 20, 0.1, 10, 1, 'Q', 1),
 
     // Número de etapas del phaser
-    stages: createNumberProperty('Etapas', 2, 20, 1, 10, 1, '', 0),
+    // stages: createNumberProperty('Etapas', 2, 20, 1, 10, 1, '', 0),
 
     // Mezcla entre señal seca y procesada
     wet: createNumberProperty('Mezcla', 0, 1, 0.01, 1, 100, '%', 0),
