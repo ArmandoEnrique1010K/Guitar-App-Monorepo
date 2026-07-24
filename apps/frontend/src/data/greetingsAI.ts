@@ -1,7 +1,6 @@
 export const greetingsAI = [
-    'Hazme una pregunta. Cada consulta se procesa de forma independiente.',
-    '¿Qué deseas consultar? Ten en cuenta que no conservo el contexto entre preguntas.',
-    'Estoy listo para responder una consulta. Si haces otra pregunta, incluye nuevamente toda la información necesaria.',
-    '¿Qué deseas preguntar? Cada consulta es independiente.',
-    'Puedo ayudarte con una consulta. Si realizas otra pregunta, recuerda incluir nuevamente el contexto.',
+    '¿Qué sonido quieres conseguir hoy? Puedo ayudarte con presets de guitarra, cadenas de efectos y configuraciones de Tone.js.',
+    'Describe el tono que buscas: limpio, crunch, lead, ambiental o inspirado en una canción o guitarrista.',
+    'Puedo ayudarte a crear configuraciones de Distortion, EQ3, FeedbackDelay, Reverb y otros efectos de Tone.js.',
+    '¿Quieres acercarte al sonido de una canción o guitarrista? Dime el nombre y te propondré una configuración lista para usar.',
 ];

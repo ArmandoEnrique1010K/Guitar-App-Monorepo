@@ -34,6 +34,7 @@
     --breakpoint-xsm: 400px;
     --font-shockwave: 'Shockwave2';
     --font-roboto: 'Roboto';
+    --z-index: 200;
 }
 
 /* OVERLAY DE LA VENTANA MODAL DEL DIALOG DE RADIX UI */

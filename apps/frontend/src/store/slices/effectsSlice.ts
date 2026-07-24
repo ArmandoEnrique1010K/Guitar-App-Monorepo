@@ -137,7 +137,7 @@ export const effectsSlice: StateCreator<
             baseFrequency: PHASER_SCHEMA.baseFrequency.defaultValue,
             octaves: PHASER_SCHEMA.octaves.defaultValue,
             q: PHASER_SCHEMA.Q.defaultValue,
-            stages: PHASER_SCHEMA.stages.defaultValue,
+            // stages: PHASER_SCHEMA.stages.defaultValue,
             wet: PHASER_SCHEMA.wet.defaultValue,
             enabled: false,
         },

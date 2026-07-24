@@ -40,10 +40,8 @@ export const WorkspaceView = () => {
                 )}
             </div>
 
-            {/* <div>{JSON.stringify(profile, null, 2)}</div> */}
-
             <EffectControlsContainer>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {workspaces.map((workspace) => (
                         <div
                             key={workspace._id}
@@ -53,10 +51,10 @@ export const WorkspaceView = () => {
                                 className={`flex flex-col text-center w-full 
                             rounded-lg border border-slate-600
                              
-                            p-4  ${
+                            py-2 px-6 ${
                                 currentSelectedWorkspace._id === workspace._id
                                     ? 'bg-green-500 text-black'
-                                    : '                             hover:bg-slate-700 hover:text-green-500 bg-black text-green-500'
+                                    : 'hover:bg-slate-700 hover:text-green-500 bg-black text-green-500'
                             }`}
                                 onClick={() => {
                                     setCurrentSelectedWorkspace({
@@ -65,6 +63,7 @@ export const WorkspaceView = () => {
                                     });
                                     setWorkspaceView('presets');
                                 }}
+                                title={workspace.name}
                             >
                                 <span className="truncate font-medium">
                                     {workspace.name}
@@ -74,8 +73,8 @@ export const WorkspaceView = () => {
                                 />
                             </button>
 
-                            <div className="absolute top-0 right-0 p-2">
-                                <div className="pt-2 pr-1">
+                            <div className="absolute top-0 right-0">
+                                <div className="pt-4 pr-4">
                                     <WorkspaceBurgerMenuButton
                                         workspaceId={workspace._id}
                                         workspaceName={workspace.name}

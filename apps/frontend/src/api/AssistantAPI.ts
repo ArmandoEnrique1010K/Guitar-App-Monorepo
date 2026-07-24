@@ -2,7 +2,6 @@ import { systemPrompt } from '@/data/systemPrompt';
 import { startOpenRouter } from '@/lib/ai';
 import { streamText } from 'ai';
 
-// TODO: REFACTORIZAR ESTE ARCHIVO
 // https://ai-sdk.dev/providers/community-providers/openrouter
 // Esta funcion se encarga de generar la respuesta del asistente de IA
 export const requestAIResponse = async (prompt: string) => {

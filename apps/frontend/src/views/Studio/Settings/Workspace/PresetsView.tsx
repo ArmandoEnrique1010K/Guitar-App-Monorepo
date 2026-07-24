@@ -39,10 +39,10 @@ export const PresetsView = () => {
                         setWorkspaceView('workspaces');
 
                         //
-                        setCurrentSelectedWorkspace({
-                            _id: '',
-                            name: '',
-                        });
+                        // setCurrentSelectedWorkspace({
+                        //     _id: '',
+                        //     name: '',
+                        // });
                         clearPresets();
                     }}
                 />
@@ -73,7 +73,7 @@ export const PresetsView = () => {
             {/* <div>{JSON.stringify(profile, null, 2)}</div> */}
 
             <EffectControlsContainer>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {presets.map((preset) => (
                         <div
                             key={preset._id}
@@ -82,11 +82,10 @@ export const PresetsView = () => {
                             <button
                                 className={`flex flex-col text-center w-full 
                             rounded-lg border border-slate-600
-                             
-                            p-4  ${
+                            py-2 px-6   ${
                                 currentPresetSelected._id === preset._id
                                     ? 'bg-green-500 text-black'
-                                    : '                             hover:bg-slate-700 hover:text-green-500 bg-black text-green-500'
+                                    : 'hover:bg-slate-700 hover:text-green-500 bg-black text-green-500'
                             }`}
                                 onClick={() => {
                                     setCurrentSelectedPreset({
@@ -94,20 +93,23 @@ export const PresetsView = () => {
                                         name: preset.name,
                                     });
 
+                                    // TODO: AQUI DEBERIA LLAMAR A UNA ACCION PARA ESTABLECER TODAS LAS CONFIGURACIONES EN EL ESTADO
+                                    // DE TAL MANERA QUE SI LA CONFIGURACION DE LOS CONFIGS Y EFECTS NO COINCIDEN, QUIERE DECIR QUE SE HA
+                                    // EDITADO LA CONFIGURACION
+
+                                    // PERO IMPLICA QUE SE TIENE QUE LLAMAR A ESA FUNCION CON CADA CAMBIO EN CUALQUIER CONFIGURACION
+
                                     applyPresetSelected(preset._id);
                                 }}
+                                title={preset.name}
                             >
                                 <span className="truncate font-medium">
                                     {preset.name}
                                 </span>
                             </button>
 
-                            <div className="absolute top-0 right-0 p-2">
-                                <div className="pt-2 pr-1">
-                                    {/* <WorkspaceBurgerMenuButton
-                                        workspaceId={workspace._id}
-                                        workspaceName={workspace.name}
-                                    /> */}
+                            <div className="absolute top-0 right-0">
+                                <div className="pt-4 pr-4">
                                     {/* BurgerMenu para las configuraciones */}
                                     <PresetBurgerMenuButton
                                         presetId={preset._id}

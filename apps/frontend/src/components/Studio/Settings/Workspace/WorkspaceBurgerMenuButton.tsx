@@ -22,13 +22,7 @@ export const WorkspaceBurgerMenuButton = ({
             <ActionMenu
                 icon={
                     <DotsVerticalIcon
-                        // TODO: CAMBIAR EL COLOR DE HOVER
-                        className={`
-                            
-                        size-6
-                        
-                        ${workspaceId === currentSelectedWorkspace._id ? 'text-black hover:text-slate-600' : 'text-green-500 hover:text-green-300'}
-                            `}
+                        className={`size-5 ${workspaceId === currentSelectedWorkspace._id ? 'text-black hover:text-slate-700' : 'text-green-500 hover:text-green-400'}`}
                     />
                 }
                 options={[

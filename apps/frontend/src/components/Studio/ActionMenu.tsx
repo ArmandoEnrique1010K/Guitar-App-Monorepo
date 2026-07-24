@@ -22,7 +22,9 @@ export const ActionMenu = ({ icon, options, width = 'min-w-28' }: Props) => {
             <Menu.Positioner>
                 <Menu.Content
                     className={`${width} z-30 border border-gray-200 bg-white shadow-xl outline-none 
-                                focus:outline-none focus-visible:outline-none flex flex-col`}
+                                focus:outline-none focus-visible:outline-none flex flex-col
+                            
+                                `}
                 >
                     {options.map((option) =>
                         !option.to ? (

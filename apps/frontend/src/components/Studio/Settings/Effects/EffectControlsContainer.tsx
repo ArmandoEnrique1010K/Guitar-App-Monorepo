@@ -29,18 +29,7 @@ export const EffectControlsContainer = ({ children, className }: Props) => {
 ${className}
             `}
         >
-            {/* xl:grid-cols-2 */}
-
-            <div
-                // gap-y-2
-                className="
-                    grid
-                    grid-cols-1
-                    gap-x-4
-                "
-            >
-                {children}
-            </div>
+            {children}
         </div>
     );
 };

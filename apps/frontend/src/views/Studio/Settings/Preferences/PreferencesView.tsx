@@ -15,7 +15,7 @@ import {
 } from '@/components';
 
 export const PreferencesView = () => {
-    // TODO: SOLUCION TEMPORAL: OCULTAR LAS TECLAS EN PANTALLAS MENORES QUE 640PX sm:flex hidden
+    // TODO PENDIENTE: OCULTAR LAS TECLAS EN PANTALLAS MENORES QUE 640PX sm:flex hidden
     return (
         <>
             <div className="flex flex-row justify-between sm:gap-4 gap-2 ">

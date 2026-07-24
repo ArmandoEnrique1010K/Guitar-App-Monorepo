@@ -31,7 +31,7 @@ export const HorizontalButtonGroup = ({
                 return (
                     <button
                         key={option}
-                        className={`px-2 py-1 border border-slate-600
+                        className={`px-2 py-1 border border-slate-600 rounded-lg
                              hover:bg-slate-700 hover:text-green-500 flex-1 ${
                                  value === option
                                      ? 'bg-green-500 text-black'

@@ -13,14 +13,14 @@ export const FretNumbers = () => {
     return (
         <div
             className="flex flex-row w-full 
-                    gap-2 px-2
+                    gap-1 pr-1 lg:pr-2
                     text-sm
                     font-bold
                     text-green-500
 
             "
         >
-            <div className="w-3"></div>
+            <div className="w-5 lg:w-6"></div>
             {lockOpenString && (
                 <div className="flex-1 flex items-center gap-2">
                     <div className="flex-1 h-1 bg-green-700" />
